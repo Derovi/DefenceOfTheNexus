@@ -1,0 +1,13 @@
+#include <utility>
+
+#include "resource.h"
+#include "resourcebundle.h"
+
+core::ResourceBundle::ResourceBundle(uint32_t id, core::ResourceType resourceType, int maxHealth, QPointF position,
+                                     QPolygonF hitbox, float rotationAngle) :
+        Object(id, position, std::move(hitbox), rotationAngle), Damageable(maxHealth, maxHealth),
+        resourceType(resourceType) {}
+
+core::ResourceType core::ResourceBundle::getResourceType() const {
+    return resourceType;
+}
