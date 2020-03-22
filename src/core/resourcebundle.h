@@ -12,10 +12,8 @@ namespace core {
 
 class ResourceBundle : public Object, public Damageable {
   public:
-    ResourceBundle(uint32_t id, ResourceType resourceType, int maxHealth, QPointF position = QPointF(),
+    ResourceBundle(uint64_t id, ResourceType resourceType, int maxHealth, QPointF position = QPointF(),
                    QPolygonF hitbox = QPolygonF(), float rotationAngle = 0);
-
-    ~ResourceBundle() override = default;
 
     ResourceType getResourceType() const;
 

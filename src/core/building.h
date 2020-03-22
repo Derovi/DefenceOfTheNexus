@@ -1,7 +1,6 @@
 #ifndef BUILDING_H
 #define BUILDING_H
 
-
 #include <QPointF>
 #include <QPolygonF>
 
@@ -12,12 +11,8 @@ namespace core {
 
 class Building : public Object, public Damageable {
   public:
-    Building() = delete;
-
-    Building(uint32_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(), float rotationsAngle = 0,
+    Building(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(), float rotationAngle = 0,
              const Damageable& damageableProperties = Damageable());
-
-    ~Building() override = default;
 };
 
 }  // namespace core

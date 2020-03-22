@@ -10,7 +10,7 @@ class Damaging {
   public:
     Damaging();
 
-    Damaging(int damage, int maxDamage, double attackRadius, double attackDealy, QString bulletType);
+    Damaging(int damage, int maxDamage, double attackRadius, double attackDelay, QString bulletType);
 
     virtual ~Damaging() = default;
 

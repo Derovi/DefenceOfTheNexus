@@ -5,9 +5,9 @@
 namespace core {
 
 enum class ResourceType {
-    kWood = 0,
-    kStone = 1,
-    kIron = 2
+    kWood,
+    kStone,
+    kIron
 };
 
 class Resource {
@@ -20,7 +20,7 @@ class Resource {
 
     int getAmount() const;
 
-    virtual void setAmount(int amount);
+    void setAmount(int amount);
 
   private:
     const ResourceType type;

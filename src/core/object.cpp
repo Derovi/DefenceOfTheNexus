@@ -2,10 +2,10 @@
 
 #include "object.h"
 
-core::Object::Object(uint32_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
+core::Object::Object(uint64_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
     id(id), position(position), hitbox(std::move(hitbox)), rotationAngle(rotationAngle) {}
 
-uint32_t core::Object::getId() const {
+uint64_t core::Object::getId() const {
     return id;
 }
 

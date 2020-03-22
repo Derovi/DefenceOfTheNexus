@@ -4,8 +4,8 @@
 
 core::Moving::Moving() : direction(QVector2D()), speed(0), maxSpeed(0) {}
 
-core::Moving::Moving(QVector2D direction, double speed, double maxSpeed) : direction(direction), speed(speed),
-                                                                           maxSpeed(maxSpeed) {}
+core::Moving::Moving(QVector2D direction, double speed, double maxSpeed) :
+        direction(direction), speed(speed), maxSpeed(maxSpeed) {}
 
 const QVector2D& core::Moving::getDirection() const {
     return direction;

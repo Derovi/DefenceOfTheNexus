@@ -14,13 +14,9 @@ namespace core {
 
 class Unit : public Object, public Moving, public Damaging, public Damageable {
   public:
-    Unit() = delete;
-
-    explicit Unit(uint32_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(), float rotationAngle = 0,
+    explicit Unit(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(), float rotationAngle = 0,
                   const Moving& movingProperties = Moving(), const Damaging& damagingProperties = Damaging(),
                   const Damageable& damageableProperties = Damageable());
-
-    ~Unit() override = default;
 };
 
 }  // namespace core
