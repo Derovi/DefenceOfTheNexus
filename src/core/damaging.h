@@ -1,7 +1,6 @@
 #ifndef DAMAGING_H
 #define DAMAGING_H
 
-
 #include <QString>
 
 namespace core {
@@ -10,7 +9,8 @@ class Damaging {
   public:
     Damaging();
 
-    Damaging(int damage, int maxDamage, double attackRadius, double attackDelay, QString bulletType);
+    Damaging(int damage, double attackRadius, double attackDelay,
+             QString bulletType);
 
     virtual ~Damaging() = default;
 
@@ -36,6 +36,5 @@ class Damaging {
 };
 
 }  // namespace core
-
 
 #endif // DAMAGING_H

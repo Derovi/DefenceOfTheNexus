@@ -2,9 +2,9 @@
 
 #include "moving.h"
 
-core::Moving::Moving() : direction(QVector2D()), speed(0), maxSpeed(0) {}
+core::Moving::Moving(): direction(QVector2D()), speed(0), maxSpeed(0) {}
 
-core::Moving::Moving(QVector2D direction, double speed, double maxSpeed) :
+core::Moving::Moving(QVector2D direction, double speed, double maxSpeed):
         direction(direction), speed(speed), maxSpeed(maxSpeed) {}
 
 const QVector2D& core::Moving::getDirection() const {

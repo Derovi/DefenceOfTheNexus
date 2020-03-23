@@ -6,8 +6,10 @@
 
 core::Damaging::Damaging(): damage(0), attackDelay(0), attackRadius(0) {}
 
-core::Damaging::Damaging(int damage, int maxDamage, double attackRadius, double attackDelay, QString bulletType):
-    damage(damage), attackRadius(attackRadius), attackDelay(attackDelay), bulletType(std::move(bulletType)) {}
+core::Damaging::Damaging(int damage, double attackRadius, double attackDelay,
+                         QString bulletType):
+        damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
+        bulletType(std::move(bulletType)) {}
 
 int core::Damaging::getDamage() const {
     return damage;

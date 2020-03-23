@@ -35,5 +35,4 @@ class Moving {
 
 }  // namespace core
 
-
 #endif // MOVING_H

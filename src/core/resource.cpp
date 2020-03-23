@@ -1,6 +1,6 @@
 #include "resource.h"
 
-core::Resource::Resource(core::ResourceType type, int amount) : type(type), amount(amount) {}
+core::Resource::Resource(core::ResourceType type, int amount): type(type), amount(amount) {}
 
 core::ResourceType core::Resource::getType() const {
     return type;

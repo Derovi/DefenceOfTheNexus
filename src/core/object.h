@@ -11,7 +11,8 @@ class Object {
   public:
     Object() = delete;
 
-    explicit Object(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(), float rotationAngle = 0);
+    explicit Object(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
+                    float rotationAngle = 0);
 
     virtual ~Object() = default;
 

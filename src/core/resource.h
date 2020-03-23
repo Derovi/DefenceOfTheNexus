@@ -1,7 +1,6 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
-
 namespace core {
 
 enum class ResourceType {
@@ -28,6 +27,5 @@ class Resource {
 };
 
 }  // namespace core
-
 
 #endif // RESOURCE_H

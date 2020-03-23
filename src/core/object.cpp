@@ -3,7 +3,7 @@
 #include "object.h"
 
 core::Object::Object(uint64_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
-    id(id), position(position), hitbox(std::move(hitbox)), rotationAngle(rotationAngle) {}
+        id(id), position(position), hitbox(std::move(hitbox)), rotationAngle(rotationAngle) {}
 
 uint64_t core::Object::getId() const {
     return id;
