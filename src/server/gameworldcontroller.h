@@ -6,9 +6,19 @@
 #define GAMEWORLDCONTROLLER_H
 
 
-class GameWorldController {
+#include "../core/gameworld.h"
+#include "controller.h"
 
+namespace server {
+
+class GameWorldController : core::GameWorld {
+  public:
+    GameWorldController(GameWorld &gameWorld);
+
+    void tick();
 };
+
+}
 
 
 #endif //GAMEWORLDCONTROLLER_H

@@ -3,3 +3,7 @@
 //
 
 #include "gameworldcontroller.h"
+
+void server::GameWorldController::tick() {
+
+}
