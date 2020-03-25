@@ -20,7 +20,7 @@ class CommandExecutor {
 
     bool executeCommand(const core::Command& command);
 
-    void registerCommand(QString name, std::function<bool(QStringList)> executable);
+    void registerCommand(QString name, bool (CommandExecutor::* executable)(const QStringList&));
 
     void unregisterCommand(QString name);
 
@@ -29,11 +29,13 @@ class CommandExecutor {
   private:
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
-    QMap<QString, std::function<bool(QStringList)>> commands;
+    QMap<QString, bool (CommandExecutor::*)(const QStringList&)> commands;
 
     core::GameWorld* gameWorld;
 
-    static bool testCommand(QStringList arguments);
+    bool testCommand(const QStringList& arguments);
+
+    bool changeSpeedCommand(const QStringList& arguments);
 };
 
 }
