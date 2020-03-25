@@ -1,18 +1,16 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #include <QDateTime>
 #include <QThread>
 #include <QQueue>
 #include <QDebug>
+
+#include "../core/gameworld.h"
+
 #include "commandexecutor.h"
 #include "engine.h"
 #include "worldgenerator.h"
-#include "../core/gameworld.h"
 
-server::Engine::Engine(const GameConfiguration& gameConfiguration) :
-                            gameConfiguration(gameConfiguration) {
+server::Engine::Engine(const GameConfiguration& gameConfiguration):
+        gameConfiguration(gameConfiguration) {
     gameWorld = WorldGenerator::generate(gameConfiguration);
     gameWorldController = new GameWorldController(gameWorld);
     commandExecutor = CommandExecutor(gameWorld);
@@ -37,7 +35,7 @@ void server::Engine::start() {
 
             // sleep until next tick
             mainThread->msleep(1000 / gameConfiguration.getTickPerSec() -
-                                       (currentTime - timeBeforeTick));
+                               (currentTime - timeBeforeTick));
         }
     });
     mainThread->start();

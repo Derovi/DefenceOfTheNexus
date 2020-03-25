@@ -1,11 +1,8 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #ifndef WORLDGENERATOR_H
 #define WORLDGENERATOR_H
 
 #include "../core/gameworld.h"
+
 #include "gameconfiguration.h"
 
 // class is responsible for random world generation.
@@ -13,7 +10,7 @@
 
 class WorldGenerator {
   public:
-    static core::GameWorld * generate(const GameConfiguration& configuration);
+    static core::GameWorld* generate(const GameConfiguration& configuration);
 
 };
 

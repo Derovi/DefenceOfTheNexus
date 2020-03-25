@@ -1,7 +1,3 @@
-//
-// Created by derovi on 3/23/2020.
-//
-
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
@@ -12,9 +8,9 @@ namespace server {
 
 class Controller {
   public:
-    virtual void tick(core::GameWorld * world, double timeDelta) = 0;
+    virtual void tick(core::GameWorld* world, double timeDelta) = 0;
 
-    static Controller * getController(core::Object *);
+    static Controller* getController(core::Object*);
 };
 
 }

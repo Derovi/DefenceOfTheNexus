@@ -1,7 +1,3 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #include "gameconfiguration.h"
 
 int GameConfiguration::getWidth() const {

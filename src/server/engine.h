@@ -1,14 +1,12 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #ifndef ENGINE_H
 #define ENGINE_H
 
 #include <QThread>
-#include "gameconfiguration.h"
+
 #include "../core/gameworld.h"
 #include "../core/command.h"
+
+#include "gameconfiguration.h"
 #include "gameworldcontroller.h"
 #include "commandexecutor.h"
 

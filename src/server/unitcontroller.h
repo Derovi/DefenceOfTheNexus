@@ -1,22 +1,19 @@
-//
-// Created by derovi on 3/23/2020.
-//
-
 #ifndef UNITCONTROLLER_H
 #define UNITCONTROLLER_H
 
-#include "controller.h"
 #include "../core/unit.h"
+
+#include "controller.h"
 
 namespace server {
 
 class UnitController : public Controller {
   public:
-    explicit UnitController(::core::Unit * unit);
+    explicit UnitController(::core::Unit* unit);
 
     UnitController();
 
-    static bool create(Controller *& controller, core::Object * object);
+    static bool create(Controller*& controller, core::Object* object);
 
     void tick(core::GameWorld* world, double timeDelta) override;
 
@@ -26,7 +23,7 @@ class UnitController : public Controller {
 
   private:
 
-    ::core::Unit * unit;
+    ::core::Unit* unit;
 };
 
 }

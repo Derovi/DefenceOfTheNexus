@@ -1,11 +1,8 @@
-//
-// Created by derovi on 3/25/2020.
-//
-
 #ifndef SERVER_H
 #define SERVER_H
 
 #include <QQueue>
+
 #include "../core/command.h"
 
 namespace server {
@@ -21,7 +18,7 @@ class Server {
     void finish();
 
   private:
-    QQueue<core::Command> * commandQueue;
+    QQueue<core::Command>* commandQueue;
 };
 
 }

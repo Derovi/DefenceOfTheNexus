@@ -1,14 +1,12 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #ifndef COMMANDEXECUTOR_H
 #define COMMANDEXECUTOR_H
 
-#include <QMap>
 #include <functional>
+
+#include <QMap>
 #include <QStringList>
 #include <QString>
+
 #include "../core/command.h"
 #include "../core/gameworld.h"
 
@@ -18,7 +16,7 @@ class CommandExecutor {
   public:
     CommandExecutor();
 
-    explicit CommandExecutor(core::GameWorld * gameWorld);
+    explicit CommandExecutor(core::GameWorld* gameWorld);
 
     bool executeCommand(const core::Command& command);
 
@@ -31,7 +29,7 @@ class CommandExecutor {
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
     QMap<QString, std::function<bool(QStringList)>> commands;
 
-    core::GameWorld * gameWorld;
+    core::GameWorld* gameWorld;
 
     static bool testCommand(QStringList arguments);
 };

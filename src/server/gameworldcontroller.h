@@ -1,21 +1,18 @@
-//
-// Created by derovi on 3/23/2020.
-//
-
 #ifndef GAMEWORLDCONTROLLER_H
 #define GAMEWORLDCONTROLLER_H
 
+#include <QVector>
 
 #include "../core/gameworld.h"
+
 #include "controller.h"
-#include <QVector>
 
 namespace server {
 
 class GameWorldController {
 
   public:
-    explicit GameWorldController(core::GameWorld * gameWorld);
+    explicit GameWorldController(core::GameWorld* gameWorld);
 
     void tick(double deltaTime);
 
@@ -25,9 +22,9 @@ class GameWorldController {
 
   private:
 
-    core::GameWorld * gameWorld;
+    core::GameWorld* gameWorld;
 
-    QVector<Controller *> controllers;
+    QVector<Controller*> controllers;
 };
 
 }

@@ -1,19 +1,16 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #include <QDebug>
-#include "commandexecutor.h"
+
 #include "../core/gameworld.h"
+
+#include "commandexecutor.h"
 
 server::CommandExecutor::CommandExecutor() {
 
 }
 
-server::CommandExecutor::CommandExecutor(core::GameWorld* gameWorld) : gameWorld(gameWorld) {
+server::CommandExecutor::CommandExecutor(core::GameWorld* gameWorld): gameWorld(gameWorld) {
     registerCommand("test", testCommand);
 }
-
 
 
 bool server::CommandExecutor::executeCommand(const core::Command& command) {

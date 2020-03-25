@@ -1,17 +1,15 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #include <QTextStream>
 #include <QQueue>
-#include "engine.h"
+
 #include "../core/command.h"
+
+#include "engine.h"
 #include "server.h"
 
 int main(int argc, char** argv) {
     GameConfiguration gameConfiguration;
-    auto * engine = new server::Engine(gameConfiguration);
-    auto * server = new server::Server();
+    auto* engine = new server::Engine(gameConfiguration);
+    auto* server = new server::Server();
     // register command queue
     server->registerCommandQueue(engine->getCommandQueue());
     engine->start();

@@ -1,10 +1,5 @@
-//
-// Created by derovi on 3/24/2020.
-//
-
 #ifndef GAMECONFIGURATION_H
 #define GAMECONFIGURATION_H
-
 
 class GameConfiguration {
   public:

@@ -1,7 +1,3 @@
-//
-// Created by derovi on 3/25/2020.
-//
-
 #include "server.h"
 
 QQueue<core::Command>* server::Server::getCommandQueue() const {
