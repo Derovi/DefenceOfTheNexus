@@ -4,6 +4,7 @@
 #include <QDebug>
 
 #include "../core/gameworld.h"
+#include "../core/command.h"
 
 #include "commandexecutor.h"
 #include "engine.h"
@@ -14,6 +15,7 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
     gameWorld = WorldGenerator::generate(gameConfiguration);
     gameWorldController = new GameWorldController(gameWorld);
     commandExecutor = CommandExecutor(gameWorld);
+    commandQueue = new QQueue<core::Command>();
 }
 
 void server::Engine::start() {

@@ -1,6 +1,4 @@
-//
-// Created by derovi on 3/24/2020.
-//
+#include <QDebug>
 
 #include "command.h"
 
@@ -8,7 +6,7 @@ core::Command::Command() {
 
 }
 
-core::Command::Command(QString name) : name(name) {
+core::Command::Command(QString name): name(name) {
 
 }
 
@@ -25,11 +23,13 @@ void core::Command::setArguments(const QStringList& arguments) {
 }
 
 core::Command core::Command::getCommand(QString text) {
-    Command command = Command(text);
     if (text.contains(' ')) {
-        command.setArguments(text.right(text.indexOf(' ')).split(' '));
+        Command command = Command(text.left(text.indexOf(' ')));
+        command.setArguments(text.right(text.length() - text.indexOf(' ') - 1).split(' '));
+        return command;
+    } else {
+        return Command(text);
     }
-    return command;
 }
 
 const QStringList& core::Command::getArguments() const {

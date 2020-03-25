@@ -24,6 +24,8 @@ class CommandExecutor {
 
     void unregisterCommand(QString name);
 
+    void registerCommands();
+
   private:
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)

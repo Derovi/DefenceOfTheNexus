@@ -1,7 +1,3 @@
-//
-// Created by derovi on 3/23/2020.
-//
-
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
@@ -25,19 +21,19 @@ class GameWorld {
 
     void setResources(const QVector<core::Resource>& resources);
 
-    QMap<int64_t, core::Object *>& getObjects();
+    QMap<int64_t, core::Object*>& getObjects();
 
-    void setObjects(const QMap<int64_t, core::Object *> objects);
+    void setObjects(const QMap<int64_t, core::Object*> objects);
 
   public:
 
- private:
+  private:
 
-  int height;
-  int width;
+    int height;
+    int width;
 
-  QVector<core::Resource> resources;
-  QMap<int64_t, core::Object * > objects;
+    QVector<core::Resource> resources;
+    QMap<int64_t, core::Object*> objects;
 };
 
 }

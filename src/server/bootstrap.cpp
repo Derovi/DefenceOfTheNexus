@@ -1,5 +1,6 @@
 #include <QTextStream>
 #include <QQueue>
+#include <QDebug>
 
 #include "../core/command.h"
 
@@ -20,8 +21,11 @@ int main(int argc, char** argv) {
         if (line == "exit") {
             engine->finish();
             server->finish();
+            delete engine;
+            delete server;
             break;
         }
+        core::Command command = core::Command::getCommand(line);
         engine->getCommandQueue()->push_back(core::Command::getCommand(line));
     }
 }
