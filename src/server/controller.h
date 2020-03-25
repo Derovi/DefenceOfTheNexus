@@ -5,13 +5,16 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-namespace server {
+#include "../core/gameworld.h"
+#include "../core/object.h"
 
-class GameWorld;
+namespace server {
 
 class Controller {
   public:
-    virtual void tick(GameWorld * world) = 0;
+    virtual void tick(core::GameWorld * world, double timeDelta) = 0;
+
+    static Controller * getController(core::Object *);
 };
 
 }

@@ -8,14 +8,26 @@
 
 #include "../core/gameworld.h"
 #include "controller.h"
+#include <QVector>
 
 namespace server {
 
-class GameWorldController : core::GameWorld {
-  public:
-    GameWorldController(GameWorld &gameWorld);
+class GameWorldController {
 
-    void tick();
+  public:
+    explicit GameWorldController(core::GameWorld * gameWorld);
+
+    void tick(double deltaTime);
+
+    core::GameWorld* getGameWorld() const;
+
+    void setGameWorld(core::GameWorld* gameWorld);
+
+  private:
+
+    core::GameWorld * gameWorld;
+
+    QVector<Controller *> controllers;
 };
 
 }

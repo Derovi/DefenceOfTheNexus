@@ -23,7 +23,7 @@ void core::GameWorld::setWidth(int width) {
     GameWorld::width = width;
 }
 
-const QVector<core::Resource>& core::GameWorld::getResources() const {
+QVector<core::Resource>& core::GameWorld::getResources() {
     return resources;
 }
 
@@ -31,7 +31,7 @@ void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
     GameWorld::resources = resources;
 }
 
-const QMap<int64_t, core::Object *> core::GameWorld::getObjects() const {
+QMap<int64_t, core::Object *>& core::GameWorld::getObjects() {
     return objects;
 }
 

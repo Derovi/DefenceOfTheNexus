@@ -21,11 +21,11 @@ class GameWorld {
 
     void setWidth(int width);
 
-    const QVector<core::Resource>& getResources() const;
+    QVector<core::Resource>& getResources();
 
     void setResources(const QVector<core::Resource>& resources);
 
-    const QMap<int64_t, core::Object *> getObjects() const;
+    QMap<int64_t, core::Object *>& getObjects();
 
     void setObjects(const QMap<int64_t, core::Object *> objects);
 
