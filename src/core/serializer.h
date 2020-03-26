@@ -6,6 +6,8 @@
 #define SERIALIZER_H
 
 #include<QString>
+#include <QJsonObject>
+#include <QtCore>
 #include "object.h"
 #include "resource.h"
 #include "resourcebundle.h"
@@ -14,6 +16,7 @@
 #include "damaging.h"
 #include "damageable.h"
 #include "building.h"
+#include "unit.h"
 
 namespace core {
 class Serializer {
@@ -33,6 +36,8 @@ class Serializer {
 
     static void serialize(const core::Damageable& object, QString& serialized);
 
+    static void serialize(const core::Unit& object, QString& serialized);
+
     static bool deserialize(const core::Object& object, const QString& serialized);
 
     static bool deserialize(const core::Resource& object, const QString& serialized);
@@ -48,6 +53,8 @@ class Serializer {
     static bool deserialize(const core::Building& object, const QString& serialized);
 
     static bool deserialize(const core::Damageable& object, const QString& serialized);
+
+    static bool deserialize(const core::Unit& object, const QString& serialized);
 
 
 };
