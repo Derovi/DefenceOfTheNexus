@@ -39,11 +39,6 @@ void server::CommandExecutor::registerCommands() {
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
 }
 
-template<typename Signature>
-std::function<Signature> cast(void* f) {
-    return static_cast<Signature*>(f);
-}
-
 // change_speed_command <object_id> <new_speed>
 bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
     // check for arguments count
@@ -80,6 +75,7 @@ bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
         return false;
     }
     movingObject->setSpeed(newSpeed);
+    return true;
 }
 
 //test command

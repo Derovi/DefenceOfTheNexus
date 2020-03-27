@@ -27,15 +27,17 @@ add_executable(defenceofnexus
         src/core/unit.cpp
         src/core/building.cpp
         src/core/gameworld.cpp
-        src/core/gameworld.h
         src/server/gameworldcontroller.cpp
-        src/server/gameworldcontroller.h
-        src/server/controller.h
         src/server/controller.cpp
         src/server/unitcontroller.cpp
-        src/server/unitcontroller.h
-        src/server/movingperformer.h
-        src/server/test.cpp src/core/command.cpp src/core/command.h src/server/commandexecutor.cpp src/server/commandexecutor.h src/server/worldgenerator.cpp src/server/worldgenerator.h src/server/engine.cpp src/server/engine.h src/server/bootstrap.cpp src/server/gameconfiguration.cpp src/server/gameconfiguration.h src/server/server.cpp src/server/server.h)
+        src/server/test.cpp
+        src/core/command.cpp
+        src/server/commandexecutor.cpp
+        src/server/worldgenerator.cpp
+        src/server/engine.cpp
+        src/server/bootstrap.cpp
+        src/server/gameconfiguration.cpp
+        src/server/server.cpp)
 
 target_link_libraries(defenceofnexus Qt5::Widgets)
 

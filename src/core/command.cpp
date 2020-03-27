@@ -2,13 +2,7 @@
 
 #include "command.h"
 
-core::Command::Command() {
-
-}
-
-core::Command::Command(QString name): name(name) {
-
-}
+core::Command::Command(const QString& name): name(name) {}
 
 const QString& core::Command::getName() const {
     return name;
@@ -22,7 +16,7 @@ void core::Command::setArguments(const QStringList& arguments) {
     Command::arguments = arguments;
 }
 
-core::Command core::Command::getCommand(QString text) {
+core::Command core::Command::fromCommandLine(QString text) {
     if (text.contains(' ')) {
         Command command = Command(text.left(text.indexOf(' ')));
         command.setArguments(text.right(text.length() - text.indexOf(' ') - 1).split(' '));

@@ -29,7 +29,7 @@ class CommandExecutor {
   private:
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
-    QMap<QString, bool (CommandExecutor::*)(const QStringList&)> commands;
+    QHash<QString, bool (CommandExecutor::*)(const QStringList&)> commands;
 
     core::GameWorld* gameWorld;
 

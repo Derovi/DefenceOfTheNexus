@@ -20,11 +20,16 @@ class GameWorldController {
 
     void setGameWorld(core::GameWorld* gameWorld);
 
+    void addObject(core::Object* object);
+
+    void removeObject(qint64 id);
+
   private:
 
     core::GameWorld* gameWorld;
 
-    QVector<Controller*> controllers;
+    // id, controller
+    QHash<qint64, Controller*> controllers;
 };
 
 }

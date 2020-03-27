@@ -5,9 +5,11 @@
 
 #include "gameworldcontroller.h"
 
+// todo one controller for one object type
+
 server::GameWorldController::GameWorldController(core::GameWorld* gameWorld): gameWorld(gameWorld) {
     for (core::Object* object : gameWorld->getObjects()) {
-        controllers.push_back(Controller::getController(object));
+        controllers[object->getId()] = Controller::getController(object);
     }
 }
 
@@ -24,3 +26,19 @@ core::GameWorld* server::GameWorldController::getGameWorld() const {
 void server::GameWorldController::setGameWorld(core::GameWorld* gameWorld) {
     GameWorldController::gameWorld = gameWorld;
 }
+
+void server::GameWorldController::addObject(core::Object* object) {
+    gameWorld->getObjects()[object->getId()] = object;
+    controllers[object->getId()] = Controller::getController(object);
+}
+
+void server::GameWorldController::removeObject(qint64 id) {
+    if (!gameWorld->getObjects().contains(id)) {
+        return;
+    }
+    delete gameWorld->getObjects()[id];
+    gameWorld->getObjects().remove(id);
+    delete controllers[id];
+    controllers.remove(id);
+}
+

@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
             delete server;
             break;
         }
-        core::Command command = core::Command::getCommand(line);
-        engine->getCommandQueue()->push_back(core::Command::getCommand(line));
+        core::Command command = core::Command::fromCommandLine(line);
+        engine->getCommandQueue()->push_back(core::Command::fromCommandLine(line));
     }
 }

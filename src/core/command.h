@@ -8,9 +8,9 @@ namespace core {
 
 class Command {
   public:
-    Command();
+    Command() = default;
 
-    explicit Command(QString name);
+    explicit Command(const QString& name);
 
     const QString& getName() const;
 
@@ -20,7 +20,7 @@ class Command {
 
     void setArguments(const QStringList& arguments);
 
-    static Command getCommand(QString text);
+    static Command fromCommandLine(QString text);
 
   private:
     QString name;

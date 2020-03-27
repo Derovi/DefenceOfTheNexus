@@ -4,8 +4,10 @@
 #include "unitcontroller.h"
 
 void server::UnitController::tick(core::GameWorld* world, double timeDelta) {
+    // todo change class to namespace
     MovingPerformer movingPerformer(world, unit, timeDelta);
     movingPerformer.move();
+
 }
 
 server::UnitController::UnitController(::core::Unit* unit): unit(unit) {
