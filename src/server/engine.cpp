@@ -19,25 +19,29 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
 }
 
 void server::Engine::start() {
-    qint64 lastTick = QDateTime::currentDateTime().currentMSecsSinceEpoch();
     mainThread = QThread::create([&] {
+        // time when last tick execution was started
+        qint64 lastTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
         while (true) {
             if (finished) {
                 break;
             }
 
-            qint64 timeBeforeTick = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+            qint64 currentTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
 
-            // firstly, execute all commands from clients
+            // first, execute all commands from clients
             executeCommands();
             // make changes on game world
-            gameWorldController->tick(1.0 / static_cast<double>(timeBeforeTick - lastTick));
-
-            qint64 currentTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+            gameWorldController->tick(static_cast<double>(
+                                              currentTickStartTime - lastTickStartTime));
 
             // sleep until next tick
             mainThread->msleep(1000 / gameConfiguration.getTickPerSec() -
-                               (currentTime - timeBeforeTick));
+                               (QDateTime::currentDateTime().currentMSecsSinceEpoch()
+                                - currentTickStartTime));
+
+
+            lastTickStartTime = currentTickStartTime;
         }
     });
     mainThread->start();

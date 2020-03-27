@@ -40,6 +40,7 @@ void server::MovingPerformer<T>::move() {
     object->setPosition(getNextPosition());
 }
 
+// todo moveIfNoObstacles function
 template<class T>
 void server::MovingPerformer<T>::moveIfNoObstacles() {}
 

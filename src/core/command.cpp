@@ -9,11 +9,11 @@ const QString& core::Command::getName() const {
 }
 
 void core::Command::setName(const QString& name) {
-    Command::name = name;
+    this->name = name;
 }
 
 void core::Command::setArguments(const QStringList& arguments) {
-    Command::arguments = arguments;
+    this->arguments = arguments;
 }
 
 core::Command core::Command::fromCommandLine(QString text) {
