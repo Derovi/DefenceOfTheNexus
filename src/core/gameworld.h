@@ -27,7 +27,7 @@ class GameWorld {
 
     void setObjects(const QHash<int64_t, core::Object*> objects);
 
-  public:
+    ~GameWorld();
 
   private:
 

@@ -33,3 +33,9 @@ QHash<int64_t, core::Object*>& core::GameWorld::getObjects() {
 void core::GameWorld::setObjects(const QHash<int64_t, core::Object*> objects) {
     GameWorld::objects = objects;
 }
+
+core::GameWorld::~GameWorld() {
+    for (core::Object* object : objects.values()) {
+        delete object;
+    }
+}

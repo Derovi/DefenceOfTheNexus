@@ -32,6 +32,7 @@ class Engine {
 
     bool isFinished() const;
 
+    ~Engine();
 
   private:
     core::GameWorld* gameWorld;
@@ -43,7 +44,6 @@ class Engine {
     QQueue<core::Command>* commandQueue;
 
     void executeCommands();
-
 };
 
 }

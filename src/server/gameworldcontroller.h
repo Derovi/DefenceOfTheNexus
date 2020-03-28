@@ -24,6 +24,8 @@ class GameWorldController {
 
     void removeObject(int64_t id);
 
+    ~GameWorldController();
+
   private:
 
     core::GameWorld* gameWorld;

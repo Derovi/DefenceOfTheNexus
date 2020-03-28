@@ -81,3 +81,15 @@ void server::Engine::executeCommands() {
         commandQueue->pop_front();
     }
 }
+
+server::Engine::~Engine() {
+    mainThread->quit();
+    if (gameWorld) {
+        delete gameWorld;
+        gameWorld = nullptr;
+    }
+    if (gameWorldController) {
+        delete gameWorldController
+        gameWorldController = nullptr;
+    }
+}

@@ -42,3 +42,8 @@ void server::GameWorldController::removeObject(int64_t id) {
     controllers.remove(id);
 }
 
+server::GameWorldController::~GameWorldController() {
+    for (Controller*& controller : controllers.values()) {
+        delete controller;
+    }
+}
