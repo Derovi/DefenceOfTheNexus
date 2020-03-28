@@ -8,11 +8,10 @@
 // class is responsible for random world generation.
 // base center is always in the middle
 
-class WorldGenerator {
-  public:
-    static core::GameWorld* generate(const GameConfiguration& configuration);
+namespace server::world_generator {
 
-};
+core::GameWorld* generate(const GameConfiguration& configuration);
 
+}
 
 #endif //WORLDGENERATOR_H

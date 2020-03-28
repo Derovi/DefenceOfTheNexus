@@ -25,12 +25,11 @@ class GameWorld {
 
     QHash<int64_t, core::Object*>& getObjects();
 
-    void setObjects(const QHash<int64_t, core::Object*> objects);
+    void setObjects(const QHash<int64_t, core::Object*>& objects);
 
     ~GameWorld();
 
   private:
-
     int height;
     int width;
 

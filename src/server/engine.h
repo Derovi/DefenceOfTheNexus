@@ -18,9 +18,9 @@ class Engine {
 
     void start();
 
-    core::GameWorld* getGameWorld() const;
+    core::GameWorld* getGameWorld();
 
-    GameWorldController* getGameWorldController() const;
+    GameWorldController* getGameWorldController();
 
     const GameConfiguration& getGameConfiguration() const;
 
@@ -40,7 +40,9 @@ class Engine {
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
     QThread* mainThread;
-    bool finished;
+    std::atomic<bool> finished;
+
+    // todo fix race-condition
     QQueue<core::Command>* commandQueue;
 
     void executeCommands();

@@ -9,7 +9,7 @@ namespace server {
 
 class Server {
   public:
-    QQueue<core::Command>* getCommandQueue() const;
+    QQueue<core::Command>* getCommandQueue();
 
     void registerCommandQueue(QQueue<core::Command>* commandQueue);
 

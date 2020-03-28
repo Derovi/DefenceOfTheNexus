@@ -21,11 +21,11 @@ int main(int argc, char** argv) {
         if (line == "exit") {
             engine->finish();
             server->finish();
-            delete engine;
-            delete server;
             break;
         }
         core::Command command = core::Command::fromCommandLine(line);
         engine->getCommandQueue()->push_back(core::Command::fromCommandLine(line));
     }
+    delete engine;
+    delete server;
 }

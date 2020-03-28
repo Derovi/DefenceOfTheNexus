@@ -2,7 +2,7 @@
 
 #include "worldgenerator.h"
 
-core::GameWorld* WorldGenerator::generate(const GameConfiguration& configuration) {
+core::GameWorld* server::world_generator::generate(const GameConfiguration& configuration) {
     core::GameWorld* gameWorld = new core::GameWorld();
     gameWorld->setHeight(configuration.getHeight());
     gameWorld->setWidth(configuration.getWidth());

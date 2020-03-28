@@ -9,7 +9,7 @@
 
 server::GameWorldController::GameWorldController(core::GameWorld* gameWorld): gameWorld(gameWorld) {
     for (core::Object* object : gameWorld->getObjects()) {
-        controllers[object->getId()] = Controller::getController(object);
+        controllers[object->getId()] = Controller::createController(object);
     }
 }
 
@@ -19,7 +19,7 @@ void server::GameWorldController::tick(double deltaTime) {
     }
 }
 
-core::GameWorld* server::GameWorldController::getGameWorld() const {
+core::GameWorld* server::GameWorldController::getGameWorld() {
     return gameWorld;
 }
 
@@ -29,7 +29,7 @@ void server::GameWorldController::setGameWorld(core::GameWorld* gameWorld) {
 
 void server::GameWorldController::addObject(core::Object* object) {
     gameWorld->getObjects()[object->getId()] = object;
-    controllers[object->getId()] = Controller::getController(object);
+    controllers[object->getId()] = Controller::createController(object);
 }
 
 void server::GameWorldController::removeObject(int64_t id) {

@@ -14,7 +14,7 @@ server::UnitController::UnitController(::core::Unit* unit): unit(unit) {
 }
 
 bool server::UnitController::create(server::Controller*& controller, core::Object* object) {
-    auto* unit = dynamic_cast<::core::Unit*>(object);
+    auto* unit = dynamic_cast<core::Unit*>(object);
     if (unit) {
         controller = new UnitController(unit);
         return true;
@@ -26,6 +26,6 @@ core::Unit* server::UnitController::getUnit() const {
     return unit;
 }
 
-void server::UnitController::setUnit(::core::Unit* unit) {
+void server::UnitController::setUnit(core::Unit* unit) {
     UnitController::unit = unit;
 }

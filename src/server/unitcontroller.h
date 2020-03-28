@@ -9,7 +9,7 @@ namespace server {
 
 class UnitController : public Controller {
   public:
-    explicit UnitController(::core::Unit* unit);
+    explicit UnitController(core::Unit* unit);
 
     UnitController();
 
@@ -17,13 +17,13 @@ class UnitController : public Controller {
 
     void tick(core::GameWorld* world, double timeDelta) override;
 
-    ::core::Unit* getUnit() const;
+    core::Unit* getUnit() const;
 
-    void setUnit(::core::Unit* unit);
+    void setUnit(core::Unit* unit);
 
   private:
 
-    ::core::Unit* unit;
+    core::Unit* unit;
 };
 
 }

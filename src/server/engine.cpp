@@ -2,6 +2,7 @@
 #include <QThread>
 #include <QQueue>
 #include <QDebug>
+#include <QDateTime>
 
 #include "../core/gameworld.h"
 #include "../core/command.h"
@@ -12,7 +13,7 @@
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
         gameConfiguration(gameConfiguration) {
-    gameWorld = WorldGenerator::generate(gameConfiguration);
+    gameWorld = world_generator::generate(gameConfiguration);
     gameWorldController = new GameWorldController(gameWorld);
     commandExecutor = CommandExecutor(gameWorld);
     commandQueue = new QQueue<core::Command>();
@@ -21,25 +22,23 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
 void server::Engine::start() {
     mainThread = QThread::create([&] {
         // time when last tick execution was started
-        int64_t lastTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+        QDateTime lastTickStartTime = QDateTime::currentDateTime();
         while (true) {
             if (finished) {
                 break;
             }
 
-            int64_t currentTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+            QDateTime currentTickStartTime = QDateTime::currentDateTime();
 
             // first, execute all commands from clients
             executeCommands();
             // make changes on game world
             gameWorldController->tick(static_cast<double>(
-                                              currentTickStartTime - lastTickStartTime));
+                                              lastTickStartTime.msecsTo(currentTickStartTime)));
 
             // sleep until next tick
-            mainThread->msleep(1000 / gameConfiguration.getTickPerSec() -
-                               (QDateTime::currentDateTime().currentMSecsSinceEpoch()
-                                - currentTickStartTime));
-
+            QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
+                               currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
 
             lastTickStartTime = currentTickStartTime;
         }
@@ -47,11 +46,11 @@ void server::Engine::start() {
     mainThread->start();
 }
 
-core::GameWorld* server::Engine::getGameWorld() const {
+core::GameWorld* server::Engine::getGameWorld() {
     return gameWorld;
 }
 
-server::GameWorldController* server::Engine::getGameWorldController() const {
+server::GameWorldController* server::Engine::getGameWorldController() {
     return gameWorldController;
 }
 
@@ -89,7 +88,7 @@ server::Engine::~Engine() {
         gameWorld = nullptr;
     }
     if (gameWorldController) {
-        delete gameWorldController
+        delete gameWorldController;
         gameWorldController = nullptr;
     }
 }

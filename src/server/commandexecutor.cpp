@@ -5,31 +5,27 @@
 
 #include "commandexecutor.h"
 
-server::CommandExecutor::CommandExecutor() {}
-
 server::CommandExecutor::CommandExecutor(core::GameWorld* gameWorld): gameWorld(gameWorld) {
     registerCommands();
 }
 
 
 bool server::CommandExecutor::executeCommand(const core::Command& command) {
-    if (!commands.contains(command.getName().normalized(QString::NormalizationForm_D))) {
+    if (!commands.contains(command.getName())) {
         return false;
     }
-    return (this->*commands[command.getName().normalized(QString::NormalizationForm_D)])(
+    return (this->*commands[command.getName()])(
             command.getArguments());
 }
 
-void server::CommandExecutor::unregisterCommand(QString name) {
-    if (commands.contains(name.normalized(QString::NormalizationForm_D))) {
-        commands.erase(commands.find(name.normalized(QString::NormalizationForm_D)));
-    }
+void server::CommandExecutor::unregisterCommand(const QString& name) {
+    commands.remove(name);
 }
 
-void server::CommandExecutor::registerCommand(QString name,
+void server::CommandExecutor::registerCommand(const QString& name,
                                               bool (CommandExecutor::* executable)(
                                                       const QStringList&)) {
-    commands.insert(name.normalized(QString::NormalizationForm_D), executable);
+    commands.insert(name, executable);
 }
 
 void server::CommandExecutor::registerCommands() {
@@ -85,5 +81,6 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
     }
     return true;
 }
+
 
 

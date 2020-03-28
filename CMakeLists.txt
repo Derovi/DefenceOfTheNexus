@@ -30,7 +30,6 @@ add_executable(defenceofnexus
         src/server/gameworldcontroller.cpp
         src/server/controller.cpp
         src/server/unitcontroller.cpp
-        src/server/test.cpp
         src/core/command.cpp
         src/server/commandexecutor.cpp
         src/server/worldgenerator.cpp

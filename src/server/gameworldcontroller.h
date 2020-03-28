@@ -16,7 +16,7 @@ class GameWorldController {
 
     void tick(double deltaTime);
 
-    core::GameWorld* getGameWorld() const;
+    core::GameWorld* getGameWorld();
 
     void setGameWorld(core::GameWorld* gameWorld);
 

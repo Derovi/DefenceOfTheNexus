@@ -14,15 +14,13 @@ namespace server {
 
 class CommandExecutor {
   public:
-    CommandExecutor();
-
-    explicit CommandExecutor(core::GameWorld* gameWorld);
+    explicit CommandExecutor(core::GameWorld* gameWorld = nullptr);
 
     bool executeCommand(const core::Command& command);
 
-    void registerCommand(QString name, bool (CommandExecutor::* executable)(const QStringList&));
+    void registerCommand(const QString& name, bool (CommandExecutor::* executable)(const QStringList&));
 
-    void unregisterCommand(QString name);
+    void unregisterCommand(const QString& name);
 
     void registerCommands();
 
