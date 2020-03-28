@@ -48,7 +48,7 @@ bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
 
     // check if arguments are numbers
     bool status = true;
-    qint64 objectId = arguments[0].toLongLong(&status);
+    int64_t objectId = arguments[0].toLongLong(&status);
     if (!status) {
         return false;
     }

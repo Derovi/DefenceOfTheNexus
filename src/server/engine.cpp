@@ -21,13 +21,13 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
 void server::Engine::start() {
     mainThread = QThread::create([&] {
         // time when last tick execution was started
-        qint64 lastTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+        int64_t lastTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
         while (true) {
             if (finished) {
                 break;
             }
 
-            qint64 currentTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
+            int64_t currentTickStartTime = QDateTime::currentDateTime().currentMSecsSinceEpoch();
 
             // first, execute all commands from clients
             executeCommands();

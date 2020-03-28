@@ -26,10 +26,10 @@ void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
     GameWorld::resources = resources;
 }
 
-QMap<int64_t, core::Object*>& core::GameWorld::getObjects() {
+QHash<int64_t, core::Object*>& core::GameWorld::getObjects() {
     return objects;
 }
 
-void core::GameWorld::setObjects(const QMap<int64_t, core::Object*> objects) {
+void core::GameWorld::setObjects(const QHash<int64_t, core::Object*> objects) {
     GameWorld::objects = objects;
 }

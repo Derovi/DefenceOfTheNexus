@@ -22,17 +22,16 @@ class GameWorldController {
 
     void addObject(core::Object* object);
 
-    void removeObject(qint64 id);
+    void removeObject(int64_t id);
 
   private:
 
     core::GameWorld* gameWorld;
 
     // id, controller
-    QHash<qint64, Controller*> controllers;
+    QHash<int64_t, Controller*> controllers;
 };
 
 }
-
 
 #endif //GAMEWORLDCONTROLLER_H

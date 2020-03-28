@@ -32,7 +32,7 @@ void server::GameWorldController::addObject(core::Object* object) {
     controllers[object->getId()] = Controller::getController(object);
 }
 
-void server::GameWorldController::removeObject(qint64 id) {
+void server::GameWorldController::removeObject(int64_t id) {
     if (!gameWorld->getObjects().contains(id)) {
         return;
     }
