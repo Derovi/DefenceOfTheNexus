@@ -16,6 +16,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Threads REQUIRED)
 
 add_executable(defenceofnexus
         src/core/object.cpp
@@ -38,8 +39,7 @@ add_executable(defenceofnexus
         src/server/gameconfiguration.cpp
         src/server/server.cpp)
 
-target_link_libraries(defenceofnexus Qt5::Widgets)
-
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
