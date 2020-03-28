@@ -11,3 +11,7 @@ core::ResourceBundle::ResourceBundle(uint64_t id, core::ResourceType resourceTyp
 core::ResourceType core::ResourceBundle::getResourceType() const {
     return resourceType;
 }
+
+void core::ResourceBundle::setType(ResourceType new_type) {
+    resourceType=new_type;
+}

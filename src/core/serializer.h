@@ -5,6 +5,7 @@
 #ifndef SERIALIZER_H
 #define SERIALIZER_H
 
+#include<iostream>
 #include<QString>
 #include <QJsonObject>
 #include <QtCore>
@@ -21,6 +22,7 @@
 
 namespace core {
 class Serializer {
+  public:
     static void serialize(const core::Object& object, QString& serialized);
 
     static void serialize(const core::Resource& object, QString& serialized);
@@ -39,23 +41,23 @@ class Serializer {
 
     static void serialize(const core::Unit& object, QString& serialized);
 
-    static bool deserialize(const core::Object& object, const QString& serialized);
+    static bool deserialize(core::Object& object, const QString& serialized);
 
-    static bool deserialize(const core::Resource& object, const QString& serialized);
+    static bool deserialize(core::Resource& object, const QString& serialized);
 
-    static bool deserialize(const core::ResourceBundle& object, const QString& serialized);
+    static bool deserialize(core::ResourceBundle& object, const QString& serialized);
 
-    static bool deserialize(const core::Moving& object, const QString& serialized);
+    static bool deserialize(core::Moving& object, const QString& serialized);
 
-    static bool deserialize(const core::GameWorld& object, const QString& serialized);
+    static bool deserialize(core::GameWorld& object, const QString& serialized);
 
-    static bool deserialize(const core::Damaging& object, const QString& serialized);
+    static bool deserialize(core::Damaging& object, const QString& serialized);
 
-    static bool deserialize(const core::Building& object, const QString& serialized);
+    static bool deserialize(core::Building& object, const QString& serialized);
 
-    static bool deserialize(const core::Damageable& object, const QString& serialized);
+    static bool deserialize(core::Damageable& object, const QString& serialized);
 
-    static bool deserialize(const core::Unit& object, const QString& serialized);
+    static bool deserialize(core::Unit& object, const QString& serialized);
 
   private:
     static void addJsonObject(const core::Object& object, QJsonObject& my_json);
@@ -74,6 +76,14 @@ class Serializer {
 
     static bool buildObject(core::Object& object,
                             QJsonObject::iterator& iter);
+
+    static bool buildResourse(core::Resource& object, QJsonObject::iterator& iter);
+
+    static bool buildDamaging(core::Damaging& object, QJsonObject::Iterator& iter);
+
+    static bool buildDamageable(core::Damageable& object, QJsonObject::Iterator& iter);
+
+    static bool buildMoving(core::Moving& object, QJsonObject::Iterator& iter);
 };
 }
 

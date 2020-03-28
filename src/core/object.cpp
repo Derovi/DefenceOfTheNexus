@@ -36,3 +36,8 @@ void core::Object::setRotationAngle(float angle) {
 bool core::Object::isIntersect(const core::Object& object) const {
     return object.hitbox.intersects(hitbox);
 }
+
+void core::Object::setId(const uint64_t& newId) {
+    id=newId;
+}
+

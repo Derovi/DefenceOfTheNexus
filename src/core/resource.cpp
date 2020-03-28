@@ -13,3 +13,13 @@ int core::Resource::getAmount() const {
 void core::Resource::setAmount(int newAmount) {
     amount = newAmount;
 }
+
+core::Resource::Resource(const core::Resource& what_copy):
+        amount(what_copy.getAmount()), type(what_copy.getType()) {
+
+}
+
+void core::Resource::setType(ResourceType new_type) {
+    type=new_type;
+}
+
