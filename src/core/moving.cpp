@@ -5,7 +5,7 @@
 core::Moving::Moving(): direction(QVector2D()), speed(0), maxSpeed(0) {}
 
 core::Moving::Moving(QVector2D direction, double speed, double maxSpeed):
-        direction(direction), speed(speed), maxSpeed(maxSpeed) {}
+        direction(direction.normalized()), speed(speed), maxSpeed(maxSpeed) {}
 
 const QVector2D& core::Moving::getDirection() const {
     return direction;
@@ -20,7 +20,7 @@ double core::Moving::getMaxSpeed() const {
 }
 
 void core::Moving::setDirection(const QVector2D& newDirection) {
-    direction = newDirection;
+    direction = newDirection.normalized();
 }
 
 void core::Moving::setSpeed(double newSpeed) {
