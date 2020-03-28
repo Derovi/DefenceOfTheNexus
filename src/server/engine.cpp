@@ -83,12 +83,6 @@ void server::Engine::executeCommands() {
 
 server::Engine::~Engine() {
     mainThread->quit();
-    if (gameWorld) {
-        delete gameWorld;
-        gameWorld = nullptr;
-    }
-    if (gameWorldController) {
-        delete gameWorldController;
-        gameWorldController = nullptr;
-    }
+    delete gameWorld;
+    delete gameWorldController;
 }
