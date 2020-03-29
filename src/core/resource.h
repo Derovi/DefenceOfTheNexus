@@ -25,7 +25,6 @@ class Resource {
 
     void setType(ResourceType newType);
 
-
   private:
     ResourceType type;
     int amount;
