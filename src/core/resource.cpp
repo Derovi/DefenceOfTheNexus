@@ -14,8 +14,8 @@ void core::Resource::setAmount(int newAmount) {
     amount = newAmount;
 }
 
-core::Resource::Resource(const core::Resource& what_copy):
-        amount(what_copy.getAmount()), type(what_copy.getType()) {}
+core::Resource::Resource(const core::Resource& whatCopy):
+        amount(whatCopy.getAmount()), type(whatCopy.getType()) {}
 
 void core::Resource::setType(ResourceType newType) {
     type = newType;
