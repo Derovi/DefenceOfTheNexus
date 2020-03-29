@@ -26,7 +26,7 @@ class Object {
 
     virtual void setPosition(const QPointF& newPosition);
 
-    virtual  void setId(const uint64_t& newId);
+    virtual void setId(uint64_t newId);
 
     virtual void setHitbox(const QPolygonF& hitbox);
 

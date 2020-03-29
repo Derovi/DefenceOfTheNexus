@@ -28,7 +28,7 @@ class Damaging {
 
     virtual void setAttackDelay(double delay);
 
-    virtual void setBulletType(QString new_type);
+    virtual void setBulletType(const QString& newType);
 
     virtual void set(const Damaging& properties);
 

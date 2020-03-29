@@ -18,7 +18,7 @@ class ResourceBundle : public Object, public Damageable {
 
     ResourceType getResourceType() const;
 
-    void setType(ResourceType new_type);
+    void setType(const ResourceType& new_type);
 
   private:
     ResourceType resourceType;

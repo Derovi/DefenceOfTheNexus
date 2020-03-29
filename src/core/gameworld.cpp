@@ -31,10 +31,10 @@ void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
     GameWorld::resources = resources;
 }
 
-const QMap<int64_t, core::Object *> core::GameWorld::getObjects() const {
+const QMap<int64_t, core::Object*> core::GameWorld::getObjects() const {
     return objects;
 }
 
-void core::GameWorld::setObjects(const QMap<int64_t, core::Object *> objects) {
+void core::GameWorld::setObjects(const QMap<int64_t, core::Object*> objects) {
     GameWorld::objects = objects;
 }

@@ -1,26 +1,23 @@
-//
-// Created by ok-PC on 24.03.2020.
-//
 
 #include "serializer.h"
 
 
 void core::Serializer::serialize(const core::Object& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonObject(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonObject(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Resource& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonResource(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonResource(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Moving& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonMoving(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonMoving(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::GameWorld& object, QString& serialized) {
@@ -51,70 +48,69 @@ void core::Serializer::serialize(const core::GameWorld& object, QString& seriali
 }
 
 void core::Serializer::serialize(const core::ResourceBundle& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonObject(object, my_json);
-    addJsonDamageable(object, my_json);
+    QJsonObject myJson;
+    addJsonObject(object, myJson);
+    addJsonDamageable(object, myJson);
     if (object.getResourceType() == ResourceType::kWood) {
-        my_json.insert("resourceType", "wood");
+        myJson.insert("resourceType", "wood");
     }
     if (object.getResourceType() == ResourceType::kIron) {
-        my_json.insert("resourceType", "iron");
+        myJson.insert("resourceType", "iron");
     }
     if (object.getResourceType() == ResourceType::kStone) {
-        my_json.insert("resourceType", "stone");
+        myJson.insert("resourceType", "stone");
     }
-    finish(my_json, serialized);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Damaging& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonDamaging(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonDamaging(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Building& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonObject(object, my_json);
-    addJsonDamageable(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonObject(object, myJson);
+    addJsonDamageable(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Damageable& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonDamageable(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonDamageable(object, myJson);
+    finish(myJson, serialized);
 }
 
 void core::Serializer::serialize(const core::Unit& object, QString& serialized) {
-    QJsonObject my_json;
-    addJsonObject(object, my_json);
-    addJsonDamageable(object, my_json);
-    addJsonDamaging(object, my_json);
-    addJsonMoving(object, my_json);
-    finish(my_json, serialized);
+    QJsonObject myJson;
+    addJsonObject(object, myJson);
+    addJsonDamageable(object, myJson);
+    addJsonDamaging(object, myJson);
+    addJsonMoving(object, myJson);
+    finish(myJson, serialized);
 }
 
 bool core::Serializer::deserialize(core::Object& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildObject(object, my_json);
+    ok = buildObject(object, myJson);
     if (!ok) {
         return false;
     }
     return true;
-
 }
 
 bool core::Serializer::deserialize(core::Resource& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildResourse(object, my_json);
+    ok = buildResourse(object, myJson);
     if (!ok) {
         return false;
     }
@@ -122,42 +118,42 @@ bool core::Serializer::deserialize(core::Resource& object, const QString& serial
 }
 
 bool core::Serializer::deserialize(core::ResourceBundle& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildObject(object, my_json);
+    ok = buildObject(object, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamageable(object, my_json);
+    ok = buildDamageable(object, myJson);
     if (!ok) {
         return false;
     }
-    if (!my_json["resourceType"].isString()) {
+    if (!myJson["resourceType"].isString()) {
         return false;
     }
-    QString my_data = (my_json["resourceType"]).toString();
-    if (my_data == "wood") {
+    QString myData = (myJson["resourceType"]).toString();
+    if (myData == "wood") {
         object.setType(ResourceType::kWood);
     }
-    if (my_data == "iron") {
+    if (myData == "iron") {
         object.setType(ResourceType::kIron);
     }
-    if (my_data == "stone") {
+    if (myData == "stone") {
         object.setType(ResourceType::kStone);
     }
-    return !(my_data != "wood" && my_data != "iron" && my_data != "stone");
+    return !(myData != "wood" && myData != "iron" && myData != "stone");
 }
 
 bool core::Serializer::deserialize(core::Moving& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildMoving(object, my_json);
+    ok = buildMoving(object, myJson);
     if (!ok) {
         return false;
     }
@@ -169,12 +165,12 @@ bool core::Serializer::deserialize(core::GameWorld& object, const QString& seria
 }
 
 bool core::Serializer::deserialize(core::Damaging& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamaging(object, my_json);
+    ok = buildDamaging(object, myJson);
     if (!ok) {
         return false;
     }
@@ -182,16 +178,16 @@ bool core::Serializer::deserialize(core::Damaging& object, const QString& serial
 }
 
 bool core::Serializer::deserialize(core::Building& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildObject(object, my_json);
+    ok = buildObject(object, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamageable(object, my_json);
+    ok = buildDamageable(object, myJson);
     if (!ok) {
         return false;
     }
@@ -199,12 +195,12 @@ bool core::Serializer::deserialize(core::Building& object, const QString& serial
 }
 
 bool core::Serializer::deserialize(core::Damageable& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamageable(object, my_json);
+    ok = buildDamageable(object, myJson);
     if (!ok) {
         return false;
     }
@@ -212,99 +208,100 @@ bool core::Serializer::deserialize(core::Damageable& object, const QString& seri
 }
 
 bool core::Serializer::deserialize(core::Unit& object, const QString& serialized) {
-    QJsonObject my_json;
-    bool ok = objectFromString(serialized, my_json);
+    QJsonObject myJson;
+    bool ok = objectFromString(serialized, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildObject(object, my_json);
+    ok = buildObject(object, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamageable(object, my_json);
+    ok = buildDamageable(object, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildDamaging(object, my_json);
+    ok = buildDamaging(object, myJson);
     if (!ok) {
         return false;
     }
-    ok = buildMoving(object, my_json);
+    ok = buildMoving(object, myJson);
     if (!ok) {
         return false;
     }
     return true;
 }
 
-void core::Serializer::addJsonObject(const core::Object& object, QJsonObject& my_json) {
-    QJsonObject polygon, pos;
-    my_json.insert("id", QString::number(object.getId()));
-    pos.insert("x", object.getPosition().x());
-    pos.insert("y", object.getPosition().y());
-    my_json.insert("position", pos);
-    my_json.insert("rotationAngle", object.getRotationAngle());
-    QVector<QPointF> my_rectangle;
+void core::Serializer::addJsonObject(const core::Object& object, QJsonObject& myJson) {
+    QJsonObject polygon;
+    QJsonObject position;
+    myJson.insert("id", QString::number(object.getId()));
+    position.insert("x", object.getPosition().x());
+    position.insert("y", object.getPosition().y());
+    myJson.insert("position", position);
+    myJson.insert("rotationAngle", object.getRotationAngle());
+    QVector<QPointF> myRectangle;
     QPolygonF hitbox = object.getHitbox();
     int iter = 0;
-    QJsonArray x_array, y_array;
+    QJsonArray xArray, yArray;
     for (auto i:hitbox) {
-        x_array.push_back(i.x());
-        y_array.push_back(i.y());
+        xArray.push_back(i.x());
+        yArray.push_back(i.y());
         iter++;
     }
-    pos.remove("x");
-    pos.remove("y");
-    pos.insert("x", x_array);
-    pos.insert("y", y_array);
-    my_json.insert("hitbox", pos);
+    position.remove("x");
+    position.remove("y");
+    position.insert("x", xArray);
+    position.insert("y", yArray);
+    myJson.insert("hitbox", position);
 }
 
-void core::Serializer::addJsonResource(const core::Resource& object, QJsonObject& my_json) {
+void core::Serializer::addJsonResource(const core::Resource& object, QJsonObject& myJson) {
     if (object.getType() == ResourceType::kWood) {
-        my_json.insert("resourceType", "wood");
+        myJson.insert("resourceType", "wood");
     }
     if (object.getType() == ResourceType::kIron) {
-        my_json.insert("resourceType", "iron");
+        myJson.insert("resourceType", "iron");
     }
     if (object.getType() == ResourceType::kStone) {
-        my_json.insert("resourceType", "stone");
+        myJson.insert("resourceType", "stone");
     }
-    my_json.insert("amount", object.getAmount());
+    myJson.insert("amount", object.getAmount());
 }
 
-void core::Serializer::addJsonDamaging(const core::Damaging& object, QJsonObject& my_json) {
-    my_json.insert("damage", object.getDamage());
-    my_json.insert("radius", object.getAttackRadius());
-    my_json.insert("delay", object.getAttackDelay());
-    my_json.insert("bulletType", object.getBulletType());
+void core::Serializer::addJsonDamaging(const core::Damaging& object, QJsonObject& myJson) {
+    myJson.insert("damage", object.getDamage());
+    myJson.insert("radius", object.getAttackRadius());
+    myJson.insert("delay", object.getAttackDelay());
+    myJson.insert("bulletType", object.getBulletType());
 }
 
-void core::Serializer::addJsonDamageable(const core::Damageable& object, QJsonObject& my_json) {
-    my_json.insert("health", object.getHealth());
-    my_json.insert("maxHealth", object.getMaxHealth());
+void core::Serializer::addJsonDamageable(const core::Damageable& object, QJsonObject& myJson) {
+    myJson.insert("health", object.getHealth());
+    myJson.insert("maxHealth", object.getMaxHealth());
 }
 
-void core::Serializer::finish(const QJsonObject& my_object, QString& serialized) {
-    QJsonDocument doc(my_object);
+void core::Serializer::finish(const QJsonObject& myObject, QString& serialized) {
+    QJsonDocument doc(myObject);
     QString strJson(doc.toJson(QJsonDocument::Compact));
-    serialized = strJson;
+    serialized = std::move(strJson);
 }
 
-void core::Serializer::addJsonMoving(const core::Moving& object, QJsonObject& my_json) {
+void core::Serializer::addJsonMoving(const core::Moving& object, QJsonObject& myJson) {
     QJsonObject direction;
     direction.insert("x", object.getDirection().x());
     direction.insert("y", object.getDirection().y());
-    my_json.insert("direction", direction);
-    my_json.insert("maxSpeed", object.getMaxSpeed());
-    my_json.insert("speed", object.getSpeed());
+    myJson.insert("direction", direction);
+    myJson.insert("maxSpeed", object.getMaxSpeed());
+    myJson.insert("speed", object.getSpeed());
 }
 
-bool core::Serializer::objectFromString(const QString& in, QJsonObject& my_json) {
+bool core::Serializer::objectFromString(const QString& in, QJsonObject& myJson) {
     QJsonDocument doc = QJsonDocument::fromJson(in.toUtf8());
     // check validity of the document
     if (!doc.isNull()) {
         if (doc.isObject()) {
-            my_json = doc.object();
+            myJson = doc.object();
         } else {
             return false;
         }
@@ -315,164 +312,164 @@ bool core::Serializer::objectFromString(const QString& in, QJsonObject& my_json)
 }
 
 bool core::Serializer::buildObject(core::Object& object,
-                                   const QJsonObject& my_json) {
-    if (!my_json["id"].isString()) {
+                                   const QJsonObject& myJson) {
+    if (!myJson["id"].isString()) {
         return false;
     }
-    QString id_str = my_json["id"].toString();
+    QString idStr = myJson["id"].toString();
     bool ok = false;
-    uint64_t id = id_str.toULongLong(&ok);
+    uint64_t id = idStr.toULongLong(&ok);
     if (!ok) {
         return ok;
     }
     object.setId(id);
     QJsonObject pos;
-    if (!my_json["position"].isObject()) {
+    if (!myJson["position"].isObject()) {
         return false;
     }
-    pos = (my_json["position"]).toObject();
-    auto iter_pos = pos.begin();
-    if (!(*iter_pos).isDouble()) {
+    pos = (myJson["position"]).toObject();
+    auto iterPos = pos.begin();
+    if (!(*iterPos).isDouble()) {
         return false;
     }
-    double x = (*iter_pos).toDouble();
-    iter_pos++;
-    if (!(*iter_pos).isDouble()) {
+    double x = (*iterPos).toDouble();
+    iterPos++;
+    if (!(*iterPos).isDouble()) {
         return false;
     }
-    double y = (*iter_pos).toDouble();
-    iter_pos++;
-    QPointF my_point(x, y);
-    object.setPosition(my_point);
+    double y = (*iterPos).toDouble();
+    iterPos++;
+    QPointF myPoint(x, y);
+    object.setPosition(myPoint);
 
-    if (!my_json["rotationAngle"].isDouble()) {
+    if (!myJson["rotationAngle"].isDouble()) {
         return false;
     }
-    object.setRotationAngle((my_json["rotationAngle"]).toDouble());
-    QVector<QPointF> my_vec;
-    if (!my_json["hitbox"].isObject()) {
+    object.setRotationAngle((myJson["rotationAngle"]).toDouble());
+    QVector<QPointF> myVec;
+    if (!myJson["hitbox"].isObject()) {
         return false;
     }
-    pos = my_json["hitbox"].toObject();
-    iter_pos = pos.begin();
-    if (!(*iter_pos).isArray()) {
+    pos = myJson["hitbox"].toObject();
+    iterPos = pos.begin();
+    if (!(*iterPos).isArray()) {
         return false;
     }
-    QJsonArray x_array = (*iter_pos).toArray();
-    iter_pos++;
-    if (!(*iter_pos).isArray()) {
+    QJsonArray xArray = (*iterPos).toArray();
+    iterPos++;
+    if (!(*iterPos).isArray()) {
         return false;
     }
-    QJsonArray y_array = (*iter_pos).toArray();
-    if (x_array.size() != y_array.size()) {
+    QJsonArray yArray = (*iterPos).toArray();
+    if (xArray.size() != yArray.size()) {
         return false;
     }
-    for (auto i:x_array) {
+    for (auto i:xArray) {
         if (!i.isDouble()) {
             return false;
         }
-        my_vec.push_back(QPointF(i.toDouble(), 0));
+        myVec.push_back(QPointF(i.toDouble(), 0));
     }
     int it = 0;
-    for (auto i:y_array) {
+    for (auto i:yArray) {
         if (!i.isDouble()) {
             return false;
         }
-        my_vec[it].setY(qreal(i.toDouble()));
+        myVec[it].setY(qreal(i.toDouble()));
     }
-    object.setHitbox(QPolygonF(my_vec));
+    object.setHitbox(QPolygonF(myVec));
     return true;
 }
 
-bool core::Serializer::buildResourse(core::Resource& object, const QJsonObject& my_json) {
-    if (!my_json["amount"].isDouble()) {
+bool core::Serializer::buildResourse(core::Resource& object, const QJsonObject& myJson) {
+    if (!myJson["amount"].isDouble()) {
         return false;
     }
-    int amount = my_json["amount"].toDouble();
+    int amount = myJson["amount"].toDouble();
     object.setAmount(amount);
 
-    if (!my_json["resourceType"].isString()) {
+    if (!myJson["resourceType"].isString()) {
         return false;
     }
-    QString type = my_json["resourceType"].toString();
-    ResourceType my_type;
+    QString type = myJson["resourceType"].toString();
+    ResourceType myType;
     if (type == "wood") {
-        my_type = ResourceType::kWood;
+        myType = ResourceType::kWood;
     }
     if (type == "iron") {
-        my_type = ResourceType::kIron;
+        myType = ResourceType::kIron;
     }
     if (type == "stone") {
-        my_type = ResourceType::kStone;
+        myType = ResourceType::kStone;
     }
 
-    object.setType(my_type);
+    object.setType(myType);
     return true;
 }
 
-bool core::Serializer::buildDamaging(core::Damaging& object, const QJsonObject& my_json) {
-    if (!my_json["bulletType"].isString()) {
+bool core::Serializer::buildDamaging(core::Damaging& object, const QJsonObject& myJson) {
+    if (!myJson["bulletType"].isString()) {
         return false;
     }
-    object.setBulletType((my_json["bulletType"]).toString());
+    object.setBulletType((myJson["bulletType"]).toString());
 
-    if (!my_json["damage"].isDouble()) {
+    if (!myJson["damage"].isDouble()) {
         return false;
     }
-    object.setDamage((my_json["damage"]).toDouble());
+    object.setDamage((myJson["damage"]).toDouble());
 
-    if (!my_json["delay"].isDouble()) {
+    if (!myJson["delay"].isDouble()) {
         return false;
     }
-    object.setAttackDelay((my_json["delay"]).toDouble());
-    if (!my_json["radius"].isDouble()) {
+    object.setAttackDelay((myJson["delay"]).toDouble());
+    if (!myJson["radius"].isDouble()) {
         return false;
     }
-    object.setAttackRadius((my_json["radius"]).toDouble());
+    object.setAttackRadius((myJson["radius"]).toDouble());
     return true;
 }
 
-bool core::Serializer::buildDamageable(core::Damageable& object, const QJsonObject& my_json) {
-    if (!my_json["health"].isDouble()) {
+bool core::Serializer::buildDamageable(core::Damageable& object, const QJsonObject& myJson) {
+    if (!myJson["health"].isDouble()) {
         return false;
     }
-    object.setHealth(my_json["health"].toDouble());
+    object.setHealth(myJson["health"].toDouble());
 
-    if (!my_json["maxHealth"].isDouble()) {
+    if (!myJson["maxHealth"].isDouble()) {
         return false;
     }
-    object.setMaxHealth(my_json["maxHealth"].toDouble());
+    object.setMaxHealth(myJson["maxHealth"].toDouble());
     return true;
 }
 
-bool core::Serializer::buildMoving(core::Moving& object, const QJsonObject& my_json) {
+bool core::Serializer::buildMoving(core::Moving& object, const QJsonObject& myJson) {
     QJsonObject direction;
 
-    if (!my_json["direction"].isObject()) {
+    if (!myJson["direction"].isObject()) {
         return false;
     }
 
-    direction = my_json["direction"].toObject();
-    QJsonObject::Iterator dir_iter = direction.begin();
+    direction = myJson["direction"].toObject();
+    QJsonObject::Iterator dirIter = direction.begin();
     double x, y;
-    if (!(dir_iter)->isDouble()) {
+    if (!(dirIter)->isDouble()) {
         return false;
     }
 
-    x = (dir_iter)->toDouble();
-    dir_iter++;
-    if (!dir_iter->isDouble()) {
+    x = (dirIter)->toDouble();
+    dirIter++;
+    if (!dirIter->isDouble()) {
         return false;
     }
-    y = (dir_iter)->toDouble();
+    y = (dirIter)->toDouble();
     object.setDirection(QVector2D(x, y));
-    if (!my_json["maxSpeed"].isDouble()) {
+    if (!myJson["maxSpeed"].isDouble()) {
         return false;
     }
-    object.setMaxSpeed(my_json["maxSpeed"].toDouble());
-    if (!my_json["speed"].isDouble()) {
+    object.setMaxSpeed(myJson["maxSpeed"].toDouble());
+    if (!myJson["speed"].isDouble()) {
         return false;
     }
-    object.setSpeed(my_json["speed"].toDouble());
+    object.setSpeed(myJson["speed"].toDouble());
     return true;
 }

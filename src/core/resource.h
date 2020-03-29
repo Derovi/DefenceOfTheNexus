@@ -23,12 +23,11 @@ class Resource {
 
     void setAmount(int amount);
 
-    void setType(ResourceType new_type);
+    void setType(ResourceType newType);
 
 
   private:
-    ResourceType type;  //  Deleted const because of addResource function,that is getting a reference to an Object
-                        // and writes all changes directly to an Object
+    ResourceType type;
     int amount;
 };
 

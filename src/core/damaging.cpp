@@ -45,6 +45,6 @@ QString core::Damaging::getBulletType() const {
     return bulletType;
 }
 
-void core::Damaging::setBulletType(QString new_type) {
-    bulletType=new_type;
+void core::Damaging::setBulletType(const QString& newtType) {
+    bulletType = newType;
 }
