@@ -75,15 +75,15 @@ class Serializer {
     static bool objectFromString(const QString& in, QJsonObject& my_json);
 
     static bool buildObject(core::Object& object,
-                            QJsonObject::iterator& iter);
+                            const  QJsonObject& my_json);
 
-    static bool buildResourse(core::Resource& object, QJsonObject::iterator& iter);
+    static bool buildResourse(core::Resource& object,const QJsonObject& my_json);
 
-    static bool buildDamaging(core::Damaging& object, QJsonObject::Iterator& iter);
+    static bool buildDamaging(core::Damaging& object, const QJsonObject& my_json);
 
-    static bool buildDamageable(core::Damageable& object, QJsonObject::Iterator& iter);
+    static bool buildDamageable(core::Damageable& object,const QJsonObject& my_json);
 
-    static bool buildMoving(core::Moving& object, QJsonObject::Iterator& iter);
+    static bool buildMoving(core::Moving& object, const QJsonObject& my_json);
 };
 }
 
