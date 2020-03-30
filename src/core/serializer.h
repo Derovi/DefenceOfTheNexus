@@ -102,4 +102,4 @@ class Serializer {
 
 }  // namespace core
 
-#endif //SERIALIZER_H
+#endif // SERIALIZER_H
