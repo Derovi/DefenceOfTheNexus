@@ -299,15 +299,10 @@ void core::Serializer::addJsonMoving(const core::Moving& object, QJsonObject& my
 bool core::Serializer::objectFromString(const QString& in, QJsonObject& myJson) {
     QJsonDocument doc = QJsonDocument::fromJson(in.toUtf8());
     // check validity of the document
-    if (!doc.isNull()) {
-        if (doc.isObject()) {
-            myJson = doc.object();
-        } else {
-            return false;
-        }
-    } else {
+    if (doc.isNull() || !doc.isObject()) {
         return false;
     }
+    myJson = doc.object();
     return true;
 }
 
