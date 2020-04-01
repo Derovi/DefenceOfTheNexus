@@ -359,7 +359,7 @@ bool core::Serializer::buildObject(core::Object& object,
     if (xArray.size() != yArray.size()) {
         return false;
     }
-    for (auto i:xArray) {
+    for (const auto& i : xArray) {
         if (!i.isDouble()) {
             return false;
         }
