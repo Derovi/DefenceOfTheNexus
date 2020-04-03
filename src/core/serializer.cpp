@@ -134,15 +134,7 @@ bool core::Serializer::deserialize(core::ResourceBundle& object, const QString& 
         return false;
     }
     int data = (json["resourceType"]).toDouble();
-    if (data == 1) {
-        object.setType(ResourceType::kWood);
-    }
-    if (data == 2) {
-        object.setType(ResourceType::kIron);
-    }
-    if (data == 3) {
-        object.setType(ResourceType::kStone);
-    }
+    object.setType(static_cast<ResourceType>(json["resourceType"].toInt()));
     return data >= 1 && data <= 3;
 }
 
