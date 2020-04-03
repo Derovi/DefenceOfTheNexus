@@ -41,10 +41,10 @@ void core::Damaging::set(const core::Damaging& properties) {
     setAttackRadius(properties.attackRadius);
 }
 
-QString core::Damaging::getBulletType() const {
+const QString& core::Damaging::getBulletType() const {
     return bulletType;
 }
 
-void core::Damaging::setBulletType(const QString& newtType) {
+void core::Damaging::setBulletType(const QString& newType) {
     bulletType = newType;
 }

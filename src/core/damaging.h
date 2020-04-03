@@ -20,7 +20,7 @@ class Damaging {
 
     double getAttackDelay() const;
 
-    QString getBulletType() const;
+    const QString& getBulletType() const;
 
     virtual void setDamage(int damage);
 

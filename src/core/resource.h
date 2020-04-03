@@ -15,8 +15,6 @@ class Resource {
 
     explicit Resource(ResourceType type, int amount = 0);
 
-    Resource(const Resource& what_copy);
-
     ResourceType getType() const;
 
     int getAmount() const;

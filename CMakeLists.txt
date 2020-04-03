@@ -27,8 +27,6 @@ add_executable(defenceofnexus
         src/core/unit.cpp
         src/core/serializer.cpp
         src/core/building.cpp src/core/gameworld.cpp
-        gtest/gtest-all.cc gtest/gtest_main.cc
-        tests.cpp
         )
 
 target_link_libraries(defenceofnexus Qt5::Widgets)
