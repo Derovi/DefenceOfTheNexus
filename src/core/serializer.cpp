@@ -151,7 +151,7 @@ bool core::Serializer::deserialize(core::ResourceBundle& object, const QString& 
         return false;
     }
     int data = (json["resourceType"]).toDouble();
-    object.setType(static_cast<ResourceType>(json["resourceType"].toInt()));
+    object.setType(static_cast<ResourceType>(data));
     return data >= 1 && data <= 3;
 }
 
