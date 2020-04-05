@@ -35,7 +35,7 @@ class Object {
     bool isIntersect(const Object& object) const;
 
   private:
-    uint64_t id;
+    const uint64_t id;
     QPointF position;
     QPolygonF hitbox;
     float rotationAngle;

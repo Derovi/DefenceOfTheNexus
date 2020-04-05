@@ -69,7 +69,7 @@ class Serializer {
 
     static void addJsonMoving(const core::Moving& object, QJsonObject& json);
 
-    static void finish(const QJsonObject& Object, QString& serialized);
+    static void convertJsonToString(const QJsonObject& Object, QString& serialized);
 
     static bool objectFromString(const QString& in, QJsonObject& json);
 

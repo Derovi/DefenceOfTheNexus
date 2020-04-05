@@ -3,19 +3,19 @@
 void core::Serializer::serialize(const core::Object& object, QString& serialized) {
     QJsonObject json;
     addJsonObject(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Resource& object, QString& serialized) {
     QJsonObject json;
     addJsonResource(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Moving& object, QString& serialized) {
     QJsonObject json;
     addJsonMoving(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::GameWorld& object, QString& serialized) {
@@ -59,26 +59,26 @@ void core::Serializer::serialize(const core::ResourceBundle& object, QString& se
     if (object.getResourceType() == ResourceType::kStone) {
         json.insert("resourceType", 3);
     }
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Damaging& object, QString& serialized) {
     QJsonObject json;
     addJsonDamaging(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Building& object, QString& serialized) {
     QJsonObject json;
     addJsonObject(object, json);
     addJsonDamageable(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Damageable& object, QString& serialized) {
     QJsonObject json;
     addJsonDamageable(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 void core::Serializer::serialize(const core::Unit& object, QString& serialized) {
@@ -87,7 +87,7 @@ void core::Serializer::serialize(const core::Unit& object, QString& serialized) 
     addJsonDamageable(object, json);
     addJsonDamaging(object, json);
     addJsonMoving(object, json);
-    finish(json, serialized);
+    convertJsonToString(json, serialized);
 }
 
 bool core::Serializer::deserialize(core::Object& object, const QString& serialized) {
@@ -263,7 +263,7 @@ void core::Serializer::addJsonDamageable(const core::Damageable& object, QJsonOb
     json.insert("maxHealth", object.getMaxHealth());
 }
 
-void core::Serializer::finish(const QJsonObject& Object, QString& serialized) {
+void core::Serializer::convertJsonToString(const QJsonObject& Object, QString& serialized) {
     QJsonDocument doc(Object);
     QString strJson(doc.toJson(QJsonDocument::Compact));
     serialized = std::move(strJson);

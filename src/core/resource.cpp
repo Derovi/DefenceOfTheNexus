@@ -15,5 +15,5 @@ void core::Resource::setAmount(int newAmount) {
 }
 
 void core::Resource::setType(ResourceType newType) {
-    type = newType;
+    *const_cast<ResourceType*> (&type) = newType;
 }
