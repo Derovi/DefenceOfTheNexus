@@ -1,24 +1,30 @@
 #include "serializer.h"
 
-void core::Serializer::serialize(const core::Object& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Object& object) {
+    QString serialized;
     QJsonObject json;
     addJsonObject(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Resource& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Resource& object) {
+    QString serialized;
     QJsonObject json;
     addJsonResource(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Moving& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Moving& object) {
+    QString serialized;
     QJsonObject json;
     addJsonMoving(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::GameWorld& object, QString& serialized) {
+QString core::Serializer::serialize(const core::GameWorld& object) {
     /* //TODO
       QJsonObject _json;
     _json.insert("height", object.getHeight());
@@ -44,9 +50,11 @@ void core::Serializer::serialize(const core::GameWorld& object, QString& seriali
     }
     _json.insert("resources",resources);
     finish(_json,serialized);*/
+    return "";
 }
 
-void core::Serializer::serialize(const core::ResourceBundle& object, QString& serialized) {
+QString core::Serializer::serialize(const core::ResourceBundle& object) {
+    QString serialized;
     QJsonObject json;
     addJsonObject(object, json);
     addJsonDamageable(object, json);
@@ -60,34 +68,43 @@ void core::Serializer::serialize(const core::ResourceBundle& object, QString& se
         json.insert("resourceType", 3);
     }
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Damaging& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Damaging& object) {
+    QString serialized;
     QJsonObject json;
     addJsonDamaging(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Building& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Building& object) {
+    QString serialized;
     QJsonObject json;
     addJsonObject(object, json);
     addJsonDamageable(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Damageable& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Damageable& object) {
+    QString serialized;
     QJsonObject json;
     addJsonDamageable(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
-void core::Serializer::serialize(const core::Unit& object, QString& serialized) {
+QString core::Serializer::serialize(const core::Unit& object) {
+    QString serialized;
     QJsonObject json;
     addJsonObject(object, json);
     addJsonDamageable(object, json);
     addJsonDamaging(object, json);
     addJsonMoving(object, json);
     convertJsonToString(json, serialized);
+    return serialized;
 }
 
 bool core::Serializer::deserialize(core::Object& object, const QString& serialized) {

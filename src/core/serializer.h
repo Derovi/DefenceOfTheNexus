@@ -22,23 +22,23 @@ namespace core {
 
 class Serializer {
   public:
-    void serialize(const core::Object& object, QString& serialized);
+    QString serialize(const core::Object& object);
 
-    void serialize(const core::Resource& object, QString& serialized);
+    QString serialize(const core::Resource& object);
 
-    void serialize(const core::ResourceBundle& object, QString& serialized);
+    QString serialize(const core::ResourceBundle& object);
 
-    void serialize(const core::Moving& object, QString& serialized);
+    QString serialize(const core::Moving& object);
 
-    void serialize(const core::GameWorld& object, QString& serialized);
+    QString serialize(const core::GameWorld& object);
 
-    void serialize(const core::Damaging& object, QString& serialized);
+    QString serialize(const core::Damaging& object);
 
-    void serialize(const core::Building& object, QString& serialized);
+    QString serialize(const core::Building& object);
 
-    void serialize(const core::Damageable& object, QString& serialized);
+    QString serialize(const core::Damageable& object);
 
-    void serialize(const core::Unit& object, QString& serialized);
+    QString serialize(const core::Unit& object);
 
     bool deserialize(core::Object& object, const QString& serialized);
 
