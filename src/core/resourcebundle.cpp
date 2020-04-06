@@ -13,5 +13,5 @@ core::ResourceType core::ResourceBundle::getResourceType() const {
 }
 
 void core::ResourceBundle::setType(const ResourceType& newType) {
-    *const_cast<ResourceType*> (&resourceType) = newType;
+    resourceType = newType;
 }

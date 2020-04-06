@@ -21,7 +21,7 @@ class ResourceBundle : public Object, public Damageable {
     void setType(const ResourceType& newType);
 
   private:
-    const ResourceType resourceType;
+    ResourceType resourceType;
 };
 
 }  // namespace core

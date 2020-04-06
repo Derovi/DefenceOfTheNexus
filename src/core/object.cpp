@@ -38,6 +38,6 @@ bool core::Object::isIntersect(const core::Object& object) const {
 }
 
 void core::Object::setId(uint64_t newId) {
-    *const_cast<uint64_t*>(&id) = newId;
+    id = newId;
 }
 
