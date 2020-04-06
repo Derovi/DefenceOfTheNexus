@@ -5,7 +5,6 @@
 #include <mutex>
 #include <queue>
 
-
 template<typename T>
 class Queue {
   public:
@@ -48,9 +47,7 @@ bool Queue<T>::empty() const {
 template<typename T>
 const T& Queue<T>::front() const {
     std::unique_lock<std::mutex> locker(mutex);
-    while (queue.empty()) {
-        isEmpty.wait(locker);
-    }
+    isEmpty.wait(locker, [&]() { return !queue.empty(); });
     return queue.front();
 }
 
@@ -71,9 +68,7 @@ void Queue<T>::push(T&& item) {
 template<typename T>
 void Queue<T>::pop() {
     std::unique_lock<std::mutex> locker(mutex);
-    while (queue.empty()) {
-        isEmpty.wait(locker);
-    }
+    isEmpty.wait(locker, [&]() { return !queue.empty(); });
     queue.pop();
 }
 
