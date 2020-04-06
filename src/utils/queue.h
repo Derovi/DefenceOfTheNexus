@@ -49,7 +49,7 @@ template<typename T>
 const T& Queue<T>::front() const {
     std::unique_lock<std::mutex> locker(mutex);
     while (queue.empty()) {
-        isEmpty.wait();
+        isEmpty.wait(locker);
     }
     return queue.front();
 }
@@ -72,7 +72,7 @@ template<typename T>
 void Queue<T>::pop() {
     std::unique_lock<std::mutex> locker(mutex);
     while (queue.empty()) {
-        isEmpty.wait();
+        isEmpty.wait(locker);
     }
     queue.pop();
 }
