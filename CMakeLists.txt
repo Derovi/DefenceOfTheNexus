@@ -4,7 +4,7 @@ project(defenceofnexus)
 set(CMAKE_CXX_STANDARD 17)
 
 if (APPLE)
-    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5.13/5.13.0/clang_64")
+    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5*/5*/clang_64")
 else (APPLE)
     # type here
 endif (APPLE)
@@ -37,7 +37,7 @@ add_executable(defenceofnexus
         src/server/engine.cpp
         src/server/bootstrap.cpp
         src/server/gameconfiguration.cpp
-        src/server/server.cpp)
+        src/server/server.cpp src/utils/queue.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
