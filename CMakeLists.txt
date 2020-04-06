@@ -37,7 +37,7 @@ add_executable(defenceofnexus
         src/server/engine.cpp
         src/server/bootstrap.cpp
         src/server/gameconfiguration.cpp
-        src/server/server.cpp src/utils/queue.h)
+        src/server/server.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
