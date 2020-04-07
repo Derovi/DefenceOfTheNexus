@@ -4,7 +4,7 @@ project(defenceofnexus)
 set(CMAKE_CXX_STANDARD 17)
 
 if (APPLE)
-    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5.13/5.13.0/clang_64")
+    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5*/5*/clang_64")
 else (APPLE)
     # type here
 endif (APPLE)
