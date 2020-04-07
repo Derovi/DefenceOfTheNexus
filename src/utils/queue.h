@@ -18,13 +18,11 @@ class Queue {
 
     bool empty() const;
 
-    const T& front() const;
-
     void push(const T& item);
 
     void push(T&& item);
 
-    void pop();
+    T pop();
 
   private:
     mutable std::mutex mutex;
@@ -45,13 +43,6 @@ bool Queue<T>::empty() const {
 }
 
 template<typename T>
-const T& Queue<T>::front() const {
-    std::unique_lock<std::mutex> locker(mutex);
-    isEmpty.wait(locker, [&]() { return !queue.empty(); });
-    return queue.front();
-}
-
-template<typename T>
 void Queue<T>::push(const T& item) {
     std::unique_lock<std::mutex> locker(mutex);
     queue.push(item);
@@ -66,10 +57,12 @@ void Queue<T>::push(T&& item) {
 }
 
 template<typename T>
-void Queue<T>::pop() {
+T Queue<T>::pop() {
     std::unique_lock<std::mutex> locker(mutex);
     isEmpty.wait(locker, [&]() { return !queue.empty(); });
+    T item = queue.front();
     queue.pop();
+    return item;
 }
 
 #endif // QUEUE_H
