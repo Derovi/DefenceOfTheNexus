@@ -62,6 +62,7 @@ T Queue<T>::pop() {
     isEmpty.wait(locker, [&]() { return !queue.empty(); });
     T item = queue.front();
     queue.pop();
+    isEmpty.notify_one();
     return item;
 }
 
