@@ -9,3 +9,7 @@ core::Unit::Unit(uint64_t id, QPointF position, QPolygonF hitbox, float rotation
         Moving(movingProperties),
         Damaging(damagingProperties),
         Damageable(damageableProperties) {}
+
+QString core::Unit::getTypeName() {
+    return "unit";
+}

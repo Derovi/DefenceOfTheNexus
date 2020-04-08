@@ -32,6 +32,8 @@ class Object {
 
     virtual void setRotationAngle(float angle);
 
+    virtual QString getTypeName() = 0;
+
     bool isIntersect(const Object& object) const;
 
   private:

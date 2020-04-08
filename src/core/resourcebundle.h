@@ -10,6 +10,7 @@
 
 namespace core {
 
+// typeName = "resourceBundle"
 class ResourceBundle : public Object, public Damageable {
   public:
     ResourceBundle(uint64_t id, ResourceType resourceType, int maxHealth,
@@ -19,6 +20,8 @@ class ResourceBundle : public Object, public Damageable {
     ResourceType getResourceType() const;
 
     void setType(const ResourceType& newType);
+
+    QString getTypeName() override;
 
   private:
     ResourceType resourceType;

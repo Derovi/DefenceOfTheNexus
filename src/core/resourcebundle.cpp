@@ -15,3 +15,7 @@ core::ResourceType core::ResourceBundle::getResourceType() const {
 void core::ResourceBundle::setType(const ResourceType& newType) {
     resourceType = newType;
 }
+
+QString core::ResourceBundle::getTypeName() {
+    return "resourceBundle";
+}
