@@ -21,8 +21,10 @@ class Resource {
 
     void setAmount(int amount);
 
+    void setType(ResourceType newType);
+
   private:
-    const ResourceType type;
+    ResourceType type;
     int amount;
 };
 

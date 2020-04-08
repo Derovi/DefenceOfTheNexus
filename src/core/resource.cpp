@@ -13,3 +13,7 @@ int core::Resource::getAmount() const {
 void core::Resource::setAmount(int newAmount) {
     amount = newAmount;
 }
+
+void core::Resource::setType(ResourceType newType) {
+    type = newType;
+}

@@ -9,6 +9,10 @@ else (APPLE)
     # type here
 endif (APPLE)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
+
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
@@ -21,7 +25,9 @@ add_executable(defenceofnexus
         src/core/resource.cpp
         src/core/resourcebundle.cpp
         src/core/unit.cpp
-        src/core/building.cpp src/core/gameworld.cpp src/core/gameworld.h)
+        src/core/serializer.cpp
+        src/core/building.cpp src/core/gameworld.cpp
+        )
 
 target_link_libraries(defenceofnexus Qt5::Widgets)
 

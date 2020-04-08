@@ -25,19 +25,19 @@ class GameWorld {
 
     void setResources(const QVector<core::Resource>& resources);
 
-    const QMap<int64_t, core::Object *> getObjects() const;
+    const QMap<int64_t, core::Object*> getObjects() const;
 
-    void setObjects(const QMap<int64_t, core::Object *> objects);
+    void setObjects(const QMap<int64_t, core::Object*> objects);
 
   public:
 
- private:
+  private:
 
-  int height;
-  int width;
+    int height;
+    int width;
 
-  QVector<core::Resource> resources;
-  QMap<int64_t, core::Object * > objects;
+    QVector<core::Resource> resources;
+    QMap<int64_t, core::Object*> objects;
 };
 
 }
