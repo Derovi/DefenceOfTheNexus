@@ -40,3 +40,11 @@ void core::Damaging::set(const core::Damaging& properties) {
     setAttackDelay(properties.attackDelay);
     setAttackRadius(properties.attackRadius);
 }
+
+const QString& core::Damaging::getBulletType() const {
+    return bulletType;
+}
+
+void core::Damaging::setBulletType(const QString& newType) {
+    bulletType = newType;
+}

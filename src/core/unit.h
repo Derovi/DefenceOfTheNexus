@@ -11,6 +11,7 @@
 
 namespace core {
 
+// typeName = "unit";
 class Unit : public Object, public Moving, public Damaging, public Damageable {
   public:
     explicit Unit(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
@@ -18,6 +19,8 @@ class Unit : public Object, public Moving, public Damaging, public Damageable {
                   const Moving& movingProperties = Moving(),
                   const Damaging& damagingProperties = Damaging(),
                   const Damageable& damageableProperties = Damageable());
+
+    QString getTypeName() override;
 };
 
 }  // namespace core
