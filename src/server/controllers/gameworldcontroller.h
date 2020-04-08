@@ -3,7 +3,7 @@
 
 #include <QVector>
 
-#include "../core/gameworld.h"
+#include "../../core/gameworld.h"
 
 #include "controller.h"
 

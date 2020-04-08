@@ -1,7 +1,7 @@
 #include <QDebug>
 
-#include "../core/gameworld.h"
-#include "../core/object.h"
+#include "../../core/gameworld.h"
+#include "../../core/object.h"
 
 #include "gameworldcontroller.h"
 

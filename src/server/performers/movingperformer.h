@@ -4,9 +4,9 @@
 #include <QPointF>
 #include <QVector2D>
 
-#include "../core/gameworld.h"
-#include "../core/object.h"
-#include "../core/moving.h"
+#include "../../core/gameworld.h"
+#include "../../core/object.h"
+#include "../../core/moving.h"
 
 namespace server {
 

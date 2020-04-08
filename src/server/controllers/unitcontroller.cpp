@@ -1,6 +1,6 @@
-#include "../core/unit.h"
+#include "../../core/unit.h"
 
-#include "movingperformer.h"
+#include "../performers/movingperformer.h"
 #include "unitcontroller.h"
 
 void server::UnitController::tick(core::GameWorld* world, double timeDelta) {

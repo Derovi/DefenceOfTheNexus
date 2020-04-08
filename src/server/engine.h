@@ -7,7 +7,7 @@
 #include "../core/command.h"
 
 #include "gameconfiguration.h"
-#include "gameworldcontroller.h"
+#include "controllers/gameworldcontroller.h"
 #include "commandexecutor.h"
 
 namespace server {

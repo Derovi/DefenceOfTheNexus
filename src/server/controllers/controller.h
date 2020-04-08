@@ -1,8 +1,8 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include "../core/gameworld.h"
-#include "../core/object.h"
+#include "../../core/gameworld.h"
+#include "../../core/object.h"
 
 namespace server {
 

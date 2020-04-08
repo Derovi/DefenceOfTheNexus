@@ -28,9 +28,9 @@ add_executable(defenceofnexus
         src/core/unit.cpp
         src/core/building.cpp
         src/core/gameworld.cpp
-        src/server/gameworldcontroller.cpp
-        src/server/controller.cpp
-        src/server/unitcontroller.cpp
+        src/server/controllers/gameworldcontroller.cpp
+        src/server/controllers/controller.cpp
+        src/server/controllers/unitcontroller.cpp
         src/core/command.cpp
         src/server/commandexecutor.cpp
         src/server/worldgenerator.cpp
