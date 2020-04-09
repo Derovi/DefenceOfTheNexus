@@ -39,7 +39,7 @@ add_executable(defenceofnexus
         src/server/gameconfiguration.cpp
         src/server/server.cpp
         src/core/serializer.cpp
-        )
+        src/utils/factory.cpp src/utils/factory.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
