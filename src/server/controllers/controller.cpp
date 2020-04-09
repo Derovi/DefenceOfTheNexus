@@ -1,13 +1,11 @@
 #include <QDebug>
 
+#include "../../utils/factory.h"
+
 #include "controller.h"
 #include "unitcontroller.h"
 
 server::Controller* server::Controller::createController(core::Object* object) {
-    Controller* controller = nullptr;
-    if (UnitController::create(controller, object)) {
-        return controller;
-    }
-    return nullptr;
+    return utils::Factory::createController(object);
 }
 

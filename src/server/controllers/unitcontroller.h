@@ -11,9 +11,9 @@ class UnitController : public Controller {
   public:
     explicit UnitController(core::Unit* unit);
 
-    UnitController();
+    UnitController() = delete;
 
-    static bool create(Controller*& controller, core::Object* object);
+    static Controller* create(core::Object* object);
 
     void tick(core::GameWorld* world, double timeDelta) override;
 

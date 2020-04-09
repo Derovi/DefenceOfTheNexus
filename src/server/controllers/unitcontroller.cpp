@@ -3,6 +3,8 @@
 #include "../performers/movingperformer.h"
 #include "unitcontroller.h"
 
+server::UnitController::UnitController(core::Unit* unit) : unit(unit) {}
+
 void server::UnitController::tick(core::GameWorld* world, double timeDelta) {
     // todo change class to namespace
     MovingPerformer movingPerformer(world, unit, timeDelta);
@@ -10,16 +12,12 @@ void server::UnitController::tick(core::GameWorld* world, double timeDelta) {
 
 }
 
-server::UnitController::UnitController(::core::Unit* unit): unit(unit) {
-}
-
-bool server::UnitController::create(server::Controller*& controller, core::Object* object) {
+server::Controller* server::UnitController::create(core::Object* object) {
     auto* unit = dynamic_cast<core::Unit*>(object);
     if (unit) {
-        controller = new UnitController(unit);
-        return true;
+        return new UnitController(unit);
     }
-    return false;
+    return nullptr;
 }
 
 core::Unit* server::UnitController::getUnit() const {
