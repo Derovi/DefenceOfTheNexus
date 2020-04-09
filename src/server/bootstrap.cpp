@@ -20,6 +20,12 @@ void registerGameObjects() {
     //utils::Factory::registerSerializer("unit", );
 }
 
+void registerStrategies() {
+    utils::Factory::registerStrategy("moveStrategy", [](server::Controller* controller)) {
+        return server::
+    }
+}
+
 void runTest() {
     core::Unit unit(7);
     server::Controller* controller = server::Controller::createController(&unit);

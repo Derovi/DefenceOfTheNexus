@@ -11,7 +11,7 @@ namespace server {
 
 class Strategy {
   public:
-    explicit Strategy(core::Object* object);
+    Strategy() = default;
 
     virtual void tick(core::GameWorld* world, double timeDelta) = 0;
 
