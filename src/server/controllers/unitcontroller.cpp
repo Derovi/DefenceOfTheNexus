@@ -27,3 +27,7 @@ core::Unit* server::UnitController::getUnit() const {
 void server::UnitController::setUnit(core::Unit* unit) {
     UnitController::unit = unit;
 }
+
+core::Object* server::UnitController::getObject() {
+    return unit;
+}

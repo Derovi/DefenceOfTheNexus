@@ -4,17 +4,19 @@
 #include <QHash>
 #include <QString>
 
+namespace DataBundle {
+
 class DataBundle {
   public:
     DataBundle() = default;
 
     ~DataBundle();
 
-    template <class T>
+    template<class T>
     void registerVariable(const QString& name, T* variable);
 
     // true if successfully assigned (variable in bundle not exists or has type T)
-    template <class T>
+    template<class T>
     bool assign(const QString& name, T*& variable);
 
   private:
@@ -39,6 +41,8 @@ bool DataBundle::assign(const QString& name, T*& variable) {
     }
     T* foundVariable = reinterpret_cast<T*>(data[name]);
     variable = foundVariable;
+}
+
 }
 
 #endif //DATABUNDLE_H

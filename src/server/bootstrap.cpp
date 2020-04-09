@@ -8,6 +8,9 @@
 #include "engine.h"
 #include "server.h"
 
+#include "controllers/controller.h"
+#include "controllers/unitcontroller.h"
+#include "controllers/databundle.h"
 
 void registerGameObjects() {
     // unit
@@ -17,8 +20,17 @@ void registerGameObjects() {
     //utils::Factory::registerSerializer("unit", );
 }
 
+void runTest() {
+    core::Unit unit(7);
+    server::Controller* controller = server::Controller::createController(&unit);
+    qDebug() << controller->getObject()->getId();
+}
+
+
 int main(int argc, char** argv) {
     registerGameObjects();
+    runTest();
+    return 0;
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);
     auto* server = new server::Server();
@@ -40,4 +52,3 @@ int main(int argc, char** argv) {
     delete engine;
     delete server;
 }
-

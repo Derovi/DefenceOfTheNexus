@@ -10,6 +10,8 @@ class Controller {
   public:
     virtual void tick(core::GameWorld* world, double timeDelta) = 0;
 
+    virtual core::Object* getObject() = 0;
+
     static Controller* createController(core::Object* object);
 
     virtual ~Controller() = default;

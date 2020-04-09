@@ -19,6 +19,8 @@ class UnitController : public Controller {
 
     core::Unit* getUnit() const;
 
+    core::Object* getObject() override;
+
     void setUnit(core::Unit* unit);
 
   private:
