@@ -4,7 +4,7 @@
 #include <QHash>
 #include <QString>
 
-namespace DataBundle {
+namespace server {
 
 class DataBundle {
   public:
