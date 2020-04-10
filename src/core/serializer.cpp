@@ -1,4 +1,4 @@
-#include "serializer.h"
+/*#include "serializer.h"
 
 QString core::Serializer::serialize(const core::Object& object) {
     QString serialized;
@@ -50,7 +50,7 @@ QString core::Serializer::serialize(const core::GameWorld& object) {
     }
     _json.insert("resources",resources);
     finish(_json,serialized);*/
-    return "";
+/*    return "";
 }
 
 QString core::Serializer::serialize(const core::ResourceBundle& object) {
@@ -466,3 +466,4 @@ bool core::Serializer::buildMoving(core::Moving& object, const QJsonObject& json
     object.setSpeed(json["speed"].toDouble());
     return true;
 }
+*/

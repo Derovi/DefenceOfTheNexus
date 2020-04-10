@@ -7,5 +7,7 @@ core::Building::Building(uint64_t id, QPointF position, QPolygonF hitbox, float 
         Object(id, position, std::move(hitbox), rotationAngle), Damageable(damageableProperties) {}
 
 QString core::Building::getTypeName() {
-    return "building";
+    return typeName;
 }
+
+QString core::Building::typeName = "building";

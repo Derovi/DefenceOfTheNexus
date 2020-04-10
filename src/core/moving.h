@@ -3,9 +3,11 @@
 
 #include <QVector2D>
 
+#include "attribute.h"
+
 namespace core {
 
-class Moving {
+class Moving : public Attribute {
   public:
     Moving();
 
@@ -26,6 +28,10 @@ class Moving {
     virtual void setSpeed(double speed);
 
     virtual void set(const Moving& properties);
+
+    static QString attributeName;
+
+    QString getAttributeName() override;
 
   private:
     QVector2D direction;

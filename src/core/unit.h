@@ -21,6 +21,8 @@ class Unit : public Object, public Moving, public Damaging, public Damageable {
                   const Damageable& damageableProperties = Damageable());
 
     QString getTypeName() override;
+
+    static QString typeName;
 };
 
 }  // namespace core

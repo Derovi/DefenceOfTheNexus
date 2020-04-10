@@ -1,9 +1,13 @@
 #ifndef DAMAGEABLE_H
 #define DAMAGEABLE_H
 
+#include <QString>
+
+#include "attribute.h"
+
 namespace core {
 
-class Damageable {
+class Damageable : public Attribute {
   public:
     Damageable();
 
@@ -20,6 +24,10 @@ class Damageable {
     virtual void setMaxHealth(int maxHealth);
 
     virtual void set(const Damageable& properties);
+
+    QString getAttributeName() override;
+
+    static QString attributeName;
 
   private:
     int health;

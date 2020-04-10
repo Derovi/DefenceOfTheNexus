@@ -24,3 +24,9 @@ void core::Damageable::set(const core::Damageable& properties) {
     setHealth(properties.health);
     setMaxHealth(properties.maxHealth);
 }
+
+QString core::Damageable::getAttributeName() {
+    return attributeName;
+}
+
+QString core::Damageable::attributeName = "damageable";

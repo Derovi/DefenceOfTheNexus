@@ -1,4 +1,4 @@
-#ifndef SERIALIZER_H
+/*#ifndef SERIALIZER_H
 #define SERIALIZER_H
 
 #include <iostream>
@@ -87,3 +87,4 @@ class Serializer {
 }  // namespace core
 
 #endif // SERIALIZER_H
+*/

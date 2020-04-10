@@ -48,3 +48,9 @@ const QString& core::Damaging::getBulletType() const {
 void core::Damaging::setBulletType(const QString& newType) {
     bulletType = newType;
 }
+
+QString core::Damaging::getAttributeName() {
+    return attributeName;
+}
+
+QString core::Damaging::attributeName = "damaging";

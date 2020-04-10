@@ -11,5 +11,7 @@ core::Unit::Unit(uint64_t id, QPointF position, QPolygonF hitbox, float rotation
         Damageable(damageableProperties) {}
 
 QString core::Unit::getTypeName() {
-    return "unit";
+    return typeName;
 }
+
+QString core::Unit::typeName = "unit";

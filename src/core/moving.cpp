@@ -36,3 +36,10 @@ void core::Moving::set(const core::Moving& properties) {
     setSpeed(properties.speed);
     setMaxSpeed(properties.maxSpeed);
 }
+
+QString core::Moving::getAttributeName() {
+    return attributeName;
+}
+
+QString core::Moving::attributeName = "moving";
+

@@ -3,9 +3,11 @@
 
 #include <QString>
 
+#include "attribute.h"
+
 namespace core {
 
-class Damaging {
+class Damaging : public Attribute {
   public:
     Damaging();
 
@@ -31,6 +33,10 @@ class Damaging {
     virtual void setBulletType(const QString& newType);
 
     virtual void set(const Damaging& properties);
+
+    static QString attributeName;
+
+    QString getAttributeName() override;
 
   private:
     int damage;

@@ -17,6 +17,8 @@ class Building : public Object, public Damageable {
                       float rotationAngle = 0, const Damageable& damageableProperties = Damageable());
 
     QString getTypeName() override;
+
+    static QString typeName;
 };
 
 }  // namespace core
