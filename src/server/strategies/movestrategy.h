@@ -2,11 +2,12 @@
 #define MOVESTRATEGY_H
 
 #include "../controllers/databundle.h"
+#include "../../core/moving.h"
 #include "strategy.h"
 
 namespace server {
 
-class MoveStrategy : server::Strategy {
+class MoveStrategy : public server::Strategy {
   public:
     explicit MoveStrategy(core::Object* object, DataBundle& dataBundle);
 
@@ -16,11 +17,12 @@ class MoveStrategy : server::Strategy {
 
     static QString name;
 
-  private:
+    ~MoveStrategy() override;
 
-    QVector2D* direction;
-    double* speed;
-    double* maxSpeed;
+  private:
+    void assign(DataBundle& dataBundle) override;
+
+    core::Moving* moving;
 };
 
 }

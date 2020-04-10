@@ -23,9 +23,12 @@ class UnitController : public Controller {
 
     void setUnit(core::Unit* unit);
 
+    DataBundle createDataBundle() override;
+
   private:
 
     core::Unit* unit;
+
 };
 
 }

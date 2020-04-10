@@ -8,6 +8,18 @@ bool server::Strategy::isPaused() const {
     return paused;
 }
 
-void server::Strategy::setPaused(bool paused) {
-    Strategy::paused = paused;
+server::Strategy::Strategy(core::Object* object) : object(object) {}
+
+void server::Strategy::pause() {
+    if (paused) {
+        return;
+    }
+    paused = true;
+}
+
+void server::Strategy::resume() {
+    if (!paused) {
+        return;
+    }
+    paused = false;
 }

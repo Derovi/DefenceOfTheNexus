@@ -31,3 +31,9 @@ void server::UnitController::setUnit(core::Unit* unit) {
 core::Object* server::UnitController::getObject() {
     return unit;
 }
+
+server::DataBundle server::UnitController::createDataBundle() {
+    DataBundle dataBundle;
+    //dataBundle.registerVariable("moving", &moving);
+    return dataBundle;
+}

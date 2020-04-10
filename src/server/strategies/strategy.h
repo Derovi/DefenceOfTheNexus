@@ -11,17 +11,23 @@ namespace server {
 
 class Strategy {
   public:
-    Strategy() = default;
+    explicit Strategy(core::Object*);
+
+    virtual ~Strategy() = 0;
 
     virtual void tick(core::GameWorld* world, double timeDelta) = 0;
 
     virtual QString getName() = 0;
 
+    virtual void assign(DataBundle& dataBundle) = 0;
+
     core::Object* getObject() const;
 
     bool isPaused() const;
 
-    void setPaused(bool paused);
+    virtual void pause();
+
+    virtual void resume();
 
   private:
 

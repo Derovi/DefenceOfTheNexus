@@ -14,9 +14,19 @@ void utils::Factory::registerController(const QString& typeName,
     controllerCreators.insert(typeName, creator);
 }
 
+server::Strategy*
+utils::Factory::createStrategy(const QString& strategyName, core::Object* object,
+                               server::DataBundle& dataBundle) {
+    if (object == nullptr || !strategyCreators.contains(strategyName)) {
+        return nullptr;
+    }
+    return strategyCreators[strategyName](object, dataBundle);
+}
+
 void utils::Factory::registerStrategy(const QString& strategyName, std::function<server::Strategy*(
-        server::Controller*)> creator) {
+        core::Object*, server::DataBundle&)> creator) {
     strategyCreators.insert(strategyName, creator);
 }
 
-QHash<QString, std::function<server::Controller*(core::Object*)>> utils::Factory::controllerCreators;
+QHash<QString, std::function<server::Controller*(
+        core::Object*)>> utils::Factory::controllerCreators;

@@ -24,10 +24,6 @@ class DataBundle {
     QHash<QString, void*> data;
 };
 
-DataBundle::~DataBundle() {
-    // bundle mustn't delete variables!
-}
-
 template<class T>
 void DataBundle::registerVariable(const QString& name, T* variable) {
     data.insert(name, variable);
@@ -41,6 +37,7 @@ bool DataBundle::assign(const QString& name, T*& variable) {
     }
     T* foundVariable = reinterpret_cast<T*>(data[name]);
     variable = foundVariable;
+    return true;
 }
 
 }

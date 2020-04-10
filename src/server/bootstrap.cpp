@@ -4,6 +4,7 @@
 
 #include "../utils/factory.h"
 #include "../core/command.h"
+#include "strategies/movestrategy.h"
 
 #include "engine.h"
 #include "server.h"
@@ -21,9 +22,11 @@ void registerGameObjects() {
 }
 
 void registerStrategies() {
-    utils::Factory::registerStrategy("moveStrategy", [](server::Controller* controller)) {
-        return server::
-    }
+    utils::Factory::registerStrategy("moveStrategy",
+                                     [](core::Object* object, server::DataBundle& dataBundle) {
+                                         return static_cast<server::Strategy*>(new server::MoveStrategy(
+                                                 object, dataBundle));
+                                     });
 }
 
 void runTest() {

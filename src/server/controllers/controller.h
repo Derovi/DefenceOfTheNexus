@@ -35,7 +35,9 @@ class Controller {
 
     void pauseStrategies(const QStringList& strategyNames);
 
-    const QHash<QString, Strategy>& getStrategies() const;
+    virtual DataBundle createDataBundle() = 0;
+
+    const QHash<QString, Strategy*>& getStrategies() const;
 
   private:
     QHash<QString, Strategy*> strategies;
