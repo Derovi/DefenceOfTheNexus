@@ -19,9 +19,9 @@ void registerGameObjects() {
 
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
-                                     [](core::Object* object, server::DataBundle& dataBundle) {
+                                     [](core::Object* object) {
                                          return static_cast<server::Strategy*>(new server::MoveStrategy(
-                                                 object, dataBundle));
+                                                 object));
                                      });
 }
 

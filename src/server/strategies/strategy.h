@@ -27,8 +27,6 @@ class Strategy {
 
     core::Object* getObject() const;
 
-    bool isPaused() const;
-
   private:
 
     core::Object* object;

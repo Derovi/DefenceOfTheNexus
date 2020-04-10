@@ -3,9 +3,6 @@
 
 #include "../../utils/factory.h"
 
-#include "controller.h"
-#include "databundle.h"
-
 server::Controller::Controller(core::Object* object): object(object) {
     addStrategies(object->getStrategies());
 }
@@ -31,7 +28,7 @@ void server::Controller::addStrategies(const QStringList& strategyNames) {
         if (strategies.contains(strategyName)) {
             continue;
         }
-        Strategy* strategy = utils::Factory::createStrategy(strategyName, getObject(), dataBundle);
+        Strategy* strategy = utils::Factory::createStrategy(strategyName, getObject());
         if (strategy) {
             strategies.insert(strategyName, strategy);
         }

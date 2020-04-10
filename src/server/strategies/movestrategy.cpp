@@ -9,10 +9,7 @@ QString server::MoveStrategy::getName() {
     return name;
 }
 
-server::MoveStrategy::MoveStrategy(core::Object* object, server::DataBundle& dataBundle):
-        Strategy(object) {
-    assign(dataBundle);
-}
+server::MoveStrategy::MoveStrategy(core::Object* object) : Strategy(object) {}
 
 void server::MoveStrategy::assign(server::DataBundle& dataBundle) {
     dataBundle.assign("moving", moving);

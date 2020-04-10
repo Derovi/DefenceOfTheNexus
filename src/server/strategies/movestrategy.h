@@ -9,7 +9,7 @@ namespace server {
 
 class MoveStrategy : public server::Strategy {
   public:
-    explicit MoveStrategy(core::Object* object, DataBundle& dataBundle);
+    explicit MoveStrategy(core::Object* object);
 
     void tick(core::GameWorld* world, double timeDelta) override;
 

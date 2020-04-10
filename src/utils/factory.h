@@ -16,17 +16,15 @@ namespace utils {
 class Factory {
   public:
 
-    static server::Strategy* createStrategy(const QString& strategyName, core::Object* object,
-                                            server::DataBundle& dataBundle);
+    static server::Strategy* createStrategy(const QString& strategyName, core::Object* object);
 
     static void registerStrategy(
             const QString& strategyName,
-            std::function<server::Strategy*(core::Object*, server::DataBundle&)> creator);
+            std::function<server::Strategy*(core::Object*)> creator);
 
   private:
 
-    static QHash<QString, std::function<server::Strategy*(core::Object*,
-                                                          server::DataBundle&)>> strategyCreators;
+    static QHash<QString, std::function<server::Strategy*(core::Object*)>> strategyCreators;
 };
 
 }
