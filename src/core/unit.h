@@ -12,7 +12,7 @@
 namespace core {
 
 // typeName = "unit";
-class Unit : public Object, public Moving, public Damaging, public Damageable {
+class Unit : public Object {
   public:
     explicit Unit(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
                   float rotationAngle = 0,
@@ -23,6 +23,23 @@ class Unit : public Object, public Moving, public Damaging, public Damageable {
     QString getTypeName() override;
 
     static QString typeName;
+
+    Moving& getMoving();
+
+    void setMoving(const Moving& moving);
+
+    Damaging& getDamaging();
+
+    void setDamaging(const Damaging& damaging);
+
+    Damageable& getDamageable();
+
+    void setDamageable(const Damageable& damageable);
+
+  private:
+    Moving moving;
+    Damaging damaging;
+    Damageable damageable;
 };
 
 }  // namespace core

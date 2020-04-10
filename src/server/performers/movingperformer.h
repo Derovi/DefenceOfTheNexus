@@ -46,10 +46,10 @@ void server::MovingPerformer<T>::moveIfNoObstacles() {}
 
 template<class T>
 QPointF server::MovingPerformer<T>::getNextPosition()  {
-    double newX = object->getPosition().x() + object->getDirection().x() *
-                                              object->getSpeed() * timeDelta;
-    double newY = object->getPosition().y() + object->getDirection().y() *
-                                              object->getSpeed() * timeDelta;
+    double newX = object->getPosition().x() + object->getMoving().getDirection().x() *
+                                              object->getMoving().getSpeed() * timeDelta;
+    double newY = object->getPosition().y() + object->getMoving().getDirection().y() *
+                                              object->getMoving().getSpeed() * timeDelta;
     return QPointF(newX, newY);
 }
 
