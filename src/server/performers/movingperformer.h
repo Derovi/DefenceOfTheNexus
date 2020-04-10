@@ -8,49 +8,16 @@
 #include "../../core/object.h"
 #include "../../core/moving.h"
 
-namespace server {
+namespace server::moving_performer {
 
-template<class T>
-class MovingPerformer {
-  public:
-    MovingPerformer(core::GameWorld* gameWorld, T* object, double timeDelta);
-
-    void move();
-
-    void moveIfNoObstacles();
-
-    QPointF getNextPosition();
-
-  private:
-
-    core::GameWorld* gameWorld;
-    T* object;
-    double timeDelta;
-};
-
-}
-
-template<class T>
-server::MovingPerformer<T>::MovingPerformer(core::GameWorld* gameWorld, T* object,
-                                            double timeDelta) :
-        gameWorld(gameWorld), object(object), timeDelta(timeDelta) {}
-
-template<class T>
-void server::MovingPerformer<T>::move() {
-    object->setPosition(getNextPosition());
-}
+void move(core::Object* object, double timeDelta, const core::Moving& moving);
 
 // todo moveIfNoObstacles function
-template<class T>
-void server::MovingPerformer<T>::moveIfNoObstacles() {}
+void moveIfNoObstacles(core::Object* object, double timeDelta, core::GameWorld* gameWorld,
+                       core::Moving* moving);
 
-template<class T>
-QPointF server::MovingPerformer<T>::getNextPosition()  {
-    double newX = object->getPosition().x() + object->getMoving().getDirection().x() *
-                                              object->getMoving().getSpeed() * timeDelta;
-    double newY = object->getPosition().y() + object->getMoving().getDirection().y() *
-                                              object->getMoving().getSpeed() * timeDelta;
-    return QPointF(newX, newY);
+QPointF getNextPosition(core::Object* object, double timeDelta, const core::Moving& moving);
+
 }
 
 #endif //MOVINGPERFORMER_H

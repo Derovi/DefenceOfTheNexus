@@ -2,8 +2,7 @@
 #include "movestrategy.h"
 
 void server::MoveStrategy::tick(core::GameWorld* world, double timeDelta) {
-//    MovingPerformer movingPerformer(world, getObject(), timeDelta);
-//    movingPerformer.move();
+    moving_performer::move(getObject(), timeDelta, *moving);
 }
 
 QString server::MoveStrategy::getName() {
