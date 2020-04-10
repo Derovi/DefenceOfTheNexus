@@ -13,11 +13,11 @@ class Controller {
   public:
     Controller(core::Object* object);
 
-    virtual void tick(core::GameWorld* world, double timeDelta);
+    void tick(core::GameWorld* world, double timeDelta);
 
-    virtual core::Object* getObject();
+    core::Object* getObject();
 
-    virtual ~Controller() = default;
+    ~Controller() = default;
 
     void addStrategy(const QString& strategyName);
 
@@ -26,8 +26,6 @@ class Controller {
     void addStrategies(const QStringList& strategyNames);
 
     void removeStrategies(const QStringList& strategyNames);
-
-    virtual DataBundle createDataBundle();
 
     const QHash<QString, Strategy*>& getStrategies() const;
 
@@ -38,6 +36,8 @@ class Controller {
     QHash<QString, Strategy*> strategies;
     QLinkedList<Strategy*> strategiesByPriority;
     core::Object* object;
+
+    DataBundle createDataBundle();
 
     void prepare();
 

@@ -2,6 +2,7 @@
 #include <QVector>
 
 #include "../../utils/factory.h"
+#include "../../core/attribute.h"
 
 server::Controller::Controller(core::Object* object): object(object) {
     addStrategies(object->getStrategies());
@@ -20,10 +21,6 @@ void server::Controller::removeStrategy(const QString& strategyName) {
 }
 
 void server::Controller::addStrategies(const QStringList& strategyNames) {
-    DataBundle dataBundle = createDataBundle();
-    for (Strategy* strategy : strategies) {
-        strategy->assign(dataBundle);
-    }
     for (const QString& strategyName : strategyNames) {
         if (strategies.contains(strategyName)) {
             continue;
@@ -34,6 +31,10 @@ void server::Controller::addStrategies(const QStringList& strategyNames) {
         }
     }
     prepare();
+    DataBundle dataBundle = createDataBundle();
+    for (Strategy* strategy : strategiesByPriority) {
+        strategy->assign(dataBundle);
+    }
 }
 
 void server::Controller::removeStrategies(const QStringList& strategyNames) {
@@ -45,6 +46,10 @@ void server::Controller::removeStrategies(const QStringList& strategyNames) {
         strategies.remove(strategyName);
     }
     prepare();
+    DataBundle dataBundle = createDataBundle();
+    for (Strategy* strategy : strategiesByPriority) {
+        strategy->assign(dataBundle);
+    }
 }
 
 core::Object* server::Controller::getObject() {
@@ -58,7 +63,11 @@ void server::Controller::tick(core::GameWorld* world, double timeDelta) {
 }
 
 server::DataBundle server::Controller::createDataBundle() {
-    return server::DataBundle();
+    DataBundle dataBundle;
+    for (core::Attribute* attribute : object->getAttributes()) {
+        dataBundle.assign(attribute->getAttributeName(), attribute);
+    }
+    return dataBundle;
 }
 
 const QLinkedList<server::Strategy*>& server::Controller::getStrategiesByPriority() const {
