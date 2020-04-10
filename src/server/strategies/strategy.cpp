@@ -23,3 +23,5 @@ void server::Strategy::resume() {
     }
     paused = false;
 }
+
+server::Strategy::~Strategy() = default;

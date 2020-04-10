@@ -17,7 +17,7 @@ class MoveStrategy : public server::Strategy {
 
     static QString name;
 
-    ~MoveStrategy() override;
+    ~MoveStrategy();
 
   private:
     void assign(DataBundle& dataBundle) override;

@@ -13,7 +13,7 @@ class Strategy {
   public:
     explicit Strategy(core::Object*);
 
-    virtual ~Strategy() = 0;
+    ~Strategy();
 
     virtual void tick(core::GameWorld* world, double timeDelta) = 0;
 

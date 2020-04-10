@@ -21,7 +21,5 @@ void server::MoveStrategy::assign(server::DataBundle& dataBundle) {
     dataBundle.assign("moving", moving);
 }
 
-server::MoveStrategy::~MoveStrategy() {
-
-}
+server::MoveStrategy::~MoveStrategy() = default;
 

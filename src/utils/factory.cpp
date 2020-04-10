@@ -30,3 +30,6 @@ void utils::Factory::registerStrategy(const QString& strategyName, std::function
 
 QHash<QString, std::function<server::Controller*(
         core::Object*)>> utils::Factory::controllerCreators;
+
+QHash<QString, std::function<server::Strategy*(core::Object*,
+                                               server::DataBundle&)>> utils::Factory::strategyCreators;

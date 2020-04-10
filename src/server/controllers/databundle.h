@@ -10,8 +10,6 @@ class DataBundle {
   public:
     DataBundle() = default;
 
-    ~DataBundle();
-
     template<class T>
     void registerVariable(const QString& name, T* variable);
 
