@@ -3,12 +3,7 @@
 #include "../../utils/factory.h"
 
 #include "controller.h"
-#include "unitcontroller.h"
 #include "databundle.h"
-
-server::Controller* server::Controller::createController(core::Object* object) {
-    return utils::Factory::createController(object);
-}
 
 const QHash<QString, server::Strategy*>& server::Controller::getStrategies() const {
     return strategies;
@@ -72,4 +67,18 @@ void server::Controller::pauseStrategies(const QStringList& strategyNames) {
         }
         strategies[strategyName]->resume();
     }
+}
+
+server::Controller::Controller(core::Object* object) : object(object) {}
+
+core::Object* server::Controller::getObject() {
+    return object;
+}
+
+void server::Controller::tick(core::GameWorld* world, double timeDelta) {
+
+}
+
+server::DataBundle server::Controller::createDataBundle() {
+    return server::DataBundle();
 }

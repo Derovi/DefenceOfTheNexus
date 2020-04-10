@@ -1,5 +1,6 @@
 #include <utility>
 
+#include "attribute.h"
 #include "object.h"
 
 core::Object::Object(uint64_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
@@ -39,5 +40,21 @@ bool core::Object::isIntersect(const core::Object& object) const {
 
 void core::Object::setId(uint64_t newId) {
     id = newId;
+}
+
+QLinkedList<core::Attribute*>& core::Object::getAttributes() {
+    return attributes;
+}
+
+void core::Object::setAttributes(const QLinkedList<Attribute*>& attributes) {
+    Object::attributes = attributes;
+}
+
+QLinkedList<QString>& core::Object::getStrategies() {
+    return strategies;
+}
+
+void core::Object::setStrategies(const QLinkedList<QString>& strategies) {
+    Object::strategies = strategies;
 }
 

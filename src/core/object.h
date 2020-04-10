@@ -1,9 +1,12 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <QLinkedList>
 #include <QtGlobal>
 #include <QPointF>
 #include <QPolygonF>
+
+#include "attribute.h"
 
 namespace core {
 
@@ -36,11 +39,22 @@ class Object {
 
     bool isIntersect(const Object& object) const;
 
+    QLinkedList<Attribute*>& getAttributes();
+
+    void setAttributes(const QLinkedList<Attribute*>& attributes);
+
+    QLinkedList<QString>& getStrategies();
+
+    void setStrategies(const QLinkedList<QString>& strategies);
+
   private:
     uint64_t id;
     QPointF position;
     QPolygonF hitbox;
     float rotationAngle;
+
+    QLinkedList<Attribute*> attributes;
+    QLinkedList<QString> strategies;
 };
 
 }  // namespace core

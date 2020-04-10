@@ -3,13 +3,14 @@
 #include "../../core/gameworld.h"
 #include "../../core/object.h"
 
+#include "controller.h"
 #include "gameworldcontroller.h"
 
 // todo one controller for one object type
 
 server::GameWorldController::GameWorldController(core::GameWorld* gameWorld): gameWorld(gameWorld) {
     for (core::Object* object : gameWorld->getObjects()) {
-        controllers[object->getId()] = Controller::createController(object);
+        controllers[object->getId()] = new Controller(object);
     }
 }
 
@@ -29,7 +30,7 @@ void server::GameWorldController::setGameWorld(core::GameWorld* gameWorld) {
 
 void server::GameWorldController::addObject(core::Object* object) {
     gameWorld->getObjects()[object->getId()] = object;
-    controllers[object->getId()] = Controller::createController(object);
+    controllers[object->getId()] = new Controller(object);
 }
 
 void server::GameWorldController::removeObject(int64_t id) {

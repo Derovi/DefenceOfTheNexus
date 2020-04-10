@@ -11,11 +11,11 @@ namespace server {
 
 class Controller {
   public:
-    virtual void tick(core::GameWorld* world, double timeDelta) = 0;
+    Controller(core::Object* object);
 
-    virtual core::Object* getObject() = 0;
+    virtual void tick(core::GameWorld* world, double timeDelta);
 
-    static Controller* createController(core::Object* object);
+    virtual core::Object* getObject();
 
     virtual ~Controller() = default;
 
@@ -35,12 +35,14 @@ class Controller {
 
     void pauseStrategies(const QStringList& strategyNames);
 
-    virtual DataBundle createDataBundle() = 0;
+    virtual DataBundle createDataBundle();
 
     const QHash<QString, Strategy*>& getStrategies() const;
 
   private:
+
     QHash<QString, Strategy*> strategies;
+    core::Object* object;
 };
 
 }

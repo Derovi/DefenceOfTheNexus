@@ -10,14 +10,10 @@
 #include "server.h"
 
 #include "controllers/controller.h"
-#include "controllers/unitcontroller.h"
 #include "controllers/databundle.h"
 
 void registerGameObjects() {
     // unit
-    utils::Factory::registerController("unit", [](core::Object* object) {
-        return server::UnitController::create(object);
-    });
     //utils::Factory::registerSerializer("unit", );
 }
 
@@ -29,17 +25,10 @@ void registerStrategies() {
                                      });
 }
 
-void runTest() {
-    core::Unit unit(7);
-    server::Controller* controller = server::Controller::createController(&unit);
-    qDebug() << controller->getObject()->getId();
-}
-
 
 int main(int argc, char** argv) {
     registerGameObjects();
-    runTest();
-    return 0;
+    registerStrategies();
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);
     auto* server = new server::Server();
