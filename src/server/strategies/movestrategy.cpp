@@ -9,8 +9,6 @@ QString server::MoveStrategy::getName() {
     return name;
 }
 
-QString server::MoveStrategy::name = "moveStrategy";
-
 server::MoveStrategy::MoveStrategy(core::Object* object, server::DataBundle& dataBundle):
         Strategy(object) {
     assign(dataBundle);
@@ -20,5 +18,21 @@ void server::MoveStrategy::assign(server::DataBundle& dataBundle) {
     dataBundle.assign("moving", moving);
 }
 
+QStringList server::MoveStrategy::getRequiredAttributes() {
+    return requiredAttributes;
+}
+
+QStringList server::MoveStrategy::getStartAfter() {
+    return startAfter;
+}
+
 server::MoveStrategy::~MoveStrategy() = default;
+
+QString server::MoveStrategy::name = "moveStrategy";
+
+const QStringList server::MoveStrategy::requiredAttributes = {"moving"};
+
+const QStringList server::MoveStrategy::startAfter = {};
+
+
 

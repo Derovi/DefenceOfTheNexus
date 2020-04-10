@@ -4,24 +4,14 @@ core::Object* server::Strategy::getObject() const {
     return object;
 }
 
-bool server::Strategy::isPaused() const {
-    return paused;
-}
-
 server::Strategy::Strategy(core::Object* object) : object(object) {}
 
-void server::Strategy::pause() {
-    if (paused) {
-        return;
-    }
-    paused = true;
+QStringList server::Strategy::getRequiredAttributes() {
+    return QStringList();
 }
 
-void server::Strategy::resume() {
-    if (!paused) {
-        return;
-    }
-    paused = false;
+QStringList server::Strategy::getStartAfter() {
+    return QStringList();
 }
 
 server::Strategy::~Strategy() = default;

@@ -50,11 +50,20 @@ void core::Object::setAttributes(const QLinkedList<Attribute*>& attributes) {
     Object::attributes = attributes;
 }
 
-QLinkedList<QString>& core::Object::getStrategies() {
+QStringList& core::Object::getStrategies() {
     return strategies;
 }
 
-void core::Object::setStrategies(const QLinkedList<QString>& strategies) {
+void core::Object::setStrategies(const QStringList& strategies) {
     Object::strategies = strategies;
+}
+
+bool core::Object::hasAttribute(const QString& name) {
+    for (Attribute* attribute : attributes) {
+        if (attribute->getAttributeName() == name) {
+            return true;
+        }
+    }
+    return false;
 }
 

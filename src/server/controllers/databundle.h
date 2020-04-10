@@ -30,10 +30,9 @@ void DataBundle::registerVariable(const QString& name, T* variable) {
 template<class T>
 bool DataBundle::assign(const QString& name, T*& variable) {
     if (!data.contains(name)) {
-        registerVariable(name, variable);
-        return true;
+        return false;
     }
-    T* foundVariable = reinterpret_cast<T*>(data[name]);
+    T* foundVariable = static_cast<T*>(data[name]);
     variable = foundVariable;
     return true;
 }

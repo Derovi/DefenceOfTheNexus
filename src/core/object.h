@@ -5,6 +5,7 @@
 #include <QtGlobal>
 #include <QPointF>
 #include <QPolygonF>
+#include <QtCore/QStringList>
 
 #include "attribute.h"
 
@@ -43,9 +44,11 @@ class Object {
 
     void setAttributes(const QLinkedList<Attribute*>& attributes);
 
-    QLinkedList<QString>& getStrategies();
+    QStringList& getStrategies();
 
-    void setStrategies(const QLinkedList<QString>& strategies);
+    void setStrategies(const QStringList& strategies);
+
+    bool hasAttribute(const QString& name);
 
   private:
     uint64_t id;
@@ -54,7 +57,8 @@ class Object {
     float rotationAngle;
 
     QLinkedList<Attribute*> attributes;
-    QLinkedList<QString> strategies;
+    QStringList strategies;
+
 };
 
 }  // namespace core

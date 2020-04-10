@@ -19,21 +19,19 @@ class Strategy {
 
     virtual QString getName() = 0;
 
+    virtual QStringList getRequiredAttributes();
+
+    virtual QStringList getStartAfter();
+
     virtual void assign(DataBundle& dataBundle) = 0;
 
     core::Object* getObject() const;
 
     bool isPaused() const;
 
-    virtual void pause();
-
-    virtual void resume();
-
   private:
 
     core::Object* object;
-
-    bool paused = false;
 };
 
 }

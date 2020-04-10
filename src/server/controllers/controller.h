@@ -23,26 +23,27 @@ class Controller {
 
     void removeStrategy(const QString& strategyName);
 
-    void resumeStrategy(const QString& strategyName);
-
-    void pauseStrategy(const QString& strategyName);
-
     void addStrategies(const QStringList& strategyNames);
 
     void removeStrategies(const QStringList& strategyNames);
-
-    void resumeStrategies(const QStringList& strategyNames);
-
-    void pauseStrategies(const QStringList& strategyNames);
 
     virtual DataBundle createDataBundle();
 
     const QHash<QString, Strategy*>& getStrategies() const;
 
+    const QLinkedList<Strategy*>& getStrategiesByPriority() const;
+
   private:
 
     QHash<QString, Strategy*> strategies;
+    QLinkedList<Strategy*> strategiesByPriority;
     core::Object* object;
+
+    void prepare();
+
+    void prepareStrategy(server::Strategy* strategy,
+                    QHash<QString, int>& nameToVisitIteration,
+                    int currentIteration);
 };
 
 }

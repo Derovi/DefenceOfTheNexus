@@ -19,10 +19,19 @@ class MoveStrategy : public server::Strategy {
 
     ~MoveStrategy();
 
+    QStringList getRequiredAttributes() override;
+
+    QStringList getStartAfter() override;
+
   private:
     void assign(DataBundle& dataBundle) override;
 
+    static const QStringList requiredAttributes;
+
+    static const QStringList startAfter;
+
     core::Moving* moving;
+
 };
 
 }
