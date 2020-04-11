@@ -63,7 +63,6 @@ class Object {
 
     QLinkedList<Attribute*> attributes;
     QStringList strategies;
-
 };
 
 }  // namespace core
