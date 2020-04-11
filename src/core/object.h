@@ -15,7 +15,7 @@ class Object {
   public:
     Object() = delete;
 
-    explicit Object(uint64_t id, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
+    explicit Object(uint64_t id, QString typeName, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
                     float rotationAngle = 0);
 
     virtual ~Object() = default;
@@ -28,22 +28,25 @@ class Object {
 
     float getRotationAngle() const;
 
-    virtual void setPosition(const QPointF& newPosition);
+    void setPosition(const QPointF& newPosition);
 
-    virtual void setId(uint64_t newId);
+    void setId(uint64_t newId);
 
-    virtual void setHitbox(const QPolygonF& hitbox);
+    void setHitbox(const QPolygonF& hitbox);
 
-    virtual void setRotationAngle(float angle);
+    void setRotationAngle(float angle);
 
-    virtual QString getTypeName();
+    const QString& getTypeName() const;
+
+    void setTypeName(const QString& typeName);
 
     bool isIntersect(const Object& object) const;
 
     QLinkedList<Attribute*>& getAttributes();
 
-    void setAttributes(const QLinkedList<Attribute*>& attributes);
+    const QLinkedList<Attribute*>& getAttributes() const;
 
+    void setAttributes(const QLinkedList<Attribute*>& attributes);
     QStringList& getStrategies();
 
     void setStrategies(const QStringList& strategies);
@@ -51,6 +54,7 @@ class Object {
     bool hasAttribute(const QString& name);
 
   private:
+    QString typeName;
     uint64_t id;
     QPointF position;
     QPolygonF hitbox;
@@ -58,7 +62,6 @@ class Object {
 
     QLinkedList<Attribute*> attributes;
     QStringList strategies;
-
 };
 
 }  // namespace core

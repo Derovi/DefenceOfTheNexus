@@ -88,29 +88,29 @@ void server::Controller::prepare() {
 void server::Controller::prepareStrategy(server::Strategy* strategy,
                                         QHash<QString, int>& nameToVisitIteration,
                                         int currentIteration) {
-    bool ok = true;
+    bool isStrategyDependenciesCorrect = true;
     for (const QString& attribute : strategy->getRequiredAttributes()) {
         if (!object->hasAttribute(attribute)) {
-            ok = false;
+            isStrategyDependenciesCorrect = false;
             break;
         }
     }
-    if (ok) {
+    if (isStrategyDependenciesCorrect) {
         for (QString& needed : strategy->getStartAfter()) {
             if (!nameToVisitIteration.contains(needed)) {
-                ok = false;
+                isStrategyDependenciesCorrect = false;
                 break;
             }
             if (nameToVisitIteration[needed] == 0) {
                 prepareStrategy(strategies[needed], nameToVisitIteration, currentIteration);
             }
             if (nameToVisitIteration[needed] != currentIteration) {
-                ok = false;
+                isStrategyDependenciesCorrect = false;
                 break;
             }
         }
     }
-    if (ok) {
+    if (isStrategyDependenciesCorrect) {
         strategiesByPriority.push_back(strategy);
         nameToVisitIteration[strategy->getName()] = currentIteration;
     } else {

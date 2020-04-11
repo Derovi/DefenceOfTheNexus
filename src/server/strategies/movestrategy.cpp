@@ -30,6 +30,3 @@ QString server::MoveStrategy::name = "moveStrategy";
 const QStringList server::MoveStrategy::requiredAttributes = {"moving"};
 
 const QStringList server::MoveStrategy::startAfter = {};
-
-
-
