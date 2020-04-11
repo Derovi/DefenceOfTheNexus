@@ -3,8 +3,10 @@
 #include "attribute.h"
 #include "object.h"
 
-core::Object::Object(uint64_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
-        id(id), position(position), hitbox(std::move(hitbox)), rotationAngle(rotationAngle) {}
+core::Object::Object(uint64_t id, QString typeName, QPointF position, QPolygonF hitbox,
+                     float rotationAngle):
+        id(id), typeName(typeName), position(position), hitbox(std::move(hitbox)),
+        rotationAngle(rotationAngle) {}
 
 uint64_t core::Object::getId() const {
     return id;
@@ -67,3 +69,14 @@ bool core::Object::hasAttribute(const QString& name) {
     return false;
 }
 
+const QString& core::Object::getTypeName() const {
+    return typeName;
+}
+
+void core::Object::setTypeName(const QString& typeName) {
+    Object::typeName = typeName;
+}
+
+const QLinkedList<core::Attribute*>& core::Object::getAttributes() const {
+    return attributes;
+}

@@ -4,6 +4,8 @@
 
 #include "../utils/factory.h"
 #include "../core/command.h"
+#include "../core/damageable.h"
+#include "../core/serializer.h"
 #include "strategies/movestrategy.h"
 
 #include "engine.h"
@@ -25,6 +27,11 @@ void registerStrategies() {
                                      });
 }
 
+void registerAttributes() {
+    utils::Factory::registerAttribute(core::Damageable::attributeName,
+                                      core::Serializer::damageableSerializer,
+                                      core::Serializer::damageableDeserializer);
+}
 
 int main(int argc, char** argv) {
     registerGameObjects();
