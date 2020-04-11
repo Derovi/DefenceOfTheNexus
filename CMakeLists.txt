@@ -36,6 +36,8 @@ add_executable(defenceofnexus
         src/server/gameconfiguration.cpp
         src/server/server.cpp
         src/core/serializer.cpp
+        tests.cpp
+        gtest/gtest-all.cc
         src/utils/factory.cpp src/utils/factory.h src/server/controllers/databundle.h src/server/strategies/strategy.cpp src/server/strategies/strategy.h src/server/strategies/movestrategy.cpp src/server/strategies/movestrategy.h src/core/attribute.h src/server/performers/movingperformer.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
