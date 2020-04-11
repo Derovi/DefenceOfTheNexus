@@ -31,10 +31,6 @@ class GameWorld {
 
   private:
 
-    const QMap<int64_t, core::Object*> getObjects() const;
-
-    void setObjects(const QMap<int64_t, core::Object*> objects);
-
     int height;
     int width;
 

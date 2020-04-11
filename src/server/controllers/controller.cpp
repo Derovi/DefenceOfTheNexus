@@ -65,7 +65,7 @@ void server::Controller::tick(core::GameWorld* world, double timeDelta) {
 server::DataBundle server::Controller::createDataBundle() {
     DataBundle dataBundle;
     for (core::Attribute* attribute : object->getAttributes()) {
-        dataBundle.assign(attribute->getAttributeName(), attribute);
+        dataBundle.registerVariable(attribute->getAttributeName(), attribute);
     }
     return dataBundle;
 }
