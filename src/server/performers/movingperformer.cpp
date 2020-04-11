@@ -5,10 +5,34 @@ server::moving_performer::move(core::Object* object, double timeDelta, const cor
     object->setPosition(getNextPosition(object, timeDelta, moving));
 }
 
-// todo moveIfNoObstacles function
 void server::moving_performer::moveIfNoObstacles(core::Object* object, double timeDelta,
                                                  core::GameWorld* gameWorld,
-                                                 core::Moving* moving) {}
+                                                 core::Moving* moving) {
+    bool isOk = true;
+
+    QPolygonF hitbox = object->getHitbox();
+
+    QPointF nextPosition = server::moving_performer::getNextPosition(object, timeDelta, *moving);
+    for (auto& i:hitbox) {
+        i.setX(i.x() + nextPosition.x());
+        i.setY(i.y() + nextPosition.y());
+    }
+
+    for (auto i:gameWorld->getObjects()) {
+        QPolygonF gameObject = i->getHitbox();
+        for (auto& j : gameObject) {
+            j.setX(j.x() + i->getPosition().x());
+            j.setY(j.y() + i->getPosition().y());
+        }
+        if (!gameObject.intersected(hitbox).isEmpty()) {
+            isOk = false;
+            break;
+        }
+    }
+    if (isOk) {
+        object->setPosition(nextPosition);
+    }
+}
 
 QPointF server::moving_performer::getNextPosition(core::Object* object, double timeDelta,
                                                   const core::Moving& moving) {

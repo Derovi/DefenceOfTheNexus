@@ -12,7 +12,6 @@ namespace server::moving_performer {
 
 void move(core::Object* object, double timeDelta, const core::Moving& moving);
 
-// todo moveIfNoObstacles function
 void moveIfNoObstacles(core::Object* object, double timeDelta, core::GameWorld* gameWorld,
                        core::Moving* moving);
 
