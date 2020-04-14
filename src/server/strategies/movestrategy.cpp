@@ -1,7 +1,7 @@
 #include "../performers/movingperformer.h"
 #include "movestrategy.h"
 
-void server::MoveStrategy::tick(core::GameWorld* world, double timeDelta) {
+void server::MoveStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
     moving_performer::move(getObject(), timeDelta, *moving);
 }
 
@@ -9,7 +9,7 @@ QString server::MoveStrategy::getName() {
     return name;
 }
 
-server::MoveStrategy::MoveStrategy(core::Object* object) : Strategy(object) {}
+server::MoveStrategy::MoveStrategy(std::shared_ptr<core::Object> object) : Strategy(object) {}
 
 void server::MoveStrategy::assign(server::DataBundle& dataBundle) {
     dataBundle.assign("moving", moving);

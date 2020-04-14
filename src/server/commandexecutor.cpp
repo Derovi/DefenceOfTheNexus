@@ -1,3 +1,4 @@
+#include <memory>
 #include <QDebug>
 
 #include "../core/gameworld.h"
@@ -5,7 +6,8 @@
 
 #include "commandexecutor.h"
 
-server::CommandExecutor::CommandExecutor(core::GameWorld* gameWorld): gameWorld(gameWorld) {
+server::CommandExecutor::CommandExecutor(std::shared_ptr<core::GameWorld> gameWorld):
+        gameWorld(gameWorld) {
     registerCommands();
 }
 
@@ -60,17 +62,23 @@ bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
         return false;
     }
 
-    auto* movingObject = dynamic_cast<core::Moving*>(gameWorld->getObjects()[objectId]);
+    if (!gameWorld->getObjects()[objectId]->hasAttribute("moving")) {
+        return false;
+    }
+
+    std::shared_ptr<core::Moving> moving = std::dynamic_pointer_cast<core::Moving>(
+            gameWorld->getObjects()[objectId]->getAttribute("moving"));
+
     // check of object is moving.
-    if (!movingObject) {
+    if (!moving) {
         return false;
     }
 
     // check for permission, NOT READY YET
-    if (newSpeed < 0 && newSpeed > movingObject->getMaxSpeed()) {
+    if (newSpeed < 0 && newSpeed > moving->getMaxSpeed()) {
         return false;
     }
-    movingObject->setSpeed(newSpeed);
+    moving->setSpeed(newSpeed);
     return true;
 }
 

@@ -12,15 +12,15 @@ namespace server {
 class GameWorldController {
 
   public:
-    explicit GameWorldController(core::GameWorld* gameWorld);
+    explicit GameWorldController(std::shared_ptr<core::GameWorld> gameWorld);
 
     void tick(double deltaTime);
 
-    core::GameWorld* getGameWorld();
+    std::shared_ptr<core::GameWorld> getGameWorld();
 
-    void setGameWorld(core::GameWorld* gameWorld);
+    void setGameWorld(std::shared_ptr<core::GameWorld> gameWorld);
 
-    void addObject(core::Object* object);
+    void addObject(std::shared_ptr<core::Object> object);
 
     void removeObject(int64_t id);
 
@@ -28,10 +28,10 @@ class GameWorldController {
 
   private:
 
-    core::GameWorld* gameWorld;
+    std::shared_ptr<core::GameWorld> gameWorld;
 
     // id, controller
-    QHash<int64_t, Controller*> controllers;
+    QHash<int64_t, std::shared_ptr<Controller>> controllers;
 };
 
 }

@@ -14,16 +14,12 @@
 #include "controllers/controller.h"
 #include "controllers/databundle.h"
 
-void registerGameObjects() {
-    // unit
-    //utils::Factory::registerSerializer("unit", );
-}
-
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
-                                     [](core::Object* object) {
-                                         return static_cast<server::Strategy*>(new server::MoveStrategy(
-                                                 object));
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                                 static_cast<server::Strategy*>(
+                                                         new server::MoveStrategy(object)));
                                      });
 }
 
@@ -31,10 +27,22 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Damageable::attributeName,
                                       core::Serializer::damageableSerializer,
                                       core::Serializer::damageableDeserializer);
+
+    utils::Factory::registerAttribute(core::Moving::attributeName,
+                                      core::Serializer::movingSerializer,
+                                      core::Serializer::movingDeserializer);
+
+    utils::Factory::registerAttribute(core::Damaging::attributeName,
+                                      core::Serializer::damagingSerializer,
+                                      core::Serializer::damagingDeserializer);
+
+    utils::Factory::registerAttribute(core::Resource::attributeName,
+                                      core::Serializer::resourceSerializer,
+                                      core::Serializer::resourceDeserializer);
 }
 
 int main(int argc, char** argv) {
-    registerGameObjects();
+    registerAttributes();
     registerStrategies();
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);

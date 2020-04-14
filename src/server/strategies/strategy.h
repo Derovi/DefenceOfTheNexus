@@ -11,11 +11,11 @@ namespace server {
 
 class Strategy {
   public:
-    explicit Strategy(core::Object*);
+    explicit Strategy(std::shared_ptr<core::Object>);
 
     ~Strategy();
 
-    virtual void tick(core::GameWorld* world, double timeDelta) = 0;
+    virtual void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) = 0;
 
     virtual QString getName() = 0;
 
@@ -25,11 +25,11 @@ class Strategy {
 
     virtual void assign(DataBundle& dataBundle) = 0;
 
-    core::Object* getObject() const;
+    std::shared_ptr<core::Object> getObject() const;
 
   private:
 
-    core::Object* object;
+    std::shared_ptr<core::Object> object;
 };
 
 }

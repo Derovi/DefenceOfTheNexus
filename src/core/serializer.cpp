@@ -8,9 +8,10 @@ std::optional<QString> core::Serializer::serializeObject(const core::Object& obj
     return std::nullopt;
 }
 
-std::optional<QString> core::Serializer::serializeAttribute(const core::Attribute* attribute,
-                                                            std::function<std::optional<QJsonObject>(
-                                                                    const core::Attribute*)> serializer) {
+std::optional<QString>
+core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute> attribute,
+                                     std::function<std::optional<QJsonObject>(
+                                             const std::shared_ptr<core::Attribute>)> serializer) {
     return std::nullopt;
 }
 
@@ -22,9 +23,10 @@ std::optional<core::Object> core::Serializer::deserializeObject(const QString& s
     return std::nullopt;
 }
 
-std::optional<core::Attribute*> core::Serializer::deserializeAttribute(const QString& serialized,
-                                                                       std::function<std::optional<Attribute*>(
-                                                                               const QJsonObject&)> deserializer) {
+std::optional<std::shared_ptr<core::Attribute>>
+core::Serializer::deserializeAttribute(const QString& serialized,
+                                       std::function<std::optional<std::shared_ptr<Attribute>>(
+                                               const QJsonObject&)> deserializer) {
     return std::nullopt;
 }
 
@@ -40,20 +42,23 @@ std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object
     return std::nullopt;
 }
 
-std::optional<QJsonObject> core::Serializer::resourceSerializer(const core::Attribute* attribute) {
-    return std::nullopt;
-}
-
-std::optional<QJsonObject> core::Serializer::damagingSerializer(const core::Attribute* attribute) {
+std::optional<QJsonObject>
+core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute> attribute) {
     return std::nullopt;
 }
 
 std::optional<QJsonObject>
-core::Serializer::damageableSerializer(const core::Attribute* attribute) {
+core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute> attribute) {
     return std::nullopt;
 }
 
-std::optional<QJsonObject> core::Serializer::movingSerializer(const core::Attribute* moving) {
+std::optional<QJsonObject>
+core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute> attribute) {
+    return std::nullopt;
+}
+
+std::optional<QJsonObject>
+core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute> moving) {
     return std::nullopt;
 }
 
@@ -61,22 +66,22 @@ std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObje
     return std::nullopt;
 }
 
-std::optional<core::Attribute*>
+std::optional<std::shared_ptr<core::Attribute>>
 core::Serializer::resourceDeserializer(const QJsonObject& serialized) {
     return nullptr;
 }
 
-std::optional<core::Attribute*>
+std::optional<std::shared_ptr<core::Attribute>>
 core::Serializer::damagingDeserializer(const QJsonObject& serialized) {
     return nullptr;
 }
 
-std::optional<core::Attribute*>
+std::optional<std::shared_ptr<core::Attribute>>
 core::Serializer::damageableDeserializer(const QJsonObject& serialized) {
     return nullptr;
 }
 
-std::optional<core::Attribute*>
+std::optional<std::shared_ptr<core::Attribute>>
 core::Serializer::movingDeserializer(const QJsonObject& serialized) {
     return nullptr;
 }

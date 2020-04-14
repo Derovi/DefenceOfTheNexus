@@ -10,7 +10,7 @@
 
 namespace server::world_generator {
 
-core::GameWorld* generate(const GameConfiguration& configuration);
+std::shared_ptr<core::GameWorld> generate(const GameConfiguration& configuration);
 
 }
 

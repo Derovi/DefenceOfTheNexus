@@ -18,15 +18,15 @@ class Engine {
 
     void start();
 
-    core::GameWorld* getGameWorld();
+    std::shared_ptr<core::GameWorld> getGameWorld();
 
-    GameWorldController* getGameWorldController();
+    std::shared_ptr<GameWorldController> getGameWorldController();
 
     const GameConfiguration& getGameConfiguration() const;
 
-    QThread* getMainThread() const;
+    std::shared_ptr<QThread> getMainThread() const;
 
-    QQueue<core::Command>* getCommandQueue() const;
+    std::shared_ptr<QQueue<core::Command>> getCommandQueue() const;
 
     void finish();
 
@@ -35,15 +35,15 @@ class Engine {
     ~Engine();
 
   private:
-    core::GameWorld* gameWorld;
-    GameWorldController* gameWorldController;
+    std::shared_ptr<core::GameWorld> gameWorld;
+    std::shared_ptr<GameWorldController> gameWorldController;
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
-    QThread* mainThread;
+    std::shared_ptr<QThread> mainThread;
     std::atomic<bool> finished;
 
     // todo fix race-condition
-    QQueue<core::Command>* commandQueue;
+    std::shared_ptr<QQueue<core::Command>> commandQueue;
 
     void executeCommands();
 };

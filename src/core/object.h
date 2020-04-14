@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+#include <memory>
+
 #include <QLinkedList>
 #include <QtGlobal>
 #include <QPointF>
@@ -42,16 +44,19 @@ class Object {
 
     bool isIntersect(const Object& object) const;
 
-    QLinkedList<Attribute*>& getAttributes();
+    QLinkedList<std::shared_ptr<Attribute>>& getAttributes();
 
-    const QLinkedList<Attribute*>& getAttributes() const;
+    const QLinkedList<std::shared_ptr<Attribute>>& getAttributes() const;
 
-    void setAttributes(const QLinkedList<Attribute*>& attributes);
+    void setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes);
+
     QStringList& getStrategies();
 
     void setStrategies(const QStringList& strategies);
 
     bool hasAttribute(const QString& name);
+
+    std::shared_ptr<core::Attribute> getAttribute(const QString& name);
 
   private:
     QString typeName;
@@ -60,7 +65,7 @@ class Object {
     QPolygonF hitbox;
     float rotationAngle;
 
-    QLinkedList<Attribute*> attributes;
+    QLinkedList<std::shared_ptr<Attribute>> attributes;
     QStringList strategies;
 };
 

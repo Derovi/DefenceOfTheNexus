@@ -14,13 +14,13 @@
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
         gameConfiguration(gameConfiguration) {
     gameWorld = world_generator::generate(gameConfiguration);
-    gameWorldController = new GameWorldController(gameWorld);
+    gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
     commandExecutor = CommandExecutor(gameWorld);
-    commandQueue = new QQueue<core::Command>();
+    commandQueue = std::shared_ptr<QQueue<core::Command>>(new QQueue<core::Command>());
 }
 
 void server::Engine::start() {
-    mainThread = QThread::create([&] {
+    mainThread = std::shared_ptr<QThread>(QThread::create([&] {
         // time when last tick execution was started
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
         while (true) {
@@ -42,15 +42,15 @@ void server::Engine::start() {
 
             lastTickStartTime = currentTickStartTime;
         }
-    });
+    }));
     mainThread->start();
 }
 
-core::GameWorld* server::Engine::getGameWorld() {
+std::shared_ptr<core::GameWorld> server::Engine::getGameWorld() {
     return gameWorld;
 }
 
-server::GameWorldController* server::Engine::getGameWorldController() {
+std::shared_ptr<server::GameWorldController> server::Engine::getGameWorldController() {
     return gameWorldController;
 }
 
@@ -58,7 +58,7 @@ const GameConfiguration& server::Engine::getGameConfiguration() const {
     return gameConfiguration;
 }
 
-QThread* server::Engine::getMainThread() const {
+std::shared_ptr<QThread> server::Engine::getMainThread() const {
     return mainThread;
 }
 
@@ -70,7 +70,7 @@ bool server::Engine::isFinished() const {
     return finished;
 }
 
-QQueue<core::Command>* server::Engine::getCommandQueue() const {
+std::shared_ptr<QQueue<core::Command>> server::Engine::getCommandQueue() const {
     return commandQueue;
 }
 
@@ -83,6 +83,4 @@ void server::Engine::executeCommands() {
 
 server::Engine::~Engine() {
     mainThread->quit();
-    delete gameWorld;
-    delete gameWorldController;
 }
