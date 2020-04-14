@@ -1,5 +1,6 @@
 #include <QDebug>
-
+#include <QVector>
+#include <QHash>
 #include "../../core/gameworld.h"
 #include "../../core/object.h"
 
@@ -15,8 +16,24 @@ server::GameWorldController::GameWorldController(core::GameWorld* gameWorld): ga
 }
 
 void server::GameWorldController::tick(double deltaTime) {
-    for (Controller* controller : controllers) {
-        controller->tick(gameWorld, deltaTime);
+    for (core::Object* object : gameWorld->getObjects()) {
+        if (!controllers.contains(object->getId())) {
+            controllers.insert(object->getId(), new Controller(object));
+        }
+    }
+
+    QVector<int> eraseList;
+
+    for (auto iterator = controllers.begin(); iterator != controllers.end(); ++iterator) {
+        if (iterator.value()->getObject() == nullptr) {
+            eraseList.push_back(iterator.key());
+        } else {
+            iterator.value()->tick(gameWorld, deltaTime);
+        }
+    }
+
+    for (int id : eraseList) {
+        controllers.remove(id);
     }
 }
 
