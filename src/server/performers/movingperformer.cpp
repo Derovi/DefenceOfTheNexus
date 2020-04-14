@@ -1,13 +1,15 @@
 #include "movingperformer.h"
 
 void
-server::moving_performer::move(core::Object* object, double timeDelta, const core::Moving& moving) {
+server::moving_performer::move(std::shared_ptr<core::Object> object, double timeDelta,
+                               const core::Moving& moving) {
     object->setPosition(getNextPosition(object, timeDelta, moving));
 }
 
-void server::moving_performer::moveIfNoObstacles(core::Object* object, double timeDelta,
-                                                 core::GameWorld* gameWorld,
-                                                 core::Moving* moving) {
+void
+server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+                                            std::shared_ptr<core::GameWorld> gameWorld,
+                                            std::shared_ptr<core::Moving> moving) {
     bool isOk = true;
 
     QPolygonF hitbox = object->getHitbox();
