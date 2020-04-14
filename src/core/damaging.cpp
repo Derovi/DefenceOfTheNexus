@@ -23,12 +23,20 @@ double core::Damaging::getAttackDelay() const {
     return attackDelay;
 }
 
+double core::Damaging::getCurrentDelay() const {
+    return currentDelay;
+}
+
 void core::Damaging::setAttackRadius(double radius) {
     attackRadius = radius;
 }
 
 void core::Damaging::setAttackDelay(double delay) {
     attackDelay = delay;
+}
+
+void core::Damaging::setCurrentDelay(double delay) {
+    currentDelay = delay;
 }
 
 void core::Damaging::setDamage(int newDamage) {
