@@ -16,15 +16,13 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
 
     QPointF nextPosition = server::moving_performer::getNextPosition(object, timeDelta, *moving);
     for (auto& i:hitbox) {
-        i.setX(i.x() + nextPosition.x());
-        i.setY(i.y() + nextPosition.y());
+        i += nextPosition;
     }
 
-    for (auto i:gameWorld->getObjects()) {
-        QPolygonF gameObject = i->getHitbox();
+    for (auto obj:gameWorld->getObjects()) {
+        QPolygonF gameObject = obj->getHitbox();
         for (auto& j : gameObject) {
-            j.setX(j.x() + i->getPosition().x());
-            j.setY(j.y() + i->getPosition().y());
+            j += obj->getPosition();
         }
         if (!gameObject.intersects(hitbox)) {
             isOk = false;
