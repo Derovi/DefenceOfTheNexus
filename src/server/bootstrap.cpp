@@ -14,17 +14,12 @@
 #include "controllers/controller.h"
 #include "controllers/databundle.h"
 
-void registerGameObjects() {
-    // unit
-    //utils::Factory::registerSerializer("unit", );
-}
-
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(new server::MoveStrategy(
-                                                         object)));
+                                                 static_cast<server::Strategy*>(
+                                                         new server::MoveStrategy(object)));
                                      });
 }
 
@@ -47,7 +42,7 @@ void registerAttributes() {
 }
 
 int main(int argc, char** argv) {
-    registerGameObjects();
+    registerAttributes();
     registerStrategies();
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);

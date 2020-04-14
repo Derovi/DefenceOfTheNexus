@@ -31,7 +31,6 @@ class MoveStrategy : public server::Strategy {
     static const QStringList startAfter;
 
     std::shared_ptr<core::Moving> moving;
-
 };
 
 }
