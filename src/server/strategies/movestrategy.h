@@ -9,9 +9,9 @@ namespace server {
 
 class MoveStrategy : public server::Strategy {
   public:
-    explicit MoveStrategy(core::Object* object);
+    explicit MoveStrategy(std::shared_ptr<core::Object> object);
 
-    void tick(core::GameWorld* world, double timeDelta) override;
+    void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) override;
 
     QString getName() override;
 
@@ -30,7 +30,7 @@ class MoveStrategy : public server::Strategy {
 
     static const QStringList startAfter;
 
-    core::Moving* moving;
+    std::shared_ptr<core::Moving> moving;
 
 };
 

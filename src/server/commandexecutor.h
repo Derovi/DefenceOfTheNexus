@@ -14,7 +14,7 @@ namespace server {
 
 class CommandExecutor {
   public:
-    explicit CommandExecutor(core::GameWorld* gameWorld = nullptr);
+    explicit CommandExecutor(std::shared_ptr<core::GameWorld> gameWorld = nullptr);
 
     bool executeCommand(const core::Command& command);
 
@@ -29,7 +29,7 @@ class CommandExecutor {
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
     QHash<QString, bool (CommandExecutor::*)(const QStringList&)> commands;
 
-    core::GameWorld* gameWorld;
+    std::shared_ptr<core::GameWorld> gameWorld;
 
     bool testCommand(const QStringList& arguments);
 

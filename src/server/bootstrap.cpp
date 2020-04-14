@@ -21,16 +21,17 @@ void registerGameObjects() {
 
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
-                                     [](core::Object* object) {
-                                         return static_cast<server::Strategy*>(new server::MoveStrategy(
-                                                 object));
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                                 static_cast<server::Strategy*>(new server::MoveStrategy(
+                                                         object)));
                                      });
 }
 
 void registerAttributes() {
-    utils::Factory::registerAttribute(core::Damageable::attributeName,
+    /*utils::Factory::registerAttribute(core::Damageable::attributeName,
                                       core::Serializer::damageableSerializer,
-                                      core::Serializer::damageableDeserializer);
+                                      core::Serializer::damageableDeserializer);*/
 }
 
 int main(int argc, char** argv) {

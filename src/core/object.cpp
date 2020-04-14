@@ -44,11 +44,11 @@ void core::Object::setId(uint64_t newId) {
     id = newId;
 }
 
-QLinkedList<core::Attribute*>& core::Object::getAttributes() {
+QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() {
     return attributes;
 }
 
-void core::Object::setAttributes(const QLinkedList<Attribute*>& attributes) {
+void core::Object::setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes) {
     Object::attributes = attributes;
 }
 
@@ -61,7 +61,7 @@ void core::Object::setStrategies(const QStringList& strategies) {
 }
 
 bool core::Object::hasAttribute(const QString& name) {
-    for (Attribute* attribute : attributes) {
+    for (std::shared_ptr<Attribute> attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return true;
         }
@@ -77,6 +77,15 @@ void core::Object::setTypeName(const QString& typeName) {
     Object::typeName = typeName;
 }
 
-const QLinkedList<core::Attribute*>& core::Object::getAttributes() const {
+const QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() const {
     return attributes;
+}
+
+std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name) {
+    for (std::shared_ptr<Attribute> attribute : attributes) {
+        if (attribute->getAttributeName() == name) {
+            return attribute;
+        }
+    }
+    return nullptr;
 }

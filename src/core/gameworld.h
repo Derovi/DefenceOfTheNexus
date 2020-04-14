@@ -1,6 +1,7 @@
 #ifndef GAMEWORLD_H
 #define GAMEWORLD_H
 
+#include <memory>
 #include <QMap>
 #include <QtCore/QHash>
 
@@ -23,9 +24,9 @@ class GameWorld {
 
     void setResources(const QVector<core::Resource>& resources);
 
-    QHash<int64_t, core::Object*>& getObjects();
+    QHash<int64_t, std::shared_ptr<core::Object>>& getObjects();
 
-    void setObjects(const QHash<int64_t, core::Object*>& objects);
+    void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
     ~GameWorld();
 
@@ -35,7 +36,7 @@ class GameWorld {
     int width;
 
     QVector<core::Resource> resources;
-    QHash<int64_t, core::Object*> objects;
+    QHash<int64_t, std::shared_ptr<core::Object>> objects;
 };
 
 }

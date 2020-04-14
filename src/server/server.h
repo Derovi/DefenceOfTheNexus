@@ -9,16 +9,16 @@ namespace server {
 
 class Server {
   public:
-    QQueue<core::Command>* getCommandQueue();
+    std::shared_ptr<QQueue<core::Command>> getCommandQueue();
 
-    void registerCommandQueue(QQueue<core::Command>* commandQueue);
+    void registerCommandQueue(std::shared_ptr<QQueue<core::Command>> commandQueue);
 
     void start();
 
     void finish();
 
   private:
-    QQueue<core::Command>* commandQueue;
+    std::shared_ptr<QQueue<core::Command>> commandQueue;
 };
 
 }
