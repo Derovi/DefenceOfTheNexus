@@ -47,6 +47,7 @@ class Object {
     const QLinkedList<Attribute*>& getAttributes() const;
 
     void setAttributes(const QLinkedList<Attribute*>& attributes);
+  
     QStringList& getStrategies();
 
     void setStrategies(const QStringList& strategies);
