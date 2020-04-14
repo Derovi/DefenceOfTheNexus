@@ -43,7 +43,7 @@ std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object
 }
 
 std::optional<QJsonObject>
-core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Resource*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -63,7 +63,7 @@ core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute> attr
 }
 
 std::optional<QJsonObject>
-core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damaging*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -77,7 +77,7 @@ core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute> attr
 }
 
 std::optional<QJsonObject>
-core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damageable*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -89,7 +89,7 @@ core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute> at
 }
 
 std::optional<QJsonObject>
-core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Moving*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
