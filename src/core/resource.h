@@ -12,7 +12,7 @@ enum class ResourceType {
     kIron
 };
 
-class Resource : Attribute {
+class Resource : public Attribute {
   public:
     Resource() = delete;
 
