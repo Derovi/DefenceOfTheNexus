@@ -1,6 +1,9 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
+#include <QString>
+#include "attribute.h"
+
 namespace core {
 
 enum class ResourceType {
@@ -9,7 +12,7 @@ enum class ResourceType {
     kIron
 };
 
-class Resource {
+class Resource : Attribute {
   public:
     Resource() = delete;
 
@@ -22,6 +25,10 @@ class Resource {
     void setAmount(int amount);
 
     void setType(ResourceType newType);
+
+    static QString attributeName;
+
+    QString getAttributeName() override;
 
   private:
     ResourceType type;

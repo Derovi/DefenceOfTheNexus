@@ -29,9 +29,21 @@ void registerStrategies() {
 }
 
 void registerAttributes() {
-    /*utils::Factory::registerAttribute(core::Damageable::attributeName,
+    utils::Factory::registerAttribute(core::Damageable::attributeName,
                                       core::Serializer::damageableSerializer,
-                                      core::Serializer::damageableDeserializer);*/
+                                      core::Serializer::damageableDeserializer);
+
+    utils::Factory::registerAttribute(core::Moving::attributeName,
+                                      core::Serializer::movingSerializer,
+                                      core::Serializer::movingDeserializer);
+
+    utils::Factory::registerAttribute(core::Damaging::attributeName,
+                                      core::Serializer::damagingSerializer,
+                                      core::Serializer::damagingDeserializer);
+
+    utils::Factory::registerAttribute(core::Resource::attributeName,
+                                      core::Serializer::resourceSerializer,
+                                      core::Serializer::resourceDeserializer);
 }
 
 int main(int argc, char** argv) {
