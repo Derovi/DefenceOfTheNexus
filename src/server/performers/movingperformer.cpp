@@ -24,7 +24,7 @@ void server::moving_performer::moveIfNoObstacles(core::Object* object, double ti
             j.setX(j.x() + i->getPosition().x());
             j.setY(j.y() + i->getPosition().y());
         }
-        if (!gameObject.intersected(hitbox).isEmpty()) {
+        if (!gameObject.intersects(hitbox)) {
             isOk = false;
             break;
         }
