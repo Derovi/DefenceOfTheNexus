@@ -1,33 +1,57 @@
 #include "serializer.h"
 
 std::optional<QString> core::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
-    return std::nullopt;
+    auto result = gameWorldSerializer(gameWorld);
+    if (result == std::nullopt) {
+        return std::nullopt;
+    }
+    return jsonObjectToString(result.value());
 }
 
 std::optional<QString> core::Serializer::serializeObject(const core::Object& object) {
-    return std::nullopt;
+    auto result = objectSerializer(object);
+    if (result == std::nullopt) {
+        return std::nullopt;
+    }
+    return jsonObjectToString(result.value());
 }
 
 std::optional<QString>
 core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute> attribute,
                                      std::function<std::optional<QJsonObject>(
                                              const std::shared_ptr<core::Attribute>)> serializer) {
-    return std::nullopt;
+    auto result = serializer(attribute);
+    if (result == std::nullopt) {
+        return std::nullopt;
+    }
+    return jsonObjectToString(result.value());
 }
 
 std::optional<core::GameWorld> core::Serializer::deserializeGameWorld(const QString& serialized) {
-    return std::nullopt;
+    std::optional<QJsonObject> json = stringToJsonObject(serialized);
+    if (json == std::nullopt) {
+        return std::nullopt;
+    }
+    return gameWorldDeserialize(json.value());
 }
 
 std::optional<core::Object> core::Serializer::deserializeObject(const QString& serialized) {
-    return std::nullopt;
+    std::optional<QJsonObject> json = stringToJsonObject(serialized);
+    if (json == std::nullopt) {
+        return std::nullopt;
+    }
+    return objectDeserializer(json.value());
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
 core::Serializer::deserializeAttribute(const QString& serialized,
                                        std::function<std::optional<std::shared_ptr<Attribute>>(
                                                const QJsonObject&)> deserializer) {
-    return std::nullopt;
+    std::optional<QJsonObject> json = stringToJsonObject(serialized);
+    if (json == std::nullopt) {
+        return std::nullopt;
+    }
+    return deserializer(json.value());
 }
 
 void core::Serializer::setPrettyPrinting(bool prettyPrinting) {
@@ -39,8 +63,39 @@ bool core::Serializer::isPrettyPrinting() {
 }
 
 std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object& object) {
-
-    return std::nullopt;
+    QJsonObject json;
+    QJsonObject polygon;
+    QJsonObject position;
+    json.insert("id", QString::number(object.getId()));
+    position.insert("x", object.getPosition().x());
+    position.insert("y", object.getPosition().y());
+    json.insert("position", position);
+    json.insert("rotationAngle", object.getRotationAngle());
+    QPolygonF hitbox = object.getHitbox();
+    int iter = 0;
+    QJsonArray xArray, yArray;
+    for (const auto& i : hitbox) {
+        xArray.push_back(i.x());
+        yArray.push_back(i.y());
+        ++iter;
+    }
+    position.remove("x");
+    position.remove("y");
+    position.insert("x", xArray);
+    position.insert("y", yArray);
+    json.insert("hitbox", position);
+    json.insert("typeName", object.getTypeName());
+    QJsonObject attributes;
+    for (const auto& attribute : object.getAttributes()) {
+        std::optional<QJsonObject> result = utils::Factory::getSerializer(
+                attribute->getAttributeName())(attribute);
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        attributes.insert(attribute->getAttributeName(), result.value());
+    }
+    json.insert("attributes", attributes);
+    return json;
 }
 
 std::optional<QJsonObject>
@@ -105,8 +160,95 @@ core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attri
     return json;
 }
 
-std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObject& serialized) {
-    return std::nullopt;
+std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObject& json) {
+
+    if (!json["id"].isString()) {
+        return std::nullopt;
+    }
+    QString idStr = json["id"].toString();
+    bool ok = false;
+    uint64_t id = idStr.toULongLong(&ok);
+    if (!ok) {
+        return std::nullopt;
+    }
+    QJsonObject pos;
+    if (!json["position"].isObject()) {
+        return std::nullopt;
+    }
+    pos = (json["position"]).toObject();
+    auto iterPos = pos.begin();
+    if (!(*iterPos).isDouble()) {
+        return std::nullopt;
+    }
+    double x = (*iterPos).toDouble();
+    ++iterPos;
+    if (!(*iterPos).isDouble()) {
+        return std::nullopt;
+    }
+    double y = (*iterPos).toDouble();
+    ++iterPos;
+    QPointF point(x, y);
+    if (!json["rotationAngle"].isDouble()) {
+        return std::nullopt;
+    }
+    QVector<QPointF> vec;
+    if (!json["hitbox"].isObject()) {
+        return std::nullopt;
+    }
+    pos = json["hitbox"].toObject();
+    iterPos = pos.begin();
+    if (!(*iterPos).isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray xArray = (*iterPos).toArray();
+    ++iterPos;
+    if (!(*iterPos).isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray yArray = (*iterPos).toArray();
+    if (xArray.size() != yArray.size()) {
+        return std::nullopt;
+    }
+    for (const auto& i : xArray) {
+        if (!i.isDouble()) {
+            return std::nullopt;
+        }
+        vec.push_back(QPointF(i.toDouble(), 0));
+    }
+    int it = 0;
+    for (const auto& i : yArray) {
+        if (!i.isDouble()) {
+            return std::nullopt;
+        }
+        vec[it].setY(qreal(i.toDouble()));
+    }
+    if (!json["typeName"].isString()) {
+        return std::nullopt;
+    }
+    core::Object ans = core::Object(id, json["typeName"].toString(), point, QPolygonF(vec),
+                                    json["rotationAngle"].toDouble());
+    QJsonObject attributes;
+    if (!json["attributes"].isObject()) {
+        return std::nullopt;
+    }
+    attributes = json["attributes"].toObject();
+    QLinkedList<std::shared_ptr<Attribute> > objectAttributes;
+    auto iter = attributes.begin();
+    while (iter != attributes.end()) {
+        if (!iter.value().isObject()) {
+            return std::nullopt;
+        }
+        QJsonObject attribute = iter.value().toObject();
+        std::optional<std::shared_ptr<Attribute>> result = utils::Factory::getDeserializer(
+                iter.key())(attribute);
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        objectAttributes.push_back(result.value());
+        ++iter;
+    }
+    ans.setAttributes(objectAttributes);
+    return ans;
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
@@ -192,7 +334,7 @@ core::Serializer::movingDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     x = (dirIter)->toDouble();
-    dirIter++;
+    ++dirIter;
     if (!dirIter->isDouble()) {
         delete object;
         return std::nullopt;
@@ -210,6 +352,85 @@ core::Serializer::movingDeserializer(const QJsonObject& serialized) {
     }
     object->setSpeed(serialized["speed"].toDouble());
     return std::make_shared<core::Moving>(*object);
+}
+
+
+std::optional<QJsonObject> core::Serializer::gameWorldSerializer(const core::GameWorld& world) {
+    QJsonObject json;
+    json.insert("width", world.getWidth());
+    json.insert("height", world.getHeight());
+    QJsonArray resources;
+    QJsonObject object;
+    QVector<core::Resource> resVector = world.getResources();
+    for (auto res : resVector) {
+        std::optional<QJsonObject> result = resourceSerializer(
+                std::make_shared<core::Resource>(res));
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        resources.insert(resources.size(), result.value());
+    }
+    auto iter = world.getObjects().begin();
+    while (iter != world.getObjects().end()) {
+        std::optional<QJsonObject> result = objectSerializer(*iter.value());
+        if (result == std::nullopt) {
+            return result;
+        }
+        object.insert(QString::number(iter.key()), result.value());
+        ++iter;
+    }
+    json.insert("resources", resources);
+    json.insert("objects", object);
+    return json;
+}
+
+std::optional<core::GameWorld>
+core::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
+    core::GameWorld ans;
+    if (!serialized["width"].isDouble()) {
+        return std::nullopt;
+    }
+    ans.setWidth(serialized["width"].toDouble());
+    if (!serialized["height"].isDouble()) {
+        return std::nullopt;
+    }
+    ans.setHeight(serialized["height"].toDouble());
+    QJsonArray resources;
+    if (!serialized["resources"].isArray()) {
+        return std::nullopt;
+    }
+    resources = serialized["resources"].toArray();
+    QVector<core::Resource> resVector;
+    for (const auto& res : resources) {
+        if (!res.isObject()) {
+            return std::nullopt;
+        }
+        auto resource = resourceDeserializer(res.toObject());
+        if (resource == std::nullopt) {
+            return std::nullopt;
+        }
+        resVector.push_back(*dynamic_cast<core::Resource*>(resource.value().get()));
+    }
+    ans.setResources(resVector);
+    if (serialized["objects"].isObject()) {
+        return std::nullopt;
+    }
+    QJsonObject objects = serialized["objects"].toObject();
+    QHash<int64_t, std::shared_ptr<core::Object>> hashObjects;
+    auto iter = objects.begin();
+    while (iter != objects.end()) {
+        if (!iter.value().isObject()) {
+            return std::nullopt;
+        }
+        auto result = objectDeserializer(iter.value().toObject());
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        hashObjects[iter.key().toLongLong()] = std::make_shared<core::Object>(result.value());
+        ++iter;
+    }
+    ans.setObjects(hashObjects);
+    return ans;
 }
 
 QString core::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
@@ -236,19 +457,183 @@ std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& j
 }
 
 std::optional<core::Command> core::Serializer::commandDeserializer(const QJsonObject& serialized) {
-    return std::optional<core::Command>();
+    core::Command command;
+    if (!serialized["typeName"].isString()) {
+        return std::nullopt;
+    }
+    command.setName(serialized["typeName"].toString());
+    QStringList arguments;
+    QJsonArray json;
+    if (!serialized["arguments"].isArray()) {
+        return std::nullopt;
+    }
+    json = serialized["arguments"].toArray();
+    for (const auto& i : json) {
+        if(!i.isString()){
+            return std::nullopt;
+        }
+        arguments.push_back(i.toString());
+    }
+    command.setArguments(arguments);
+    return command;
 }
 
 std::optional<core::ObjectSignature>
 core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
-    return std::optional<core::ObjectSignature>();
+    if (!serialized["typeName"].isString()) {
+        return std::nullopt;
+    }
+    QVector <QPointF> vec;
+    if (!serialized["hitbox"].isObject()) {
+        return std::nullopt;
+    }
+    QJsonObject pos;
+    pos = serialized["hitbox"].toObject();
+    auto iterPos = pos.begin();
+    if (!(*iterPos).isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray xArray = (*iterPos).toArray();
+    ++iterPos;
+    if (!(*iterPos).isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray yArray = (*iterPos).toArray();
+    if (xArray.size() != yArray.size()) {
+        return std::nullopt;
+    }
+    for (const auto& i : xArray) {
+        if (!i.isDouble()) {
+            return std::nullopt;
+        }
+        vec.push_back(QPointF(i.toDouble(), 0));
+    }
+    int it = 0;
+    for (const auto& i : yArray) {
+        if (!i.isDouble()) {
+            return std::nullopt;
+        }
+        vec[it].setY(qreal(i.toDouble()));
+    }
+    core::ObjectSignature signature(serialized["typeName"].toString(),QPolygonF(vec));
+    QStringList strategies;
+    QJsonArray json;
+    if (!serialized["strategies"].isArray()) {
+        return std::nullopt;
+    }
+    json = serialized["strategies"].toArray();
+    for (const auto& i : json) {
+        if(!i.isString()){
+            return std::nullopt;
+        }
+        strategies.push_back(i.toString());
+    }
+    signature.setStrategies(strategies);
+    if (serialized["objects"].isObject()) {
+        return std::nullopt;
+    }
+    QJsonObject objects = serialized["objects"].toObject();
+    QJsonObject attributes;
+    if (!serialized["attributes"].isObject()) {
+        return std::nullopt;
+    }
+    attributes = serialized["attributes"].toObject();
+    QLinkedList<std::shared_ptr<Attribute> > objectAttributes;
+    auto iter = attributes.begin();
+    while (iter != attributes.end()) {
+        if (!iter.value().isObject()) {
+            return std::nullopt;
+        }
+        QJsonObject attribute = iter.value().toObject();
+        std::optional<std::shared_ptr<Attribute>> result = utils::Factory::getDeserializer(
+                iter.key())(attribute);
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        objectAttributes.push_back(result.value());
+        ++iter;
+    }
+    signature.setAttributes(objectAttributes);
+    return signature;
 }
 
 std::optional<QJsonObject>
-core::Serializer::objectSignatureSerializer(const core::ObjectSignature& command) {
-    return std::optional<QJsonObject>();
+core::Serializer::objectSignatureSerializer(const core::ObjectSignature& signature) {
+    QJsonObject json;
+    json["typeName"] = signature.getTypeName();
+    QJsonObject position;
+    QPolygonF hitbox = signature.getHitbox();
+    int iter = 0;
+    QJsonArray xArray, yArray;
+    for (const auto& i : hitbox) {
+        xArray.push_back(i.x());
+        yArray.push_back(i.y());
+        ++iter;
+    }
+    position.insert("x", xArray);
+    position.insert("y", yArray);
+    json["hitbox"] = position;
+    QJsonArray stratigies;
+    for (const auto& i : signature.getStrategies()) {
+        stratigies.push_back(i);
+    }
+    json["strategies"] = stratigies;
+    QJsonObject attributes;
+    for (const auto& attribute : signature.getAttributes()) {
+        std::optional<QJsonObject> result = utils::Factory::getSerializer(
+                attribute->getAttributeName())(attribute);
+        if (result == std::nullopt) {
+            return std::nullopt;
+        }
+        attributes.insert(attribute->getAttributeName(), result.value());
+    }
+    json["attributes"] = attributes;
+    return json;
 }
 
+
 std::optional<QJsonObject> core::Serializer::commandSerializer(const core::Command& command) {
-    return std::optional<QJsonObject>();
+    QJsonObject json;
+    json["typeName"] = command.getName();
+    QJsonArray arguments;
+    for (const auto& i : command.getArguments()) {
+        arguments.push_back(i);
+    }
+    json["arguments"] = arguments;
+    return json;
+
+}
+
+std::optional<QString>
+core::Serializer::serializeObjectSignature(const core::ObjectSignature& signature) {
+    auto result = objectSignatureSerializer(signature);
+    if (result == std::nullopt) {
+        return std::nullopt;
+    }
+    return jsonObjectToString(result.value());
+}
+
+std::optional<QString> core::Serializer::serializeCommand(const core::Command& command) {
+    auto result = commandSerializer(command);
+    if (result == std::nullopt) {
+        return std::nullopt;
+    }
+    return jsonObjectToString(result.value());
+}
+
+std::optional<core::ObjectSignature>
+core::Serializer::deserializeObjectSignature(const QString& serialized) {
+    std::optional<QJsonObject> json = stringToJsonObject(serialized);
+    if (json == std::nullopt) {
+        return std::nullopt;
+    }
+    return objectSignatureDeserializer(json.value());
+}
+
+std::optional<core::Command> core::Serializer::deserializeCommand(const QString& serialized) {
+    std::optional<QJsonObject> json = stringToJsonObject(serialized);
+    if (json == std::nullopt) {
+        return std::nullopt;
+    }
+    return commandDeserializer(json.value());
 }

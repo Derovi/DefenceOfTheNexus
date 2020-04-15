@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QtCore>
 #include <QtGlobal>
+#include <QJsonDocument>
 
 #include "command.h"
 #include "object.h"
@@ -15,6 +16,7 @@
 #include "gameworld.h"
 #include "damaging.h"
 #include "damageable.h"
+#include "../utils/factory.h"
 #include "objectsignature.h"
 
 namespace core {
@@ -26,6 +28,10 @@ class Serializer {
 
     std::optional<QString> serializeObject(const core::Object& object);
 
+    std::optional<QString> serializeObjectSignature(const core::ObjectSignature& signature);
+
+    std::optional<QString> serializeCommand(const core::Command& command);
+
     std::optional<QString> serializeAttribute(const std::shared_ptr<core::Attribute> attribute,
                                               std::function<std::optional<QJsonObject>(
                                                       const std::shared_ptr<core::Attribute>)> serializer);
@@ -33,6 +39,10 @@ class Serializer {
     std::optional<GameWorld> deserializeGameWorld(const QString& serialized);
 
     std::optional<Object> deserializeObject(const QString& serialized);
+
+    std::optional<ObjectSignature> deserializeObjectSignature(const QString& serialized);
+
+    std::optional<Command> deserializeCommand(const QString& serialized);
 
     std::optional<std::shared_ptr<Attribute>> deserializeAttribute(const QString& serialized,
                                                                    std::function<std::optional<std::shared_ptr<Attribute>>(
@@ -42,10 +52,12 @@ class Serializer {
 
     bool isPrettyPrinting();
 
+    static std::optional<QJsonObject> gameWorldSerializer(const core::GameWorld& world);
+
     static std::optional<QJsonObject> commandSerializer(const core::Command& command);
 
     static std::optional<QJsonObject>
-    objectSignatureSerializer(const core::ObjectSignature& command);
+    objectSignatureSerializer(const core::ObjectSignature& signature);
 
     static std::optional<QJsonObject> objectSerializer(const core::Object& object);
 
@@ -62,9 +74,12 @@ class Serializer {
     movingSerializer(const std::shared_ptr<core::Attribute>& moving);
 
 
+    static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
+
     static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
 
-    static std::optional<core::ObjectSignature> objectSignatureDeserializer(const QJsonObject& serialized);
+    static std::optional<core::ObjectSignature>
+    objectSignatureDeserializer(const QJsonObject& serialized);
 
     static std::optional<core::Object> objectDeserializer(const QJsonObject& serialized);
 

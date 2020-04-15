@@ -44,6 +44,8 @@ class ObjectSignature {
 
     QStringList& getStrategies();
 
+    const QStringList& getStrategies() const;
+
     void setStrategies(const QStringList& strategies);
 
     bool hasAttribute(const QString& name);
