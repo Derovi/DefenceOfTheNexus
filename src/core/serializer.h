@@ -72,6 +72,10 @@ class Serializer {
   private:
 
     bool prettyPrinting = true;
+
+    QString jsonObjectToString(const QJsonObject& jsonObject);
+
+    std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
 };
 
 }  // namespace core

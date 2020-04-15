@@ -211,3 +211,26 @@ core::Serializer::movingDeserializer(const QJsonObject& serialized) {
     object->setSpeed(serialized["speed"].toDouble());
     return std::make_shared<core::Moving>(*object);
 }
+
+QString core::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
+    QJsonDocument doc(jsonObject);
+    if (isPrettyPrinting()) {
+        return doc.toJson(QJsonDocument::Indented);
+    }
+    return doc.toJson(QJsonDocument::Compact);
+}
+
+std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& jsonString) {
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
+
+    // check validity of the document
+    if (jsonDocument.isNull()) {
+        return std::nullopt;
+    }
+
+    if (!jsonDocument.isObject()) {
+        return std::nullopt;
+    }
+
+    return jsonDocument.object();
+}
