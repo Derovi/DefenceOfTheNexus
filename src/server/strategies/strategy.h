@@ -13,7 +13,7 @@ class Strategy {
   public:
     explicit Strategy(std::shared_ptr<core::Object>);
 
-    ~Strategy();
+    virtual ~Strategy() = default;
 
     virtual void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) = 0;
 

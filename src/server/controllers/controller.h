@@ -33,6 +33,7 @@ class Controller {
 
   private:
 
+    //TODO optimize
     QHash<QString, std::shared_ptr<Strategy>> strategies;
     QLinkedList<std::shared_ptr<Strategy>> strategiesByPriority;
     std::shared_ptr<core::Object> object;

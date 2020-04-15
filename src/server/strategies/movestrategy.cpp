@@ -23,8 +23,6 @@ QStringList server::MoveStrategy::getStartAfter() {
     return startAfter;
 }
 
-server::MoveStrategy::~MoveStrategy() = default;
-
 QString server::MoveStrategy::name = "moveStrategy";
 
 const QStringList server::MoveStrategy::requiredAttributes = {"moving"};

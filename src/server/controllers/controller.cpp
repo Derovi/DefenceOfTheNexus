@@ -14,11 +14,11 @@ const QHash<QString, std::shared_ptr<server::Strategy>>& server::Controller::get
 }
 
 void server::Controller::addStrategy(const QString& strategyName) {
-    addStrategies({QStringList(strategyName)});
+    addStrategies(QStringList(strategyName));
 }
 
 void server::Controller::removeStrategy(const QString& strategyName) {
-    removeStrategies({QStringList(strategyName)});
+    removeStrategies(QStringList(strategyName));
 }
 
 void server::Controller::addStrategies(const QStringList& strategyNames) {

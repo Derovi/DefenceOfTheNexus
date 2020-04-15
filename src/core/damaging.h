@@ -39,7 +39,7 @@ class Damaging : public Attribute {
 
     virtual void set(const Damaging& properties);
 
-    static QString attributeName;
+    static const QString attributeName;
 
     QString getAttributeName() override;
 
