@@ -1,7 +1,9 @@
 #ifndef DAMAGEABLE_H
 #define DAMAGEABLE_H
 
+#include <memory>
 #include <QString>
+#include <bits/shared_ptr.h>
 
 #include "attribute.h"
 
@@ -19,13 +21,15 @@ class Damageable : public Attribute {
 
     int getMaxHealth() const;
 
-    virtual void setHealth(int health);
+    void setHealth(int health);
 
-    virtual void setMaxHealth(int maxHealth);
+    void setMaxHealth(int maxHealth);
 
-    virtual void set(const Damageable& properties);
+    void set(const Damageable& properties);
 
     QString getAttributeName() override;
+
+    std::shared_ptr<Attribute> clone() override;
 
     static QString attributeName;
 

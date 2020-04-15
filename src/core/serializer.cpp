@@ -234,3 +234,21 @@ std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& j
 
     return jsonDocument.object();
 }
+
+std::optional<core::Command> core::Serializer::commandDeserializer(const QJsonObject& serialized) {
+    return std::optional<core::Command>();
+}
+
+std::optional<core::ObjectSignature>
+core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
+    return std::optional<core::ObjectSignature>();
+}
+
+std::optional<QJsonObject>
+core::Serializer::objectSignatureSerializer(const core::ObjectSignature& command) {
+    return std::optional<QJsonObject>();
+}
+
+std::optional<QJsonObject> core::Serializer::commandSerializer(const core::Command& command) {
+    return std::optional<QJsonObject>();
+}

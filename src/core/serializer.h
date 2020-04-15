@@ -8,12 +8,14 @@
 #include <QtCore>
 #include <QtGlobal>
 
+#include "command.h"
 #include "object.h"
 #include "resource.h"
 #include "moving.h"
 #include "gameworld.h"
 #include "damaging.h"
 #include "damageable.h"
+#include "objectsignature.h"
 
 namespace core {
 
@@ -40,6 +42,11 @@ class Serializer {
 
     bool isPrettyPrinting();
 
+    static std::optional<QJsonObject> commandSerializer(const core::Command& command);
+
+    static std::optional<QJsonObject>
+    objectSignatureSerializer(const core::ObjectSignature& command);
+
     static std::optional<QJsonObject> objectSerializer(const core::Object& object);
 
     static std::optional<QJsonObject>
@@ -54,6 +61,10 @@ class Serializer {
     static std::optional<QJsonObject>
     movingSerializer(const std::shared_ptr<core::Attribute>& moving);
 
+
+    static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
+
+    static std::optional<core::ObjectSignature> objectSignatureDeserializer(const QJsonObject& serialized);
 
     static std::optional<core::Object> objectDeserializer(const QJsonObject& serialized);
 

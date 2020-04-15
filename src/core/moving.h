@@ -1,6 +1,7 @@
 #ifndef MOVING_H
 #define MOVING_H
 
+#include <memory>
 #include <QVector2D>
 
 #include "attribute.h"
@@ -32,6 +33,8 @@ class Moving : public Attribute {
     static QString attributeName;
 
     QString getAttributeName() override;
+
+    std::shared_ptr<Attribute> clone() override;
 
   private:
     QVector2D direction;

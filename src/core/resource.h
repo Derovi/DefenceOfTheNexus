@@ -30,6 +30,8 @@ class Resource : public Attribute {
 
     QString getAttributeName() override;
 
+    std::shared_ptr<Attribute> clone() override;
+
   private:
     ResourceType type;
     int amount;

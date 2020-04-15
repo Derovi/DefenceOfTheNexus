@@ -1,4 +1,5 @@
 #include <utility>
+#include <memory>
 
 #include <QString>
 
@@ -62,3 +63,7 @@ QString core::Damaging::getAttributeName() {
 }
 
 QString core::Damaging::attributeName = "damaging";
+
+std::shared_ptr<core::Attribute> core::Damaging::clone() {
+    return std::shared_ptr<Attribute>(new Damaging(*this));
+}

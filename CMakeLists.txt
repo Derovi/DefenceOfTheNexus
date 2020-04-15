@@ -40,7 +40,7 @@ add_executable(defenceofnexus
         src/server/strategies/movestrategy.cpp
         src/server/performers/movingperformer.cpp
         src/server/performers/damagingperformer.cpp
-        src/server/performers/damageableperformer.cpp)
+        src/server/performers/damageableperformer.cpp src/core/objectsignature.cpp src/core/objectsignature.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

@@ -2,6 +2,7 @@
 #define DAMAGING_H
 
 #include <QString>
+#include <bits/shared_ptr.h>
 
 #include "attribute.h"
 
@@ -41,6 +42,8 @@ class Damaging : public Attribute {
     static QString attributeName;
 
     QString getAttributeName() override;
+
+    std::shared_ptr<Attribute> clone() override;
 
   private:
     int damage;
