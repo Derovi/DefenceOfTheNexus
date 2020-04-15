@@ -34,8 +34,8 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
     }
 }
 
-QPointF server::moving_performer::getNextPosition(core::Object* object, double timeDelta,
-                                                  const core::Moving& moving) {
+QPointF server::moving_performer::getNextPosition(std::shared_ptr<core::Object> object,
+                                                  double timeDelta, const core::Moving& moving) {
     double newX = object->getPosition().x() + moving.getDirection().x() *
                                               moving.getSpeed() * timeDelta;
     double newY = object->getPosition().y() + moving.getDirection().y() *

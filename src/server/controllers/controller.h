@@ -11,11 +11,11 @@ namespace server {
 
 class Controller {
   public:
-    Controller(core::Object* object);
+    Controller(std::shared_ptr<core::Object> object);
 
-    void tick(core::GameWorld* world, double timeDelta);
+    void tick(std::shared_ptr<core::GameWorld> world, double timeDelta);
 
-    core::Object* getObject();
+    std::shared_ptr<core::Object> getObject();
 
     ~Controller() = default;
 
@@ -27,21 +27,21 @@ class Controller {
 
     void removeStrategies(const QStringList& strategyNames);
 
-    const QHash<QString, Strategy*>& getStrategies() const;
+    const QHash<QString, std::shared_ptr<Strategy>>& getStrategies() const;
 
-    const QLinkedList<Strategy*>& getStrategiesByPriority() const;
+    const QLinkedList<std::shared_ptr<Strategy>>& getStrategiesByPriority() const;
 
   private:
 
-    QHash<QString, Strategy*> strategies;
-    QLinkedList<Strategy*> strategiesByPriority;
-    core::Object* object;
+    QHash<QString, std::shared_ptr<Strategy>> strategies;
+    QLinkedList<std::shared_ptr<Strategy>> strategiesByPriority;
+    std::shared_ptr<core::Object> object;
 
     DataBundle createDataBundle();
 
     void prepare();
 
-    void prepareStrategy(server::Strategy* strategy,
+    void prepareStrategy(std::shared_ptr<server::Strategy> strategy,
                     QHash<QString, int>& nameToVisitIteration,
                     int currentIteration);
 };

@@ -1,14 +1,15 @@
+#include <memory>
 #include <QDebug>
 #include <QVector>
 
 #include "../../utils/factory.h"
 #include "../../core/attribute.h"
 
-server::Controller::Controller(core::Object* object): object(object) {
+server::Controller::Controller(std::shared_ptr<core::Object> object): object(object) {
     addStrategies(object->getStrategies());
 }
 
-const QHash<QString, server::Strategy*>& server::Controller::getStrategies() const {
+const QHash<QString, std::shared_ptr<server::Strategy>>& server::Controller::getStrategies() const {
     return strategies;
 }
 
@@ -25,14 +26,15 @@ void server::Controller::addStrategies(const QStringList& strategyNames) {
         if (strategies.contains(strategyName)) {
             continue;
         }
-        Strategy* strategy = utils::Factory::createStrategy(strategyName, getObject());
+        std::shared_ptr<Strategy> strategy = utils::Factory::createStrategy(strategyName,
+                                                                            getObject());
         if (strategy) {
             strategies.insert(strategyName, strategy);
         }
     }
     prepare();
     DataBundle dataBundle = createDataBundle();
-    for (Strategy* strategy : strategiesByPriority) {
+    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
         strategy->assign(dataBundle);
     }
 }
@@ -42,35 +44,35 @@ void server::Controller::removeStrategies(const QStringList& strategyNames) {
         if (!strategies.contains(strategyName)) {
             continue;
         }
-        delete strategies[strategyName];
         strategies.remove(strategyName);
     }
     prepare();
     DataBundle dataBundle = createDataBundle();
-    for (Strategy* strategy : strategiesByPriority) {
+    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
         strategy->assign(dataBundle);
     }
 }
 
-core::Object* server::Controller::getObject() {
+std::shared_ptr<core::Object> server::Controller::getObject() {
     return object;
 }
 
-void server::Controller::tick(core::GameWorld* world, double timeDelta) {
-    for (Strategy* strategy : strategiesByPriority) {
+void server::Controller::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
+    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
         strategy->tick(world, timeDelta);
     }
 }
 
 server::DataBundle server::Controller::createDataBundle() {
     DataBundle dataBundle;
-    for (core::Attribute* attribute : object->getAttributes()) {
-        dataBundle.assign(attribute->getAttributeName(), attribute);
+    for (std::shared_ptr<core::Attribute> attribute : object->getAttributes()) {
+        dataBundle.registerVariable(attribute->getAttributeName(), attribute);
     }
     return dataBundle;
 }
 
-const QLinkedList<server::Strategy*>& server::Controller::getStrategiesByPriority() const {
+const QLinkedList<std::shared_ptr<server::Strategy>>&
+server::Controller::getStrategiesByPriority() const {
     return strategiesByPriority;
 }
 
@@ -78,16 +80,16 @@ void server::Controller::prepare() {
     strategiesByPriority.clear();
     QHash<QString, int> nameToVisitIteration;
     int currentIteration = 1;
-    for (Strategy* strategy : strategies.values()) {
+    for (std::shared_ptr<Strategy> strategy : strategies.values()) {
         if (nameToVisitIteration[strategy->getName()] == 0) {
             prepareStrategy(strategy, nameToVisitIteration, currentIteration++);
         }
     }
 }
 
-void server::Controller::prepareStrategy(server::Strategy* strategy,
-                                        QHash<QString, int>& nameToVisitIteration,
-                                        int currentIteration) {
+void server::Controller::prepareStrategy(std::shared_ptr<server::Strategy> strategy,
+                                         QHash<QString, int>& nameToVisitIteration,
+                                         int currentIteration) {
     bool isStrategyDependenciesCorrect = true;
     for (const QString& attribute : strategy->getRequiredAttributes()) {
         if (!object->hasAttribute(attribute)) {

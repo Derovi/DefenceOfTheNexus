@@ -2,6 +2,7 @@
 #define DAMAGING_H
 
 #include <QString>
+#include <bits/shared_ptr.h>
 
 #include "attribute.h"
 
@@ -22,6 +23,8 @@ class Damaging : public Attribute {
 
     double getAttackDelay() const;
 
+    double getCurrentDelay() const;
+
     const QString& getBulletType() const;
 
     virtual void setDamage(int damage);
@@ -29,6 +32,8 @@ class Damaging : public Attribute {
     virtual void setAttackRadius(double radius);
 
     virtual void setAttackDelay(double delay);
+
+    virtual void setCurrentDelay(double delay);
 
     virtual void setBulletType(const QString& newType);
 
@@ -38,10 +43,13 @@ class Damaging : public Attribute {
 
     QString getAttributeName() override;
 
+    std::shared_ptr<Attribute> clone() override;
+
   private:
     int damage;
     double attackRadius;
     double attackDelay;
+    double currentDelay;
     QString bulletType;
 };
 

@@ -10,12 +10,14 @@
 
 namespace server::moving_performer {
 
-void move(core::Object* object, double timeDelta, const core::Moving& moving);
+void move(std::shared_ptr<core::Object> object, double timeDelta, const core::Moving& moving);
 
-void moveIfNoObstacles(core::Object* object, double timeDelta, core::GameWorld* gameWorld,
-                       core::Moving* moving);
+void moveIfNoObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+                       std::shared_ptr<core::GameWorld> gameWorld,
+                       std::shared_ptr<core::Moving> moving);
 
-QPointF getNextPosition(core::Object* object, double timeDelta, const core::Moving& moving);
+QPointF getNextPosition(std::shared_ptr<core::Object> object,
+                        double timeDelta, const core::Moving& moving);
 
 }
 

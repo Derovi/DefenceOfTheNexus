@@ -17,3 +17,13 @@ void core::Resource::setAmount(int newAmount) {
 void core::Resource::setType(ResourceType newType) {
     type = newType;
 }
+
+QString core::Resource::getAttributeName() {
+    return attributeName;
+}
+
+QString core::Resource::attributeName = "resource";
+
+std::shared_ptr<core::Attribute> core::Resource::clone() {
+    return std::shared_ptr<Attribute>(new Resource(*this));
+}
