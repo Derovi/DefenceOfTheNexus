@@ -7,81 +7,101 @@
 #include <QJsonObject>
 #include <QtCore>
 #include <QtGlobal>
+#include <QJsonDocument>
 
+#include "command.h"
 #include "object.h"
 #include "resource.h"
-#include "resourcebundle.h"
 #include "moving.h"
 #include "gameworld.h"
 #include "damaging.h"
 #include "damageable.h"
-#include "building.h"
-#include "unit.h"
+#include "../utils/factory.h"
+#include "objectsignature.h"
 
 namespace core {
 
 class Serializer {
   public:
-    QString serialize(const core::Object& object);
 
-    QString serialize(const core::Resource& object);
+    std::optional<QString> serializeGameWorld(const core::GameWorld& gameWorld);
 
-    QString serialize(const core::ResourceBundle& object);
+    std::optional<QString> serializeObject(const core::Object& object);
 
-    QString serialize(const core::Moving& object);
+    std::optional<QString> serializeObjectSignature(const core::ObjectSignature& signature);
 
-    QString serialize(const core::GameWorld& object);
+    std::optional<QString> serializeCommand(const core::Command& command);
 
-    QString serialize(const core::Damaging& object);
+    std::optional<QString> serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
+                                              std::function<std::optional<QJsonObject>(
+                                                      const std::shared_ptr<core::Attribute>)> serializer);
 
-    QString serialize(const core::Building& object);
+    std::optional<GameWorld> deserializeGameWorld(const QString& serialized);
 
-    QString serialize(const core::Damageable& object);
+    std::optional<Object> deserializeObject(const QString& serialized);
 
-    QString serialize(const core::Unit& object);
+    std::optional<ObjectSignature> deserializeObjectSignature(const QString& serialized);
 
-    bool deserialize(core::Object& object, const QString& serialized);
+    std::optional<Command> deserializeCommand(const QString& serialized);
 
-    bool deserialize(core::Resource& object, const QString& serialized);
+    std::optional<std::shared_ptr<Attribute>> deserializeAttribute(const QString& serialized,
+                                                                   std::function<std::optional<std::shared_ptr<Attribute>>(
+                                                                           const QJsonObject&)> deserializer);
 
-    bool deserialize(core::ResourceBundle& object, const QString& serialized);
+    void setPrettyPrinting(bool prettyPrinting);
 
-    bool deserialize(core::Moving& object, const QString& serialized);
+    bool isPrettyPrinting();
 
-    bool deserialize(core::GameWorld& object, const QString& serialized);
+    static std::optional<QJsonObject> gameWorldSerializer(const core::GameWorld& world);
 
-    bool deserialize(core::Damaging& object, const QString& serialized);
+    static std::optional<QJsonObject> commandSerializer(const core::Command& command);
 
-    bool deserialize(core::Building& object, const QString& serialized);
+    static std::optional<QJsonObject>
+    objectSignatureSerializer(const core::ObjectSignature& signature);
 
-    bool deserialize(core::Damageable& object, const QString& serialized);
+    static std::optional<QJsonObject> objectSerializer(const core::Object& object);
 
-    bool deserialize(core::Unit& object, const QString& serialized);
+    static std::optional<QJsonObject>
+    resourceSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
+    static std::optional<QJsonObject>
+    damagingSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
+    static std::optional<QJsonObject>
+    damageableSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
+    static std::optional<QJsonObject>
+    movingSerializer(const std::shared_ptr<core::Attribute>& moving);
+
+
+    static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
+
+    static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
+
+    static std::optional<core::ObjectSignature>
+    objectSignatureDeserializer(const QJsonObject& serialized);
+
+    static std::optional<core::Object> objectDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    resourceDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    damagingDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    damageableDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    movingDeserializer(const QJsonObject& serialized);
 
   private:
-    void addJsonObject(const core::Object& object, QJsonObject& json);
 
-    void addJsonResource(const core::Resource& object, QJsonObject& json);
+    bool prettyPrinting = true;
 
-    void addJsonDamaging(const core::Damaging& object, QJsonObject& json);
+    QString jsonObjectToString(const QJsonObject& jsonObject);
 
-    void addJsonDamageable(const core::Damageable& object, QJsonObject& json);
-
-    void addJsonMoving(const core::Moving& object, QJsonObject& json);
-
-    void convertJsonToString(const QJsonObject& Object, QString& serialized);
-
-    bool objectFromString(const QString& in, QJsonObject& json);
-
-    bool buildObject(core::Object& object, const QJsonObject& json);
-
-    bool buildResourse(core::Resource& object, const QJsonObject& json);
-
-    bool buildDamaging(core::Damaging& object, const QJsonObject& json);
-
-    bool buildDamageable(core::Damageable& object, const QJsonObject& json);
-
-    bool buildMoving(core::Moving& object, const QJsonObject& json);
+    std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
 };
 
 }  // namespace core

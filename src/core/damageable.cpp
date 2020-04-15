@@ -24,3 +24,13 @@ void core::Damageable::set(const core::Damageable& properties) {
     setHealth(properties.health);
     setMaxHealth(properties.maxHealth);
 }
+
+QString core::Damageable::getAttributeName() {
+    return attributeName;
+}
+
+const QString core::Damageable::attributeName = "damageable";
+
+std::shared_ptr<core::Attribute> core::Damageable::clone() {
+    return std::shared_ptr<Attribute>(new Damageable(*this));
+}

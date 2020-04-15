@@ -1,11 +1,14 @@
 #ifndef MOVING_H
 #define MOVING_H
 
+#include <memory>
 #include <QVector2D>
+
+#include "attribute.h"
 
 namespace core {
 
-class Moving {
+class Moving : public Attribute {
   public:
     Moving();
 
@@ -26,6 +29,12 @@ class Moving {
     virtual void setSpeed(double speed);
 
     virtual void set(const Moving& properties);
+
+    static const QString attributeName;
+
+    QString getAttributeName() override;
+
+    std::shared_ptr<Attribute> clone() override;
 
   private:
     QVector2D direction;

@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "gameworld.h"
 #include "resource.h"
 #include "object.h"
@@ -22,20 +24,25 @@ QVector<core::Resource>& core::GameWorld::getResources() {
     return resources;
 }
 
+const QVector<core::Resource>& core::GameWorld::getResources() const {
+    return resources;
+}
+
 void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
     GameWorld::resources = resources;
 }
 
-QHash<int64_t, core::Object*>& core::GameWorld::getObjects() {
+QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() {
     return objects;
 }
 
-void core::GameWorld::setObjects(const QHash<int64_t, core::Object*>& objects) {
-    GameWorld::objects = objects;
+void core::GameWorld::setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects) {
+    this->objects = objects;
 }
 
 core::GameWorld::~GameWorld() {
-    for (core::Object* object : objects.values()) {
-        delete object;
-    }
+}
+
+const QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() const {
+    return objects;
 }

@@ -24,13 +24,9 @@ add_executable(defenceofnexus
         src/core/damaging.cpp
         src/core/moving.cpp
         src/core/resource.cpp
-        src/core/resourcebundle.cpp
-        src/core/unit.cpp
-        src/core/building.cpp
         src/core/gameworld.cpp
-        src/server/gameworldcontroller.cpp
-        src/server/controller.cpp
-        src/server/unitcontroller.cpp
+        src/server/controllers/gameworldcontroller.cpp
+        src/server/controllers/controller.cpp
         src/core/command.cpp
         src/server/commandexecutor.cpp
         src/server/worldgenerator.cpp
@@ -39,7 +35,13 @@ add_executable(defenceofnexus
         src/server/gameconfiguration.cpp
         src/server/server.cpp
         src/core/serializer.cpp
-        )
+        src/utils/factory.cpp
+        src/server/strategies/strategy.cpp
+        src/server/strategies/movestrategy.cpp
+        src/server/performers/movingperformer.cpp
+        src/server/performers/damagingperformer.cpp
+        src/server/performers/damageableperformer.cpp
+        src/core/objectsignature.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

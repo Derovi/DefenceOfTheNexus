@@ -1,9 +1,12 @@
 #include <utility>
 
+#include "attribute.h"
 #include "object.h"
 
-core::Object::Object(uint64_t id, QPointF position, QPolygonF hitbox, float rotationAngle):
-        id(id), position(position), hitbox(std::move(hitbox)), rotationAngle(rotationAngle) {}
+core::Object::Object(uint64_t id, QString typeName, QPointF position, QPolygonF hitbox,
+                     float rotationAngle):
+        id(id), typeName(typeName), position(position), hitbox(std::move(hitbox)),
+        rotationAngle(rotationAngle) {}
 
 uint64_t core::Object::getId() const {
     return id;
@@ -41,3 +44,48 @@ void core::Object::setId(uint64_t newId) {
     id = newId;
 }
 
+QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() {
+    return attributes;
+}
+
+void core::Object::setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes) {
+    Object::attributes = attributes;
+}
+
+QStringList& core::Object::getStrategies() {
+    return strategies;
+}
+
+void core::Object::setStrategies(const QStringList& strategies) {
+    Object::strategies = strategies;
+}
+
+bool core::Object::hasAttribute(const QString& name) {
+    for (const auto& attribute : attributes) {
+        if (attribute->getAttributeName() == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const QString& core::Object::getTypeName() const {
+    return typeName;
+}
+
+void core::Object::setTypeName(const QString& typeName) {
+    Object::typeName = typeName;
+}
+
+const QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() const {
+    return attributes;
+}
+
+std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name) {
+    for (const auto& attribute : attributes) {
+        if (attribute->getAttributeName() == name) {
+            return attribute;
+        }
+    }
+    return nullptr;
+}

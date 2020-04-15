@@ -1,5 +1,5 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef OBJECTSIGNATURE_H
+#define OBJECTSIGNATURE_H
 
 #include <memory>
 
@@ -9,40 +9,32 @@
 #include <QPolygonF>
 #include <QtCore/QStringList>
 
+#include "object.h"
 #include "attribute.h"
 
 namespace core {
 
-class Object {
+class ObjectSignature {
   public:
-    Object() = delete;
+    ObjectSignature() = delete;
 
-    explicit Object(uint64_t id, QString typeName, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
-                    float rotationAngle = 0);
+    // Copies current object attributes states.
+    // Example: if objet has 47/100 hp, then objects,
+    // summoned with creates signature will have 47/100 hp.
+    explicit ObjectSignature(core::Object object);
 
-    virtual ~Object() = default;
+    explicit ObjectSignature(QString typeName,
+                             QPolygonF hitbox = QPolygonF());
 
-    uint64_t getId() const;
-
-    QPointF getPosition() const;
+    virtual ~ObjectSignature() = default;
 
     const QPolygonF& getHitbox() const;
 
-    float getRotationAngle() const;
-
-    void setPosition(const QPointF& newPosition);
-
-    void setId(uint64_t newId);
-
     void setHitbox(const QPolygonF& hitbox);
-
-    void setRotationAngle(float angle);
 
     const QString& getTypeName() const;
 
     void setTypeName(const QString& typeName);
-
-    bool isIntersect(const Object& object) const;
 
     QLinkedList<std::shared_ptr<Attribute>>& getAttributes();
 
@@ -52,6 +44,8 @@ class Object {
 
     QStringList& getStrategies();
 
+    const QStringList& getStrategies() const;
+
     void setStrategies(const QStringList& strategies);
 
     bool hasAttribute(const QString& name);
@@ -60,10 +54,7 @@ class Object {
 
   private:
     QString typeName;
-    uint64_t id;
-    QPointF position;
     QPolygonF hitbox;
-    float rotationAngle;
 
     QLinkedList<std::shared_ptr<Attribute>> attributes;
     QStringList strategies;
@@ -71,4 +62,5 @@ class Object {
 
 }  // namespace core
 
-#endif // OBJECT_H
+
+#endif //OBJECTSIGNATURE_H
