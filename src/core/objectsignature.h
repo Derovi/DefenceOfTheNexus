@@ -44,11 +44,14 @@ class ObjectSignature {
 
     QStringList& getStrategies();
 
+    const QStringList& getStrategies() const;
+
     void setStrategies(const QStringList& strategies);
 
     bool hasAttribute(const QString& name);
 
     std::shared_ptr<core::Attribute> getAttribute(const QString& name);
+
 
   private:
     QString typeName;

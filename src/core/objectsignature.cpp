@@ -69,3 +69,7 @@ core::ObjectSignature::ObjectSignature(core::Object object) {
         attributes.push_back(attribute->clone());
     }
 }
+
+const QStringList& core::ObjectSignature::getStrategies() const {
+    return strategies;
+}
