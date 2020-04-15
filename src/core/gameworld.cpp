@@ -24,6 +24,10 @@ QVector<core::Resource>& core::GameWorld::getResources() {
     return resources;
 }
 
+const QVector<core::Resource>& core::GameWorld::getResources() const {
+    return resources;
+}
+
 void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
     GameWorld::resources = resources;
 }
@@ -37,4 +41,8 @@ void core::GameWorld::setObjects(const QHash<int64_t, std::shared_ptr<core::Obje
 }
 
 core::GameWorld::~GameWorld() {
+}
+
+const QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() const {
+    return objects;
 }

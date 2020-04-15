@@ -22,9 +22,14 @@ class GameWorld {
 
     QVector<core::Resource>& getResources();
 
+    const QVector<core::Resource>& getResources() const;
+
     void setResources(const QVector<core::Resource>& resources);
 
     QHash<int64_t, std::shared_ptr<core::Object>>& getObjects();
+
+    const QHash<int64_t, std::shared_ptr<core::Object>>& getObjects() const;
+
 
     void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
