@@ -52,7 +52,6 @@ class ObjectSignature {
 
     std::shared_ptr<core::Attribute> getAttribute(const QString& name);
 
-
   private:
     QString typeName;
     QPolygonF hitbox;

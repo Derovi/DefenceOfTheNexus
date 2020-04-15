@@ -30,7 +30,6 @@ class GameWorld {
 
     const QHash<int64_t, std::shared_ptr<core::Object>>& getObjects() const;
 
-
     void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
     ~GameWorld();
