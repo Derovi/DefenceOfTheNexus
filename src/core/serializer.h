@@ -9,6 +9,7 @@
 #include <QtGlobal>
 #include <QJsonDocument>
 
+#include "command.h"
 #include "object.h"
 #include "resource.h"
 #include "moving.h"
@@ -16,6 +17,7 @@
 #include "damaging.h"
 #include "damageable.h"
 #include "../utils/factory.h"
+#include "objectsignature.h"
 
 namespace core {
 
@@ -43,22 +45,31 @@ class Serializer {
     bool isPrettyPrinting();
 
     static std::optional<QJsonObject> gameWorldSerializer(const core::GameWorld& world);
+    static std::optional<QJsonObject> commandSerializer(const core::Command& command);
+
+    static std::optional<QJsonObject>
+    objectSignatureSerializer(const core::ObjectSignature& command);
 
     static std::optional<QJsonObject> objectSerializer(const core::Object& object);
 
     static std::optional<QJsonObject>
-    resourceSerializer(const std::shared_ptr<core::Attribute> attribute);
+    resourceSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    damagingSerializer(const std::shared_ptr<core::Attribute> attribute);
+    damagingSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    damageableSerializer(const std::shared_ptr<core::Attribute> attribute);
+    damageableSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    movingSerializer(const std::shared_ptr<core::Attribute> moving);
+    movingSerializer(const std::shared_ptr<core::Attribute>& moving);
+
 
     static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
+
+    static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
+
+    static std::optional<core::ObjectSignature> objectSignatureDeserializer(const QJsonObject& serialized);
 
     static std::optional<core::Object> objectDeserializer(const QJsonObject& serialized);
 
@@ -77,6 +88,10 @@ class Serializer {
   private:
 
     bool prettyPrinting = true;
+
+    QString jsonObjectToString(const QJsonObject& jsonObject);
+
+    std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
 };
 
 }  // namespace core

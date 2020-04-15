@@ -75,6 +75,7 @@ bool core::Serializer::isPrettyPrinting() {
 }
 
 std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object& object) {
+<<<<<<< HEAD
     QJsonObject json;
     QJsonObject polygon;
     QJsonObject position;
@@ -111,7 +112,7 @@ std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object
 }
 
 std::optional<QJsonObject>
-core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Resource*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -131,7 +132,7 @@ core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute> attr
 }
 
 std::optional<QJsonObject>
-core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damaging*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -145,7 +146,7 @@ core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute> attr
 }
 
 std::optional<QJsonObject>
-core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damageable*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -157,7 +158,7 @@ core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute> at
 }
 
 std::optional<QJsonObject>
-core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute> attribute) {
+core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Moving*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -366,6 +367,7 @@ core::Serializer::movingDeserializer(const QJsonObject& serialized) {
     return std::make_shared<core::Moving>(*object);
 }
 
+
 std::optional<QJsonObject> core::Serializer::gameWorldSerializer(const core::GameWorld& world) {
     QJsonObject json;
     json.insert("width", world.getWidth());
@@ -440,4 +442,43 @@ core::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
     }
     ans.setObjects(hashObjects);
     return ans;
+QString core::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
+    QJsonDocument doc(jsonObject);
+    if (isPrettyPrinting()) {
+        return doc.toJson(QJsonDocument::Indented);
+    }
+    return doc.toJson(QJsonDocument::Compact);
+}
+
+std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& jsonString) {
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
+
+    // check validity of the document
+    if (jsonDocument.isNull()) {
+        return std::nullopt;
+    }
+
+    if (!jsonDocument.isObject()) {
+        return std::nullopt;
+    }
+
+    return jsonDocument.object();
+}
+
+std::optional<core::Command> core::Serializer::commandDeserializer(const QJsonObject& serialized) {
+    return std::optional<core::Command>();
+}
+
+std::optional<core::ObjectSignature>
+core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
+    return std::optional<core::ObjectSignature>();
+}
+
+std::optional<QJsonObject>
+core::Serializer::objectSignatureSerializer(const core::ObjectSignature& command) {
+    return std::optional<QJsonObject>();
+}
+
+std::optional<QJsonObject> core::Serializer::commandSerializer(const core::Command& command) {
+    return std::optional<QJsonObject>();
 }

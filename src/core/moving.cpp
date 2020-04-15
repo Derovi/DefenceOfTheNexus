@@ -43,3 +43,7 @@ QString core::Moving::getAttributeName() {
 
 QString core::Moving::attributeName = "moving";
 
+std::shared_ptr<core::Attribute> core::Moving::clone() {
+    return std::shared_ptr<Attribute>(new Moving(*this));
+}
+
