@@ -31,7 +31,7 @@ class Damageable : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
-    static QString attributeName;
+    static const QString attributeName;
 
   private:
     int health;

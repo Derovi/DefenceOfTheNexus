@@ -32,7 +32,7 @@ class Serializer {
 
     std::optional<QString> serializeCommand(const core::Command& command);
 
-    std::optional<QString> serializeAttribute(const std::shared_ptr<core::Attribute> attribute,
+    std::optional<QString> serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
                                               std::function<std::optional<QJsonObject>(
                                                       const std::shared_ptr<core::Attribute>)> serializer);
 

@@ -33,6 +33,9 @@ bool DataBundle::assign(const QString& name, std::shared_ptr<T>& variable) {
         return false;
     }
     std::shared_ptr<T> foundVariable = std::static_pointer_cast<T>(data[name]);
+    if (foundVariable == nullptr) {
+        return false;
+    }
     variable = foundVariable;
     return true;
 }

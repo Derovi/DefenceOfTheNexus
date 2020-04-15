@@ -17,7 +17,7 @@ class MoveStrategy : public server::Strategy {
 
     static QString name;
 
-    ~MoveStrategy();
+    ~MoveStrategy() = default;
 
     QStringList getRequiredAttributes() override;
 

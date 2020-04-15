@@ -30,7 +30,7 @@ class Moving : public Attribute {
 
     virtual void set(const Moving& properties);
 
-    static QString attributeName;
+    static const QString attributeName;
 
     QString getAttributeName() override;
 

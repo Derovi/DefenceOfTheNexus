@@ -13,5 +13,3 @@ QStringList server::Strategy::getRequiredAttributes() {
 QStringList server::Strategy::getStartAfter() {
     return QStringList();
 }
-
-server::Strategy::~Strategy() = default;

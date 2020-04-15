@@ -1,6 +1,6 @@
 #include <QDebug>
 #include <QVector>
-#include <QHash>
+
 #include "../../core/gameworld.h"
 #include "../../core/object.h"
 
@@ -59,7 +59,4 @@ void server::GameWorldController::removeObject(int64_t id) {
     }
     gameWorld->getObjects().remove(id);
     controllers.remove(id);
-}
-
-server::GameWorldController::~GameWorldController() {
 }

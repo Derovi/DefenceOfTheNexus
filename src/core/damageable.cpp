@@ -29,7 +29,7 @@ QString core::Damageable::getAttributeName() {
     return attributeName;
 }
 
-QString core::Damageable::attributeName = "damageable";
+const QString core::Damageable::attributeName = "damageable";
 
 std::shared_ptr<core::Attribute> core::Damageable::clone() {
     return std::shared_ptr<Attribute>(new Damageable(*this));

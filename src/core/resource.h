@@ -26,7 +26,7 @@ class Resource : public Attribute {
 
     void setType(ResourceType newType);
 
-    static QString attributeName;
+    static const QString attributeName;
 
     QString getAttributeName() override;
 

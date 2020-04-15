@@ -24,7 +24,7 @@ class GameWorldController {
 
     void removeObject(int64_t id);
 
-    ~GameWorldController();
+    ~GameWorldController() = default;
 
   private:
 

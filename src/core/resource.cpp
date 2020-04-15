@@ -22,7 +22,7 @@ QString core::Resource::getAttributeName() {
     return attributeName;
 }
 
-QString core::Resource::attributeName = "resource";
+const QString core::Resource::attributeName = "resource";
 
 std::shared_ptr<core::Attribute> core::Resource::clone() {
     return std::shared_ptr<Attribute>(new Resource(*this));

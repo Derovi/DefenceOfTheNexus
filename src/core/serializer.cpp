@@ -17,7 +17,7 @@ std::optional<QString> core::Serializer::serializeObject(const core::Object& obj
 }
 
 std::optional<QString>
-core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute> attribute,
+core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
                                      std::function<std::optional<QJsonObject>(
                                              const std::shared_ptr<core::Attribute>)> serializer) {
     auto result = serializer(attribute);
