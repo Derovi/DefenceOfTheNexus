@@ -43,16 +43,16 @@ class Serializer {
     static std::optional<QJsonObject> objectSerializer(const core::Object& object);
 
     static std::optional<QJsonObject>
-    resourceSerializer(const std::shared_ptr<core::Attribute> attribute);
+    resourceSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    damagingSerializer(const std::shared_ptr<core::Attribute> attribute);
+    damagingSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    damageableSerializer(const std::shared_ptr<core::Attribute> attribute);
+    damageableSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
-    movingSerializer(const std::shared_ptr<core::Attribute> moving);
+    movingSerializer(const std::shared_ptr<core::Attribute>& moving);
 
 
     static std::optional<core::Object> objectDeserializer(const QJsonObject& serialized);

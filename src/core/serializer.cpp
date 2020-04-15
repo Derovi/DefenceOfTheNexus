@@ -39,6 +39,7 @@ bool core::Serializer::isPrettyPrinting() {
 }
 
 std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object& object) {
+
     return std::nullopt;
 }
 
