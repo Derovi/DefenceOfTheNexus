@@ -56,3 +56,21 @@ std::shared_ptr<QThread> client::MainWindow::getUiThread() const {
 void client::MainWindow::paintEvent(QPaintEvent*) {
     draw();
 }
+
+void client::MainWindow::openScreen(const std::shared_ptr<Screen>& screen) {
+    if (!screens.empty()) {
+        screens.top()->pause();
+    }
+    screens.push(screen);
+}
+
+void client::MainWindow::closeScreen() {
+    if (screens.empty()) {
+        return;
+    }
+    screens.pop();
+    if (screens.empty()) {
+        return;
+    }
+    screens.top()->resume();
+}
