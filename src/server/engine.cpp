@@ -23,11 +23,7 @@ void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
         // time when last tick execution was started
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
-        while (true) {
-            if (finished) {
-                break;
-            }
-
+        while (!finished && gameWorld) {
             QDateTime currentTickStartTime = QDateTime::currentDateTime();
 
             // first, execute all commands from clients
@@ -64,6 +60,7 @@ std::shared_ptr<QThread> server::Engine::getMainThread() const {
 
 void server::Engine::finish() {
     finished = true;
+    mainThread->terminate();
 }
 
 bool server::Engine::isFinished() const {

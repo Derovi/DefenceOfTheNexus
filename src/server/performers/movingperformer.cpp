@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "movingperformer.h"
 
 void
@@ -20,11 +22,14 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
     }
 
     for (auto obj:gameWorld->getObjects()) {
+        if (obj->getId() == object->getId()) {
+            continue;
+        }
         QPolygonF gameObject = obj->getHitbox();
         for (auto& j : gameObject) {
             j += obj->getPosition();
         }
-        if (!gameObject.intersects(hitbox)) {
+        if (gameObject.intersects(hitbox)) {
             isOk = false;
             break;
         }
