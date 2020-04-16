@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 
 #include "menuscreen.h"
+#include "gamescreen.h"
 #include "../widgets/imagebutton.h"
 #include "../mainwindow.h"
 #include "../properties.h"
@@ -36,4 +37,13 @@ client::MenuScreen::MenuScreen() {
     });
 
     addChild(fullScreenButton);
+
+    ImageButton * startButton = new ImageButton(QPoint(1000, 100), 500, 500);
+    startButton->setImage(QImage(":/images/resume"));
+    startButton->setOnClick([=](QPoint point) {
+        MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
+    });
+
+
+    addChild(startButton);
 }

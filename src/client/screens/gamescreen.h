@@ -5,8 +5,14 @@
 
 namespace client {
 
-class GameScreen : Screen {
+class GameScreen : public Screen {
+  public:
+    GameScreen();
 
+  private:
+    void onPaused() override;
+
+    void onResumed() override;
 };
 
 }

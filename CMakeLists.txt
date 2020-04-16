@@ -57,7 +57,7 @@ add_executable(defenceofnexus
         src/client/widgets/imagebutton.cpp
         src/client/widgets/imagebutton.h
         src/utils/utils.cpp
-        src/utils/utils.h src/client/properties.cpp src/client/screens/gamescreen.cpp src/client/screens/gamescreen.h)
+        src/utils/utils.h src/client/properties.cpp src/client/screens/gamescreen.cpp src/client/screens/gamescreen.h src/client/widgets/gamemap.cpp src/client/widgets/gamemap.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

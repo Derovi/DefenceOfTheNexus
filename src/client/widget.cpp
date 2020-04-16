@@ -4,7 +4,7 @@
 #include "widget.h"
 #include "windowmanager.h"
 
-client::Widget::Widget(const QPoint& position) : position(position) {
+client::Widget::Widget(const QPoint& position): position(position) {
 
 }
 
@@ -25,7 +25,7 @@ void client::Widget::setParent(const std::shared_ptr<client::Widget>& parent) {
     this->parent = parent;
 }
 
-void client::Widget::addChild(client::Widget * child) {
+void client::Widget::addChild(client::Widget* child) {
     children.push_back(child);
     child->setParent(std::shared_ptr<Widget>(this));
 }
@@ -75,10 +75,10 @@ bool client::Widget::isHovered() {
 void client::Widget::mouse(QPoint point) {
     is_hovered = true;
     mouseMoved(point);
-    for (Widget * child : children) {
+    for (Widget* child : children) {
         if (child->isPointOnWidget(point)) {
             child->mouse(QPoint(point.x() - child->getPosition().x(),
-                    point.y() - child->getPosition().y()));
+                                point.y() - child->getPosition().y()));
         }
     }
 }
@@ -102,15 +102,12 @@ QRect client::Widget::boundsRect() {
 }
 
 void client::Widget::click(QPoint point) {
-    qDebug() << "click!" << point.x() << point.y();
     bool is_clicked = false;
-    for (Widget * child : children) {
-        qDebug() << "child!" << ' ' << child->getPosition().x() << ' ' << child->getPosition().y() << child->getWidth() << child->getHeght();
+    for (Widget* child : children) {
         if (child->isPointOnWidget(point)) {
-            qDebug() << "onWidget!";
             is_clicked = true;
             child->click(QPoint(point.x() - child->getPosition().x(),
-                                        point.y() - child->getPosition().y()));
+                                point.y() - child->getPosition().y()));
         }
     }
     if (!is_clicked) {
