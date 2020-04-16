@@ -2,7 +2,7 @@
 #define MOVESTRATEGY_H
 
 #include "../controllers/databundle.h"
-#include "../../core/moving.h"
+#include "../../core/attributes/moving.h"
 #include "strategy.h"
 
 namespace server {

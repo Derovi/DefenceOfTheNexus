@@ -2,7 +2,7 @@
 #include <QDebug>
 
 #include "../core/gameworld.h"
-#include "../core/moving.h"
+#include "../core/attributes/moving.h"
 
 #include "commandexecutor.h"
 

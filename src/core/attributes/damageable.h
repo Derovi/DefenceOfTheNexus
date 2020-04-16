@@ -5,7 +5,7 @@
 #include <QString>
 #include <bits/shared_ptr.h>
 
-#include "attribute.h"
+#include "../attribute.h"
 
 namespace core {
 

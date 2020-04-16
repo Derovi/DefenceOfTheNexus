@@ -6,7 +6,7 @@
 #include <QtCore/QHash>
 
 #include "object.h"
-#include "resource.h"
+#include "attributes/resource.h"
 
 namespace core {
 

@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "../../core/gameworld.h"
-#include "../../core/damageable.h"
+#include "../../core/attributes/damageable.h"
 
 namespace server::damageable_performer {
 

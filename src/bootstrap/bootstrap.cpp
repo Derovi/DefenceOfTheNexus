@@ -4,15 +4,15 @@
 
 #include "../utils/factory.h"
 #include "../core/command.h"
-#include "../core/damageable.h"
-#include "../core/serializer.h"
-#include "strategies/movestrategy.h"
+#include "../core/attributes/damageable.h"
+#include "../utils/serializer.h"
+#include "../server/strategies/movestrategy.h"
 
-#include "engine.h"
-#include "server.h"
+#include "../server/engine.h"
+#include "../server/server.h"
 
-#include "controllers/controller.h"
-#include "controllers/databundle.h"
+#include "../server/controllers/controller.h"
+#include "../server/controllers/databundle.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
@@ -25,20 +25,20 @@ void registerStrategies() {
 
 void registerAttributes() {
     utils::Factory::registerAttribute(core::Damageable::attributeName,
-                                      core::Serializer::damageableSerializer,
-                                      core::Serializer::damageableDeserializer);
+                                      utils::Serializer::damageableSerializer,
+                                      utils::Serializer::damageableDeserializer);
 
     utils::Factory::registerAttribute(core::Moving::attributeName,
-                                      core::Serializer::movingSerializer,
-                                      core::Serializer::movingDeserializer);
+                                      utils::Serializer::movingSerializer,
+                                      utils::Serializer::movingDeserializer);
 
     utils::Factory::registerAttribute(core::Damaging::attributeName,
-                                      core::Serializer::damagingSerializer,
-                                      core::Serializer::damagingDeserializer);
+                                      utils::Serializer::damagingSerializer,
+                                      utils::Serializer::damagingDeserializer);
 
     utils::Factory::registerAttribute(core::Resource::attributeName,
-                                      core::Serializer::resourceSerializer,
-                                      core::Serializer::resourceDeserializer);
+                                      utils::Serializer::resourceSerializer,
+                                      utils::Serializer::resourceDeserializer);
 }
 
 int main(int argc, char** argv) {

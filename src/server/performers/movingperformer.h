@@ -6,7 +6,7 @@
 
 #include "../../core/gameworld.h"
 #include "../../core/object.h"
-#include "../../core/moving.h"
+#include "../../core/attributes/moving.h"
 
 namespace server::moving_performer {
 

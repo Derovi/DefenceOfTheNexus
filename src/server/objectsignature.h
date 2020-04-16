@@ -9,10 +9,10 @@
 #include <QPolygonF>
 #include <QtCore/QStringList>
 
-#include "object.h"
-#include "attribute.h"
+#include "../core/object.h"
+#include "../core/attribute.h"
 
-namespace core {
+namespace server {
 
 class ObjectSignature {
   public:
@@ -36,11 +36,11 @@ class ObjectSignature {
 
     void setTypeName(const QString& typeName);
 
-    QLinkedList<std::shared_ptr<Attribute>>& getAttributes();
+    QLinkedList<std::shared_ptr<core::Attribute>>& getAttributes();
 
-    const QLinkedList<std::shared_ptr<Attribute>>& getAttributes() const;
+    const QLinkedList<std::shared_ptr<core::Attribute>>& getAttributes() const;
 
-    void setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes);
+    void setAttributes(const QLinkedList<std::shared_ptr<core::Attribute>>& attributes);
 
     QStringList& getStrategies();
 
@@ -56,7 +56,7 @@ class ObjectSignature {
     QString typeName;
     QPolygonF hitbox;
 
-    QLinkedList<std::shared_ptr<Attribute>> attributes;
+    QLinkedList<std::shared_ptr<core::Attribute>> attributes;
     QStringList strategies;
 };
 

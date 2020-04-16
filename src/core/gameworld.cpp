@@ -1,7 +1,7 @@
 #include <memory>
 
 #include "gameworld.h"
-#include "resource.h"
+#include "attributes/resource.h"
 #include "object.h"
 
 int core::GameWorld::getHeight() const {

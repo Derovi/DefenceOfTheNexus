@@ -4,7 +4,7 @@
 #include <memory>
 #include <QVector2D>
 
-#include "attribute.h"
+#include "../attribute.h"
 
 namespace core {
 

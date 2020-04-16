@@ -1,6 +1,6 @@
 #include "serializer.h"
 
-std::optional<QString> core::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
+std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
     if (result == std::nullopt) {
         return std::nullopt;
@@ -8,7 +8,7 @@ std::optional<QString> core::Serializer::serializeGameWorld(const core::GameWorl
     return jsonObjectToString(result.value());
 }
 
-std::optional<QString> core::Serializer::serializeObject(const core::Object& object) {
+std::optional<QString> utils::Serializer::serializeObject(const core::Object& object) {
     auto result = objectSerializer(object);
     if (result == std::nullopt) {
         return std::nullopt;
@@ -17,7 +17,7 @@ std::optional<QString> core::Serializer::serializeObject(const core::Object& obj
 }
 
 std::optional<QString>
-core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
+utils::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
                                      std::function<std::optional<QJsonObject>(
                                              const std::shared_ptr<core::Attribute>)> serializer) {
     auto result = serializer(attribute);
@@ -27,7 +27,7 @@ core::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute>& att
     return jsonObjectToString(result.value());
 }
 
-std::optional<core::GameWorld> core::Serializer::deserializeGameWorld(const QString& serialized) {
+std::optional<core::GameWorld> utils::Serializer::deserializeGameWorld(const QString& serialized) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
         return std::nullopt;
@@ -35,7 +35,7 @@ std::optional<core::GameWorld> core::Serializer::deserializeGameWorld(const QStr
     return gameWorldDeserialize(json.value());
 }
 
-std::optional<core::Object> core::Serializer::deserializeObject(const QString& serialized) {
+std::optional<core::Object> utils::Serializer::deserializeObject(const QString& serialized) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
         return std::nullopt;
@@ -44,8 +44,8 @@ std::optional<core::Object> core::Serializer::deserializeObject(const QString& s
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
-core::Serializer::deserializeAttribute(const QString& serialized,
-                                       std::function<std::optional<std::shared_ptr<Attribute>>(
+utils::Serializer::deserializeAttribute(const QString& serialized,
+                                       std::function<std::optional<std::shared_ptr<core::Attribute>>(
                                                const QJsonObject&)> deserializer) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
@@ -54,15 +54,15 @@ core::Serializer::deserializeAttribute(const QString& serialized,
     return deserializer(json.value());
 }
 
-void core::Serializer::setPrettyPrinting(bool prettyPrinting) {
+void utils::Serializer::setPrettyPrinting(bool prettyPrinting) {
 
 }
 
-bool core::Serializer::isPrettyPrinting() {
+bool utils::Serializer::isPrettyPrinting() {
     return false;
 }
 
-std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object& object) {
+std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Object& object) {
     QJsonObject json;
     QJsonObject polygon;
     QJsonObject position;
@@ -99,19 +99,19 @@ std::optional<QJsonObject> core::Serializer::objectSerializer(const core::Object
 }
 
 std::optional<QJsonObject>
-core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+utils::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Resource*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
         return std::nullopt;
     }
-    if (object->getType() == ResourceType::kWood) {
+    if (object->getType() == core::ResourceType::kWood) {
         json.insert("resourceType", 1);
     }
-    if (object->getType() == ResourceType::kIron) {
+    if (object->getType() == core::ResourceType::kIron) {
         json.insert("resourceType", 2);
     }
-    if (object->getType() == ResourceType::kStone) {
+    if (object->getType() == core::ResourceType::kStone) {
         json.insert("resourceType", 3);
     }
     json.insert("amount", object->getAmount());
@@ -119,7 +119,7 @@ core::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& att
 }
 
 std::optional<QJsonObject>
-core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+utils::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damaging*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -133,7 +133,7 @@ core::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& att
 }
 
 std::optional<QJsonObject>
-core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+utils::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Damageable*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -145,7 +145,7 @@ core::Serializer::damageableSerializer(const std::shared_ptr<core::Attribute>& a
 }
 
 std::optional<QJsonObject>
-core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+utils::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attribute) {
     auto object = dynamic_cast<core::Moving*>(attribute.get());
     QJsonObject json;
     if (object == nullptr) {
@@ -160,7 +160,7 @@ core::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attri
     return json;
 }
 
-std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObject& json) {
+std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObject& json) {
 
     if (!json["id"].isString()) {
         return std::nullopt;
@@ -232,14 +232,14 @@ std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObje
         return std::nullopt;
     }
     attributes = json["attributes"].toObject();
-    QLinkedList<std::shared_ptr<Attribute> > objectAttributes;
+    QLinkedList<std::shared_ptr<core::Attribute> > objectAttributes;
     auto iter = attributes.begin();
     while (iter != attributes.end()) {
         if (!iter.value().isObject()) {
             return std::nullopt;
         }
         QJsonObject attribute = iter.value().toObject();
-        std::optional<std::shared_ptr<Attribute>> result = utils::Factory::getDeserializer(
+        std::optional<std::shared_ptr<core::Attribute>> result = utils::Factory::getDeserializer(
                 iter.key())(attribute);
         if (result == std::nullopt) {
             return std::nullopt;
@@ -252,7 +252,7 @@ std::optional<core::Object> core::Serializer::objectDeserializer(const QJsonObje
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
-core::Serializer::resourceDeserializer(const QJsonObject& serialized) {
+utils::Serializer::resourceDeserializer(const QJsonObject& serialized) {
     if (!serialized["amount"].isDouble()) {
         return std::nullopt;
     }
@@ -262,22 +262,22 @@ core::Serializer::resourceDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     int type = serialized["resourceType"].toDouble();
-    ResourceType resType;
+    core::ResourceType resType;
     if (type == 1) {
-        resType = ResourceType::kWood;
+        resType = core::ResourceType::kWood;
     }
     if (type == 2) {
-        resType = ResourceType::kIron;
+        resType = core::ResourceType::kIron;
     }
     if (type == 3) {
-        resType = ResourceType::kStone;
+        resType = core::ResourceType::kStone;
     }
     auto object = new core::Resource(resType, amount);
     return std::make_shared<core::Resource>(*object);
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
-core::Serializer::damagingDeserializer(const QJsonObject& serialized) {
+utils::Serializer::damagingDeserializer(const QJsonObject& serialized) {
     auto object = new core::Damaging;
     if (!serialized["bulletType"].isString()) {
         delete object;
@@ -303,7 +303,7 @@ core::Serializer::damagingDeserializer(const QJsonObject& serialized) {
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
-core::Serializer::damageableDeserializer(const QJsonObject& serialized) {
+utils::Serializer::damageableDeserializer(const QJsonObject& serialized) {
     auto object = new core::Damageable;
     if (!serialized["health"].isDouble()) {
         delete object;
@@ -319,7 +319,7 @@ core::Serializer::damageableDeserializer(const QJsonObject& serialized) {
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
-core::Serializer::movingDeserializer(const QJsonObject& serialized) {
+utils::Serializer::movingDeserializer(const QJsonObject& serialized) {
     auto object = new core::Moving;
     QJsonObject direction;
     if (!serialized["direction"].isObject()) {
@@ -355,7 +355,7 @@ core::Serializer::movingDeserializer(const QJsonObject& serialized) {
 }
 
 
-std::optional<QJsonObject> core::Serializer::gameWorldSerializer(const core::GameWorld& world) {
+std::optional<QJsonObject> utils::Serializer::gameWorldSerializer(const core::GameWorld& world) {
     QJsonObject json;
     json.insert("width", world.getWidth());
     json.insert("height", world.getHeight());
@@ -385,7 +385,7 @@ std::optional<QJsonObject> core::Serializer::gameWorldSerializer(const core::Gam
 }
 
 std::optional<core::GameWorld>
-core::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
+utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
     core::GameWorld ans;
     if (!serialized["width"].isDouble()) {
         return std::nullopt;
@@ -433,7 +433,7 @@ core::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
     return ans;
 }
 
-QString core::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
+QString utils::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
     QJsonDocument doc(jsonObject);
     if (isPrettyPrinting()) {
         return doc.toJson(QJsonDocument::Indented);
@@ -441,7 +441,7 @@ QString core::Serializer::jsonObjectToString(const QJsonObject& jsonObject) {
     return doc.toJson(QJsonDocument::Compact);
 }
 
-std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& jsonString) {
+std::optional<QJsonObject> utils::Serializer::stringToJsonObject(const QString& jsonString) {
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
 
     // check validity of the document
@@ -456,7 +456,7 @@ std::optional<QJsonObject> core::Serializer::stringToJsonObject(const QString& j
     return jsonDocument.object();
 }
 
-std::optional<core::Command> core::Serializer::commandDeserializer(const QJsonObject& serialized) {
+std::optional<core::Command> utils::Serializer::commandDeserializer(const QJsonObject& serialized) {
     core::Command command;
     if (!serialized["typeName"].isString()) {
         return std::nullopt;
@@ -478,8 +478,8 @@ std::optional<core::Command> core::Serializer::commandDeserializer(const QJsonOb
     return command;
 }
 
-std::optional<core::ObjectSignature>
-core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
+std::optional<server::ObjectSignature>
+utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
     if (!serialized["typeName"].isString()) {
         return std::nullopt;
     }
@@ -515,7 +515,7 @@ core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
         }
         vec[it].setY(qreal(i.toDouble()));
     }
-    core::ObjectSignature signature(serialized["typeName"].toString(),QPolygonF(vec));
+    server::ObjectSignature signature(serialized["typeName"].toString(),QPolygonF(vec));
     QStringList strategies;
     QJsonArray json;
     if (!serialized["strategies"].isArray()) {
@@ -538,14 +538,14 @@ core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     attributes = serialized["attributes"].toObject();
-    QLinkedList<std::shared_ptr<Attribute> > objectAttributes;
+    QLinkedList<std::shared_ptr<core::Attribute> > objectAttributes;
     auto iter = attributes.begin();
     while (iter != attributes.end()) {
         if (!iter.value().isObject()) {
             return std::nullopt;
         }
         QJsonObject attribute = iter.value().toObject();
-        std::optional<std::shared_ptr<Attribute>> result = utils::Factory::getDeserializer(
+        std::optional<std::shared_ptr<core::Attribute>> result = utils::Factory::getDeserializer(
                 iter.key())(attribute);
         if (result == std::nullopt) {
             return std::nullopt;
@@ -558,7 +558,7 @@ core::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
 }
 
 std::optional<QJsonObject>
-core::Serializer::objectSignatureSerializer(const core::ObjectSignature& signature) {
+utils::Serializer::objectSignatureSerializer(const server::ObjectSignature& signature) {
     QJsonObject json;
     json["typeName"] = signature.getTypeName();
     QJsonObject position;
@@ -592,7 +592,7 @@ core::Serializer::objectSignatureSerializer(const core::ObjectSignature& signatu
 }
 
 
-std::optional<QJsonObject> core::Serializer::commandSerializer(const core::Command& command) {
+std::optional<QJsonObject> utils::Serializer::commandSerializer(const core::Command& command) {
     QJsonObject json;
     json["typeName"] = command.getName();
     QJsonArray arguments;
@@ -605,7 +605,7 @@ std::optional<QJsonObject> core::Serializer::commandSerializer(const core::Comma
 }
 
 std::optional<QString>
-core::Serializer::serializeObjectSignature(const core::ObjectSignature& signature) {
+utils::Serializer::serializeObjectSignature(const server::ObjectSignature& signature) {
     auto result = objectSignatureSerializer(signature);
     if (result == std::nullopt) {
         return std::nullopt;
@@ -613,7 +613,7 @@ core::Serializer::serializeObjectSignature(const core::ObjectSignature& signatur
     return jsonObjectToString(result.value());
 }
 
-std::optional<QString> core::Serializer::serializeCommand(const core::Command& command) {
+std::optional<QString> utils::Serializer::serializeCommand(const core::Command& command) {
     auto result = commandSerializer(command);
     if (result == std::nullopt) {
         return std::nullopt;
@@ -621,8 +621,8 @@ std::optional<QString> core::Serializer::serializeCommand(const core::Command& c
     return jsonObjectToString(result.value());
 }
 
-std::optional<core::ObjectSignature>
-core::Serializer::deserializeObjectSignature(const QString& serialized) {
+std::optional<server::ObjectSignature>
+utils::Serializer::deserializeObjectSignature(const QString& serialized) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
         return std::nullopt;
@@ -630,7 +630,7 @@ core::Serializer::deserializeObjectSignature(const QString& serialized) {
     return objectSignatureDeserializer(json.value());
 }
 
-std::optional<core::Command> core::Serializer::deserializeCommand(const QString& serialized) {
+std::optional<core::Command> utils::Serializer::deserializeCommand(const QString& serialized) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
         return std::nullopt;

@@ -2,7 +2,7 @@
 #define RESOURCE_H
 
 #include <QString>
-#include "attribute.h"
+#include "../attribute.h"
 
 namespace core {
 

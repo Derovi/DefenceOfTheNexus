@@ -4,7 +4,7 @@
 
 #include <QLineF>
 
-#include "../../core/damageable.h"
+#include "../../core/attributes/damageable.h"
 #include "damageableperformer.h"
 
 namespace server::damaging_performer {
