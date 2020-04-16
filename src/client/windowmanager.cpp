@@ -1,3 +1,7 @@
+#include <QTimer>
+#include <QMetaObject>
+
+#include "mainwindow.h"
 #include "windowmanager.h"
 #include "properties.h"
 

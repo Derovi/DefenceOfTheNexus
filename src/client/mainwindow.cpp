@@ -1,6 +1,8 @@
 #include <memory>
 
 #include <QDateTime>
+#include <QMetaObject>
+#include <QTimer>
 #include <QPainter>
 #include <QMainWindow>
 #include <QDebug>
@@ -9,6 +11,7 @@
 
 #include "mainwindow.h"
 #include "properties.h"
+#include "windowmanager.h"
 #include "screens/menuscreen.h"
 
 client::MainWindow::MainWindow() {
@@ -25,9 +28,16 @@ client::MainWindow::MainWindow() {
                 uiThread->msleep(1);
                 continue;
             }
-            setFixedWidth(properties::width);
-            setFixedHeight(properties::height);
-            update();
+            runOnUiThread([&] {
+                if (properties::fullscreen) {
+                    showFullScreen();
+                } else {
+                    showNormal();
+                    setFixedWidth(properties::width);
+                    setFixedHeight(properties::height);
+                }
+                update();
+            });
             lastFrame = currentTime;
             uiThread->msleep(1);
         }
@@ -38,7 +48,8 @@ client::MainWindow::MainWindow() {
 
 void client::MainWindow::mousePressEvent(QMouseEvent* event) {
     if (!screens.empty()) {
-        screens.top()->click(event->pos());
+        screens.top()->click(QPoint(window_manager::get_x4k(event->pos().x()),
+                window_manager::get_y4k(event->pos().y())));
     }
 }
 
@@ -55,6 +66,17 @@ std::shared_ptr<QThread> client::MainWindow::getUiThread() const {
 
 void client::MainWindow::paintEvent(QPaintEvent*) {
     draw();
+}
+
+void client::MainWindow::runOnUiThread(std::function<void()> callback) {
+    QTimer* timer = new QTimer();
+    timer->moveToThread(qApp->thread());
+    timer->setSingleShot(true);
+    QObject::connect(timer, &QTimer::timeout, [=]() {
+        callback();
+        timer->deleteLater();
+    });
+    QMetaObject::invokeMethod(timer, "start", Qt::QueuedConnection, Q_ARG(int, 0));
 }
 
 void client::MainWindow::openScreen(const std::shared_ptr<Screen>& screen) {

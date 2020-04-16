@@ -2,13 +2,13 @@
 #define PROPERTIES_H
 
 namespace client::properties {
-static bool fullscreen = false;
+extern bool fullscreen;
 
-static int width = 1600;
+extern int width;
 
-static int height = 900;
+extern int height;
 
-static int frameRate = 60;
+extern int frameRate;
 }
 
 #endif //PROPERTIES_H

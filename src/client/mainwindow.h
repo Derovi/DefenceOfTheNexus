@@ -29,6 +29,8 @@ class MainWindow : public QWidget {
 
     static MainWindow* getInstance();
 
+    void runOnUiThread(std::function<void()> callback);
+
   private:
     void draw();
 

@@ -102,10 +102,12 @@ QRect client::Widget::boundsRect() {
 }
 
 void client::Widget::click(QPoint point) {
-    qDebug() << "click!";
+    qDebug() << "click!" << point.x() << point.y();
     bool is_clicked = false;
     for (Widget * child : children) {
+        qDebug() << "child!" << ' ' << child->getPosition().x() << ' ' << child->getPosition().y() << child->getWidth() << child->getHeght();
         if (child->isPointOnWidget(point)) {
+            qDebug() << "onWidget!";
             is_clicked = true;
             child->click(QPoint(point.x() - child->getPosition().x(),
                                         point.y() - child->getPosition().y()));
