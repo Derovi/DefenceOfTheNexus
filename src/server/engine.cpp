@@ -60,7 +60,7 @@ std::shared_ptr<QThread> server::Engine::getMainThread() const {
 
 void server::Engine::finish() {
     finished = true;
-    mainThread->terminate();
+    mainThread->wait();
 }
 
 bool server::Engine::isFinished() const {
