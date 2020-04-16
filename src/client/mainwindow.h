@@ -27,14 +27,16 @@ class MainWindow : public QWidget {
 
     std::shared_ptr<QThread> getUiThread() const;
 
+    static MainWindow* getInstance();
+
   private:
     void draw();
 
-    QVector<std::shared_ptr<Widget>> widgets;
+    QStack<std::shared_ptr<Screen>> screens;
 
     std::shared_ptr<QThread> uiThread;
 
-    QStack<std::shared_ptr<Screen>> screens;
+    static MainWindow* instance;
 };
 
 }  // namespace client

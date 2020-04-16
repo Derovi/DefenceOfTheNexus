@@ -41,7 +41,7 @@ add_executable(defenceofnexus
         src/server/performers/movingperformer.cpp
         src/server/performers/damagingperformer.cpp
         src/server/performers/damageableperformer.cpp
-        src/server/objectsignature.cpp src/client/windowmanager.cpp src/client/windowmanager.h src/client/widget.cpp src/client/widget.h src/client/mainwindow.cpp src/client/mainwindow.h src/client/properties.h src/client/screen.cpp src/client/screen.h)
+        src/server/objectsignature.cpp src/client/windowmanager.cpp src/client/windowmanager.h src/client/widget.cpp src/client/widget.h src/client/mainwindow.cpp src/client/mainwindow.h src/client/properties.h src/client/screen.cpp src/client/screen.h src/client/screens/menuscreen.cpp src/client/screens/menuscreen.h src/client/widgets/imagebutton.cpp src/client/widgets/imagebutton.h src/utils/utils.cpp src/utils/utils.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

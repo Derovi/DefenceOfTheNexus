@@ -1,3 +1,5 @@
+#include <memory>
+
 #include <QDateTime>
 #include <QPainter>
 #include <QMainWindow>
@@ -6,11 +8,12 @@
 #include <QMouseEvent>
 
 #include "mainwindow.h"
-#include "windowmanager.h"
 #include "properties.h"
+#include "screens/menuscreen.h"
 
 client::MainWindow::MainWindow() {
     //showFullScreen();
+    instance = this;
     uiThread = std::shared_ptr<QThread>(QThread::create([&] {
         int64_t lastFrame;
         while (true) {
@@ -29,23 +32,20 @@ client::MainWindow::MainWindow() {
             uiThread->msleep(1);
         }
     }));
+    openScreen(std::shared_ptr<Screen>(new MenuScreen()));
     uiThread->start();
 }
 
 void client::MainWindow::mousePressEvent(QMouseEvent* event) {
-    for (const std::shared_ptr<Widget>& widget : widgets) {
-        if (widget->isPointOnWidget(QPoint(window_manager::get_x4k(event->x()),
-                                           window_manager::get_y4k(event->y())))) {
-            widget->click(QPoint(window_manager::get_x4k(event->x()) - widget->getPosition().x(),
-                                 window_manager::get_y4k(event->y()) - widget->getPosition().y()));
-        }
+    if (!screens.empty()) {
+        screens.top()->click(event->pos());
     }
 }
 
 void client::MainWindow::draw() {
-    QPainter painter(this);
-    for (std::shared_ptr<Widget> part : widgets) {
-        part->draw(painter);
+    if (!screens.empty()) {
+        QPainter painter(this);
+        screens.top()->draw(painter);
     }
 }
 
@@ -74,3 +74,9 @@ void client::MainWindow::closeScreen() {
     }
     screens.top()->resume();
 }
+
+client::MainWindow* client::MainWindow::getInstance() {
+    return instance;
+}
+
+client::MainWindow* client::MainWindow::instance;

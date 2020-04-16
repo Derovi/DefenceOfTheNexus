@@ -62,11 +62,11 @@ class Widget : public QObject {
   protected:
     QPoint position;
 
-    virtual void paint(QPainter& painter) = 0;
+    virtual void paint(QPainter& painter) {};
 
-    virtual void clicked(QPoint point) = 0;
+    virtual void clicked(QPoint point) {};
 
-    virtual void mouseMoved(QPoint point) = 0;
+    virtual void mouseMoved(QPoint point) {};
 
     std::function<void(QPoint)> onClick;
 
