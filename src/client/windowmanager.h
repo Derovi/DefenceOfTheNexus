@@ -1,6 +1,8 @@
 #ifndef WINDOWMANAGER_H
 #define WINDOWMANAGER_H
 
+namespace client {
+
 class WindowManager {
   public:
     WindowManager(int width, int height);
@@ -25,5 +27,7 @@ class WindowManager {
 
     friend class MainWindow;
 };
+
+}  // namespace client
 
 #endif // WINDOWMANAGER_H
