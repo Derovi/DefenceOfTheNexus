@@ -1,10 +1,12 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <memory>
+#include <functional>
+
 #include <QObject>
 #include <QPoint>
 #include <QPainter>
-#include <functional>
 
 namespace client {
 
@@ -32,9 +34,9 @@ class Widget : public QObject {
 
     void setOnClick(std::function<void(QPoint)> action);
 
-    Widget* getParent();
+    std::shared_ptr<Widget> getParent();
 
-    void setParent(Widget* parent);
+    void setParent(const std::shared_ptr<Widget>& parent);
 
     void addChild(Widget* child);
 
@@ -74,7 +76,7 @@ class Widget : public QObject {
 
     bool is_hovered = false;
 
-    Widget* parent = nullptr;
+    std::shared_ptr<Widget> parent = nullptr;
 };
 
 }  // namespace client

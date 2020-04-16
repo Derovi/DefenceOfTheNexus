@@ -8,7 +8,7 @@ client::Widget::Widget(const QPoint& position) : position(position) {
 
 }
 
-client::Widget* client::Widget::getParent() {
+std::shared_ptr<client::Widget> client::Widget::getParent() {
     return parent;
 }
 
@@ -21,13 +21,13 @@ int client::Widget::getWidth() {
     return width;
 }
 
-void client::Widget::setParent(client::Widget *parent) {
+void client::Widget::setParent(const std::shared_ptr<client::Widget>& parent) {
     this->parent = parent;
 }
 
 void client::Widget::addChild(client::Widget * child) {
     children.push_back(child);
-    child->setParent(this);
+    child->setParent(std::shared_ptr<Widget>(this));
 }
 
 void client::Widget::setPosition(const QPoint& position) {
