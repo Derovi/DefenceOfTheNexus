@@ -8,6 +8,8 @@
 #include "../core/object.h"
 #include "sprite.h"
 
+namespace client {
+
 class SpriteController {
   public:
     explicit SpriteController(const std::shared_ptr<core::Object>& object);
@@ -30,5 +32,7 @@ class SpriteController {
 
     QVector<std::shared_ptr<Sprite>> sprites;
 };
+
+}
 
 #endif //SPRITECONTROLLER_H

@@ -4,6 +4,8 @@
 #include <QPixmap>
 #include <QPainter>
 
+namespace client {
+
 class Sprite {
   public:
     Sprite(const QPixmap& source, int rows = 1, int columns = 1, int framesPerSec = 30);
@@ -44,5 +46,6 @@ class Sprite {
     uint64_t lastUpdateTime;
 };
 
+}
 
 #endif //SPRITE_H
