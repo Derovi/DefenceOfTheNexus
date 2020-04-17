@@ -26,6 +26,10 @@ class GameMap : public Widget {
 
     QPoint toMapPoint(const QPoint& widgetPoint);
 
+    QTransform getTransformToWidget() const;
+
+    QTransform getTransformToMap() const;
+
   protected:
     void paint(QPainter& painter) override;
 

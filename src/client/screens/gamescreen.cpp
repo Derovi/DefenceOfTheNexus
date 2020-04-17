@@ -16,6 +16,7 @@ void client::GameScreen::onResumed() {
 
 client::GameScreen::GameScreen() {
     GameMap* gameMap = new GameMap();
+    gameMap->setDisplayBounds(QRect(1920,1080,1920,1080));
     addChild(gameMap);
 
     ImageButton* closeButton = new ImageButton(QPoint(24, 24), 72, 72);
@@ -37,7 +38,7 @@ client::GameScreen::GameScreen() {
     hitbox.append(QPoint(100, 0));
 
     object->setHitbox(hitbox);
-    object->setPosition(QPointF(1000, 1000));
+    object->setPosition(QPointF(2000, 1000));
     object->getAttributes().push_back(
             std::shared_ptr<core::Moving>(new core::Moving(QVector2D(1, 1), 1, 50)));
     object->getStrategies().push_back("moveStrategy");
@@ -52,7 +53,7 @@ client::GameScreen::GameScreen() {
     hitbox2.append(QPoint(0, -50));
 
     object2->setHitbox(hitbox2);
-    object2->setPosition(QPointF(2000, 2000));
+    object2->setPosition(QPointF(3000, 2000));
 
     engine->getGameWorld()->getObjects().insert(0, object);
     engine->getGameWorld()->getObjects().insert(1, object2);
