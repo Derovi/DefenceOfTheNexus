@@ -2,7 +2,7 @@
 #include "movestrategy.h"
 
 void server::MoveStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
-    moving_performer::move(getObject(), timeDelta, *moving);
+    moving_performer::moveIfNoObstacles(getObject(), timeDelta, world, moving);
 }
 
 QString server::MoveStrategy::getName() {

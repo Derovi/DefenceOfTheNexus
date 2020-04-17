@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/images">
+        <file alias="cancel">images/cancel.png</file>
+        <file alias="fullScreen">images/fullScreen.png</file>
+        <file alias="noFullScreen">images/noFullScreen.png</file>
+        <file alias="pause">images/pause.png</file>
+        <file alias="restart">images/restart.png</file>
+        <file alias="resume">images/resume.png</file>
+    </qresource>
+</RCC>

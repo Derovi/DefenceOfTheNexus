@@ -18,7 +18,7 @@ class GameConfiguration {
   private:
     int width = 1000;
     int height = 1000;
-    int tickPerSec = 24;
+    int tickPerSec = 60;
 };
 
 

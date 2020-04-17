@@ -1,18 +1,18 @@
 #include <QTextStream>
 #include <QQueue>
 #include <QDebug>
+#include <QApplication>
 
 #include "../utils/factory.h"
 #include "../core/command.h"
 #include "../core/attributes/damageable.h"
 #include "../utils/serializer.h"
 #include "../server/strategies/movestrategy.h"
-
 #include "../server/engine.h"
 #include "../server/server.h"
-
 #include "../server/controllers/controller.h"
 #include "../server/controllers/databundle.h"
+#include "../client/mainwindow.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy("moveStrategy",
@@ -44,6 +44,13 @@ void registerAttributes() {
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
+
+    QApplication a(argc, argv);
+    client::MainWindow w;
+    w.show();
+
+    return a.exec();
+
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);
     auto* server = new server::Server();
