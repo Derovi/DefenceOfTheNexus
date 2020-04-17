@@ -1,7 +1,7 @@
 #include <QTextStream>
 #include <QQueue>
 #include <QDebug>
-#include <QtWidgets/QApplication>
+#include <QApplication>
 
 #include "../utils/factory.h"
 #include "../core/command.h"

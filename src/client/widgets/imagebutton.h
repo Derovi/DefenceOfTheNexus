@@ -23,8 +23,6 @@ class ImageButton : public Widget {
 
     QImage getImage();
 
-    bool clicked = false;
-
   private:
     QImage image;
 };

@@ -51,9 +51,7 @@ int client::utils::get_scaled_y(QPoint position, int y, double scale, int height
 
 QPolygon client::geometry::regularPolygon(int size, int radius, QPoint point) {
     QPolygon polygon;
-    for (int idx = 0;
-         idx < size;
-         ++idx) {
+    for (int idx = 0; idx < size; ++idx) {
         polygon << QPoint(point.x() + radius * qCos(2.0 * M_PI * idx / size), point.y() +
                                                                               radius *
                                                                               qSin(2.0 * M_PI *

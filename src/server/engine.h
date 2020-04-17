@@ -40,7 +40,7 @@ class Engine {
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
     std::shared_ptr<QThread> mainThread;
-    std::atomic<bool> finished = false;
+    std::atomic<bool> finished;
 
     // todo fix race-condition
     std::shared_ptr<QQueue<core::Command>> commandQueue;

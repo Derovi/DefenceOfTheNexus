@@ -12,7 +12,7 @@
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
-        gameConfiguration(gameConfiguration) {
+        gameConfiguration(gameConfiguration), finished(false) {
     gameWorld = world_generator::generate(gameConfiguration);
     gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
     commandExecutor = CommandExecutor(gameWorld);
