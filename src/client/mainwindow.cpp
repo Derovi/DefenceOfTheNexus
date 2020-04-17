@@ -4,6 +4,7 @@
 #include <QMetaObject>
 #include <QTimer>
 #include <QPainter>
+#include <QMatrix>
 #include <QMainWindow>
 #include <QDebug>
 #include <QApplication>
@@ -56,7 +57,7 @@ void client::MainWindow::mousePressEvent(QMouseEvent* event) {
 void client::MainWindow::draw() {
     if (!screens.empty()) {
         QPainter painter(this);
-        screens.top()->draw(painter);
+        screens.top()->draw();
     }
 }
 

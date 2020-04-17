@@ -11,6 +11,8 @@ namespace client::window_manager {
 
     int get_y4k(int y);
 
+    QTransform getTransform();
+
     void update(int width, int height);
 
     const int width4k = 3840;

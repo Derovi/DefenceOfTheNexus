@@ -29,17 +29,17 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     painter.setPen(QPen(QBrush(colors::interface_green),
-                        window_manager::get_real_x(8), Qt::SolidLine,
+                        8, Qt::SolidLine,
                         Qt::SquareCap, Qt::MiterJoin));
 
     for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
         QPolygon polygon;
         for (auto point : object->getHitbox()) {
-            polygon.append(absolutePosition() + toWidgetPoint(
+            polygon.append(toWidgetPoint(
                     QPoint(point.x() + object->getPosition().x(),
                            point.y() + object->getPosition().y())));
         }
-        painter.drawPolygon(display::getpolygon(polygon));
+        painter.drawPolygon(polygon);
     }
 }
 

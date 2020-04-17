@@ -3,6 +3,7 @@
 
 #include "widget.h"
 #include "windowmanager.h"
+#include "mainwindow.h"
 
 client::Widget::Widget(const QPoint& position): position(position) {
 
@@ -50,10 +51,14 @@ QPoint client::Widget::absolutePosition() {
     return QPoint(x, y);
 }
 
-void client::Widget::draw(QPainter& painter) {
+void client::Widget::draw() {
+    QPainter painter(MainWindow::getInstance());
+    painter.translate(window_manager::get_real_x(absolutePosition().x()),
+                      window_manager::get_real_y(absolutePosition().y()));
+    painter.setTransform(QTransform(window_manager::getTransform()), true);
     paint(painter);
     for (Widget* interfacePart : children) {
-        interfacePart->draw(painter);
+        interfacePart->draw();
     }
 }
 
@@ -95,8 +100,8 @@ bool client::Widget::isPointOnBounds(const QPoint& point) {
 }
 
 QRect client::Widget::boundsRect() {
-    return QRect(absolutePosition().x() + bound_width / 2,
-                 absolutePosition().y() + bound_width / 2,
+    return QRect(bound_width / 2,
+                 bound_width / 2,
                  width - bound_width,
                  height - bound_width);
 }

@@ -11,7 +11,7 @@ client::ImageButton::ImageButton(QPoint position, int height, int width) :
 }
 
 void client::ImageButton::paint(QPainter &painter) {
-    painter.drawImage(display::getrect(boundsRect()), image);
+    painter.drawImage(boundsRect(), image);
 }
 
 void client::ImageButton::setWidth(int width) {

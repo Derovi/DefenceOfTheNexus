@@ -53,7 +53,7 @@ class Widget : public QObject {
   public slots:
 
     // called my main window
-    void draw(QPainter& painter);
+    void draw();
 
     void click(QPoint point);
 

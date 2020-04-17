@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <QtWidgets/QPushButton>
 
 #include "menuscreen.h"
 #include "gamescreen.h"
@@ -43,7 +44,6 @@ client::MenuScreen::MenuScreen() {
     startButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
     });
-
 
     addChild(startButton);
 }
