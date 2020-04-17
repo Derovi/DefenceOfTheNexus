@@ -1,7 +1,5 @@
 #include <QDebug>
 
-#include "../../utils/utils.h"
-
 #include "imagebutton.h"
 
 client::ImageButton::ImageButton(QPoint position, int height, int width) :

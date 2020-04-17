@@ -102,4 +102,4 @@ client::MainWindow* client::MainWindow::getInstance() {
     return instance;
 }
 
-client::MainWindow* client::MainWindow::instance;
+client::MainWindow* client::MainWindow::instance = nullptr;

@@ -1,8 +1,7 @@
 #include <QDebug>
 
 #include "gamemap.h"
-#include "../windowmanager.h"
-#include "../../utils/utils.h"
+#include "../../utils/colors.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position) {
@@ -28,7 +27,7 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
-    painter.setPen(QPen(QBrush(colors::interface_green),
+    painter.setPen(QPen(QBrush(colors::border),
                         8, Qt::SolidLine,
                         Qt::SquareCap, Qt::MiterJoin));
 
