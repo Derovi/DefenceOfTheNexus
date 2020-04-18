@@ -1,5 +1,5 @@
-#ifndef UNISPRITECONTROLLER_H
-#define UNISPRITECONTROLLER_H
+#ifndef UNITSPRITECONTROLLER_H
+#define UNITSPRITECONTROLLER_H
 
 #include "../spritecontroller.h"
 #include "../sprite.h"
@@ -27,4 +27,4 @@ class UnitSpriteController : public SpriteController {
 
 }
 
-#endif //UNISPRITECONTROLLER_H
+#endif //UNITSPRITECONTROLLER_H

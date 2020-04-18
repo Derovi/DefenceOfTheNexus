@@ -1,18 +1,24 @@
 #include <memory>
 
 #include "../../utils/factory.h"
-#include "unispritecontroller.h"
+#include "unitspritecontroller.h"
 #include "../../core/attributes/moving.h"
 
 void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     if (!getObject()->hasAttribute("moving")) {
-        moveSprite->pause();
+        if (moveSprite) {
+            moveSprite->pause();
+        }
     } else {
         auto moving = std::dynamic_pointer_cast<core::Moving>(getObject()->getAttribute("moving"));
         if (moving->getDirection().x() < 0) {
-            moveSprite->pause();
+            if (moveSprite) {
+                moveSprite->pause();
+            }
         } else {
-            moveSprite->resume();
+            if (moveSprite) {
+                moveSprite->resume();
+            }
         }
     }
 }

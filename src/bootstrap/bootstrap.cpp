@@ -41,9 +41,15 @@ void registerAttributes() {
                                       utils::Serializer::resourceDeserializer);
 }
 
+
+void registerGraphicsDescriptions() {
+
+}
+
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
+    registerGraphicsDescriptions();
 
     QApplication a(argc, argv);
     client::MainWindow w;

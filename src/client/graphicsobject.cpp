@@ -3,7 +3,7 @@
 #include "../utils/colors.h"
 #include "graphicsobject.h"
 #include "mainwindow.h"
-#include "spritecontrollers/unispritecontroller.h"
+#include "spritecontrollers/unitspritecontroller.h"
 
 client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& object):
         object(object), width(object->getHitbox().boundingRect().width()), height(
