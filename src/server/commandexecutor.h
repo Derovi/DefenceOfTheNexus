@@ -34,6 +34,8 @@ class CommandExecutor {
     bool testCommand(const QStringList& arguments);
 
     bool changeSpeedCommand(const QStringList& arguments);
+
+    bool changeMoveTargetCommand(const QStringList& arguments);
 };
 
 }

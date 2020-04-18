@@ -58,6 +58,7 @@ client::GameScreen::GameScreen() {
     engine->getGameWorld()->getObjects().insert(0, object);
     engine->getGameWorld()->getObjects().insert(1, object2);
     gameMap->setGameWorld(engine->getGameWorld());
+    gameMap->setCommandQueue(engine->getCommandQueue());
     engine->start();
 }
 
@@ -68,6 +69,5 @@ const std::shared_ptr<server::Engine>& client::GameScreen::getEngine() const {
 client::GameScreen::~GameScreen() {
     if (engine) {
         engine->finish();
-        qDebug() << "finished!";
     }
 }

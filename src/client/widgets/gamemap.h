@@ -2,7 +2,9 @@
 #define GAMEMAP_H
 
 #include <QDateTime>
+#include <QQueue>
 
+#include "../../core/command.h"
 #include "../graphicsobject.h"
 #include "../widget.h"
 #include "../../core/gameworld.h"
@@ -29,8 +31,33 @@ class GameMap : public Widget {
 
     QTransform getTransformToMap() const;
 
+    void scaleWindow(double scaling);
+
+    void centerWindow(const QPoint& point);
+
+    QPoint getWindowCenter() const;
+
+    void resizeWindow(const QPoint& size);
+
+    QPoint getWindowSize() const;
+
+    void changeWindowWidth(int width);
+
+    int getWindowWidth() const;
+
+    void changeWindowHeight(int width);
+
+    int getWindowHeight() const;
+
   protected:
     void paint(QPainter& painter) override;
+
+    void clicked(QPoint point) override;
+
+  public:
+    const std::shared_ptr<QQueue<core::Command>>& getCommandQueue() const;
+
+    void setCommandQueue(const std::shared_ptr<QQueue<core::Command>>& commandQueue);
 
   private:
     QRect displayBounds;
@@ -40,6 +67,8 @@ class GameMap : public Widget {
     QHash<int64_t, std::shared_ptr<GraphicsObject>> graphicsObjects;
 
     QDateTime lastPaintTime;
+
+    std::shared_ptr<QQueue<core::Command>> commandQueue;
 };
 
 }

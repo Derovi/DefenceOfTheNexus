@@ -4,7 +4,7 @@
 #include "../../utils/colors.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), lastPaintTime(QDateTime::currentDateTime()) {
+        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr) {
     setHeight(height);
     setWidth(width);
     setDisplayBounds(QRect(0, 0, width, height));
@@ -27,6 +27,11 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
+    if (gameWorld->getObjects().contains(0)) {
+        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
+                gameWorld->getObjects()[0]->getPosition().y()));
+    }
+
     // paint transform
     painter.setTransform(getTransformToWidget(), true);
     painter.setPen(QPen(QBrush(colors::border),
@@ -91,4 +96,62 @@ QTransform client::GameMap::getTransformToWidget() const {
 
 QTransform client::GameMap::getTransformToMap() const {
     return getTransformToWidget().inverted();
+}
+
+void client::GameMap::clicked(QPoint point) {
+    point = getTransformToMap().map(point);
+    commandQueue->push_back(core::Command("change_move_target", {"0", QString::number(point.x()),
+                                                                 QString::number(point.y())}));
+}
+
+const std::shared_ptr<QQueue<core::Command>>& client::GameMap::getCommandQueue() const {
+    return commandQueue;
+}
+
+void client::GameMap::setCommandQueue(const std::shared_ptr<QQueue<core::Command>>& commandQueue) {
+    GameMap::commandQueue = commandQueue;
+}
+
+int client::GameMap::getWindowHeight() const {
+    return displayBounds.height();
+}
+
+int client::GameMap::getWindowWidth() const {
+    return displayBounds.width();
+}
+
+QPoint client::GameMap::getWindowSize() const {
+    return QPoint(getWindowWidth(), getWindowHeight());
+}
+
+QPoint client::GameMap::getWindowCenter() const {
+    return displayBounds.center();
+}
+
+void client::GameMap::centerWindow(const QPoint& point) {
+    setDisplayBounds(QRect(point.x() - getWindowWidth() / 2.0,
+                          point.y() - getWindowHeight() / 2.0,
+                          getWindowWidth(), getWindowHeight()));
+}
+
+void client::GameMap::changeWindowWidth(int width) {
+    QPoint center = getWindowCenter();
+    displayBounds.setWidth(width);
+    centerWindow(center);
+}
+
+void client::GameMap::changeWindowHeight(int height) {
+    QPoint center = getWindowCenter();
+    displayBounds.setHeight(height);
+    centerWindow(center);
+}
+
+void client::GameMap::resizeWindow(const QPoint& size) {
+    changeWindowWidth(size.x());
+    changeWindowHeight(size.y());
+}
+
+void client::GameMap::scaleWindow(double scaling) {
+    changeWindowWidth(getWindowWidth() * scaling);
+    changeWindowHeight(getWindowHeight() * scaling);
 }

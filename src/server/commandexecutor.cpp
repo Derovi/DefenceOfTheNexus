@@ -35,6 +35,7 @@ void server::CommandExecutor::registerCommands() {
     registerCommand("test", &CommandExecutor::testCommand);
     // change_speed_command <object_id> <new_speed>
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
+    registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -81,6 +82,55 @@ bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
     moving->setSpeed(newSpeed);
     return true;
 }
+
+// change_speed_command <object_id> <x> <y>
+bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& arguments) {
+    // check for arguments count
+    if (arguments.size() != 3) {
+        return false;
+    }
+
+    // check if arguments are numbers
+    bool status = true;
+    int64_t objectId = arguments[0].toLongLong(&status);
+    if (!status) {
+        return false;
+    }
+
+    int x = arguments[1].toInt(&status);
+    if (!status) {
+        return false;
+    }
+
+    int y = arguments[2].toInt(&status);
+    if (!status) {
+        return false;
+    }
+
+    // check if object exists
+    if (!gameWorld->getObjects().contains(objectId)) {
+        return false;
+    }
+
+    auto object = gameWorld->getObjects()[objectId];
+
+    if (!object->hasAttribute("moving")) {
+        return false;
+    }
+
+    std::shared_ptr<core::Moving> moving = std::dynamic_pointer_cast<core::Moving>(
+            object->getAttribute("moving"));
+
+    // check of object is moving.
+    if (!moving) {
+        return false;
+    }
+
+    // check for permission, NOT READY YET
+    moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    return true;
+}
+
 
 //test command
 bool server::CommandExecutor::testCommand(const QStringList& arguments) {

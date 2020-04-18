@@ -48,8 +48,6 @@ QRect client::Sprite::getFrameBounds() const {
 }
 
 void client::Sprite::draw(QPainter& painter, const QRect& destination) {
-    qDebug() << "draw!" << ' ' << getCurrentFrame();
-    //painter.drawRect(destination);
     painter.drawPixmap(destination, source, getFrameBounds());
 }
 
