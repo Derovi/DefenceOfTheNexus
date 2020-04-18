@@ -45,6 +45,19 @@ utils::Factory::getDeserializer(const QString& attributeName) {
     return attributeDeserializers[attributeName];
 }
 
+void utils::Factory::registerObjectGraphicsDescription(const QString& objectName,
+                                                       const client::ObjectGraphicsDescription& description) {
+    graphicsDescriptions.insert(objectName, description);
+}
+
+std::optional<client::ObjectGraphicsDescription>
+utils::Factory::getObjectGraphicsDescription(const QString& objectName) {
+    if (!graphicsDescriptions.contains(objectName)) {
+        return std::nullopt;
+    }
+    return graphicsDescriptions[objectName];
+}
+
 QHash<QString, std::function<std::shared_ptr<server::Strategy>(
         std::shared_ptr<core::Object>)>> utils::Factory::strategyCreators;
 

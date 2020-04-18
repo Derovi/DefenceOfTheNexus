@@ -28,10 +28,16 @@ class Factory {
     static std::function<std::optional<std::shared_ptr<core::Attribute>>(const QJsonObject&)>
     getDeserializer(const QString& attributeName);
 
+    static std::optional<client::ObjectGraphicsDescription>
+    getObjectGraphicsDescription(const QString& objectName);
+
     static void registerStrategy(
             const QString& strategyName,
             std::function<std::shared_ptr<server::Strategy>(
                     std::shared_ptr<core::Object>)> creator);
+
+    static void registerObjectGraphicsDescription(const QString& objectName,
+                                                  const client::ObjectGraphicsDescription& description);
 
     static void registerAttribute(
             const QString& attributeName,
@@ -50,6 +56,8 @@ class Factory {
 
     static QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(
             const QJsonObject&)>> attributeDeserializers;
+
+    static QHash<QString, client::ObjectGraphicsDescription> graphicsDescriptions;
 };
 
 }

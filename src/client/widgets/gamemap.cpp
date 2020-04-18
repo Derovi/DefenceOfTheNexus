@@ -153,7 +153,6 @@ void client::GameMap::resizeWindow(const QPoint& size) {
 }
 
 void client::GameMap::scaleWindow(double scaling) {
-    qDebug() << displayBounds;
     changeWindowWidth(getWindowWidth() * scaling);
     changeWindowHeight(getWindowHeight() * scaling);
 }
