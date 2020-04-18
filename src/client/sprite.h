@@ -14,6 +14,10 @@ class Sprite {
 
     void draw(QPainter& painter, const QRect& destination);
 
+    void pause();
+
+    void resume();
+
     QRect getFrameBounds() const;
 
     int getFrameCount() const;
@@ -32,7 +36,17 @@ class Sprite {
 
     int getFrameHeight() const;
 
+    int64_t getAnimationDurationMSec();
+
     void setFramesPerSec(int framesPerSec);
+
+    bool isReverseDirection() const;
+
+    void setReverseDirection(bool reverseDirection);
+
+    const QPixmap& getSource() const;
+
+    bool isPaused() const;
 
   private:
     QPixmap source;
@@ -44,6 +58,10 @@ class Sprite {
     int columns;
 
     uint64_t lastUpdateTime;
+
+    bool reverseDirection;
+
+    bool paused = false;
 };
 
 }
