@@ -16,7 +16,7 @@ void client::ObjectGraphicsDescription::setHeight(int height) {
     ObjectGraphicsDescription::height = height;
 }
 
-const QStringList& client::ObjectGraphicsDescription::getSpriteControllers() const {
+QStringList& client::ObjectGraphicsDescription::getSpriteControllers() {
     return spriteControllers;
 }
 
@@ -25,7 +25,7 @@ void client::ObjectGraphicsDescription::setSpriteControllers(const QStringList& 
 }
 
 
-const QHash<QString, SpriteDescription>&
+QHash<QString, SpriteDescription>&
 client::ObjectGraphicsDescription::getSpriteDescriptions() {
     return spriteDescriptions;
 }

@@ -98,7 +98,7 @@ const QPixmap& client::Sprite::getSource() const {
     return source;
 }
 
-client::Sprite::Sprite(const SpriteDescription& spriteDescription):
-        source(QPixmap(spriteDescription.getResourceName())), rows(spriteDescription.getRows()),
-        columns(spriteDescription.getColumns()) {}
+client::Sprite::Sprite(const SpriteDescription& spriteDescription): Sprite(
+        QPixmap(spriteDescription.getResourceName()), spriteDescription.getRows(),
+        spriteDescription.getColumns()) {}
 

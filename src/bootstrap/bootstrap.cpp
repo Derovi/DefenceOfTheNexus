@@ -3,6 +3,8 @@
 #include <QDebug>
 #include <QApplication>
 
+#include "../client/objectgraphicsdescription.h"
+#include "../utils/serializer.h"
 #include "../utils/factory.h"
 #include "../core/command.h"
 #include "../core/attributes/damageable.h"
@@ -43,7 +45,46 @@ void registerAttributes() {
 
 
 void registerGraphicsDescriptions() {
+    QFile file(":/data/graphics");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
 
+    utils::Serializer serializer;
+    std::optional<QJsonObject> descriptions = serializer.stringToJsonObject(
+            QString(file.readAll()));
+    if (!descriptions) {
+        return;
+    }
+    for (auto iter = descriptions.value().begin();
+         iter != descriptions.value().end();
+         ++iter) {
+        auto valueRef = iter.value();
+        if (!valueRef.isObject()) {
+            continue;
+        }
+        QJsonObject json = valueRef.toObject();
+        client::ObjectGraphicsDescription description;
+        if (!json.contains("width") || !json.contains("height") ||
+            !json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
+            continue;
+        }
+        description.setWidth(json.value("width").toInt(50));
+        description.setHeight(json.value("height").toInt(50));
+        for (const auto& entry : json.value("spriteControllers").toArray(QJsonArray())) {
+            if (!entry.isString()) {
+                continue;
+            }
+            description.getSpriteControllers().push_back(entry.toString());
+        }
+        for (const QString& spriteName : json.value("spriteDescriptions").toObject().keys()) {
+            QJsonObject spriteJson = json.value("spriteDescriptions")[spriteName].toObject();
+            description.getSpriteDescriptions().insert(spriteName, SpriteDescription(
+                    spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
+                    spriteJson["columns"].toInt()));
+        }
+        utils::Factory::registerObjectGraphicsDescription(iter.key(), description);
+    }
 }
 
 int main(int argc, char** argv) {

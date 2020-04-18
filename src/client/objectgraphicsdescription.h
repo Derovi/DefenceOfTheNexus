@@ -18,11 +18,11 @@ class ObjectGraphicsDescription {
 
     void setHeight(int height);
 
-    const QStringList& getSpriteControllers() const;
+    QStringList& getSpriteControllers();
 
     void setSpriteControllers(const QStringList& spriteControllers);
 
-    const QHash<QString, SpriteDescription>& getSpriteDescriptions();
+    QHash<QString, SpriteDescription>& getSpriteDescriptions();
 
     void setSpriteDescriptions(const QHash<QString, SpriteDescription>& spriteDescriptions);
 

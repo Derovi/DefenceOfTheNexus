@@ -1,5 +1,7 @@
 #include <memory>
 
+#include <QDebug>
+
 #include "../../utils/factory.h"
 #include "unitspritecontroller.h"
 #include "../../core/attributes/moving.h"

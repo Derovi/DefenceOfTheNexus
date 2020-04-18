@@ -4,7 +4,7 @@
     "height": 100,
     "spriteControllers": ["unit"],
     "spriteDescriptions": {
-      "test": {
+      "moving": {
         "resource": ":/sprites/unit1",
         "rows": 1,
         "columns": 20
