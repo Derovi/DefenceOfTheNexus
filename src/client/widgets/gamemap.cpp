@@ -37,7 +37,7 @@ void client::GameMap::paint(QPainter& painter) {
         QPolygon polygon;
         for (auto point : object->getHitbox()) {
             polygon.append(QPoint(point.x() + object->getPosition().x(),
-                           point.y() + object->getPosition().y()));
+                                  point.y() + object->getPosition().y()));
         }
         painter.drawPolygon(polygon);
     }
