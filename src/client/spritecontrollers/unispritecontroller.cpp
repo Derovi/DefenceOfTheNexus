@@ -1,10 +1,18 @@
 #include <memory>
 
 #include "unispritecontroller.h"
+#include "../../core/attributes/moving.h"
 
 void client::UniSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     if (!getObject()->hasAttribute("moving")) {
-        moveSprite->jump(0);
+        moveSprite->pause();
+    } else {
+        auto moving = std::dynamic_pointer_cast<core::Moving>(getObject()->getAttribute("moving"));
+        if (moving->getDirection().x() < 0) {
+            moveSprite->pause();
+        } else {
+            moveSprite->resume();
+        }
     }
 }
 

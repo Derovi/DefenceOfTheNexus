@@ -10,7 +10,7 @@ class GraphicsObject {
   public:
     GraphicsObject(const std::shared_ptr<core::Object>& object);
 
-    void update(const QPainter& painter, uint64_t timeDeltaMSec);
+    void update(const QTransform& painterTransform, uint64_t timeDeltaMSec);
 
     const std::shared_ptr<core::Object>& getObject() const;
 

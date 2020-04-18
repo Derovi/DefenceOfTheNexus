@@ -52,10 +52,49 @@ void client::Sprite::draw(QPainter& painter, const QRect& destination) {
 }
 
 void client::Sprite::update(uint64_t timeDeltaMSec) {
-    lastUpdateTime += timeDeltaMSec;
+    if (paused) {
+        return;
+    }
+    if (isReverseDirection()) {
+        lastUpdateTime -= timeDeltaMSec;
+        if (lastUpdateTime < 0) {
+            lastUpdateTime %= getAnimationDurationMSec();
+            lastUpdateTime += getAnimationDurationMSec();
+        }
+    } else {
+        lastUpdateTime += timeDeltaMSec;
+    }
 }
 
 void client::Sprite::jump(int frameNumber) {
     lastUpdateTime = frameNumber * framesPerSec;
+}
+
+bool client::Sprite::isReverseDirection() const {
+    return reverseDirection;
+}
+
+void client::Sprite::setReverseDirection(bool reverseDirection) {
+    Sprite::reverseDirection = reverseDirection;
+}
+
+int64_t client::Sprite::getAnimationDurationMSec() {
+    return getFrameCount() * 1000 / framesPerSec;
+}
+
+void client::Sprite::pause() {
+    paused = true;
+}
+
+void client::Sprite::resume() {
+    paused = false;
+}
+
+bool client::Sprite::isPaused() const {
+    return paused;
+}
+
+const QPixmap& client::Sprite::getSource() const {
+    return source;
 }
 
