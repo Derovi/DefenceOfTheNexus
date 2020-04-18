@@ -95,13 +95,13 @@ class Serializer {
     static std::optional<std::shared_ptr<core::Attribute>>
     movingDeserializer(const QJsonObject& serialized);
 
-  private:
-
-    bool prettyPrinting = true;
-
     QString jsonObjectToString(const QJsonObject& jsonObject);
 
     std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
+
+  private:
+
+    bool prettyPrinting = true;
 };
 
 }  // namespace core

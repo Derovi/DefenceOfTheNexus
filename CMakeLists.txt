@@ -19,6 +19,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Threads REQUIRED)
 
 add_executable(defenceofnexus
+        resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
         src/core/object.cpp
