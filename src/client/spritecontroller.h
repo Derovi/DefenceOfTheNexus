@@ -18,7 +18,7 @@ class SpriteController {
 
     const std::shared_ptr<core::Object>& getObject() const;
 
-    void update(QPainter painter, const QRect& target, uint64_t timeDeltaMSec);
+    void update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec);
 
   protected:
     virtual void onUpdate(uint64_t timeDeltaMSec) = 0;

@@ -1,6 +1,9 @@
 #ifndef GAMEMAP_H
 #define GAMEMAP_H
 
+#include <QDateTime>
+
+#include "../graphicsobject.h"
 #include "../widget.h"
 #include "../../core/gameworld.h"
 
@@ -22,10 +25,6 @@ class GameMap : public Widget {
 
     void setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld);
 
-    QPoint toWidgetPoint(const QPoint& mapPoint);
-
-    QPoint toMapPoint(const QPoint& widgetPoint);
-
     QTransform getTransformToWidget() const;
 
     QTransform getTransformToMap() const;
@@ -37,6 +36,10 @@ class GameMap : public Widget {
     QRect displayBounds;
 
     std::shared_ptr<core::GameWorld> gameWorld;
+
+    QHash<int64_t, std::shared_ptr<GraphicsObject>> graphicsObjects;
+
+    QDateTime lastPaintTime;
 };
 
 }

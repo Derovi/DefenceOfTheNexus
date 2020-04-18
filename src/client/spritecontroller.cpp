@@ -6,7 +6,7 @@ const std::shared_ptr<core::Object>& client::SpriteController::getObject() const
 
 client::SpriteController::SpriteController(const std::shared_ptr<core::Object>& object): object(object) {}
 
-void client::SpriteController::update(QPainter painter, const QRect& target, uint64_t timeDeltaMSec) {
+void client::SpriteController::update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec) {
     onUpdate(timeDeltaMSec);
     for (auto sprite : sprites) {
         sprite->update(timeDeltaMSec);

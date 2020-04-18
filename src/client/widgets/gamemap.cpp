@@ -4,7 +4,7 @@
 #include "../../utils/colors.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position) {
+        Widget(position), lastPaintTime(QDateTime::currentDateTime()) {
     setHeight(height);
     setWidth(width);
     setDisplayBounds(QRect(0, 0, width, height));
@@ -27,20 +27,53 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
-    //painter.translate(displayBounds.x(), displayBounds.y());
+    // paint transform
     painter.setTransform(getTransformToWidget(), true);
     painter.setPen(QPen(QBrush(colors::border),
                         8, Qt::SolidLine,
                         Qt::SquareCap, Qt::MiterJoin));
 
-    for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
+    // renew graphics object list
+
+    for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
+        if (!graphicsObjects.contains(object->getId())) {
+            graphicsObjects.insert(object->getId(),
+                                   std::shared_ptr<GraphicsObject>(new GraphicsObject(object)));
+        }
+    }
+
+    QVector<int> eraseList;
+
+    for (auto iterator = graphicsObjects.begin();
+         iterator != graphicsObjects.end();
+         ++iterator) {
+        if (!gameWorld->getObjects().contains(iterator.key())) {
+            eraseList.push_back(iterator.key());
+        }
+    }
+
+    for (int id : eraseList) {
+        graphicsObjects.remove(id);
+    }
+
+    // update graphics objects
+
+    int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
+
+    lastPaintTime = QDateTime::currentDateTime();
+
+    for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
+        graphicsObject->update(painter, deltaTime);
+    }
+
+    /*for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
         QPolygon polygon;
         for (auto point : object->getHitbox()) {
             polygon.append(QPoint(point.x() + object->getPosition().x(),
                                   point.y() + object->getPosition().y()));
         }
         painter.drawPolygon(polygon);
-    }
+    }*/
 }
 
 const std::shared_ptr<core::GameWorld>& client::GameMap::getGameWorld() const {

@@ -28,7 +28,7 @@ void server::GameWorldController::tick(double deltaTime) {
     for (auto iterator = controllers.begin();
          iterator != controllers.end();
          ++iterator) {
-        if (iterator.value()->getObject() == nullptr) {
+        if (!gameWorld->getObjects().contains(iterator.key())) {
             eraseList.push_back(iterator.key());
         } else {
             iterator.value()->tick(gameWorld, deltaTime);
