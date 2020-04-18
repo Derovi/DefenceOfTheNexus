@@ -3,14 +3,14 @@
 #include "../utils/colors.h"
 #include "graphicsobject.h"
 #include "mainwindow.h"
-#include "spritecontrollers/uni1spritecontroller.h"
+#include "spritecontrollers/unispritecontroller.h"
 
 client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& object):
         object(object), width(object->getHitbox().boundingRect().width()), height(
                               object->getHitbox().boundingRect().height()) {
     qDebug() << "new object!";
     spriteControllers.push_back(
-            std::shared_ptr<SpriteController>(new Uni1SpriteController(object)));
+            std::shared_ptr<SpriteController>(new UniSpriteController(object)));
 }
 
 const std::shared_ptr<core::Object>& client::GraphicsObject::getObject() const {
