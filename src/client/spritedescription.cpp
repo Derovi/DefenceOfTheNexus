@@ -1,3 +1,5 @@
+
+#include <QtCore/QString>
 #include "spritedescription.h"
 
 const QString& SpriteDescription::getResourceName() const {
@@ -8,21 +10,22 @@ void SpriteDescription::setResourceName(const QString& resourceName) {
     SpriteDescription::resourceName = resourceName;
 }
 
-int SpriteDescription::getWidth() const {
-    return width;
+int SpriteDescription::getRows() const {
+    return rows;
 }
 
-void SpriteDescription::setWidth(int width) {
-    SpriteDescription::width = width;
+void SpriteDescription::setRows(int rows) {
+    SpriteDescription::rows = rows;
 }
 
-int SpriteDescription::getHeight() const {
-    return height;
+int SpriteDescription::getColumns() const {
+    return columns;
 }
 
-void SpriteDescription::setHeight(int height) {
-    SpriteDescription::height = height;
+void SpriteDescription::setColumns(int columns) {
+    SpriteDescription::columns = columns;
 }
 
-SpriteDescription::SpriteDescription(const QString& resourceName, int width, int height):
-        resourceName(resourceName), width(width), height(height) {}
+SpriteDescription::SpriteDescription(const QString& resourceName, int rows, int columns):
+        resourceName(resourceName), rows(rows), columns(columns) {}
+

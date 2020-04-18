@@ -7,9 +7,9 @@
 
 namespace client {
 
-class UniSpriteController : public SpriteController {
+class UnitSpriteController : public SpriteController {
   public:
-    UniSpriteController(const std::shared_ptr<core::Object>& object);
+    UnitSpriteController(const std::shared_ptr<core::Object>& object);
 
     const std::shared_ptr<Sprite>& getMoveSprite() const;
 

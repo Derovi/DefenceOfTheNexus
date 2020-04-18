@@ -22,9 +22,9 @@ class ObjectGraphicsDescription {
 
     void setSpriteControllers(const QStringList& spriteControllers);
 
-    const QHash<QString, SpriteDescription>& getSpriteNameToResource() const;
+    const QHash<QString, SpriteDescription>& getSpriteDescriptions();
 
-    void setSpriteNameToResource(const QHash<QString, SpriteDescription>& spriteNameToResource);
+    void setSpriteDescriptions(const QHash<QString, SpriteDescription>& spriteDescriptions);
 
   private:
     int width;
@@ -33,7 +33,7 @@ class ObjectGraphicsDescription {
 
     QStringList spriteControllers;
 
-    QHash<QString, SpriteDescription> spriteNameToResource;
+    QHash<QString, SpriteDescription> spriteDescriptions;
 };
 
 }

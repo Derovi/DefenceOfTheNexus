@@ -9,7 +9,7 @@ client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& obje
         object(object), width(object->getHitbox().boundingRect().width()), height(
                               object->getHitbox().boundingRect().height()) {
     spriteControllers.push_back(
-            std::shared_ptr<SpriteController>(new UniSpriteController(object)));
+            std::shared_ptr<SpriteController>(new UnitSpriteController(object)));
 }
 
 const std::shared_ptr<core::Object>& client::GraphicsObject::getObject() const {

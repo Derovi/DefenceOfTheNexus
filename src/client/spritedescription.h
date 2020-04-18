@@ -5,26 +5,28 @@
 
 class SpriteDescription {
   public:
-    SpriteDescription(const QString& resourceName, int width, int height);
+    SpriteDescription() = default;
+
+    SpriteDescription(const QString& resourceName, int rows, int columns);
 
     const QString& getResourceName() const;
 
     void setResourceName(const QString& resourceName);
 
-    int getWidth() const;
+    int getRows() const;
 
-    void setWidth(int width);
+    void setRows(int rows);
 
-    int getHeight() const;
+    int getColumns() const;
 
-    void setHeight(int height);
+    void setColumns(int columns);
 
   private:
     QString resourceName;
 
-    int width;
+    int rows;
 
-    int height;
+    int columns;
 };
 
 

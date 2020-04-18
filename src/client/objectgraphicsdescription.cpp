@@ -24,11 +24,14 @@ void client::ObjectGraphicsDescription::setSpriteControllers(const QStringList& 
     ObjectGraphicsDescription::spriteControllers = spriteControllers;
 }
 
-const QHash<QString, SpriteDescription>& client::ObjectGraphicsDescription::getSpriteNameToResource() const {
-    return spriteNameToResource;
+
+const QHash<QString, SpriteDescription>&
+client::ObjectGraphicsDescription::getSpriteDescriptions() {
+    return spriteDescriptions;
 }
 
-void client::ObjectGraphicsDescription::setSpriteNameToResource(
-        const QHash<QString, SpriteDescription>& spriteNameToResource) {
-    ObjectGraphicsDescription::spriteNameToResource = spriteNameToResource;
+void
+client::ObjectGraphicsDescription::setSpriteDescriptions(
+        const QHash<QString, SpriteDescription>& spriteDescriptions) {
+    ObjectGraphicsDescription::spriteDescriptions = spriteDescriptions;
 }
