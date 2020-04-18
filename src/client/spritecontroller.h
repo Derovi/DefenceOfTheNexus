@@ -5,7 +5,6 @@
 
 #include <QSet>
 
-#include "../utils/factory.h"
 #include "objectgraphicsdescription.h"
 #include "../core/object.h"
 #include "sprite.h"

@@ -8,6 +8,7 @@
 #include <QHash>
 #include <QString>
 
+#include "../client/objectgraphicsdescription.h"
 #include "../core/object.h"
 #include "../core/attribute.h"
 #include "../server/strategies/strategy.h"

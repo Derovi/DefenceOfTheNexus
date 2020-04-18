@@ -66,3 +66,5 @@ QHash<QString, std::function<std::optional<QJsonObject>(
 
 QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(
         const QJsonObject&)>> utils::Factory::attributeDeserializers;
+
+QHash<QString, client::ObjectGraphicsDescription> utils::Factory::graphicsDescriptions;

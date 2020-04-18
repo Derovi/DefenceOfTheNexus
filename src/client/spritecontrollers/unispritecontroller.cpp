@@ -1,5 +1,6 @@
 #include <memory>
 
+#include "../../utils/factory.h"
 #include "unispritecontroller.h"
 #include "../../core/attributes/moving.h"
 
@@ -20,7 +21,7 @@ client::UniSpriteController::UniSpriteController(const std::shared_ptr<core::Obj
         SpriteController(object) {
     auto description = utils::Factory::getObjectGraphicsDescription(object->getTypeName());
     if (description->getSpriteNameToResource().contains("moving")) {
-        moveSprite = std::shared_ptr<Sprite>(new Sprite(QPixmap(description->getSpriteNameToResource()["moving"]),1,20));
+        moveSprite = std::shared_ptr<Sprite>(new Sprite(QPixmap(description->getSpriteNameToResource()["moving"])));
         addSprite(moveSprite);
     }
 }

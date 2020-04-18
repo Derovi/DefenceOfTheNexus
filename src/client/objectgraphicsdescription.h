@@ -3,6 +3,7 @@
 
 #include <QStringList>
 
+#include "spritedescription.h"
 #include "spritecontroller.h"
 
 namespace client {
@@ -21,9 +22,9 @@ class ObjectGraphicsDescription {
 
     void setSpriteControllers(const QStringList& spriteControllers);
 
-    const QHash<QString, QString>& getSpriteNameToResource() const;
+    const QHash<QString, SpriteDescription>& getSpriteNameToResource() const;
 
-    void setSpriteNameToResource(const QHash<QString, QString>& spriteNameToResource);
+    void setSpriteNameToResource(const QHash<QString, SpriteDescription>& spriteNameToResource);
 
   private:
     int width;
@@ -32,7 +33,7 @@ class ObjectGraphicsDescription {
 
     QStringList spriteControllers;
 
-    QHash<QString, QString> spriteNameToResource;
+    QHash<QString, SpriteDescription> spriteNameToResource;
 };
 
 }
