@@ -50,6 +50,9 @@ class GameMap : public Widget {
     int getWindowHeight() const;
 
   protected:
+    void wheelEvent(QWheelEvent* event) override;
+
+  protected:
     void paint(QPainter& painter) override;
 
     void clicked(QPoint point) override;

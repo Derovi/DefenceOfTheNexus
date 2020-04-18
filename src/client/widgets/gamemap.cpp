@@ -28,7 +28,7 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     if (gameWorld->getObjects().contains(0)) {
-        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
+         centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
                 gameWorld->getObjects()[0]->getPosition().y()));
     }
 
@@ -91,7 +91,8 @@ void client::GameMap::setGameWorld(const std::shared_ptr<core::GameWorld>& gameW
 
 QTransform client::GameMap::getTransformToWidget() const {
     return QTransform(1, 0, 0, 1, -displayBounds.x(), -displayBounds.y()) *
-           QTransform(width / displayBounds.width(), 0, 0, height / displayBounds.height(), 0, 0);
+           QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
+                      static_cast<double>(height) / displayBounds.height(), 0, 0);
 }
 
 QTransform client::GameMap::getTransformToMap() const {
@@ -130,8 +131,8 @@ QPoint client::GameMap::getWindowCenter() const {
 
 void client::GameMap::centerWindow(const QPoint& point) {
     setDisplayBounds(QRect(point.x() - getWindowWidth() / 2.0,
-                          point.y() - getWindowHeight() / 2.0,
-                          getWindowWidth(), getWindowHeight()));
+                           point.y() - getWindowHeight() / 2.0,
+                           getWindowWidth(), getWindowHeight()));
 }
 
 void client::GameMap::changeWindowWidth(int width) {
@@ -152,6 +153,11 @@ void client::GameMap::resizeWindow(const QPoint& size) {
 }
 
 void client::GameMap::scaleWindow(double scaling) {
+    qDebug() << displayBounds;
     changeWindowWidth(getWindowWidth() * scaling);
     changeWindowHeight(getWindowHeight() * scaling);
+}
+
+void client::GameMap::wheelEvent(QWheelEvent* event) {
+    scaleWindow(event->angleDelta().y() > 0 ? 1 / 1.03 : 1.03);
 }

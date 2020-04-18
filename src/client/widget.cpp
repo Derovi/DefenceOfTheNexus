@@ -126,3 +126,16 @@ void client::Widget::click(QPoint point) {
 void client::Widget::setOnClick(std::function<void(QPoint)> action) {
     this->onClick = action;
 }
+
+void client::Widget::wheel(QWheelEvent* event) {
+    bool handled = false;
+    for (Widget* child : children) {
+        if (child->isPointOnWidget(event->pos() - absolutePosition())) {
+            handled = true;
+            child->wheel(event);
+        }
+    }
+    if (!handled) {
+        wheelEvent(event);
+    }
+}
