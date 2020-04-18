@@ -24,9 +24,9 @@ int client::GraphicsObject::getWidth() const {
     return width;
 }
 
-void client::GraphicsObject::update(const QPainter& painter, uint64_t timeDeltaMSec) {
+void client::GraphicsObject::update(const QTransform& painterTransform, uint64_t timeDeltaMSec) {
     QPainter objectPainter(MainWindow::getInstance());
-    objectPainter.setTransform(painter.transform());
+    objectPainter.setTransform(painterTransform);
     objectPainter.translate(object->getPosition().x(), object->getPosition().y());
     for (const std::shared_ptr<SpriteController>& spriteController : spriteControllers) {
         spriteController->update(objectPainter, QRect(-width / 2.0, -height / 2.0, width, height),

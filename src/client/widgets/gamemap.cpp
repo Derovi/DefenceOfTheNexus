@@ -1,10 +1,12 @@
 #include <QDebug>
 
+#include "../mainwindow.h"
 #include "gamemap.h"
 #include "../../utils/colors.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr) {
+        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr),
+        showHitBoxes(false), showSprites(true) {
     setHeight(height);
     setWidth(width);
     setDisplayBounds(QRect(0, 0, width, height));
@@ -34,9 +36,6 @@ void client::GameMap::paint(QPainter& painter) {
 
     // paint transform
     painter.setTransform(getTransformToWidget(), true);
-    painter.setPen(QPen(QBrush(colors::border),
-                        8, Qt::SolidLine,
-                        Qt::SquareCap, Qt::MiterJoin));
 
     // renew graphics object list
 
@@ -67,18 +66,36 @@ void client::GameMap::paint(QPainter& painter) {
 
     lastPaintTime = QDateTime::currentDateTime();
 
-    for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
-        graphicsObject->update(painter, deltaTime);
+    if (showSprites) {
+        for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
+            graphicsObject->update(painter.transform(), deltaTime);
+        }
     }
 
-    /*for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
-        QPolygon polygon;
-        for (auto point : object->getHitbox()) {
-            polygon.append(QPoint(point.x() + object->getPosition().x(),
-                                  point.y() + object->getPosition().y()));
+    if (showHitBoxes) {
+        QPainter hitBoxPainter(MainWindow::getInstance());
+        hitBoxPainter.setTransform(painter.transform());
+
+        QFont font = hitBoxPainter.font();
+        font.setPointSize(40);
+        font.setBold(true);
+        hitBoxPainter.setFont(font);
+        for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
+            QPolygon polygon;
+            for (auto point : object->getHitbox()) {
+                polygon.append(QPoint(point.x() + object->getPosition().x(),
+                                      point.y() + object->getPosition().y()));
+            }
+            hitBoxPainter.setPen(QPen(QBrush(colors::border),
+                                      8, Qt::SolidLine,
+                                      Qt::SquareCap, Qt::MiterJoin));
+            hitBoxPainter.drawPolygon(polygon);
+            hitBoxPainter.setPen(QPen(QBrush(QColor(0,0,0)),
+                                      8, Qt::SolidLine,
+                                      Qt::SquareCap, Qt::MiterJoin));
+            hitBoxPainter.drawText(object->getPosition() - QPoint(20,0), QString::number(object->getId()));
         }
-        painter.drawPolygon(polygon);
-    }*/
+    }
 }
 
 const std::shared_ptr<core::GameWorld>& client::GameMap::getGameWorld() const {
@@ -153,11 +170,26 @@ void client::GameMap::resizeWindow(const QPoint& size) {
 }
 
 void client::GameMap::scaleWindow(double scaling) {
-    qDebug() << displayBounds;
     changeWindowWidth(getWindowWidth() * scaling);
     changeWindowHeight(getWindowHeight() * scaling);
 }
 
 void client::GameMap::wheelEvent(QWheelEvent* event) {
     scaleWindow(event->angleDelta().y() > 0 ? 1 / 1.03 : 1.03);
+}
+
+bool client::GameMap::isShowHitBoxes() const {
+    return showHitBoxes;
+}
+
+void client::GameMap::setShowHitBoxes(bool showHitBoxesMode) {
+    GameMap::showHitBoxes = showHitBoxesMode;
+}
+
+bool client::GameMap::isShowSprites() const {
+    return showSprites;
+}
+
+void client::GameMap::setShowSprites(bool showSprites) {
+    GameMap::showSprites = showSprites;
 }

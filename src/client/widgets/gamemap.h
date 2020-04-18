@@ -49,6 +49,14 @@ class GameMap : public Widget {
 
     int getWindowHeight() const;
 
+    bool isShowHitBoxes() const;
+
+    void setShowHitBoxes(bool showHitBoxesMode);
+
+    bool isShowSprites() const;
+
+    void setShowSprites(bool showSprites);
+
   protected:
     void wheelEvent(QWheelEvent* event) override;
 
@@ -72,6 +80,10 @@ class GameMap : public Widget {
     QDateTime lastPaintTime;
 
     std::shared_ptr<QQueue<core::Command>> commandQueue;
+
+    bool showHitBoxes;
+
+    bool showSprites;
 };
 
 }

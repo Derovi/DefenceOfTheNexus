@@ -59,6 +59,7 @@ client::GameScreen::GameScreen() {
     engine->getGameWorld()->getObjects().insert(1, object2);
     gameMap->setGameWorld(engine->getGameWorld());
     gameMap->setCommandQueue(engine->getCommandQueue());
+    gameMap->setShowHitBoxes(true);
     engine->start();
 }
 
