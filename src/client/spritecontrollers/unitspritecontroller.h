@@ -20,7 +20,6 @@ class UnitSpriteController : public SpriteController {
     static QString name;
 
   protected:
-
     void onUpdate(uint64_t timeDeltaMSec) override;
 
   private:
