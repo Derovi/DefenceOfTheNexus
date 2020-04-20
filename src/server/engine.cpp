@@ -34,7 +34,7 @@ void server::Engine::start() {
 
             // sleep until next tick
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
-                               currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+                            currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
 
             lastTickStartTime = currentTickStartTime;
         }

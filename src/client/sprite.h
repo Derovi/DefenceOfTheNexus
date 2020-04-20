@@ -51,6 +51,18 @@ class Sprite {
 
     bool isPaused() const;
 
+    bool isMirroring() const;
+
+    void setMirroring(bool mirroring);
+
+    int getFirstFrame() const;
+
+    void setFirstFrame(int firstFrame);
+
+    int getLastFrame() const;
+
+    void setLastFrame(int lastFrame);
+
   private:
     QPixmap source;
 
@@ -64,7 +76,13 @@ class Sprite {
 
     bool reverseDirection;
 
-    bool paused = false;
+    bool paused;
+
+    bool mirroring;
+
+    int firstFrame;
+
+    int lastFrame;
 };
 
 }

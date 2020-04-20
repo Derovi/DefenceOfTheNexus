@@ -8,20 +8,11 @@
 
 void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     if (!getObject()->hasAttribute("moving")) {
-        if (moveSprite) {
-            moveSprite->pause();
-        }
+        moveSprite->setFirstFrame(10);
+        moveSprite->setLastFrame(10);
     } else {
         auto moving = std::dynamic_pointer_cast<core::Moving>(getObject()->getAttribute("moving"));
-        if (moving->getDirection().x() < 0) {
-            if (moveSprite) {
-                moveSprite->pause();
-            }
-        } else {
-            if (moveSprite) {
-                moveSprite->resume();
-            }
-        }
+        moveSprite->setMirroring(moving->getDirection().x() < 0);
     }
 }
 

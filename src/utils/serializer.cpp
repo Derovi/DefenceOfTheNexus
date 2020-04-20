@@ -18,8 +18,8 @@ std::optional<QString> utils::Serializer::serializeObject(const core::Object& ob
 
 std::optional<QString>
 utils::Serializer::serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
-                                     std::function<std::optional<QJsonObject>(
-                                             const std::shared_ptr<core::Attribute>)> serializer) {
+                                      std::function<std::optional<QJsonObject>(
+                                              const std::shared_ptr<core::Attribute>)> serializer) {
     auto result = serializer(attribute);
     if (result == std::nullopt) {
         return std::nullopt;
@@ -45,8 +45,8 @@ std::optional<core::Object> utils::Serializer::deserializeObject(const QString& 
 
 std::optional<std::shared_ptr<core::Attribute>>
 utils::Serializer::deserializeAttribute(const QString& serialized,
-                                       std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                                               const QJsonObject&)> deserializer) {
+                                        std::function<std::optional<std::shared_ptr<core::Attribute>>(
+                                                const QJsonObject&)> deserializer) {
     std::optional<QJsonObject> json = stringToJsonObject(serialized);
     if (json == std::nullopt) {
         return std::nullopt;
@@ -469,7 +469,7 @@ std::optional<core::Command> utils::Serializer::commandDeserializer(const QJsonO
     }
     json = serialized["arguments"].toArray();
     for (const auto& i : json) {
-        if(!i.isString()){
+        if (!i.isString()) {
             return std::nullopt;
         }
         arguments.push_back(i.toString());
@@ -483,7 +483,7 @@ utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
     if (!serialized["typeName"].isString()) {
         return std::nullopt;
     }
-    QVector <QPointF> vec;
+    QVector<QPointF> vec;
     if (!serialized["hitbox"].isObject()) {
         return std::nullopt;
     }
@@ -515,7 +515,7 @@ utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
         }
         vec[it].setY(qreal(i.toDouble()));
     }
-    server::ObjectSignature signature(serialized["typeName"].toString(),QPolygonF(vec));
+    server::ObjectSignature signature(serialized["typeName"].toString(), QPolygonF(vec));
     QStringList strategies;
     QJsonArray json;
     if (!serialized["strategies"].isArray()) {
@@ -523,7 +523,7 @@ utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
     }
     json = serialized["strategies"].toArray();
     for (const auto& i : json) {
-        if(!i.isString()){
+        if (!i.isString()) {
             return std::nullopt;
         }
         strategies.push_back(i.toString());
