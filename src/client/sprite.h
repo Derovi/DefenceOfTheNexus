@@ -65,6 +65,8 @@ class Sprite {
 
     void setLastFrame(int lastFrame);
 
+    uint64_t getLastUpdateTime() const;
+
   private:
     QPixmap source;
 

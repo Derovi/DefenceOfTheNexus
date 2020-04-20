@@ -16,7 +16,7 @@ int client::Sprite::getColumns() const {
 }
 
 int client::Sprite::getCurrentFrame() const {
-    return lastUpdateTime / framesPerSec % getFrameCount() + getFirstFrame();
+    return lastUpdateTime * framesPerSec / 1000 % getFrameCount() + getFirstFrame();
 }
 
 int client::Sprite::getFrameCount() const {
@@ -57,6 +57,10 @@ void client::Sprite::draw(QPainter& painter, const QRect& destination) {
     if (mirroring) {
         painter.setTransform(transform.inverted());
     }
+}
+
+uint64_t client::Sprite::getLastUpdateTime() const {
+    return lastUpdateTime;
 }
 
 void client::Sprite::update(uint64_t timeDeltaMSec) {

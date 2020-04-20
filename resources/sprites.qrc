@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/sprites">
+        <file alias="background">sprites/background.png</file>
         <file alias="unit1">sprites/unit1.png</file>
     </qresource>
 </RCC>
