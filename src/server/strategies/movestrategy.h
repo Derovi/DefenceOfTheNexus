@@ -23,9 +23,9 @@ class MoveStrategy : public server::Strategy {
 
     QStringList getStartAfter() override;
 
-  private:
     void assign(DataBundle& dataBundle) override;
 
+  private:
     static const QStringList requiredAttributes;
 
     static const QStringList startAfter;
