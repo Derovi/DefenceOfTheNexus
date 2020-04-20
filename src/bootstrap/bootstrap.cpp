@@ -3,19 +3,19 @@
 #include <QDebug>
 #include <QApplication>
 
-#include "../utils/factory.h"
-#include "../core/command.h"
-#include "../core/attributes/damageable.h"
+#include "../client/spritecontrollers/unitspritecontroller.h"
+#include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
+#include "../utils/factory.h"
+#include "../utils/lang.h"
 #include "../server/strategies/movestrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
-#include "../server/controllers/controller.h"
-#include "../server/controllers/databundle.h"
 #include "../client/mainwindow.h"
+#include "../client/properties.h"
 
 void registerStrategies() {
-    utils::Factory::registerStrategy("moveStrategy",
+    utils::Factory::registerStrategy(server::MoveStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
@@ -41,9 +41,63 @@ void registerAttributes() {
                                       utils::Serializer::resourceDeserializer);
 }
 
+void registerSpriteControllers() {
+    utils::Factory::registerSpriteController(client::UnitSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                         new client::UnitSpriteController(object));
+                                             });
+}
+
+void registerGraphicsDescriptions() {
+    QFile file(":/data/graphics");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    utils::Serializer serializer;
+    std::optional<QJsonObject> descriptions = serializer.stringToJsonObject(
+            QString(file.readAll()));
+    if (!descriptions) {
+        return;
+    }
+    for (auto iter = descriptions.value().begin();
+         iter != descriptions.value().end();
+         ++iter) {
+        auto valueRef = iter.value();
+        if (!valueRef.isObject()) {
+            continue;
+        }
+        QJsonObject json = valueRef.toObject();
+        client::ObjectGraphicsDescription description;
+        if (!json.contains("width") || !json.contains("height") ||
+            !json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
+            continue;
+        }
+        description.setWidth(json.value("width").toInt(50));
+        description.setHeight(json.value("height").toInt(50));
+        for (const auto& entry : json.value("spriteControllers").toArray(QJsonArray())) {
+            if (!entry.isString()) {
+                continue;
+            }
+            description.getSpriteControllers().push_back(entry.toString());
+        }
+        for (const QString& spriteName : json.value("spriteDescriptions").toObject().keys()) {
+            QJsonObject spriteJson = json.value("spriteDescriptions")[spriteName].toObject();
+            description.getSpriteDescriptions().insert(spriteName, SpriteDescription(
+                    spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
+                    spriteJson["columns"].toInt()));
+        }
+        utils::Factory::registerObjectGraphicsDescription(iter.key(), description);
+    }
+}
+
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
+    registerSpriteControllers();
+    registerGraphicsDescriptions();
+    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
     client::MainWindow w;

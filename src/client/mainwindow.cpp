@@ -103,3 +103,8 @@ client::MainWindow* client::MainWindow::getInstance() {
 }
 
 client::MainWindow* client::MainWindow::instance = nullptr;
+
+void client::MainWindow::wheelEvent(QWheelEvent* event) {
+    screens.top()->wheel(event);
+}
+
