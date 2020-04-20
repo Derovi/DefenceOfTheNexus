@@ -9,6 +9,7 @@
 #include "../utils/factory.h"
 #include "../utils/lang.h"
 #include "../server/strategies/movestrategy.h"
+#include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
 #include "../client/mainwindow.h"
@@ -20,6 +21,12 @@ void registerStrategies() {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
                                                          new server::MoveStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy("pathStrategy",
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                                 static_cast<server::Strategy*>(
+                                                         new server::PathStrategy(object)));
                                      });
 }
 

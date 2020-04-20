@@ -3,7 +3,6 @@
 
 #include <memory>
 #include <QString>
-#include <bits/shared_ptr.h>
 
 #include "../attribute.h"
 
