@@ -15,10 +15,6 @@ class GameMap : public Widget {
   public:
     GameMap(QPoint position = QPoint(0, 0), int height = 2160, int width = 3840);
 
-    void setHeight(int height);
-
-    void setWidth(int width);
-
     const QRect& getDisplayBounds() const;
 
     void setDisplayBounds(const QRect& displayBounds);

@@ -62,6 +62,10 @@ class Widget : public QObject {
 
     void wheel(QWheelEvent* event);
 
+    void setHeight(int height);
+
+    void setWidth(int width);
+
   protected:
     QPoint position;
 

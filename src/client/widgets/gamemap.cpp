@@ -12,14 +12,6 @@ client::GameMap::GameMap(QPoint position, int height, int width):
     setDisplayBounds(QRect(0, 0, width, height));
 }
 
-void client::GameMap::setHeight(int height) {
-    this->height = height;
-}
-
-void client::GameMap::setWidth(int width) {
-    this->width = width;
-}
-
 const QRect& client::GameMap::getDisplayBounds() const {
     return displayBounds;
 }

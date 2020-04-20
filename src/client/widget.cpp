@@ -139,3 +139,11 @@ void client::Widget::wheel(QWheelEvent* event) {
         wheelEvent(event);
     }
 }
+
+void client::Widget::setHeight(int height) {
+    Widget::height = height;
+}
+
+void client::Widget::setWidth(int width) {
+    Widget::width = width;
+}
