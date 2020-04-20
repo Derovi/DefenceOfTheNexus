@@ -1,8 +1,9 @@
 #ifndef DAMAGING_H
 #define DAMAGING_H
 
+#include <memory>
+
 #include <QString>
-#include <bits/shared_ptr.h>
 
 #include "../attribute.h"
 
