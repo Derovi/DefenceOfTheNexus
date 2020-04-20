@@ -30,13 +30,11 @@ void client::GameMap::paint(QPainter& painter) {
     painter.setTransform(getTransformToWidget(), true);
 
     // draw background
-
     if (!background.getSource().isNull()) {
         drawBackground(painter);
     }
 
     // renew graphics object list
-
     for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
         if (!graphicsObjects.contains(object->getId())) {
             graphicsObjects.insert(object->getId(),
@@ -59,7 +57,6 @@ void client::GameMap::paint(QPainter& painter) {
     }
 
     // update graphics objects
-
     int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
 
     lastPaintTime = QDateTime::currentDateTime();

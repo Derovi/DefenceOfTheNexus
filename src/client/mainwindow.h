@@ -29,7 +29,6 @@ class MainWindow : public QWidget {
     void wheelEvent(QWheelEvent* event) override;
 
   public:
-
     std::shared_ptr<QThread> getUiThread() const;
 
     static MainWindow* getInstance();

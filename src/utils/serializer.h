@@ -104,6 +104,6 @@ class Serializer {
     bool prettyPrinting = true;
 };
 
-}  // namespace core
+}  // namespace utils
 
 #endif // SERIALIZER_H

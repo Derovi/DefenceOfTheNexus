@@ -1,5 +1,6 @@
 
 #include <QtCore/QString>
+
 #include "spritedescription.h"
 
 const QString& SpriteDescription::getResourceName() const {

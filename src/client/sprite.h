@@ -3,6 +3,7 @@
 
 #include <QPixmap>
 #include <QPainter>
+
 #include "spritedescription.h"
 
 namespace client {
@@ -41,7 +42,7 @@ class Sprite {
 
     int getFrameHeight() const;
 
-    int64_t getAnimationDurationMSec();
+    int64_t getAnimationDurationMSec() const;
 
     void setFramesPerSec(int framesPerSec);
 

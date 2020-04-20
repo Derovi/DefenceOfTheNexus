@@ -90,7 +90,7 @@ void client::Sprite::setReverseDirection(bool reverseDirection) {
     Sprite::reverseDirection = reverseDirection;
 }
 
-int64_t client::Sprite::getAnimationDurationMSec() {
+int64_t client::Sprite::getAnimationDurationMSec() const {
     return getFrameCount() * 1000 / framesPerSec;
 }
 

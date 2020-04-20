@@ -4,7 +4,7 @@
 #include <QColor>
 
 namespace colors {
-    const QColor border = QColor(74, 192, 23);
+    const QColor border = QColor(74, 192, 23);  // green
 }
 
 #endif //COLORS_H

@@ -22,7 +22,6 @@ class GraphicsObject {
     std::shared_ptr<core::Object> object;
 
     int height;
-
     int width;
 
     QVector<std::shared_ptr<SpriteController>> spriteControllers;

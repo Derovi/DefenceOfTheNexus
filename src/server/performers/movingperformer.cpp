@@ -41,6 +41,7 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
 
 QPointF server::moving_performer::getNextPosition(std::shared_ptr<core::Object> object,
                                                   int timeDelta, const core::Moving& moving) {
+    qDebug() << "delta:" << (moving.getDirection() * static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF().manhattanLength();
     return object->getPosition() +
            (moving.getDirection() * static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
 }
