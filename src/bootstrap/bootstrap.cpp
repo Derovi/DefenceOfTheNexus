@@ -3,21 +3,17 @@
 #include <QDebug>
 #include <QApplication>
 
+#include "../client/spritecontrollers/unitspritecontroller.h"
 #include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
-#include "../core/command.h"
-#include "../core/attributes/damageable.h"
-#include "../utils/serializer.h"
 #include "../server/strategies/movestrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
-#include "../server/controllers/controller.h"
-#include "../server/controllers/databundle.h"
 #include "../client/mainwindow.h"
 
 void registerStrategies() {
-    utils::Factory::registerStrategy("moveStrategy",
+    utils::Factory::registerStrategy(server::MoveStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
@@ -43,6 +39,13 @@ void registerAttributes() {
                                       utils::Serializer::resourceDeserializer);
 }
 
+void registerSpriteControllers() {
+    utils::Factory::registerSpriteController(client::UnitSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                         new client::UnitSpriteController(object));
+                                             });
+}
 
 void registerGraphicsDescriptions() {
     QFile file(":/data/graphics");
@@ -90,6 +93,7 @@ void registerGraphicsDescriptions() {
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
+    registerSpriteControllers();
     registerGraphicsDescriptions();
 
     QApplication a(argc, argv);

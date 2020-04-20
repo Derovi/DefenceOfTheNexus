@@ -15,6 +15,10 @@ class UnitSpriteController : public SpriteController {
 
     void setMoveSprite(const std::shared_ptr<Sprite>& moveSprite);
 
+    QString getName() override;
+
+    static QString name;
+
   protected:
 
     void onUpdate(uint64_t timeDeltaMSec) override;

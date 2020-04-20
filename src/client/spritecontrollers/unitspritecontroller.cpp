@@ -33,3 +33,9 @@ const std::shared_ptr<client::Sprite>& client::UnitSpriteController::getMoveSpri
 void client::UnitSpriteController::setMoveSprite(const std::shared_ptr<Sprite>& moveSprite) {
     UnitSpriteController::moveSprite = moveSprite;
 }
+
+QString client::UnitSpriteController::getName() {
+    return name;
+}
+
+QString client::UnitSpriteController::name = "unit";

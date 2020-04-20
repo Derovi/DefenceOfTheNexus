@@ -19,6 +19,8 @@ class SpriteController {
 
     const std::shared_ptr<core::Object>& getObject() const;
 
+    virtual QString getName() = 0;
+
     void update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec);
 
   protected:

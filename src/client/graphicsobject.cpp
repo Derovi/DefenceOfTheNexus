@@ -1,15 +1,19 @@
 #include <QDebug>
 
 #include "../utils/colors.h"
+#include "../utils/factory.h"
+
 #include "graphicsobject.h"
 #include "mainwindow.h"
 #include "spritecontrollers/unitspritecontroller.h"
 
 client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& object):
         object(object), width(object->getHitbox().boundingRect().width()), height(
-                              object->getHitbox().boundingRect().height()) {
-    spriteControllers.push_back(
-            std::shared_ptr<SpriteController>(new UnitSpriteController(object)));
+        object->getHitbox().boundingRect().height()) {
+    for (QString spriteControllerName : utils::Factory::getObjectGraphicsDescription(
+            object->getTypeName())->getSpriteControllers()) {
+        spriteControllers.push_back(utils::Factory::createSpriteController(spriteControllerName, object));
+    }
 }
 
 const std::shared_ptr<core::Object>& client::GraphicsObject::getObject() const {
