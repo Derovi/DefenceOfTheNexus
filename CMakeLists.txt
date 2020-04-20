@@ -59,8 +59,7 @@ add_executable(defenceofnexus
         src/client/properties.cpp
         src/client/screens/gamescreen.cpp
         src/client/widgets/gamemap.cpp
-        src/server/strategies/pathstrategy.cpp
-        src/server/strategies/shortestpathstrategy.cpp)
+        src/server/strategies/pathstrategy.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
