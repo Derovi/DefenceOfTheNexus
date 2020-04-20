@@ -208,10 +208,10 @@ void client::GameMap::setBackground(const QPixmap& background) {
 void client::GameMap::drawBackground(QPainter& painter) {
     int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
     background.update(deltaTime);
-    for (int x = displayBounds.x() / background.getFrameWidth() * background.getFrameWidth();
+    for (int x = (displayBounds.x() / background.getFrameWidth() - 1) * background.getFrameWidth();
          x < displayBounds.x() + displayBounds.width();
          x += background.getFrameWidth()) {
-        for (int y = displayBounds.y() / background.getFrameHeight() * background.getFrameHeight();
+        for (int y = (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
              y < displayBounds.y() + displayBounds.height();
              y += background.getFrameHeight()) {
             background.draw(painter,
