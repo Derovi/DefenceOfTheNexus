@@ -40,7 +40,7 @@ client::GameScreen::GameScreen() {
     object->setHitbox(hitbox);
     object->setPosition(QPointF(2000, 1000));
     object->getAttributes().push_back(
-            std::shared_ptr<core::Moving>(new core::Moving(QVector2D(1, 1), 1, 50)));
+            std::shared_ptr<core::Moving>(new core::Moving(QVector2D(1, 1), 500, 500)));
     object->getStrategies().push_back("moveStrategy");
 
     std::shared_ptr<core::Object> object2 = std::shared_ptr<core::Object>(

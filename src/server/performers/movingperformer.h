@@ -17,7 +17,7 @@ void moveIfNoObstacles(std::shared_ptr<core::Object> object, double timeDelta,
                        std::shared_ptr<core::Moving> moving);
 
 QPointF getNextPosition(std::shared_ptr<core::Object> object,
-                        double timeDelta, const core::Moving& moving);
+                        int timeDelta, const core::Moving& moving);
 
 }
 

@@ -67,6 +67,10 @@ class Sprite {
 
     uint64_t getLastUpdateTime() const;
 
+    bool isBackAndForthMode() const;
+
+    void setBackAndForthMode(bool backAndForthMode);
+
   private:
     QPixmap source;
 
@@ -87,6 +91,8 @@ class Sprite {
     int firstFrame;
 
     int lastFrame;
+
+    bool backAndForthMode;
 };
 
 }

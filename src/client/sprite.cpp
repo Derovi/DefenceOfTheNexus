@@ -5,7 +5,7 @@
 client::Sprite::Sprite(const QPixmap& source, int rows, int columns, int framesPerSec):
         source(source), rows(rows), columns(columns), framesPerSec(framesPerSec),
         lastUpdateTime(0), paused(false), mirroring(false), firstFrame(0),
-        lastFrame(rows * columns - 1) {}
+        lastFrame(rows * columns - 1), backAndForthMode(false) {}
 
 int client::Sprite::getRows() const {
     return rows;
@@ -136,5 +136,13 @@ int client::Sprite::getLastFrame() const {
 
 void client::Sprite::setLastFrame(int lastFrame) {
     Sprite::lastFrame = lastFrame;
+}
+
+bool client::Sprite::isBackAndForthMode() const {
+    return backAndForthMode;
+}
+
+void client::Sprite::setBackAndForthMode(bool backAndForthMode) {
+    Sprite::backAndForthMode = backAndForthMode;
 }
 
