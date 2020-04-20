@@ -2,8 +2,6 @@
 
 #include "command.h"
 
-core::Command::Command(const QString& name): name(name) {}
-
 const QString& core::Command::getName() const {
     return name;
 }
@@ -29,5 +27,9 @@ core::Command core::Command::fromCommandLine(QString text) {
 const QStringList& core::Command::getArguments() const {
     return arguments;
 }
+
+core::Command::Command(const QString& name, const QStringList& arguments):
+        name(name), arguments(arguments) {}
+
 
 

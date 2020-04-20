@@ -16,8 +16,9 @@ void client::GameScreen::onResumed() {
 
 client::GameScreen::GameScreen() {
     GameMap* gameMap = new GameMap();
+    gameMap->setDisplayBounds(QRect(1920,1080,1920,1080));
+    gameMap->setBackground(Sprite(QPixmap(":/sprites/background"), 1, 4, 4));
     addChild(gameMap);
-
     ImageButton* closeButton = new ImageButton(QPoint(24, 24), 72, 72);
     closeButton->setImage(QImage(":/images/cancel"));
     closeButton->setOnClick([=](QPoint point) {
@@ -37,9 +38,9 @@ client::GameScreen::GameScreen() {
     hitbox.append(QPoint(100, 0));
 
     object->setHitbox(hitbox);
-    object->setPosition(QPointF(1000, 1000));
+    object->setPosition(QPointF(2000, 1000));
     object->getAttributes().push_back(
-            std::shared_ptr<core::Moving>(new core::Moving(QVector2D(1, 1), 1, 50)));
+            std::shared_ptr<core::Moving>(new core::Moving(QVector2D(1, 1), 500, 500)));
     object->getStrategies().push_back("moveStrategy");
 
     std::shared_ptr<core::Object> object2 = std::shared_ptr<core::Object>(
@@ -52,11 +53,13 @@ client::GameScreen::GameScreen() {
     hitbox2.append(QPoint(0, -50));
 
     object2->setHitbox(hitbox2);
-    object2->setPosition(QPointF(2000, 2000));
+    object2->setPosition(QPointF(3000, 2000));
 
     engine->getGameWorld()->getObjects().insert(0, object);
     engine->getGameWorld()->getObjects().insert(1, object2);
     gameMap->setGameWorld(engine->getGameWorld());
+    gameMap->setCommandQueue(engine->getCommandQueue());
+    gameMap->setShowHitBoxes(true);
     engine->start();
 }
 
@@ -67,6 +70,5 @@ const std::shared_ptr<server::Engine>& client::GameScreen::getEngine() const {
 client::GameScreen::~GameScreen() {
     if (engine) {
         engine->finish();
-        qDebug() << "finished!";
     }
 }

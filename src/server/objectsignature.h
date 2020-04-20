@@ -60,7 +60,7 @@ class ObjectSignature {
     QStringList strategies;
 };
 
-}  // namespace core
+}  // namespace server
 
 
 #endif //OBJECTSIGNATURE_H

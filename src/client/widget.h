@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QPoint>
 #include <QPainter>
+#include <QtGui/QWheelEvent>
 
 namespace client {
 
@@ -59,6 +60,12 @@ class Widget : public QObject {
 
     void mouse(QPoint point);
 
+    void wheel(QWheelEvent* event);
+
+    void setHeight(int height);
+
+    void setWidth(int width);
+
   protected:
     QPoint position;
 
@@ -67,6 +74,8 @@ class Widget : public QObject {
     virtual void clicked(QPoint point) {};
 
     virtual void mouseMoved(QPoint point) {};
+
+    virtual void wheelEvent(QWheelEvent* event) {};
 
     std::function<void(QPoint)> onClick;
 

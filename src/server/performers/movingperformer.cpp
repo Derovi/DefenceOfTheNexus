@@ -43,7 +43,7 @@ bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object,
 }
 
 QPointF server::moving_performer::getNextPosition(std::shared_ptr<core::Object> object,
-                                                  double timeDelta, const core::Moving& moving) {
+                                                  int timeDelta, const core::Moving& moving) {
     return object->getPosition() +
-           (moving.getDirection() * static_cast<float>(moving.getSpeed() * timeDelta)).toPointF();
+           (moving.getDirection() * static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
 }
