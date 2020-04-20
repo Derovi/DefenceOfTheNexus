@@ -54,7 +54,9 @@ void client::Sprite::draw(QPainter& painter, const QRect& destination) {
         painter.setTransform(transform, true);
     }
     painter.drawPixmap(destination, source, getFrameBounds());
-    painter.setTransform(transform.inverted());
+    if (mirroring) {
+        painter.setTransform(transform.inverted());
+    }
 }
 
 void client::Sprite::update(uint64_t timeDeltaMSec) {

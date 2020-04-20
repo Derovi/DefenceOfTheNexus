@@ -22,12 +22,18 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     if (gameWorld->getObjects().contains(0)) {
-         centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
-                gameWorld->getObjects()[0]->getPosition().y()));
+        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
+                            gameWorld->getObjects()[0]->getPosition().y()));
     }
 
     // paint transform
     painter.setTransform(getTransformToWidget(), true);
+
+    // draw background
+
+    if (!background.getSource().isNull()) {
+        drawBackground(painter);
+    }
 
     // renew graphics object list
 
@@ -82,10 +88,11 @@ void client::GameMap::paint(QPainter& painter) {
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
             hitBoxPainter.drawPolygon(polygon);
-            hitBoxPainter.setPen(QPen(QBrush(QColor(0,0,0)),
+            hitBoxPainter.setPen(QPen(QBrush(QColor(0, 0, 0)),
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
-            hitBoxPainter.drawText(object->getPosition() - QPoint(20,0), QString::number(object->getId()));
+            hitBoxPainter.drawText(object->getPosition() - QPoint(20, 0),
+                                   QString::number(object->getId()));
         }
     }
 }
@@ -184,4 +191,31 @@ bool client::GameMap::isShowSprites() const {
 
 void client::GameMap::setShowSprites(bool showSprites) {
     GameMap::showSprites = showSprites;
+}
+
+const client::Sprite& client::GameMap::getBackground() const {
+    return background;
+}
+
+void client::GameMap::setBackground(const client::Sprite& background) {
+    this->background = background;
+}
+
+void client::GameMap::setBackground(const QPixmap& background) {
+    this->background = Sprite(background);
+}
+
+void client::GameMap::drawBackground(QPainter& painter) {
+    int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
+    background.update(deltaTime);
+    for (int x = displayBounds.x() / background.getFrameWidth() * background.getFrameWidth();
+         x < displayBounds.x() + displayBounds.width();
+         x += background.getFrameWidth()) {
+        for (int y = displayBounds.y() / background.getFrameHeight() * background.getFrameHeight();
+             y < displayBounds.y() + displayBounds.height();
+             y += background.getFrameHeight()) {
+            background.draw(painter,
+                           QRect(x, y, background.getFrameWidth(), background.getFrameHeight()));
+        }
+    }
 }

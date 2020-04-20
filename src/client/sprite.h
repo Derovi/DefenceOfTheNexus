@@ -9,6 +9,8 @@ namespace client {
 
 class Sprite {
   public:
+    Sprite() = default;
+
     Sprite(const QPixmap& source, int rows = 1, int columns = 1, int framesPerSec = 30);
 
     Sprite(const SpriteDescription& spriteDescription);

@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QQueue>
 
+#include "../screen.h"
 #include "../../core/command.h"
 #include "../graphicsobject.h"
 #include "../widget.h"
@@ -53,6 +54,12 @@ class GameMap : public Widget {
 
     void setShowSprites(bool showSprites);
 
+    const Sprite& getBackground() const;
+
+    void setBackground(const Sprite& background);
+
+    void setBackground(const QPixmap& background);
+
   protected:
     void wheelEvent(QWheelEvent* event) override;
 
@@ -77,9 +84,13 @@ class GameMap : public Widget {
 
     std::shared_ptr<QQueue<core::Command>> commandQueue;
 
+    Sprite background;
+
     bool showHitBoxes;
 
     bool showSprites;
+
+    void drawBackground(QPainter& painter);
 };
 
 }

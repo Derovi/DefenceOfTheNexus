@@ -17,6 +17,7 @@ void client::GameScreen::onResumed() {
 client::GameScreen::GameScreen() {
     GameMap* gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920,1080,1920,1080));
+    gameMap->setBackground(QPixmap(":/images/restart"));
     addChild(gameMap);
 
     ImageButton* closeButton = new ImageButton(QPoint(24, 24), 72, 72);
