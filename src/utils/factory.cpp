@@ -3,11 +3,21 @@
 #include "factory.h"
 
 std::shared_ptr<server::Strategy>
-utils::Factory::createStrategy(const QString& strategyName, std::shared_ptr<core::Object> object) {
+utils::Factory::createStrategy(const QString& strategyName,
+                               const std::shared_ptr<core::Object>& object) {
     if (object == nullptr || !strategyCreators.contains(strategyName)) {
         return nullptr;
     }
     return strategyCreators[strategyName](object);
+}
+
+std::shared_ptr<client::SpriteController>
+utils::Factory::createSpriteController(const QString& spriteControllerName,
+                                       const std::shared_ptr<core::Object>& object) {
+    if (object == nullptr || !spriteControllerCreators.contains(spriteControllerName)) {
+        return nullptr;
+    }
+    return spriteControllerCreators[spriteControllerName](object);
 }
 
 void utils::Factory::registerStrategy(const QString& strategyName,
@@ -15,6 +25,13 @@ void utils::Factory::registerStrategy(const QString& strategyName,
                                               std::shared_ptr<core::Object>)> creator) {
     strategyCreators.insert(strategyName, creator);
 }
+
+void utils::Factory::registerSpriteController(const QString& spriteControllerName,
+                                              std::function<std::shared_ptr<client::SpriteController>(
+                                                      std::shared_ptr<core::Object>)> creator) {
+    spriteControllerCreators.insert(spriteControllerName, creator);
+}
+
 
 void utils::Factory::registerAttribute(const QString& attributeName,
                                        std::function<std::optional<QJsonObject>(
@@ -68,3 +85,6 @@ QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(
         const QJsonObject&)>> utils::Factory::attributeDeserializers;
 
 QHash<QString, client::ObjectGraphicsDescription> utils::Factory::graphicsDescriptions;
+
+QHash<QString, std::function<std::shared_ptr<client::SpriteController>(
+        std::shared_ptr<core::Object>)>> utils::Factory::spriteControllerCreators;
