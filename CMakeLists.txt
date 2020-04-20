@@ -19,6 +19,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Threads REQUIRED)
 
 add_executable(defenceofnexus
+        resources/lang.qrc
         resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
@@ -58,7 +59,7 @@ add_executable(defenceofnexus
         src/client/screens/menuscreen.h
         src/client/widgets/imagebutton.cpp
         src/client/widgets/imagebutton.h
-        src/client/properties.cpp src/client/screens/gamescreen.cpp src/client/screens/gamescreen.h src/client/widgets/gamemap.cpp src/client/widgets/gamemap.h src/utils/colors.h src/client/graphicsobject.cpp src/client/graphicsobject.h src/client/sprite.cpp src/client/sprite.h src/client/spritecontroller.cpp src/client/spritecontroller.h src/client/spritecontrollers/unitspritecontroller.cpp src/client/spritecontrollers/unitspritecontroller.h src/client/objectgraphicsdescription.cpp src/client/objectgraphicsdescription.h src/client/spritedescription.cpp src/client/spritedescription.h src/client/widgets/textview.cpp src/client/widgets/textview.h)
+        src/client/properties.cpp src/client/screens/gamescreen.cpp src/client/screens/gamescreen.h src/client/widgets/gamemap.cpp src/client/widgets/gamemap.h src/utils/colors.h src/client/graphicsobject.cpp src/client/graphicsobject.h src/client/sprite.cpp src/client/sprite.h src/client/spritecontroller.cpp src/client/spritecontroller.h src/client/spritecontrollers/unitspritecontroller.cpp src/client/spritecontrollers/unitspritecontroller.h src/client/objectgraphicsdescription.cpp src/client/objectgraphicsdescription.h src/client/spritedescription.cpp src/client/spritedescription.h src/client/widgets/textview.cpp src/client/widgets/textview.h src/utils/lang.cpp src/utils/lang.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

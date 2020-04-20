@@ -7,10 +7,12 @@
 #include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
+#include "../utils/lang.h"
 #include "../server/strategies/movestrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
 #include "../client/mainwindow.h"
+#include "../client/properties.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -95,6 +97,7 @@ int main(int argc, char** argv) {
     registerStrategies();
     registerSpriteControllers();
     registerGraphicsDescriptions();
+    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
     client::MainWindow w;

@@ -1,12 +1,14 @@
 #include <QCoreApplication>
 #include <QtWidgets/QPushButton>
 
-#include "menuscreen.h"
-#include "gamescreen.h"
+#include "../../utils/lang.h"
 #include "../widgets/imagebutton.h"
 #include "../mainwindow.h"
 #include "../properties.h"
 #include "../widgets/textview.h"
+
+#include "menuscreen.h"
+#include "gamescreen.h"
 
 void client::MenuScreen::onPaused() {
 
@@ -48,7 +50,7 @@ client::MenuScreen::MenuScreen() {
 
     addChild(startButton);
 
-    TextView* textView = new TextView(QPoint(1000, 50), "Example text", QApplication::font(),
+    TextView* textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"), QApplication::font(),
                                       Qt::blue);
 
     textView->setTextSize(50);
