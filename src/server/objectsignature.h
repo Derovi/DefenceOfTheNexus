@@ -19,7 +19,7 @@ class ObjectSignature {
     ObjectSignature() = delete;
 
     // Copies current object attributes states.
-    // Example: if objet has 47/100 hp, then objects,
+    // Example: if object has 47/100 hp, then objects,
     // summoned with creates signature will have 47/100 hp.
     explicit ObjectSignature(core::Object object);
 

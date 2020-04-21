@@ -55,11 +55,11 @@ utils::Serializer::deserializeAttribute(const QString& serialized,
 }
 
 void utils::Serializer::setPrettyPrinting(bool prettyPrinting) {
-
+    this->prettyPrinting = prettyPrinting;
 }
 
 bool utils::Serializer::isPrettyPrinting() {
-    return false;
+    return prettyPrinting;
 }
 
 std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Object& object) {
