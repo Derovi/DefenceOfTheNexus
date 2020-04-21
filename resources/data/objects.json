@@ -1,0 +1,50 @@
+{
+  "test1": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 500,
+        "speed": 500
+      }
+    },
+    "hitbox": {
+      "x": [
+        -100,
+        0,
+        100
+      ],
+      "y": [
+        0,
+        100,
+        0
+      ]
+    },
+    "strategies": [
+      "moveStrategy"
+    ]
+  },
+
+  "test2": {
+    "attributes": {
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        0,
+        50,
+        0
+      ],
+      "y": [
+        0,
+        50,
+        0,
+        -50
+      ]
+    },
+    "strategies": [
+    ]
+  }
+}

@@ -1,10 +1,12 @@
+#include <QDebug>
+
 #include "../mainwindow.h"
-#include "gamescreen.h"
 #include "../widgets/gamemap.h"
 #include "../widgets/imagebutton.h"
 #include "../../server/engine.h"
 #include "../../core/attributes/moving.h"
-#include <QDebug>
+
+#include "gamescreen.h"
 
 void client::GameScreen::onPaused() {
 
@@ -32,7 +34,7 @@ client::GameScreen::GameScreen() {
     GameConfiguration gameConfiguration;
     engine = std::shared_ptr<server::Engine>(new server::Engine(gameConfiguration));
     std::shared_ptr<core::Object> object = std::shared_ptr<core::Object>(
-            new core::Object(0, "test"));
+            new core::Object(0, "test1"));
 
     QPolygon hitbox;
     hitbox.append(QPoint(-100, 0));
@@ -46,7 +48,7 @@ client::GameScreen::GameScreen() {
     object->getStrategies().push_back("moveStrategy");
 
     std::shared_ptr<core::Object> object2 = std::shared_ptr<core::Object>(
-            new core::Object(1, "test"));
+            new core::Object(1, "test2"));
 
     QPolygon hitbox2;
     hitbox2.append(QPoint(-50, 0));

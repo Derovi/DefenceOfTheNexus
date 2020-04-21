@@ -52,9 +52,11 @@ class Object {
 
     QStringList& getStrategies();
 
+    const QStringList& getStrategies() const;
+
     void setStrategies(const QStringList& strategies);
 
-    bool hasAttribute(const QString& name);
+    bool hasAttribute(const QString& name) const;
 
     std::shared_ptr<core::Attribute> getAttribute(const QString& name);
 

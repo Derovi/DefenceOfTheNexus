@@ -7,6 +7,7 @@
 
 #include "object.h"
 #include "attributes/resource.h"
+#include "../server/objectsignature.h"
 
 namespace core {
 
@@ -32,12 +33,22 @@ class GameWorld {
 
     void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
+    std::shared_ptr<core::Object>
+    summonObject(const server::ObjectSignature& signature, const QPoint& position,
+                 float rotationAngle = 0);
+
+    int getLastSummonedId() const;
+
+    void setLastSummonedId(int lastSummonedId);
+
     ~GameWorld();
 
   private:
 
     int height;
     int width;
+
+    int lastSummonedId;
 
     QVector<core::Resource> resources;
     QHash<int64_t, std::shared_ptr<core::Object>> objects;

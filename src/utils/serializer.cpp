@@ -1,5 +1,7 @@
 #include "serializer.h"
 
+utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
+
 std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
     if (result == std::nullopt) {

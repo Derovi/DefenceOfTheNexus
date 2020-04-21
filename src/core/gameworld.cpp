@@ -46,3 +46,26 @@ core::GameWorld::~GameWorld() {
 const QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() const {
     return objects;
 }
+
+int core::GameWorld::getLastSummonedId() const {
+    return lastSummonedId;
+}
+
+void core::GameWorld::setLastSummonedId(int lastSummonedId) {
+    GameWorld::lastSummonedId = lastSummonedId;
+}
+
+std::shared_ptr<core::Object>
+core::GameWorld::summonObject(const server::ObjectSignature& signature, const QPoint& position,
+                              float rotationAngle) {
+    ++lastSummonedId;
+    std::shared_ptr<Object> object = std::shared_ptr<Object>(
+            new Object(lastSummonedId, signature.getTypeName(), position,
+                       signature.getHitbox(), rotationAngle));
+    object->setStrategies(signature.getStrategies());
+    for (std::shared_ptr<core::Attribute> attribute : signature.getAttributes()) {
+        object->getAttributes().push_back(attribute->clone());
+    }
+    objects.insert(lastSummonedId, object);
+    return object;
+}

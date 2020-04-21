@@ -60,7 +60,7 @@ void core::Object::setStrategies(const QStringList& strategies) {
     Object::strategies = strategies;
 }
 
-bool core::Object::hasAttribute(const QString& name) {
+bool core::Object::hasAttribute(const QString& name) const {
     for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return true;
@@ -88,4 +88,8 @@ std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name)
         }
     }
     return nullptr;
+}
+
+const QStringList& core::Object::getStrategies() const {
+    return strategies;
 }
