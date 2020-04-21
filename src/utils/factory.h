@@ -14,6 +14,7 @@
 #include "../server/strategies/strategy.h"
 #include "../server/controllers/gameworldcontroller.h"
 #include "../server/controllers/controller.h"
+#include "../server/objectsignature.h"
 
 namespace utils {
 
@@ -35,6 +36,9 @@ class Factory {
     static std::optional<client::ObjectGraphicsDescription>
     getObjectGraphicsDescription(const QString& objectName);
 
+    static std::optional<server::ObjectSignature>
+    getObjectSignature(const QString& objectName);
+
     static void registerStrategy(
             const QString& strategyName,
             std::function<std::shared_ptr<server::Strategy>(
@@ -47,6 +51,9 @@ class Factory {
 
     static void registerObjectGraphicsDescription(const QString& objectName,
                                                   const client::ObjectGraphicsDescription& description);
+
+    static void registerObjectSignature(const QString& objectName,
+                                        const server::ObjectSignature& signature);
 
     static void registerAttribute(
             const QString& attributeName,
@@ -69,6 +76,8 @@ class Factory {
             const QJsonObject&)>> attributeDeserializers;
 
     static QHash<QString, client::ObjectGraphicsDescription> graphicsDescriptions;
+
+    static QHash<QString, server::ObjectSignature> objectSignatures;
 };
 
 }

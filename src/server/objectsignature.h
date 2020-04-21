@@ -16,7 +16,7 @@ namespace server {
 
 class ObjectSignature {
   public:
-    ObjectSignature() = delete;
+    ObjectSignature() = default;
 
     // Copies current object attributes states.
     // Example: if object has 47/100 hp, then objects,

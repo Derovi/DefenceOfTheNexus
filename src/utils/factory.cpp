@@ -1,5 +1,3 @@
-#include <QDebug>
-
 #include "factory.h"
 
 std::shared_ptr<server::Strategy>
@@ -75,6 +73,19 @@ utils::Factory::getObjectGraphicsDescription(const QString& objectName) {
     return graphicsDescriptions[objectName];
 }
 
+std::optional<server::ObjectSignature>
+utils::Factory::getObjectSignature(const QString& objectName) {
+    if (!objectSignatures.contains(objectName)) {
+        return std::nullopt;
+    }
+    return objectSignatures[objectName];
+}
+
+void utils::Factory::registerObjectSignature(const QString& objectName,
+                                             const server::ObjectSignature& signature) {
+    objectSignatures.insert(objectName, signature);
+}
+
 QHash<QString, std::function<std::shared_ptr<server::Strategy>(
         std::shared_ptr<core::Object>)>> utils::Factory::strategyCreators;
 
@@ -88,3 +99,5 @@ QHash<QString, client::ObjectGraphicsDescription> utils::Factory::graphicsDescri
 
 QHash<QString, std::function<std::shared_ptr<client::SpriteController>(
         std::shared_ptr<core::Object>)>> utils::Factory::spriteControllerCreators;
+
+QHash<QString, server::ObjectSignature> utils::Factory::objectSignatures;
