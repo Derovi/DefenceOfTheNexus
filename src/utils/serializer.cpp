@@ -222,7 +222,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
         if (!i.isDouble()) {
             return std::nullopt;
         }
-        vec[it].setY(qreal(i.toDouble()));
+        vec[it++].setY(qreal(i.toDouble()));
     }
     if (!json["typeName"].isString()) {
         return std::nullopt;
@@ -515,7 +515,7 @@ utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
         if (!i.isDouble()) {
             return std::nullopt;
         }
-        vec[it].setY(qreal(i.toDouble()));
+        vec[it++].setY(qreal(i.toDouble()));
     }
     server::ObjectSignature signature(serialized["typeName"].toString(), QPolygonF(vec));
     QStringList strategies;

@@ -13,6 +13,8 @@ namespace core {
 
 class GameWorld {
   public:
+    GameWorld();
+
     int getHeight() const;
 
     void setHeight(int height);

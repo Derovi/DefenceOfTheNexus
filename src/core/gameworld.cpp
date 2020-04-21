@@ -1,5 +1,7 @@
 #include <memory>
 
+#include <QDebug>
+
 #include "gameworld.h"
 #include "attributes/resource.h"
 #include "object.h"
@@ -69,3 +71,5 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
     objects.insert(lastSummonedId, object);
     return object;
 }
+
+core::GameWorld::GameWorld() : lastSummonedId(-1) {}
