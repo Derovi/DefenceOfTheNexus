@@ -19,6 +19,8 @@ class Controller {
 
     ~Controller() = default;
 
+    void linkStrategies(const DataBundle& baseBundle = DataBundle());
+
     void addStrategy(const QString& strategyName);
 
     void removeStrategy(const QString& strategyName);
@@ -38,7 +40,7 @@ class Controller {
     QLinkedList<std::shared_ptr<Strategy>> strategiesByPriority;
     std::shared_ptr<core::Object> object;
 
-    DataBundle createDataBundle();
+    DataBundle createDataBundle(DataBundle baseBundle = DataBundle());
 
     void prepare();
 

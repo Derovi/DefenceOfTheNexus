@@ -15,7 +15,7 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
         gameConfiguration(gameConfiguration), finished(false) {
     gameWorld = world_generator::generate(gameConfiguration);
     gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
-    commandExecutor = CommandExecutor(gameWorld);
+    commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::shared_ptr<QQueue<core::Command>>(new QQueue<core::Command>());
 }
 
