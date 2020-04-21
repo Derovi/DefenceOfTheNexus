@@ -56,6 +56,35 @@ void registerSpriteControllers() {
                                              });
 }
 
+void registerObjectSignatures() {
+    QFile file(":/data/objects");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    utils::Serializer serializer;
+    std::optional<QJsonObject> signatures = serializer.stringToJsonObject(
+            QString(file.readAll()));
+    if (!signatures) {
+        return;
+    }
+
+    for (auto iter = signatures.value().begin();
+         iter != signatures.value().end();
+         ++iter) {
+        if (!iter->isObject()) {
+            continue;
+        }
+        QJsonObject object = iter->toObject();
+        object.insert("typeName", iter.key());
+        auto signature = serializer.objectSignatureDeserializer(object);
+        if (signature == std::nullopt) {
+            continue;
+        }
+        utils::Factory::registerObjectSignature(iter.key(), signature.value());
+    }
+}
+
 void registerGraphicsDescriptions() {
     QFile file(":/data/graphics");
     if (!file.open(QIODevice::ReadOnly)) {
@@ -104,6 +133,7 @@ int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();
+    registerObjectSignatures();
     registerGraphicsDescriptions();
     utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
