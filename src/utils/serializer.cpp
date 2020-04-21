@@ -107,16 +107,9 @@ utils::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& at
     if (object == nullptr) {
         return std::nullopt;
     }
-    if (object->getType() == core::ResourceType::kWood) {
-        json.insert("resourceType", 1);
-    }
-    if (object->getType() == core::ResourceType::kIron) {
-        json.insert("resourceType", 2);
-    }
-    if (object->getType() == core::ResourceType::kStone) {
-        json.insert("resourceType", 3);
-    }
+    json.insert("resourceType", static_cast<int>(object->getType()));
     json.insert("amount", object->getAmount());
+    json.insert("miningSpeedModifier", object->getMiningSpeedModifier());
     return json;
 }
 
@@ -162,8 +155,20 @@ utils::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attr
     return json;
 }
 
-std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObject& json) {
+std::optional<QJsonObject>
+utils::Serializer::miningSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Mining*>(attribute.get());
+    QJsonObject json;
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    json.insert("miningSpeed", object->getMiningSpeed());
+    json.insert("miningDelay", object->getMiningDelay());
+    json.insert("miningRadius", object->getMiningRadius());
+    return json;
+}
 
+std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObject& json) {
     if (!json["id"].isString()) {
         return std::nullopt;
     }
@@ -255,27 +260,15 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
 
 std::optional<std::shared_ptr<core::Attribute>>
 utils::Serializer::resourceDeserializer(const QJsonObject& serialized) {
-    if (!serialized["amount"].isDouble()) {
+    if (!serialized["amount"].isDouble() || !serialized["resourceType"].isDouble()
+        || !serialized["miningSpeedModifier"].isDouble()) {
         return std::nullopt;
     }
     int amount = serialized["amount"].toDouble();
-
-    if (!serialized["resourceType"].isDouble()) {
-        return std::nullopt;
-    }
     int type = serialized["resourceType"].toDouble();
-    core::ResourceType resType;
-    if (type == 1) {
-        resType = core::ResourceType::kWood;
-    }
-    if (type == 2) {
-        resType = core::ResourceType::kIron;
-    }
-    if (type == 3) {
-        resType = core::ResourceType::kStone;
-    }
-    auto object = new core::Resource(resType, amount);
-    return std::make_shared<core::Resource>(*object);
+    core::ResourceType resType = static_cast<core::ResourceType>(type);
+    double modifier = serialized["miningSpeedModifier"].toDouble();
+    return std::make_shared<core::Resource>(resType, amount, modifier);
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
@@ -356,6 +349,19 @@ utils::Serializer::movingDeserializer(const QJsonObject& serialized) {
     return std::make_shared<core::Moving>(*object);
 }
 
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::miningDeserializer(const QJsonObject& serialized) {
+    auto object = std::make_shared<core::Mining>();
+    if (!serialized["miningSpeed"].isDouble() || !serialized["miningDelay"].isDouble()
+        || !serialized["miningRadius"].isDouble()) {
+        return std::nullopt;
+    }
+    object->setMiningSpeed((serialized["miningSpeed"]).toDouble());
+    object->setMiningDelay((serialized["miningDelay"]).toDouble());
+    object->setMiningRadius((serialized["miningRadius"]).toDouble());
+    return object;
+}
+
 
 std::optional<QJsonObject> utils::Serializer::gameWorldSerializer(const core::GameWorld& world) {
     QJsonObject json;
@@ -363,15 +369,14 @@ std::optional<QJsonObject> utils::Serializer::gameWorldSerializer(const core::Ga
     json.insert("height", world.getHeight());
     QJsonArray resources;
     QJsonObject object;
-    QVector<core::Resource> resVector = world.getResources();
+    QVector<QPair<core::ResourceType, int>> resVector = world.getResources();
     for (auto res : resVector) {
-        std::optional<QJsonObject> result = resourceSerializer(
-                std::make_shared<core::Resource>(res));
-        if (result == std::nullopt) {
-            return std::nullopt;
-        }
-        resources.insert(resources.size(), result.value());
+        QJsonObject resPair;
+        resPair.insert("type", static_cast<int>(res.first));
+        resPair.insert("amount", res.second);
+        resources.append(resPair);
     }
+    json.insert("resources", resources);
     auto iter = world.getObjects().begin();
     while (iter != world.getObjects().end()) {
         std::optional<QJsonObject> result = objectSerializer(*iter.value());
@@ -402,16 +407,15 @@ utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
         return std::nullopt;
     }
     resources = serialized["resources"].toArray();
-    QVector<core::Resource> resVector;
+    QVector<QPair<core::ResourceType, int>> resVector;
     for (const auto& res : resources) {
         if (!res.isObject()) {
             return std::nullopt;
         }
-        auto resource = resourceDeserializer(res.toObject());
-        if (resource == std::nullopt) {
-            return std::nullopt;
-        }
-        resVector.push_back(*dynamic_cast<core::Resource*>(resource.value().get()));
+        auto resObj = res.toObject();
+        int type = resObj["type"].toInt();
+        int amount = resObj["amount"].toInt();
+        resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
     }
     ans.setResources(resVector);
     if (serialized["objects"].isObject()) {

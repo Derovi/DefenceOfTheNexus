@@ -14,6 +14,7 @@
 #include "../server/server.h"
 #include "../client/mainwindow.h"
 #include "../client/properties.h"
+#include "../core/attributes/mining.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -46,6 +47,9 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Resource::attributeName,
                                       utils::Serializer::resourceSerializer,
                                       utils::Serializer::resourceDeserializer);
+    utils::Factory::registerAttribute(core::Mining::attributeName,
+                                      utils::Serializer::miningSerializer,
+                                      utils::Serializer::miningDeserializer);
 }
 
 void registerSpriteControllers() {
@@ -69,9 +73,7 @@ void registerObjectSignatures() {
         return;
     }
 
-    for (auto iter = signatures.value().begin();
-         iter != signatures.value().end();
-         ++iter) {
+    for (auto iter = signatures.value().begin(); iter != signatures.value().end(); ++iter) {
         if (!iter->isObject()) {
             continue;
         }
@@ -97,9 +99,7 @@ void registerGraphicsDescriptions() {
     if (!descriptions) {
         return;
     }
-    for (auto iter = descriptions.value().begin();
-         iter != descriptions.value().end();
-         ++iter) {
+    for (auto iter = descriptions.value().begin(); iter != descriptions.value().end(); ++iter) {
         auto valueRef = iter.value();
         if (!valueRef.isObject()) {
             continue;

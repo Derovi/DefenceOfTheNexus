@@ -10,7 +10,7 @@
 namespace server::damaging_performer {
 
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
-            std::shared_ptr<core::Damaging> damaging, double timeDelta);
+            std::shared_ptr<core::Damaging> damaging, int timeDelta);
 
 }  // namespace server::damaging_performer
 
