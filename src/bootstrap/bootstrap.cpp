@@ -77,12 +77,13 @@ void registerGraphicsDescriptions() {
         }
         QJsonObject json = valueRef.toObject();
         client::ObjectGraphicsDescription description;
-        if (!json.contains("width") || !json.contains("height") ||
-            !json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
+        if (!json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
             continue;
         }
-        description.setWidth(json.value("width").toInt(50));
-        description.setHeight(json.value("height").toInt(50));
+        if (json.contains("width") && json.contains("height")) {
+            description.setWidth(json.value("width").toInt(50));
+            description.setHeight(json.value("height").toInt(50));
+        }
         for (const auto& entry : json.value("spriteControllers").toArray(QJsonArray())) {
             if (!entry.isString()) {
                 continue;

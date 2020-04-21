@@ -49,7 +49,7 @@ QRect client::Sprite::getFrameBounds() const {
 }
 
 void client::Sprite::draw(QPainter& painter, const QRect& destination) {
-    QTransform transform = QTransform(-1,0,0,1,0,0);
+    QTransform transform = QTransform(-1, 0, 0, 1, 0, 0);
     if (mirroring) {
         painter.setTransform(transform, true);
     }
@@ -67,6 +67,7 @@ void client::Sprite::update(uint64_t timeDeltaMSec) {
     if (paused) {
         return;
     }
+    int frameBeforeUpdate = getCurrentFrame();
     if (isReverseDirection()) {
         lastUpdateTime -= timeDeltaMSec;
         if (lastUpdateTime < 0) {
@@ -74,6 +75,17 @@ void client::Sprite::update(uint64_t timeDeltaMSec) {
             lastUpdateTime += getAnimationDurationMSec();
         }
     } else {
+        lastUpdateTime += timeDeltaMSec;
+    }
+    int frameAfterUpdate = getCurrentFrame();
+    if (!backAndForthMode || frameBeforeUpdate == frameAfterUpdate) {
+        return;
+    }
+    if (frameAfterUpdate == firstFrame) {
+        reverseDirection = true;
+        lastUpdateTime -= timeDeltaMSec;
+    } else if (frameAfterUpdate == lastFrame) {
+        reverseDirection = false;
         lastUpdateTime += timeDeltaMSec;
     }
 }
