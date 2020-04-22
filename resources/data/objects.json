@@ -8,6 +8,11 @@
         },
         "maxSpeed": 500,
         "speed": 500
+      },
+      "mining": {
+        "miningSpeed": 4,
+        "miningDelay": 1000,
+        "miningRadius": 500
       }
     },
     "hitbox": {
@@ -23,8 +28,24 @@
       ]
     },
     "strategies": [
-      "moveStrategy"
+      "moveStrategy",
+      "mineStrategy"
     ]
+  },
+
+  "resourcebundle-1": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [25, -25, -25, 25],
+      "y": [25, 25, -25, -25]
+    },
+    "strategies": []
   },
 
   "test2": {

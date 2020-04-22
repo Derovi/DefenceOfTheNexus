@@ -15,7 +15,7 @@ class Strategy {
 
     virtual ~Strategy() = default;
 
-    virtual void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) = 0;
+    virtual void tick(std::shared_ptr<core::GameWorld> world, int timeDelta) = 0;
 
     virtual QString getName() = 0;
 

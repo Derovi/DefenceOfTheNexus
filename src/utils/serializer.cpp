@@ -356,8 +356,8 @@ utils::Serializer::miningDeserializer(const QJsonObject& serialized) {
         || !serialized["miningRadius"].isDouble()) {
         return std::nullopt;
     }
-    object->setMiningSpeed((serialized["miningSpeed"]).toDouble());
-    object->setMiningDelay((serialized["miningDelay"]).toDouble());
+    object->setMiningSpeed((serialized["miningSpeed"]).toInt());
+    object->setMiningDelay((serialized["miningDelay"]).toInt());
     object->setMiningRadius((serialized["miningRadius"]).toDouble());
     return object;
 }

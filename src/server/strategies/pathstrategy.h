@@ -25,7 +25,7 @@ class PathStrategy : public Strategy {
 
     void assign(DataBundle& dataBundle) override;
 
-    void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) override;
+    void tick(std::shared_ptr<core::GameWorld> world, int timeDelta) override;
 
     inline static const QString name = "pathStrategy";
 

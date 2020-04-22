@@ -13,20 +13,20 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
         return;
     }
     mining->setCurrentDelay(mining->getMiningDelay());
-
     float angle = object->getRotationAngle();
     double length = mining->getMiningRadius();
     QPointF miningDirection(length * std::cos(angle), length * std::sin(angle));
     //! TODO: could be optimized
-    QPolygonF miningLine;
-    miningLine.append(object->getPosition());
-    miningLine.append(object->getPosition() + miningDirection);
+    //! TODO: fix multiple miningLine creation
     for (auto target : world->getObjects()) {
+        QPolygonF miningLine;
+        miningLine.append(object->getPosition() - target->getPosition());
+        miningLine.append(object->getPosition() + miningDirection - target->getPosition());
         if (target == object || !miningLine.intersects(target->getHitbox())) {
             continue;
         }
         std::shared_ptr<core::Resource> resource = std::dynamic_pointer_cast<core::Resource>(
-                target->getAttribute("mining"));
+                target->getAttribute("resource"));
         if (resource != nullptr) {
             int mined = resource->mine(mining->getMiningSpeed());
             world->addResources(resource->getType(), mined);

@@ -15,6 +15,8 @@ class GameWorld {
   public:
     GameWorld();
 
+    ~GameWorld();
+
     int getHeight() const;
 
     void setHeight(int height);
@@ -37,6 +39,8 @@ class GameWorld {
 
     void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
+    std::shared_ptr<core::Object> objectAt(QPointF point);
+
     std::shared_ptr<core::Object>
     summonObject(const server::ObjectSignature& signature, const QPoint& position,
                  float rotationAngle = 0);
@@ -44,8 +48,6 @@ class GameWorld {
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);
-
-    ~GameWorld();
 
   private:
 

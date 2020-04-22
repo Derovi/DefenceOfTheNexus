@@ -114,8 +114,14 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point) {
     point = getTransformToMap().map(point);
+    auto object = gameWorld->objectAt(point);
+    if (object != nullptr && object->hasAttribute("resource")) {
+        commandQueue->push_back(core::Command("mine_resource", {
+            QString::number(object->getId())}));
+    }
     commandQueue->push_back(core::Command("change_move_target", {"0", QString::number(point.x()),
                                                                  QString::number(point.y())}));
+
 }
 
 const std::shared_ptr<QQueue<core::Command>>& client::GameMap::getCommandQueue() const {

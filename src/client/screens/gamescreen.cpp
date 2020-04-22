@@ -44,6 +44,9 @@ client::GameScreen::GameScreen() {
     gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
                                           QPoint(3000, 2000));
 
+    gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("resourcebundle-1").value(),
+            QPoint(2200, 1000));
+
     gameMap->setShowHitBoxes(true);
     engine->start();
 }

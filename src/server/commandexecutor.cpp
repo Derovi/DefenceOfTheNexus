@@ -36,6 +36,7 @@ void server::CommandExecutor::registerCommands() {
     // change_speed_command <object_id> <new_speed>
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
+    registerCommand("mine_resource", &CommandExecutor::mineResource);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -138,6 +139,10 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
         qDebug() << argument;
     }
     return true;
+}
+
+bool server::CommandExecutor::mineResource(const QStringList& arguments) {
+    return false;
 }
 
 

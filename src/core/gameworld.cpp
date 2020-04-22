@@ -36,7 +36,7 @@ void core::GameWorld::setResources(const QVector<QPair<core::ResourceType, int>>
 
 void core::GameWorld::addResources(core::ResourceType type, int amount) {
     auto it = std::find_if(resources.begin(), resources.end(), [type](const auto& resource) {
-       return resource.first == type;
+        return resource.first == type;
     });
     if (it == resources.end()) {
         resources.append(QPair(type, amount));
@@ -51,6 +51,17 @@ QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() {
 
 void core::GameWorld::setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects) {
     this->objects = objects;
+}
+
+std::shared_ptr<core::Object> core::GameWorld::objectAt(QPointF point) {
+    for (const auto& object : objects) {
+        QPointF mapped(point.x() - object->getPosition().x(),
+                       point.y() - object->getPosition().y());
+        if (object->getHitbox().containsPoint(mapped, Qt::OddEvenFill)) {
+            return object;
+        }
+    }
+    return nullptr;
 }
 
 core::GameWorld::~GameWorld() {
@@ -83,4 +94,4 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
     return object;
 }
 
-core::GameWorld::GameWorld() : lastSummonedId(-1) {}
+core::GameWorld::GameWorld(): lastSummonedId(-1) {}

@@ -21,7 +21,7 @@ void PathStrategy::assign(DataBundle& dataBundle) {
     dataBundle.assign("destinationPoint", destPoint);
 }
 
-void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
+void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
     if (qFuzzyIsNull(moving->getSpeed()) || destPoint == nullptr) {
         moving->setDirection(QVector2D(0, 0));
         return;

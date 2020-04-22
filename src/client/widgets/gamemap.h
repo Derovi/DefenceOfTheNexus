@@ -95,4 +95,4 @@ class GameMap : public Widget {
 
 }
 
-#endif //GAMEMAP_H
+#endif  // GAMEMAP_H

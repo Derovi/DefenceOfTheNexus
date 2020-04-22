@@ -15,6 +15,7 @@
 #include "../client/mainwindow.h"
 #include "../client/properties.h"
 #include "../core/attributes/mining.h"
+#include "../server/strategies/minestrategy.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -23,11 +24,17 @@ void registerStrategies() {
                                                  static_cast<server::Strategy*>(
                                                          new server::MoveStrategy(object)));
                                      });
-    utils::Factory::registerStrategy("pathStrategy",
+    utils::Factory::registerStrategy(server::PathStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
                                                          new server::PathStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::MineStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                                 static_cast<server::Strategy*>(
+                                                         new server::MineStrategy(object)));
                                      });
 }
 
@@ -47,6 +54,7 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Resource::attributeName,
                                       utils::Serializer::resourceSerializer,
                                       utils::Serializer::resourceDeserializer);
+
     utils::Factory::registerAttribute(core::Mining::attributeName,
                                       utils::Serializer::miningSerializer,
                                       utils::Serializer::miningDeserializer);

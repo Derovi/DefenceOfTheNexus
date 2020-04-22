@@ -81,7 +81,8 @@ add_executable(defenceofnexus
         src/client/widgets/textview.h 
         src/utils/lang.cpp
         src/server/performers/miningperformer.cpp
-        src/core/attributes/mining.cpp)
+        src/core/attributes/mining.cpp
+        src/server/strategies/minestrategy.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

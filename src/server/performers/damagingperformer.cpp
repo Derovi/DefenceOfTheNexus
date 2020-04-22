@@ -22,6 +22,7 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
     double length = damaging->getAttackRadius();
     QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
     //! TODO: could be optimized
+    //! TODO: fix bug - attack line considired as on map while hitbox is not
     QPolygonF attackLine;
     attackLine.append(object->getPosition());
     attackLine.append(object->getPosition() + attackDirection);
