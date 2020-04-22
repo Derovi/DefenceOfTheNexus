@@ -1,8 +1,9 @@
 #include <QDebug>
 
 #include "../mainwindow.h"
-#include "gamemap.h"
 #include "../../utils/colors.h"
+
+#include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr),
@@ -22,8 +23,8 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     if (gameWorld->getObjects().contains(0)) {
-        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x(),
-                            gameWorld->getObjects()[0]->getPosition().y()));
+        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x() + 1,
+                           gameWorld->getObjects()[0]->getPosition().y() + 1));
     }
 
     // paint transform
@@ -64,8 +65,8 @@ void client::GameMap::paint(QPainter& painter) {
     if (showSprites) {
         for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
             graphicsObject->update(painter.transform(), deltaTime);
-        }
     }
+}
 
     if (showHitBoxes) {
         QPainter hitBoxPainter(MainWindow::getInstance());

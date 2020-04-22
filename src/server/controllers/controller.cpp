@@ -3,6 +3,8 @@
 #include <QVector>
 
 #include "../../utils/factory.h"
+#include "controller.h"
+
 
 server::Controller::Controller(std::shared_ptr<core::Object> object): object(object) {
     addStrategies(object->getStrategies());
@@ -116,5 +118,11 @@ void server::Controller::linkStrategies(const server::DataBundle& baseBundle) {
     DataBundle dataBundle = createDataBundle(baseBundle);
     for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
         strategy->assign(dataBundle);
+    }
+}
+
+void server::Controller::cancelTargets() {
+    for (auto strategy : strategiesByPriority) {
+        strategy->cancelTargets();
     }
 }

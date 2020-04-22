@@ -29,6 +29,8 @@ class Controller {
 
     void removeStrategies(const QStringList& strategyNames);
 
+    void cancelTargets();
+
     const QHash<QString, std::shared_ptr<Strategy>>& getStrategies() const;
 
     const QLinkedList<std::shared_ptr<Strategy>>& getStrategiesByPriority() const;
