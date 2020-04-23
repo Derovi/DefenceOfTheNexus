@@ -1,6 +1,8 @@
 #ifndef DATABUNDLE_H
 #define DATABUNDLE_H
 
+#include <memory>
+
 #include <QHash>
 #include <QString>
 
