@@ -1,6 +1,7 @@
 #ifndef DATABUNDLE_H
 #define DATABUNDLE_H
 
+#include <QDebug>
 #include <QHash>
 #include <QString>
 

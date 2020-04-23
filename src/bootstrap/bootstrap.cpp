@@ -22,7 +22,7 @@ void registerStrategies() {
                                                  static_cast<server::Strategy*>(
                                                          new server::MoveStrategy(object)));
                                      });
-    utils::Factory::registerStrategy("pathStrategy",
+    utils::Factory::registerStrategy(server::PathStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(

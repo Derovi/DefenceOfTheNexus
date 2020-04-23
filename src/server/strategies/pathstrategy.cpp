@@ -2,6 +2,7 @@
 
 #include <cmath>
 
+#include <QDebug>
 #include <QtGlobal>
 #include <QLineF>
 
@@ -21,8 +22,15 @@ void PathStrategy::assign(DataBundle& dataBundle) {
     dataBundle.assign("destinationPoint", destPoint);
 }
 
+void PathStrategy::cancelTargets() {
+    destPoint = nullptr;
+}
+
 void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
-    if (qFuzzyIsNull(moving->getSpeed()) || destPoint == nullptr) {
+    if (destPoint == nullptr) {
+        return;
+    }
+    if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
         return;
     }

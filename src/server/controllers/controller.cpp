@@ -116,7 +116,9 @@ void server::Controller::prepareStrategy(std::shared_ptr<server::Strategy> strat
 
 void server::Controller::linkStrategies(const server::DataBundle& baseBundle) {
     DataBundle dataBundle = createDataBundle(baseBundle);
+    //qDebug() << "link!" << object->getId() << strategiesByPriority.size();
     for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
+        //qDebug() << "assign!";
         strategy->assign(dataBundle);
     }
 }

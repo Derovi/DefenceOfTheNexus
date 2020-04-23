@@ -127,7 +127,11 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
     }
 
     // check for permission, NOT READY YET
-    moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    DataBundle bundle;
+    auto point = std::shared_ptr<QPointF>(new QPointF(x,y));
+    bundle.registerVariable("destinationPoint", point);
+    gameWorldController->getControllers()[objectId]->linkStrategies(bundle);
     return true;
 }
 
