@@ -30,11 +30,13 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
     if (destPoint == nullptr) {
         return;
     }
+    qDebug() << "I wanna go at " << *destPoint << " now i'm at " << getObject()->getPosition() << endl;
     if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
         return;
     }
-    if (QLineF(*destPoint, getObject()->getPosition()).length() < moving->getSpeed()) {
+    if (QLineF(*destPoint, getObject()->getPosition()).length() <
+        timeDelta / 1000.0 * moving->getSpeed()) {
         moving->setDirection(QVector2D(0, 0));
         return;
     }
@@ -62,6 +64,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
         }
         return false;
     };
+    
 
     if (!path.empty()) {
         auto currentDirection = moving->getDirection();

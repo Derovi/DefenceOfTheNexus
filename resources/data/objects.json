@@ -23,7 +23,8 @@
       ]
     },
     "strategies": [
-      "pathStrategy"
+      "pathStrategy",
+      "moveStrategy"
     ]
   },
 
