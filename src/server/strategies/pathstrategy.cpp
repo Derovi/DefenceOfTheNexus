@@ -30,7 +30,6 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
     if (destPoint == nullptr) {
         return;
     }
-    qDebug() << "I wanna go at " << *destPoint << " now i'm at " << getObject()->getPosition() << endl;
     if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
         return;
@@ -54,17 +53,18 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
     };
 
     const auto isVisited = [&]() {
-        for (const QPointF& pt : path) {
-            double distance = QLineF(pt, moving_performer::getNextPosition(getObject(),
-                                                                           timeDelta,
-                                                                           *moving)).length();
-            if (distance < moving->getSpeed() * timeDelta) {
-                return true;
-            }
-        }
         return false;
+//        for (const QPointF& pt : path) {
+//            double distance = QLineF(pt, moving_performer::getNextPosition(getObject(),
+//                                                                           timeDelta,
+//                                                                           *moving)).length();
+//            if (distance < 1000.0 / timeDelta *  moving->getSpeed()) {
+//                return true;
+//            }
+//        }
+//        return false;
     };
-    
+
 
     if (!path.empty()) {
         auto currentDirection = moving->getDirection();
@@ -75,7 +75,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
                 || isVisited()) {
                 break;
             }
-
+            qDebug() << direction << ", " << currentDirection << endl;
             if (std::abs(direction.x() - currentDirection.x()) < 0.3
                 && std::abs(direction.y() - currentDirection.y()) < 0.3) {
                 break;
@@ -95,6 +95,9 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
         }
         if (it == 0) {
             path.append(getObject()->getPosition());
+            if (path.size() > 10) {
+                path.pop_front();
+            }
         }
         direction = rotateClockwise(direction);
     }
