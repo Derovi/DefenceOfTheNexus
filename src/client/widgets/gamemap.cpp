@@ -39,7 +39,7 @@ void client::GameMap::paint(QPainter& painter) {
     for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
         if (!graphicsObjects.contains(object->getId())) {
             graphicsObjects.insert(object->getId(),
-                                   std::shared_ptr<GraphicsObject>(new GraphicsObject(object)));
+                                   std::make_shared<GraphicsObject>(object));
         }
     }
 

@@ -5,11 +5,10 @@
 #include "windowmanager.h"
 #include "mainwindow.h"
 
-client::Widget::Widget(const QPoint& position): position(position) {
+client::Widget::Widget(const QPoint& position):
+        position(position), windowManager(nullptr), width(0), height(0) {}
 
-}
-
-std::shared_ptr<client::Widget> client::Widget::getParent() {
+client::Widget* client::Widget::getParent() {
     return parent;
 }
 
@@ -22,13 +21,13 @@ int client::Widget::getWidth() {
     return width;
 }
 
-void client::Widget::setParent(const std::shared_ptr<client::Widget>& parent) {
+void client::Widget::setParent(client::Widget* parent) {
     this->parent = parent;
 }
 
-void client::Widget::addChild(client::Widget* child) {
+void client::Widget::addChild(std::shared_ptr<client::Widget> child) {
     children.push_back(child);
-    child->setParent(std::shared_ptr<Widget>(this));
+    child->setParent(this);
 }
 
 void client::Widget::setPosition(const QPoint& position) {
@@ -57,7 +56,7 @@ void client::Widget::draw() {
                       window_manager::get_real_y(absolutePosition().y()));
     painter.setTransform(QTransform(window_manager::getTransform()), true);
     paint(painter);
-    for (Widget* interfacePart : children) {
+    for (const auto& interfacePart : children) {
         interfacePart->draw();
     }
 }
@@ -80,7 +79,7 @@ bool client::Widget::isHovered() {
 void client::Widget::mouse(QPoint point) {
     is_hovered = true;
     mouseMoved(point);
-    for (Widget* child : children) {
+    for (const auto& child : children) {
         if (child->isPointOnWidget(point)) {
             child->mouse(QPoint(point.x() - child->getPosition().x(),
                                 point.y() - child->getPosition().y()));
@@ -108,7 +107,7 @@ QRect client::Widget::boundsRect() {
 
 void client::Widget::click(QPoint point) {
     bool is_clicked = false;
-    for (Widget* child : children) {
+    for (const auto& child : children) {
         if (child->isPointOnWidget(point)) {
             is_clicked = true;
             child->click(QPoint(point.x() - child->getPosition().x(),
@@ -129,7 +128,7 @@ void client::Widget::setOnClick(std::function<void(QPoint)> action) {
 
 void client::Widget::wheel(QWheelEvent* event) {
     bool handled = false;
-    for (Widget* child : children) {
+    for (const auto& child : children) {
         if (child->isPointOnWidget(event->pos() - absolutePosition())) {
             handled = true;
             child->wheel(event);

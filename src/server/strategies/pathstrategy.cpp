@@ -30,6 +30,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
     if (destPoint == nullptr) {
         return;
     }
+    qDebug() << *destPoint;
     if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
         return;
@@ -75,7 +76,6 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
                 || isVisited()) {
                 break;
             }
-            qDebug() << direction << ", " << currentDirection << endl;
             if (std::abs(direction.x() - currentDirection.x()) < 0.3
                 && std::abs(direction.y() - currentDirection.y()) < 0.3) {
                 break;

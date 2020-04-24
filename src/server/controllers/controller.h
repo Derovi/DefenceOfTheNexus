@@ -11,7 +11,7 @@ namespace server {
 
 class Controller {
   public:
-    Controller(std::shared_ptr<core::Object> object);
+    explicit Controller(std::shared_ptr<core::Object> object);
 
     void tick(std::shared_ptr<core::GameWorld> world, double timeDelta);
 

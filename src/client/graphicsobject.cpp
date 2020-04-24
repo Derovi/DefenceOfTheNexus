@@ -10,11 +10,13 @@
 client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& object):
         object(object), width(object->getHitbox().boundingRect().width()), height(
         object->getHitbox().boundingRect().height()) {
-    for (QString spriteControllerName : utils::Factory::getObjectGraphicsDescription(
-            object->getTypeName())->getSpriteControllers()) {
-        spriteControllers.push_back(
-                utils::Factory::createSpriteController(spriteControllerName, object));
-    }
+    //! TODO fix this costyl
+    spriteControllers = {utils::Factory::createSpriteController(UnitSpriteController::name, object)};
+//    for (const QString& spriteControllerName : utils::Factory::getObjectGraphicsDescription(
+//            object->getTypeName())->getSpriteControllers()) {
+//        spriteControllers.push_back(
+//                utils::Factory::createSpriteController(spriteControllerName, object));
+//    }
 }
 
 const std::shared_ptr<core::Object>& client::GraphicsObject::getObject() const {

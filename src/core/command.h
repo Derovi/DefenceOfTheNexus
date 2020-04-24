@@ -10,7 +10,7 @@ class Command {
   public:
     Command() = default;
 
-    Command(const QString& name, const QStringList& arguments = QStringList());
+    explicit Command(const QString& name, const QStringList& arguments = QStringList());
 
     const QString& getName() const;
 

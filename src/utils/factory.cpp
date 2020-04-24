@@ -43,7 +43,7 @@ void utils::Factory::registerAttribute(const QString& attributeName,
 std::function<std::optional<QJsonObject>(const std::shared_ptr<core::Attribute>)>
 utils::Factory::getSerializer(const QString& attributeName) {
     if (!attributeSerializers.contains(attributeName)) {
-        return [](const std::shared_ptr<core::Attribute>) {
+        return [](const std::shared_ptr<core::Attribute>&) {
             return std::nullopt;
         };
     }

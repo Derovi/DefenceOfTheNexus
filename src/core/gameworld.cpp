@@ -72,4 +72,4 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
     return object;
 }
 
-core::GameWorld::GameWorld() : lastSummonedId(-1) {}
+core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0) {}
