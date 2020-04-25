@@ -1,14 +1,13 @@
+#include "engine.h"
+
 #include <QDateTime>
 #include <QThread>
-#include <QQueue>
-#include <QDebug>
-#include <QDateTime>
 
+#include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
 
 #include "commandexecutor.h"
-#include "engine.h"
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
@@ -16,7 +15,7 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
     gameWorld = world_generator::generate(gameConfiguration);
     gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
     commandExecutor = CommandExecutor(gameWorldController);
-    commandQueue = std::shared_ptr<QQueue<core::Command>>(new QQueue<core::Command>());
+    commandQueue = std::make_shared<Queue<core::Command>>();
 }
 
 void server::Engine::start() {
@@ -66,14 +65,13 @@ bool server::Engine::isFinished() const {
     return finished;
 }
 
-std::shared_ptr<QQueue<core::Command>> server::Engine::getCommandQueue() const {
+std::shared_ptr<Queue<core::Command>> server::Engine::getCommandQueue() const {
     return commandQueue;
 }
 
 void server::Engine::executeCommands() {
     while (!commandQueue->empty()) {
-        commandExecutor.executeCommand(commandQueue->front());
-        commandQueue->pop_front();
+        commandExecutor.executeCommand(commandQueue->pop());
     }
 }
 

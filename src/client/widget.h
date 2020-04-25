@@ -17,6 +17,8 @@ class Widget : public QObject {
   public:
     explicit Widget(const QPoint& position = QPoint(0,0));
 
+    ~Widget() override = default;
+
     void setPosition(const QPoint& position);
 
     QPoint getPosition();

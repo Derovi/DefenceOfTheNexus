@@ -4,11 +4,12 @@
 #include <QDateTime>
 #include <QQueue>
 
-#include "../screen.h"
+#include "../../utils/queue.h"
 #include "../../core/command.h"
+#include "../../core/gameworld.h"
+#include "../screen.h"
 #include "../graphicsobject.h"
 #include "../widget.h"
-#include "../../core/gameworld.h"
 
 namespace client {
 
@@ -69,9 +70,9 @@ class GameMap : public Widget {
     void clicked(QPoint point) override;
 
   public:
-    const std::shared_ptr<QQueue<core::Command>>& getCommandQueue() const;
+    const std::shared_ptr<Queue<core::Command>>& getCommandQueue() const;
 
-    void setCommandQueue(const std::shared_ptr<QQueue<core::Command>>& commandQueue);
+    void setCommandQueue(const std::shared_ptr<Queue<core::Command>>& commandQueue);
 
   private:
     QRect displayBounds;
@@ -82,7 +83,7 @@ class GameMap : public Widget {
 
     QDateTime lastPaintTime;
 
-    std::shared_ptr<QQueue<core::Command>> commandQueue;
+    std::shared_ptr<Queue<core::Command>> commandQueue;
 
     Sprite background;
 

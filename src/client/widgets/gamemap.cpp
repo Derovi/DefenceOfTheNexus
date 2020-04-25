@@ -115,15 +115,15 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point) {
     point = getTransformToMap().map(point);
-    commandQueue->push_back(core::Command("change_move_target", {"0", QString::number(point.x()),
+    commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
                                                                  QString::number(point.y())}));
 }
 
-const std::shared_ptr<QQueue<core::Command>>& client::GameMap::getCommandQueue() const {
+const std::shared_ptr<Queue<core::Command>>& client::GameMap::getCommandQueue() const {
     return commandQueue;
 }
 
-void client::GameMap::setCommandQueue(const std::shared_ptr<QQueue<core::Command>>& commandQueue) {
+void client::GameMap::setCommandQueue(const std::shared_ptr<Queue<core::Command>>& commandQueue) {
     GameMap::commandQueue = commandQueue;
 }
 
