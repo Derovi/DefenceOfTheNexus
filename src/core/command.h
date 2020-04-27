@@ -20,13 +20,13 @@ class Command {
 
     void setArguments(const QStringList& arguments);
 
-    static Command fromCommandLine(QString text);
+    static Command fromCommandLine(const QString& text);
 
   private:
     QString name;
     QStringList arguments;
 };
 
-}
+}  // namespace core
 
-#endif //COMMAND_H
+#endif  // COMMAND_H

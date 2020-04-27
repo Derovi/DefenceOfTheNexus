@@ -2,6 +2,7 @@
 #define DAMAGEABLE_H
 
 #include <memory>
+
 #include <QString>
 
 #include "../attribute.h"
@@ -10,11 +11,13 @@ namespace core {
 
 class Damageable : public Attribute {
   public:
+    inline static const QString attributeName = "damageable";
+
     Damageable();
 
     Damageable(int health, int maxHealth);
 
-    virtual ~Damageable() = default;
+    ~Damageable() override = default;
 
     int getHealth() const;
 
@@ -30,8 +33,6 @@ class Damageable : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
-    static const QString attributeName;
-
   private:
     int health;
     int maxHealth;
@@ -39,4 +40,4 @@ class Damageable : public Attribute {
 
 }  // namespace core
 
-#endif // DAMAGEABLE_H
+#endif  // DAMAGEABLE_H

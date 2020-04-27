@@ -1,6 +1,6 @@
-#include <QDebug>
-
 #include "command.h"
+
+#include <utility>
 
 const QString& core::Command::getName() const {
     return name;
@@ -14,11 +14,11 @@ void core::Command::setArguments(const QStringList& arguments) {
     this->arguments = arguments;
 }
 
-core::Command core::Command::fromCommandLine(QString text) {
+core::Command core::Command::fromCommandLine(const QString& text) {
     if (text.contains(' ')) {
-        Command command = Command(text.left(text.indexOf(' ')));
-        command.setArguments(text.right(text.length() - text.indexOf(' ') - 1).split(' '));
-        return command;
+        QStringList words = text.split(' ');
+        QString command = words.takeFirst();
+        return Command(command, words);
     } else {
         return Command(text);
     }

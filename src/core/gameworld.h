@@ -15,6 +15,8 @@ class GameWorld {
   public:
     GameWorld();
 
+    ~GameWorld() = default;
+
     int getHeight() const;
 
     void setHeight(int height);
@@ -42,8 +44,6 @@ class GameWorld {
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);
-
-    ~GameWorld();
 
   private:
 
