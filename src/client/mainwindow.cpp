@@ -43,8 +43,8 @@ client::MainWindow::MainWindow() {
                             currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
             lastTickStartTime = currentTickStartTime;
         }
-    });
-    openScreen(std::shared_ptr<Screen>(new MenuScreen()));
+    }));
+    openScreen(std::make_shared<MenuScreen>());
     uiThread->start();
 }
 
@@ -74,7 +74,7 @@ void client::MainWindow::runOnUiThread(std::function<void()> callback) {
     QTimer* timer = new QTimer();
     timer->moveToThread(qApp->thread());
     timer->setSingleShot(true);
-    QObject::connect(timer, &QTimer::timeout, [=]() {
+    connect(timer, &QTimer::timeout, [=]() {
         callback();
         timer->deleteLater();
     });

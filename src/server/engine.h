@@ -3,6 +3,7 @@
 
 #include <QThread>
 
+#include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
 
@@ -26,7 +27,7 @@ class Engine {
 
     std::shared_ptr<QThread> getMainThread() const;
 
-    std::shared_ptr<QQueue<core::Command>> getCommandQueue() const;
+    std::shared_ptr<Queue<core::Command>> getCommandQueue() const;
 
     void finish();
 
@@ -43,7 +44,7 @@ class Engine {
     std::atomic<bool> finished;
 
     // todo fix race-condition
-    std::shared_ptr<QQueue<core::Command>> commandQueue;
+    std::shared_ptr<Queue<core::Command>> commandQueue;
 
     void executeCommands();
 };
