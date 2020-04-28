@@ -18,7 +18,7 @@
 client::MainWindow::MainWindow() {
     //showFullScreen();
     instance = this;
-    uiThread = std::shared_ptr<QThread>(QThread::create([&] {
+    uiThread = QThread::create([&] {
         // time when last tick execution was started
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
         while (true) {
@@ -43,7 +43,7 @@ client::MainWindow::MainWindow() {
                             currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
             lastTickStartTime = currentTickStartTime;
         }
-    }));
+    });
     openScreen(std::shared_ptr<Screen>(new MenuScreen()));
     uiThread->start();
 }
@@ -62,7 +62,7 @@ void client::MainWindow::draw() {
     }
 }
 
-std::shared_ptr<QThread> client::MainWindow::getUiThread() const {
+QThread* client::MainWindow::getUiThread() const {
     return uiThread;
 }
 

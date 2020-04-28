@@ -30,7 +30,6 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta
     if (destPoint == nullptr) {
         return;
     }
-    qDebug() << *destPoint;
     if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
         return;

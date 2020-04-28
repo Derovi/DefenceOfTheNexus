@@ -29,7 +29,7 @@ class MainWindow : public QWidget {
     void wheelEvent(QWheelEvent* event) override;
 
   public:
-    std::shared_ptr<QThread> getUiThread() const;
+    QThread* getUiThread() const;
 
     static MainWindow* getInstance();
 
@@ -40,7 +40,7 @@ class MainWindow : public QWidget {
 
     QStack<std::shared_ptr<Screen>> screens;
 
-    std::shared_ptr<QThread> uiThread;
+    QThread* uiThread;
 
     static MainWindow* instance;
 };

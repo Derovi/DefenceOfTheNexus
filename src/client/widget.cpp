@@ -9,13 +9,19 @@ client::Widget::Widget(const QPoint& position):
         position(position), windowManager(nullptr), width(0), height(0) {}
 
 client::Widget* client::Widget::getParent() {
-    return parent;
+    qDebug() << "delete";
+    for (Widget* child : children) {
+        delete child;
+    }    return parent;
 }
 
 int client::Widget::getHeght() {
     return height;
 }
 
+client::Widget::~Widget() {
+
+}
 
 int client::Widget::getWidth() {
     return width;
@@ -25,7 +31,7 @@ void client::Widget::setParent(client::Widget* parent) {
     this->parent = parent;
 }
 
-void client::Widget::addChild(std::shared_ptr<client::Widget> child) {
+void client::Widget::addChild(Widget* child) {
     children.push_back(child);
     child->setParent(this);
 }
@@ -107,19 +113,25 @@ QRect client::Widget::boundsRect() {
 
 void client::Widget::click(QPoint point) {
     bool is_clicked = false;
-    for (const auto& child : children) {
-        if (child->isPointOnWidget(point)) {
+
+    for (int index = static_cast<int>(children.size()) - 1; index >= 0; --index) {
+        if (!children[index]) {
+            continue;
+        }
+        if (children[index]->isPointOnWidget(point)) {
             is_clicked = true;
-            child->click(QPoint(point.x() - child->getPosition().x(),
-                                point.y() - child->getPosition().y()));
+            children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
+                                point.y() - children[index]->getPosition().y()));
         }
     }
-    if (!is_clicked) {
-        if (onClick != nullptr) {
-            onClick(point);
-        }
-        clicked(point);
+    if (is_clicked) {
+        return;
     }
+    if (onClick != nullptr) {
+        onClick(point);
+    }
+    //qDebug() << "click!!!";
+    clicked(point);
 }
 
 void client::Widget::setOnClick(std::function<void(QPoint)> action) {
