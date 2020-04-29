@@ -19,7 +19,7 @@ client::MainWindow::MainWindow() {
     //showFullScreen();
     instance = this;
     uiThread = std::shared_ptr<QThread>(QThread::create([&] {
-        int64_t lastFrame;
+        int64_t lastFrame = 0;
         while (true) {
             if (uiThread == nullptr) {
                 break;
@@ -43,7 +43,7 @@ client::MainWindow::MainWindow() {
             uiThread->msleep(1);
         }
     }));
-    openScreen(std::shared_ptr<Screen>(new MenuScreen()));
+    openScreen(std::make_shared<MenuScreen>());
     uiThread->start();
 }
 

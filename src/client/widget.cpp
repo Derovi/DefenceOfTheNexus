@@ -10,6 +10,10 @@ client::Widget::Widget(const QPoint& position): position(position) {
 }
 
 std::shared_ptr<client::Widget> client::Widget::getParent() {
+    qDebug() << "delete";
+//    for (Widget* child : children) {
+//        delete child;
+//    }
     return parent;
 }
 
