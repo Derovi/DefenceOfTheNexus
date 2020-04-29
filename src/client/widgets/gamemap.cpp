@@ -1,7 +1,6 @@
 #include <QDebug>
 
 #include "../mainwindow.h"
-#include "../../utils/colors.h"
 
 #include "gamemap.h"
 
@@ -82,7 +81,7 @@ void client::GameMap::paint(QPainter& painter) {
                 polygon.append(QPoint(point.x() + object->getPosition().x(),
                                       point.y() + object->getPosition().y()));
             }
-            hitBoxPainter.setPen(QPen(QBrush(colors::border),
+            hitBoxPainter.setPen(QPen(QBrush(Qt::green),
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
             hitBoxPainter.drawPolygon(polygon);

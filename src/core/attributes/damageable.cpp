@@ -30,5 +30,5 @@ QString core::Damageable::getAttributeName() {
 }
 
 std::shared_ptr<core::Attribute> core::Damageable::clone() {
-    return std::make_shared<Attribute>(*this);
+    return std::make_shared<core::Damageable>(*this);
 }

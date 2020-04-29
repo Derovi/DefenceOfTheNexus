@@ -22,7 +22,7 @@ class Server {
     std::shared_ptr<Queue<core::Command>> commandQueue;
 };
 
-}
+}  // namespace server
 
 
-#endif //SERVER_H
+#endif  // SERVER_H

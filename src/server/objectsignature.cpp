@@ -4,13 +4,13 @@
 #include "objectsignature.h"
 
 server::ObjectSignature::ObjectSignature(const QString& typeName, const QPolygonF& hitbox):
-        typeName(typeName), hitbox(std::move(hitbox)) {}
+    typeName(typeName), hitbox(std::move(hitbox)) {}
 
 server::ObjectSignature::ObjectSignature(const core::Object& object) {
     this->typeName = object.getTypeName();
     this->hitbox = object.getHitbox();
     this->strategies = object.getStrategies();
-    for (std::shared_ptr<core::Attribute> attribute : object.getAttributes()) {
+    for (const auto& attribute : object.getAttributes()) {
         attributes.push_back(attribute->clone());
     }
 }
@@ -23,9 +23,8 @@ QLinkedList<std::shared_ptr<core::Attribute>>& server::ObjectSignature::getAttri
     return attributes;
 }
 
-void
-server::ObjectSignature::setAttributes(
-        const QLinkedList<std::shared_ptr<core::Attribute>>& attributes) {
+void server::ObjectSignature::setAttributes(
+    const QLinkedList<std::shared_ptr<core::Attribute>>& attributes) {
     this->attributes = attributes;
 }
 
@@ -38,7 +37,7 @@ void server::ObjectSignature::setStrategies(const QStringList& strategies) {
 }
 
 bool server::ObjectSignature::hasAttribute(const QString& name) {
-    for (std::shared_ptr<core::Attribute> attribute : attributes) {
+    for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return true;
         }
@@ -60,7 +59,7 @@ server::ObjectSignature::getAttributes() const {
 }
 
 std::shared_ptr<core::Attribute> server::ObjectSignature::getAttribute(const QString& name) {
-    for (std::shared_ptr<core::Attribute> attribute : attributes) {
+    for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return attribute;
         }

@@ -23,5 +23,5 @@ QString core::Resource::getAttributeName() {
 }
 
 std::shared_ptr<core::Attribute> core::Resource::clone() {
-    return std::make_shared<Attribute>(*this);
+    return std::make_shared<core::Resource>(*this);
 }

@@ -5,7 +5,7 @@ int GameConfiguration::getWidth() const {
 }
 
 void GameConfiguration::setWidth(int width) {
-    GameConfiguration::width = width;
+    this->width = width;
 }
 
 int GameConfiguration::getHeight() const {
@@ -13,7 +13,7 @@ int GameConfiguration::getHeight() const {
 }
 
 void GameConfiguration::setHeight(int height) {
-    GameConfiguration::height = height;
+    this->height = height;
 }
 
 int GameConfiguration::getTickPerSec() const {
@@ -21,5 +21,5 @@ int GameConfiguration::getTickPerSec() const {
 }
 
 void GameConfiguration::setTickPerSec(int tickPerSec) {
-    GameConfiguration::tickPerSec = tickPerSec;
+    this->tickPerSec = tickPerSec;
 }

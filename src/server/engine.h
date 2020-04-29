@@ -6,9 +6,9 @@
 #include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
+#include "controllers/gameworldcontroller.h"
 
 #include "gameconfiguration.h"
-#include "controllers/gameworldcontroller.h"
 #include "commandexecutor.h"
 
 namespace server {
@@ -16,6 +16,8 @@ namespace server {
 class Engine {
   public:
     explicit Engine(const GameConfiguration& gameConfiguration);
+
+    ~Engine();
 
     void start();
 
@@ -33,22 +35,18 @@ class Engine {
 
     bool isFinished() const;
 
-    ~Engine();
-
   private:
-    std::shared_ptr<core::GameWorld> gameWorld;
-    std::shared_ptr<GameWorldController> gameWorldController;
+    void executeCommands();
+
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
+    std::atomic_bool finished;
+    std::shared_ptr<core::GameWorld> gameWorld;
+    std::shared_ptr<GameWorldController> gameWorldController;
     std::shared_ptr<QThread> mainThread;
-    std::atomic<bool> finished;
-
-    // todo fix race-condition
     std::shared_ptr<Queue<core::Command>> commandQueue;
-
-    void executeCommands();
 };
 
-}
+}  // namespace server
 
-#endif //ENGINE_H
+#endif  // ENGINE_H

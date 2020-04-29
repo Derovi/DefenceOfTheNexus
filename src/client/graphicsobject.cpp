@@ -1,6 +1,5 @@
 #include <QDebug>
 
-#include "../utils/colors.h"
 #include "../utils/factory.h"
 
 #include "graphicsobject.h"

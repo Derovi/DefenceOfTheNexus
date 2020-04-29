@@ -11,30 +11,31 @@
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
-        gameConfiguration(gameConfiguration), finished(false) {
+    gameConfiguration(gameConfiguration), finished(false) {
     gameWorld = world_generator::generate(gameConfiguration);
-    gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
+    gameWorldController = std::make_shared<GameWorldController>(gameWorld);
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
 }
 
+server::Engine::~Engine() {
+    mainThread->quit();
+}
+
 void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
-        // time when last tick execution was started
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
-        while (!finished && gameWorld) {
+        while (!finished && gameWorld != nullptr) {
             QDateTime currentTickStartTime = QDateTime::currentDateTime();
 
-            // first, execute all commands from clients
             executeCommands();
             // make changes on game world
-            gameWorldController->tick(static_cast<double>(
-                                              lastTickStartTime.msecsTo(currentTickStartTime)));
+            gameWorldController->tick(lastTickStartTime.msecsTo(currentTickStartTime));
 
+            lastTickStartTime = currentTickStartTime;
             // sleep until next tick
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
-                            currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
-            lastTickStartTime = currentTickStartTime;
+                currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
         }
     }));
     mainThread->start();
@@ -73,8 +74,4 @@ void server::Engine::executeCommands() {
     while (!commandQueue->empty()) {
         commandExecutor.executeCommand(commandQueue->pop());
     }
-}
-
-server::Engine::~Engine() {
-    mainThread->quit();
 }
