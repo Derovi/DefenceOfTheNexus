@@ -19,7 +19,7 @@ void client::MenuScreen::onResumed() {
 }
 
 client::MenuScreen::MenuScreen() {
-    auto closeButton = std::make_shared<ImageButton>(QPoint(24, 24), 72, 72);
+    auto closeButton = new ImageButton(QPoint(24, 24), 72, 72);
     closeButton->setImage(QImage(":/images/cancel"));
     closeButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->getUiThread()->terminate();
@@ -28,7 +28,7 @@ client::MenuScreen::MenuScreen() {
 
     addChild(closeButton);
 
-    auto fullScreenButton = std::make_shared<ImageButton>(QPoint(408, 24), 72, 72);
+    auto fullScreenButton = new ImageButton(QPoint(408, 24), 72, 72);
     fullScreenButton->setImage(QImage(":/images/fullScreen"));
     fullScreenButton->setOnClick([=](QPoint point) {
         if (properties::fullscreen) {
@@ -42,7 +42,7 @@ client::MenuScreen::MenuScreen() {
 
     addChild(fullScreenButton);
 
-    auto startButton = std::make_shared<ImageButton>(QPoint(1000, 100), 500, 500);
+    auto startButton = new ImageButton(QPoint(1000, 100), 500, 500);
     startButton->setImage(QImage(":/images/resume"));
     startButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
@@ -50,7 +50,7 @@ client::MenuScreen::MenuScreen() {
 
     addChild(startButton);
 
-    auto textView = std::make_shared<TextView>(QPoint(1000, 50), utils::Lang::get("example"), QApplication::font(),
+    auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"), QApplication::font(),
                                       Qt::blue);
 
     textView->setTextSize(50);

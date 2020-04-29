@@ -18,16 +18,20 @@ void client::GameScreen::onResumed() {
 }
 
 client::GameScreen::GameScreen() {
-    auto gameMap = std::make_shared<GameMap>();
+    auto gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
     background.setBackAndForthMode(true);
     gameMap->setBackground(background);
-    addChild(std::static_pointer_cast<Widget>(gameMap));
-    auto closeButton = std::make_shared<ImageButton>(QPoint(24, 24), 72, 72);
+    addChild(gameMap);
+    auto closeButton = new ImageButton(QPoint(24, 24), 72, 72);
     closeButton->setImage(QImage(":/images/cancel"));
     closeButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->closeScreen();
+        QThread* thread = QThread::create([&] {
+            QThread::msleep(1);
+            MainWindow::getInstance()->closeScreen();
+        });
+        thread->start();
     });
 
     addChild(closeButton);

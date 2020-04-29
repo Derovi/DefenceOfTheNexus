@@ -17,13 +17,13 @@ class Widget : public QObject {
   public:
     explicit Widget(const QPoint& position = QPoint(0,0));
 
-    ~Widget() override = default;
+    virtual ~Widget();
 
     void setPosition(const QPoint& position);
 
     QPoint getPosition();
 
-    QVector<std::shared_ptr<Widget>> children;
+    QVector<Widget*> children;
 
     bool isPointOnWidget(const QPoint& point);
 
@@ -41,7 +41,7 @@ class Widget : public QObject {
 
     void setParent(Widget* parent);
 
-    void addChild(std::shared_ptr<Widget> child);
+    void addChild(Widget* child);
 
     QPoint absolutePosition();
 

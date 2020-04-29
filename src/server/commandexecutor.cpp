@@ -129,6 +129,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
 
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    qDebug() << "click command!";
     DataBundle bundle;
     auto point = std::make_shared<QPointF>(x,y);
     bundle.registerVariable("destinationPoint", point);
