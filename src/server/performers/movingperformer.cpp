@@ -3,13 +3,13 @@
 #include "movingperformer.h"
 
 void
-server::moving_performer::move(std::shared_ptr<core::Object> object, double timeDelta,
+server::moving_performer::move(std::shared_ptr<core::Object> object, int timeDelta,
                                const core::Moving& moving) {
     object->setPosition(getNextPosition(object, timeDelta, moving));
 }
 
 void
-server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object, int timeDelta,
                                             std::shared_ptr<core::GameWorld> gameWorld,
                                             std::shared_ptr<core::Moving> moving) {
     if (!isObstacles(object, timeDelta, gameWorld, moving)) {
@@ -17,7 +17,7 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
     }
 }
 
-bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object, int timeDelta,
                                            std::shared_ptr<core::GameWorld> gameWorld,
                                            std::shared_ptr<core::Moving> moving) {
     QPolygonF hitbox = object->getHitbox();
@@ -44,6 +44,6 @@ bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object,
 
 QPointF server::moving_performer::getNextPosition(std::shared_ptr<core::Object> object,
                                                   int timeDelta, const core::Moving& moving) {
-    return object->getPosition() +
-           (moving.getDirection() * static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
+    return object->getPosition() + (moving.getDirection()
+            * static_cast<float>(moving.getSpeed() * timeDelta / 1000.0)).toPointF();
 }

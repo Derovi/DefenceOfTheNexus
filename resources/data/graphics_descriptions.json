@@ -23,15 +23,15 @@
       }
     }
   },
-  "resourcebundle-1": {
-    "width": 100,
-    "height": 100,
-    "spriteControllers": ["unit"],
+  "resourcebundle-stone": {
+    "width": 150,
+    "height": 150,
+    "spriteControllers": ["resource"],
     "spriteDescriptions": {
-      "moving": {
-        "resource": ":/sprites/unit1",
+      "default": {
+        "resource": ":/sprites/rock1",
         "rows": 1,
-        "columns": 20
+        "columns": 1
       }
     }
   }

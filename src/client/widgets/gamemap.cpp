@@ -117,7 +117,7 @@ void client::GameMap::clicked(QPoint point) {
     auto object = gameWorld->objectAt(point);
     if (object != nullptr && object->hasAttribute("resource")) {
         commandQueue->push(core::Command("mine_resource", {
-            QString::number(object->getId())}));
+           "0", QString::number(object->getId())}));
     }
     commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
                                                             QString::number(point.y())}));

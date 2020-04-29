@@ -11,7 +11,7 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-        Strategy(object), moving(nullptr), destPoint(nullptr) {}
+    Strategy(object), moving(nullptr), destPoint(nullptr) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -36,43 +36,51 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
     }
     if (QLineF(*destPoint, getObject()->getPosition()).length() <
         timeDelta / 1000.0 * moving->getSpeed()) {
-        moving->setDirection(QVector2D(0, 0));
+        destPoint = nullptr;
         return;
     }
+
     QVector2D direction(*destPoint - getObject()->getPosition());
     direction.normalize();
 
+    destIntersectionUpdate += timeDelta;
+    if (destIntersectionUpdate > 100) {
+        destIntersectionUpdate = 0;
+        auto targetObject = world->objectAt(*destPoint);
+        if (targetObject != nullptr) {
+            auto directMoving = std::static_pointer_cast<core::Moving>(moving->clone());
+            auto pointShift = moving_performer::getNextPosition(getObject(),
+                timeDelta, *directMoving) - targetObject->getPosition();
+
+            auto hitboxOnMap = getObject()->getHitbox();
+            for (auto& point : hitboxOnMap) {
+                point += pointShift;
+            }
+
+            if (targetObject->getHitbox().intersects(hitboxOnMap)) {
+                destPoint = nullptr;
+                moving->setDirection(direction);
+                return;
+            }
+        }
+    }
+
     static const auto rotateCounterClockwise = [](const QVector2D& v) {
         return QVector2D(v.x() * M_SQRT1_2 - v.y() * M_SQRT1_2,
-                v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
+                         v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
     };
 
     static const auto rotateClockwise = [](const QVector2D& v) {
         return QVector2D(v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2,
-                -v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
+                         -v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
     };
-
-    const auto isVisited = [&]() {
-        return false;
-//        for (const QPointF& pt : path) {
-//            double distance = QLineF(pt, moving_performer::getNextPosition(getObject(),
-//                                                                           timeDelta,
-//                                                                           *moving)).length();
-//            if (distance < 1000.0 / timeDelta *  moving->getSpeed()) {
-//                return true;
-//            }
-//        }
-//        return false;
-    };
-
 
     if (!path.empty()) {
         auto currentDirection = moving->getDirection();
         for (int it = 0; it < 8; ++it) {
             currentDirection = rotateCounterClockwise(currentDirection);
             moving->setDirection(currentDirection);
-            if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)
-                || isVisited()) {
+            if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
                 break;
             }
             if (std::abs(direction.x() - currentDirection.x()) < 0.3
@@ -80,8 +88,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
                 break;
             }
         }
-        if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)
-            && !isVisited()) {
+        if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             path.clear();
             return;
         }

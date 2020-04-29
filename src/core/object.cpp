@@ -37,6 +37,7 @@ void core::Object::setRotationAngle(float angle) {
 }
 
 bool core::Object::isIntersect(const core::Object& object) const {
+    // TODO should be on map
     return object.hitbox.intersects(hitbox);
 }
 

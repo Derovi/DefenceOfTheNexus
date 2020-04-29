@@ -25,11 +25,14 @@ class MineStrategy : public Strategy {
 
     void assign(DataBundle& dataBundle) override;
 
+    void cancelTargets() override;
+
   private:
     inline static const QStringList requiredAttributes = {};
 
     inline static const QStringList startAfter = {};
 
+    std::shared_ptr<core::Object> miningTarget;
     std::shared_ptr<core::Mining> mining;
 };
 

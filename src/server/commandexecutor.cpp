@@ -148,7 +148,36 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
 }
 
 bool server::CommandExecutor::mineResource(const QStringList& arguments) {
-    return false;
+    if (arguments.size() != 2) {
+        return false;
+    }
+    bool isOk = true;
+    uint64_t minerId = arguments[0].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    uint64_t resourceId = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    auto miner = getGameWorld()->getObjects().find(minerId);
+    if (miner == getGameWorld()->getObjects().end()
+        || !miner.value()->hasAttribute("mining")) {
+        return false;
+    }
+
+    auto target = getGameWorld()->getObjects().find(resourceId);
+    if (target == getGameWorld()->getObjects().end()
+        || !target.value()->hasAttribute("resource")) {
+        return false;
+    }
+    qDebug() << minerId << " wanna mine " << resourceId << endl;
+    DataBundle bundle;
+    bundle.registerVariable("miningTarget", target.value());
+    gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
+    return true;
 }
 
 std::shared_ptr<core::GameWorld> server::CommandExecutor::getGameWorld() {

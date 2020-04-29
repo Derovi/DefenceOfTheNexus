@@ -16,25 +16,26 @@
 #include "../client/properties.h"
 #include "../core/attributes/mining.h"
 #include "../server/strategies/minestrategy.h"
+#include "../client/spritecontrollers/resourcespritecontroller.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(
-                                                         new server::MoveStrategy(object)));
+                                             static_cast<server::Strategy*>(
+                                                 new server::MoveStrategy(object)));
                                      });
     utils::Factory::registerStrategy(server::PathStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(
-                                                         new server::PathStrategy(object)));
+                                             static_cast<server::Strategy*>(
+                                                 new server::PathStrategy(object)));
                                      });
     utils::Factory::registerStrategy(server::MineStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(
-                                                         new server::MineStrategy(object)));
+                                             static_cast<server::Strategy*>(
+                                                 new server::MineStrategy(object)));
                                      });
 }
 
@@ -64,7 +65,12 @@ void registerSpriteControllers() {
     utils::Factory::registerSpriteController(client::UnitSpriteController::name,
                                              [](std::shared_ptr<core::Object> object) {
                                                  return std::shared_ptr<client::SpriteController>(
-                                                         new client::UnitSpriteController(object));
+                                                     new client::UnitSpriteController(object));
+                                             });
+    utils::Factory::registerSpriteController(client::ResourceSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                     new client::ResourceSpriteController(object));
                                              });
 }
 
@@ -76,7 +82,7 @@ void registerObjectSignatures() {
 
     utils::Serializer serializer;
     std::optional<QJsonObject> signatures = serializer.stringToJsonObject(
-            QString(file.readAll()));
+        QString(file.readAll()));
     if (!signatures) {
         return;
     }
@@ -103,7 +109,7 @@ void registerGraphicsDescriptions() {
 
     utils::Serializer serializer;
     std::optional<QJsonObject> descriptions = serializer.stringToJsonObject(
-            QString(file.readAll()));
+        QString(file.readAll()));
     if (!descriptions) {
         return;
     }
@@ -130,8 +136,8 @@ void registerGraphicsDescriptions() {
         for (const QString& spriteName : json.value("spriteDescriptions").toObject().keys()) {
             QJsonObject spriteJson = json.value("spriteDescriptions")[spriteName].toObject();
             description.getSpriteDescriptions().insert(spriteName, SpriteDescription(
-                    spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
-                    spriteJson["columns"].toInt()));
+                spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
+                spriteJson["columns"].toInt()));
         }
         utils::Factory::registerObjectGraphicsDescription(iter.key(), description);
     }

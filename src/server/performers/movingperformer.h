@@ -10,13 +10,13 @@
 
 namespace server::moving_performer {
 
-void move(std::shared_ptr<core::Object> object, double timeDelta, const core::Moving& moving);
+void move(std::shared_ptr<core::Object> object, int timeDelta, const core::Moving& moving);
 
-void moveIfNoObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+void moveIfNoObstacles(std::shared_ptr<core::Object> object, int timeDelta,
                        std::shared_ptr<core::GameWorld> gameWorld,
                        std::shared_ptr<core::Moving> moving);
 
-bool isObstacles(std::shared_ptr<core::Object> object, double timeDelta,
+bool isObstacles(std::shared_ptr<core::Object> object, int timeDelta,
                  std::shared_ptr<core::GameWorld> gameWorld,
                  std::shared_ptr<core::Moving> moving);
 

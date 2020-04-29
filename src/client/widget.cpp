@@ -9,10 +9,6 @@ client::Widget::Widget(const QPoint& position):
         position(position), windowManager(nullptr), width(0), height(0) {}
 
 client::Widget* client::Widget::getParent() {
-    qDebug() << "delete";
-//    for (Widget* child : children) {
-//        delete child;
-//    }
     return parent;
 }
 
@@ -21,7 +17,10 @@ int client::Widget::getHeght() {
 }
 
 client::Widget::~Widget() {
-
+    qDebug() << "delete";
+    for (Widget* child : children) {
+        delete child;
+    }
 }
 
 int client::Widget::getWidth() {
