@@ -63,4 +63,4 @@ class ObjectSignature {
 }  // namespace server
 
 
-#endif //OBJECTSIGNATURE_H
+#endif  // OBJECTSIGNATURE_H

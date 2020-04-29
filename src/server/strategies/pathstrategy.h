@@ -27,6 +27,8 @@ class PathStrategy : public Strategy {
 
     void tick(std::shared_ptr<core::GameWorld> world, int timeDelta) override;
 
+    void cancelTargets() override;
+
     inline static const QString name = "pathStrategy";
 
   private:

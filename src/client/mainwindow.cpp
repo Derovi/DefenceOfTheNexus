@@ -18,17 +18,15 @@
 client::MainWindow::MainWindow() {
     //showFullScreen();
     instance = this;
-    uiThread = std::shared_ptr<QThread>(QThread::create([&] {
-        int64_t lastFrame = 0;
+    uiThread = QThread::create([&] {
+        // time when last tick execution was started
+        QDateTime lastTickStartTime = QDateTime::currentDateTime();
         while (true) {
             if (uiThread == nullptr) {
                 break;
             }
-            int64_t currentTime = QDateTime::currentDateTime().toMSecsSinceEpoch();
-            if (lastFrame + 1000 / properties::frameRate > currentTime) {
-                uiThread->msleep(1);
-                continue;
-            }
+            QDateTime currentTickStartTime = QDateTime::currentDateTime();
+            // make changes on game world
             runOnUiThread([&] {
                 if (properties::fullscreen) {
                     showFullScreen();
@@ -39,10 +37,13 @@ client::MainWindow::MainWindow() {
                 }
                 update();
             });
-            lastFrame = currentTime;
-            uiThread->msleep(1);
+
+            // sleep until next tick
+            QThread::msleep(1000 / properties::frameRate -
+                            currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+            lastTickStartTime = currentTickStartTime;
         }
-    }));
+    });
     openScreen(std::make_shared<MenuScreen>());
     uiThread->start();
 }
@@ -61,7 +62,7 @@ void client::MainWindow::draw() {
     }
 }
 
-std::shared_ptr<QThread> client::MainWindow::getUiThread() const {
+QThread* client::MainWindow::getUiThread() const {
     return uiThread;
 }
 
@@ -73,7 +74,7 @@ void client::MainWindow::runOnUiThread(std::function<void()> callback) {
     QTimer* timer = new QTimer();
     timer->moveToThread(qApp->thread());
     timer->setSingleShot(true);
-    QObject::connect(timer, &QTimer::timeout, [=]() {
+    connect(timer, &QTimer::timeout, [=]() {
         callback();
         timer->deleteLater();
     });

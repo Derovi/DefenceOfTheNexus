@@ -167,7 +167,7 @@ int main(int argc, char** argv) {
             break;
         }
         core::Command command = core::Command::fromCommandLine(line);
-        engine->getCommandQueue()->push_back(core::Command::fromCommandLine(line));
+        engine->getCommandQueue()->push(core::Command::fromCommandLine(line));
     }
     delete engine;
     delete server;

@@ -1,4 +1,5 @@
 #include <memory>
+
 #include <QDebug>
 
 #include "../core/gameworld.h"
@@ -6,11 +7,11 @@
 
 #include "commandexecutor.h"
 
-server::CommandExecutor::CommandExecutor(std::shared_ptr<core::GameWorld> gameWorld):
-        gameWorld(gameWorld) {
+server::CommandExecutor::CommandExecutor(
+        std::shared_ptr<server::GameWorldController> gameWorldController):
+        gameWorldController(gameWorldController) {
     registerCommands();
 }
-
 
 bool server::CommandExecutor::executeCommand(const core::Command& command) {
     if (!commands.contains(command.getName())) {
@@ -59,17 +60,17 @@ bool server::CommandExecutor::changeSpeedCommand(const QStringList& arguments) {
     }
 
     // check if object exists
-    if (!gameWorld->getObjects().contains(objectId)) {
+    if (!getGameWorld()->getObjects().contains(objectId)) {
 
         return false;
     }
 
-    if (!gameWorld->getObjects()[objectId]->hasAttribute("moving")) {
+    if (!getGameWorld()->getObjects()[objectId]->hasAttribute("moving")) {
         return false;
     }
 
     std::shared_ptr<core::Moving> moving = std::dynamic_pointer_cast<core::Moving>(
-            gameWorld->getObjects()[objectId]->getAttribute("moving"));
+            getGameWorld()->getObjects()[objectId]->getAttribute("moving"));
 
     // check of object is moving.
     if (!moving) {
@@ -109,11 +110,11 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
     }
 
     // check if object exists
-    if (!gameWorld->getObjects().contains(objectId)) {
+    if (!getGameWorld()->getObjects().contains(objectId)) {
         return false;
     }
 
-    auto object = gameWorld->getObjects()[objectId];
+    auto object = getGameWorld()->getObjects()[objectId];
 
     if (!object->hasAttribute("moving")) {
         return false;
@@ -128,7 +129,12 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
     }
 
     // check for permission, NOT READY YET
-    moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
+    qDebug() << "click command!";
+    DataBundle bundle;
+    auto point = std::make_shared<QPointF>(x,y);
+    bundle.registerVariable("destinationPoint", point);
+    gameWorldController->getControllers()[objectId]->linkStrategies(bundle);
     return true;
 }
 
@@ -145,5 +151,6 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     return false;
 }
 
-
-
+std::shared_ptr<core::GameWorld> server::CommandExecutor::getGameWorld() {
+    return gameWorldController->getGameWorld();
+}

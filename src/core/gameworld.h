@@ -15,7 +15,7 @@ class GameWorld {
   public:
     GameWorld();
 
-    ~GameWorld();
+    ~GameWorld() = default;
 
     int getHeight() const;
 

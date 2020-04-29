@@ -11,7 +11,7 @@ int core::GameWorld::getHeight() const {
 }
 
 void core::GameWorld::setHeight(int height) {
-    GameWorld::height = height;
+    this->height = height;
 }
 
 int core::GameWorld::getWidth() const {
@@ -19,7 +19,7 @@ int core::GameWorld::getWidth() const {
 }
 
 void core::GameWorld::setWidth(int width) {
-    GameWorld::width = width;
+    this->width = width;
 }
 
 QVector<QPair<core::ResourceType, int>>& core::GameWorld::getResources() {
@@ -64,9 +64,6 @@ std::shared_ptr<core::Object> core::GameWorld::objectAt(QPointF point) {
     return nullptr;
 }
 
-core::GameWorld::~GameWorld() {
-}
-
 const QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() const {
     return objects;
 }
@@ -83,15 +80,17 @@ std::shared_ptr<core::Object>
 core::GameWorld::summonObject(const server::ObjectSignature& signature, const QPoint& position,
                               float rotationAngle) {
     ++lastSummonedId;
-    std::shared_ptr<Object> object = std::shared_ptr<Object>(
-            new Object(lastSummonedId, signature.getTypeName(), position,
-                       signature.getHitbox(), rotationAngle));
+    std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
+                                                              signature.getTypeName(),
+                                                              position,
+                                                              signature.getHitbox(),
+                                                              rotationAngle);
     object->setStrategies(signature.getStrategies());
-    for (std::shared_ptr<core::Attribute> attribute : signature.getAttributes()) {
+    for (const auto& attribute : signature.getAttributes()) {
         object->getAttributes().push_back(attribute->clone());
     }
     objects.insert(lastSummonedId, object);
     return object;
 }
 
-core::GameWorld::GameWorld(): lastSummonedId(-1) {}
+core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0) {}

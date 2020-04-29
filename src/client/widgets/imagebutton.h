@@ -13,7 +13,7 @@ class ImageButton : public Widget {
     ImageButton(QPoint position = QPoint(0, 0), int height = 60,
                 int width = 60);
 
-    virtual void paint(QPainter& painter);
+    void paint(QPainter& painter) override;
 
     void setHeight(int height);
 

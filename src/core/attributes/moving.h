@@ -2,6 +2,7 @@
 #define MOVING_H
 
 #include <memory>
+
 #include <QVector2D>
 
 #include "../attribute.h"
@@ -10,11 +11,13 @@ namespace core {
 
 class Moving : public Attribute {
   public:
+    inline static const QString attributeName = "moving";
+
     Moving();
 
     Moving(QVector2D direction, double speed, double maxSpeed);
 
-    virtual ~Moving() = default;
+    ~Moving() override = default;
 
     const QVector2D& getDirection() const;
 
@@ -24,13 +27,11 @@ class Moving : public Attribute {
 
     void setMaxSpeed(double maxSpeed);
 
-    virtual void setDirection(const QVector2D& direction);
+    void setDirection(const QVector2D& direction);
 
-    virtual void setSpeed(double speed);
+    void setSpeed(double speed);
 
-    virtual void set(const Moving& properties);
-
-    static const QString attributeName;
+    void set(const Moving& properties);
 
     QString getAttributeName() override;
 
@@ -44,4 +45,4 @@ class Moving : public Attribute {
 
 }  // namespace core
 
-#endif // MOVING_H
+#endif  // MOVING_H

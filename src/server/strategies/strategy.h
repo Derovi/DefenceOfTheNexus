@@ -25,6 +25,8 @@ class Strategy {
 
     virtual void assign(DataBundle& dataBundle) = 0;
 
+    virtual void cancelTargets();
+
     std::shared_ptr<core::Object> getObject() const;
 
   private:

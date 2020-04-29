@@ -28,8 +28,9 @@
       ]
     },
     "strategies": [
-      "moveStrategy",
-      "mineStrategy"
+      "mineStrategy",
+      "pathStrategy",
+      "moveStrategy"
     ]
   },
 

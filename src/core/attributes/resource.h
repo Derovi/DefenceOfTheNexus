@@ -1,6 +1,8 @@
 #ifndef RESOURCE_H
 #define RESOURCE_H
 
+#include <memory>
+
 #include <QString>
 
 #include "../attribute.h"
@@ -15,6 +17,8 @@ enum class ResourceType {
 
 class Resource : public Attribute {
   public:
+    inline static const QString attributeName = "resource";
+
     Resource() = delete;
 
     explicit Resource(ResourceType type, int amount = 0, double miningSpeedModifier = 1);
@@ -33,8 +37,6 @@ class Resource : public Attribute {
 
     int mine(int speed);
 
-    static const QString attributeName;
-
     QString getAttributeName() override;
 
     std::shared_ptr<Attribute> clone() override;
@@ -47,4 +49,4 @@ class Resource : public Attribute {
 
 }  // namespace core
 
-#endif // RESOURCE_H
+#endif  // RESOURCE_H

@@ -17,8 +17,8 @@ class Object {
   public:
     Object() = delete;
 
-    explicit Object(uint64_t id, QString typeName, QPointF position = QPointF(), QPolygonF hitbox = QPolygonF(),
-                    float rotationAngle = 0);
+    explicit Object(uint64_t id, QString typeName, QPointF position = QPointF(),
+                    QPolygonF hitbox = QPolygonF(), float rotationAngle = 0);
 
     virtual ~Object() = default;
 
@@ -30,6 +30,18 @@ class Object {
 
     float getRotationAngle() const;
 
+    const QString& getTypeName() const;
+
+    std::shared_ptr<core::Attribute> getAttribute(const QString& name);
+
+    QLinkedList<std::shared_ptr<Attribute>>& getAttributes();
+
+    const QLinkedList<std::shared_ptr<Attribute>>& getAttributes() const;
+
+    QStringList& getStrategies();
+
+    const QStringList& getStrategies() const;
+
     void setPosition(const QPointF& newPosition);
 
     void setId(uint64_t newId);
@@ -38,34 +50,22 @@ class Object {
 
     void setRotationAngle(float angle);
 
-    const QString& getTypeName() const;
-
     void setTypeName(const QString& typeName);
-
-    bool isIntersect(const Object& object) const;
-
-    QLinkedList<std::shared_ptr<Attribute>>& getAttributes();
-
-    const QLinkedList<std::shared_ptr<Attribute>>& getAttributes() const;
 
     void setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes);
 
-    QStringList& getStrategies();
-
-    const QStringList& getStrategies() const;
-
     void setStrategies(const QStringList& strategies);
+
+    bool isIntersect(const Object& object) const;
 
     bool hasAttribute(const QString& name) const;
 
-    std::shared_ptr<core::Attribute> getAttribute(const QString& name);
-
   private:
-    QString typeName;
     uint64_t id;
+    float rotationAngle;
+    QString typeName;
     QPointF position;
     QPolygonF hitbox;
-    float rotationAngle;
 
     QLinkedList<std::shared_ptr<Attribute>> attributes;
     QStringList strategies;
@@ -73,4 +73,4 @@ class Object {
 
 }  // namespace core
 
-#endif // OBJECT_H
+#endif  // OBJECT_H

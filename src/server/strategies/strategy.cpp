@@ -13,3 +13,5 @@ QStringList server::Strategy::getRequiredAttributes() {
 QStringList server::Strategy::getStartAfter() {
     return QStringList();
 }
+
+void server::Strategy::cancelTargets() {}
