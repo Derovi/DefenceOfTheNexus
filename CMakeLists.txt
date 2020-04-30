@@ -63,8 +63,7 @@ add_executable(defenceofnexus
         src/client/screens/gamescreen.cpp
         src/client/widgets/gamemap.cpp
         src/server/strategies/pathstrategy.cpp
-        src/client/widgets/gamemap.h 
-        src/utils/colors.h 
+        src/client/widgets/gamemap.h
         src/client/graphicsobject.cpp 
         src/client/graphicsobject.h 
         src/client/sprite.cpp 
