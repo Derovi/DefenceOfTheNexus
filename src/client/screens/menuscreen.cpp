@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <QtWidgets/QPushButton>
+#include <QtGui/QFontDatabase>
 
 #include "../../utils/lang.h"
 #include "../widgets/imagebutton.h"
@@ -54,6 +55,11 @@ client::MenuScreen::MenuScreen() {
     auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"),
                                  QApplication::font(),
                                  Qt::blue);
+
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    textView->setFont(fontFamily);
+
 
     textView->setTextSize(50);
     textView->setHeight(300);

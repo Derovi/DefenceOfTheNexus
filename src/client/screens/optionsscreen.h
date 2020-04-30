@@ -6,9 +6,9 @@
 
 namespace client {
 
-class MenuScreen : public Screen {
+class OptionsScreen : public Screen {
   public:
-    MenuScreen();
+    OptionsScreen();
   private:
     void onPaused() override;
 

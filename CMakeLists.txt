@@ -23,6 +23,8 @@ add_executable(defenceofnexus
         resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
+        resources/other.qrc
+        resources/interface.qrc
         src/core/object.cpp
         src/core/attributes/damageable.cpp
         src/core/attributes/damaging.cpp
@@ -63,7 +65,7 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
-        src/utils/lang.cpp)
+        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
