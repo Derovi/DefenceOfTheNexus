@@ -1,0 +1,4 @@
+C:/DefenceOfTheNexus/cmake-build-debug-mingw/CMakeFiles/defenceofnexus.dir
+C:/DefenceOfTheNexus/cmake-build-debug-mingw/CMakeFiles/edit_cache.dir
+C:/DefenceOfTheNexus/cmake-build-debug-mingw/CMakeFiles/rebuild_cache.dir
+C:/DefenceOfTheNexus/cmake-build-debug-mingw/CMakeFiles/defenceofnexus_autogen.dir
