@@ -1,6 +1,6 @@
 #include "serializer.h"
 
-utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
+utils::Serializer::Serializer(bool prettyPrinting): prettyPrinting(prettyPrinting) {}
 
 std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
@@ -638,4 +638,108 @@ std::optional<core::Command> utils::Serializer::deserializeCommand(const QString
         return std::nullopt;
     }
     return commandDeserializer(json.value());
+}
+
+std::optional<QJsonObject>
+utils::Serializer::wallSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Wall*>(attribute.get());
+    QJsonObject json;
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    if (object->getType() == core::WallType::kWall) {
+        json.insert("wallType", 1);
+    }
+    if (object->getType() == core::WallType::kGate) {
+        json.insert("wallType", 2);
+    }
+    if (object->getType() == core::WallType::kColumn) {
+        json.insert("wallType", 3);
+    }
+    return json;
+}
+
+std::optional<QJsonObject>
+utils::Serializer::costSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Cost*>(attribute.get());
+    QJsonObject json;
+    QJsonArray ans;
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    auto iter = object->getCost().begin();
+    while (iter != object->getCost().end()) {
+        std::optional<QJsonObject> result = objectSerializer(*iter.key());
+        if (result == std::nullopt) {
+            return result;
+        }
+        QJsonObject thisObj;
+        thisObj.insert("object", result.value());
+        thisObj.insert("wood", iter.value().wood);
+        thisObj.insert("iron", iter.value().iron);
+        thisObj.insert("stone", iter.value().stone);
+        ++iter;
+        ans.push_back(thisObj);
+    }
+    json.insert("all", ans);
+    return json;
+}
+
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::wallDeserializer(const QJsonObject& serialized) {
+    if (!serialized["wallType"].isDouble()) {
+        return std::nullopt;
+    }
+    int x = serialized["wallType"].toDouble();
+    core::WallType wallType;
+    if (x == 1) {
+        wallType = core::WallType::kWall;
+    }
+    if (x == 2) {
+        wallType = core::WallType::kGate;
+    }
+    if (x == 3) {
+        wallType = core::WallType::kColumn;
+    }
+    auto object = new core::Wall(wallType);
+    return std::make_shared<core::Wall>(*object);
+}
+
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::costDeserializer(const QJsonObject& serialized) {
+    if (!serialized["all"].isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray array = serialized["all"].toArray();
+    QMap<std::shared_ptr<core::Object>, core::ResCost> cost;
+    for (const auto obj : array) {
+        if (!obj.isObject()) {
+            return std::nullopt;
+        }
+        QJsonObject myObj = obj.toObject();
+        if (!myObj["wood"].isDouble()) {
+            return std::nullopt;
+        }
+        int wood = myObj["wood"].toDouble();
+        if (!myObj["iron"].isDouble()) {
+            return std::nullopt;
+        }
+        int iron = myObj["iron"].toDouble();
+        if (!myObj["stone"].isDouble()) {
+            return std::nullopt;
+        }
+        int stone = myObj["stone"].toDouble();
+        if (!myObj["object"].isObject()) {
+            return std::nullopt;
+        }
+        core::ResCost thisCost{iron, wood, stone};
+        QJsonObject jsonOfObject = myObj["object"].toObject();
+        auto res = objectDeserializer(jsonOfObject);
+        if (res == std::nullopt) {
+            return std::nullopt;
+        }
+        cost[std::make_shared<core::Object>(res.value())] = thisCost;
+    }
+    auto object = new core::Cost(cost);
+    return std::make_shared<core::Cost>(*object);
 }
