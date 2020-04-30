@@ -5,7 +5,7 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr),
+        Widget(position), commandQueue(nullptr),
         showHitBoxes(false), showSprites(true) {
     setHeight(height);
     setWidth(width);
@@ -57,9 +57,7 @@ void client::GameMap::paint(QPainter& painter) {
     }
 
     // update graphics objects
-    int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
-
-    lastPaintTime = QDateTime::currentDateTime();
+    int64_t deltaTime = getDeltaTime();
 
     if (showSprites) {
         for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {

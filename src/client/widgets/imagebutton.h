@@ -5,6 +5,7 @@
 #include <QImage>
 
 #include "../widget.h"
+#include "textview.h"
 
 namespace client {
 
@@ -25,6 +26,8 @@ class ImageButton : public Widget {
 
   private:
     QImage image;
+
+    TextView* textChildren;
 };
 
 }
