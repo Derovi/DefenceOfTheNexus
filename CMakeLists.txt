@@ -66,6 +66,8 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
+        src/client/spritecontrollers/resourcespritecontroller.cpp
+        src/server/strategies/minestrategy.cpp
         src/utils/lang.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
