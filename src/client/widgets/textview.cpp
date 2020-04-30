@@ -53,3 +53,11 @@ void client::TextView::setTextSize(int textSize) {
 int client::TextView::getTextSize() const {
     return font.pixelSize();
 }
+
+int client::TextView::getTextHeight() const {
+    return QFontMetrics(font).height();
+}
+
+int client::TextView::getTextWidth() const {
+    return QFontMetrics(font).width(text);
+}

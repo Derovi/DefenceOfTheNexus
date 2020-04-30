@@ -9,7 +9,11 @@ client::ImageButton::ImageButton(QPoint position, int height, int width) :
 }
 
 void client::ImageButton::paint(QPainter &painter) {
-    painter.drawImage(boundsRect(), image);
+    if (is_hovered && !hoverImage.isNull()) {
+        painter.drawImage(boundsRect(), image);
+    } else {
+        painter.drawImage(boundsRect(), image);
+    }
 }
 
 void client::ImageButton::setWidth(int width) {
@@ -26,4 +30,12 @@ void client::ImageButton::setImage(QImage image) {
 
 QImage client::ImageButton::getImage() {
     return image;
+}
+
+const QImage& client::ImageButton::getHoverImage() const {
+    return hoverImage;
+}
+
+void client::ImageButton::setHoverImage(const QImage& hoverImage) {
+    ImageButton::hoverImage = hoverImage;
 }

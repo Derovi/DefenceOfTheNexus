@@ -24,6 +24,10 @@ class ImageButton : public Widget {
 
     QImage getImage();
 
+    const QImage& getHoverImage() const;
+
+    void setHoverImage(const QImage& hoverImage);
+
   private:
     QImage image;
 

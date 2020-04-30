@@ -1,7 +1,8 @@
-#ifndef MENUSCREEN_H
-#define MENUSCREEN_H
+#ifndef OPTIONS_SCREEN_H
+#define OPTIONS_SCREEN_H
 
 #include <QPushButton>
+
 #include "../screen.h"
 
 namespace client {
@@ -17,4 +18,4 @@ class OptionsScreen : public Screen {
 
 }
 
-#endif //MENUSCREEN_H
+#endif  // OPTIONS_SCREEN_H
