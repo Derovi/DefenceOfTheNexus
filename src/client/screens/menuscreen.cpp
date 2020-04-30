@@ -19,6 +19,7 @@ void client::MenuScreen::onResumed() {
 }
 
 client::MenuScreen::MenuScreen() {
+    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
     auto closeButton = new ImageButton(QPoint(24, 24), 72, 72);
     closeButton->setImage(QImage(":/images/cancel"));
     closeButton->setOnClick([=](QPoint point) {
@@ -50,8 +51,9 @@ client::MenuScreen::MenuScreen() {
 
     addChild(startButton);
 
-    auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"), QApplication::font(),
-                                      Qt::blue);
+    auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"),
+                                 QApplication::font(),
+                                 Qt::blue);
 
     textView->setTextSize(50);
     textView->setHeight(300);

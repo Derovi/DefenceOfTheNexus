@@ -1,3 +1,5 @@
+#include <QDebug>
+
 #include "screen.h"
 #include "mainwindow.h"
 #include "windowmanager.h"
