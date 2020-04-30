@@ -2,6 +2,11 @@
     <qresource prefix="/sprites">
         <file alias="background">sprites/background.png</file>
         <file alias="unit1">sprites/unit1.png</file>
+        <file alias="tower1">sprites/tower1.png</file>
+        <file alias="tower2">sprites/tower2.png</file>
+        <file alias="rocket1">sprites/rocket1.png</file>
+        <file alias="rocket2">sprites/rocket2.png</file>
         <file alias="flame">sprites/flame.png</file>
+        <file alias="bullet">sprites/bullet.png</file>
     </qresource>
 </RCC>
