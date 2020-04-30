@@ -27,6 +27,8 @@ class ImageButton : public Widget {
   private:
     QImage image;
 
+    QImage hoverImage;
+
     TextView* textChildren;
 };
 

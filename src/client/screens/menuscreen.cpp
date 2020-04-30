@@ -44,15 +44,31 @@ client::MenuScreen::MenuScreen() {
 
     addChild(fullScreenButton);
 
-    auto startButton = new ImageButton(QPoint(1000, 100), 500, 500);
-    startButton->setImage(QImage(":/images/resume"));
+    auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
+    startButton->setImage(QImage(":/interface/button"));
     startButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
     });
 
     addChild(startButton);
 
-    auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"),
+    auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
+    optionsButton->setImage(QImage(":/interface/button"));
+    optionsButton->setOnClick([=](QPoint point) {
+        MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
+    });
+
+    addChild(optionsButton);
+
+    auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
+    exitButton->setImage(QImage(":/interface/button"));
+    exitButton->setOnClick([=](QPoint point) {
+        MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
+    });
+
+    addChild(exitButton);
+
+    auto textView = new TextView(QPoint(1000, 1008), utils::Lang::get("example"),
                                  QApplication::font(),
                                  Qt::blue);
 
