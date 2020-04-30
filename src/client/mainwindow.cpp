@@ -35,6 +35,8 @@ client::MainWindow::MainWindow() {
                     setFixedWidth(properties::width);
                     setFixedHeight(properties::height);
                 }
+                hover(QPoint(window_manager::get_x4k(mapFromGlobal(cursor().pos()).x()),
+                        window_manager::get_y4k(mapFromGlobal(cursor().pos()).y())));
                 update();
             });
 
@@ -109,3 +111,34 @@ void client::MainWindow::wheelEvent(QWheelEvent* event) {
     screens.top()->wheel(event);
 }
 
+void client::MainWindow::hover(QPoint point) {
+    if (screens.empty()) {
+        return;
+    }
+
+    Widget* current = screens.top().get();
+    while (!current->children.empty()) {
+        bool found = false;
+        for (Widget* child : current->children) {
+            if (child->isPointOnWidget(point)) {
+                current = child;
+                found = true;
+            }
+        }
+        if (!found) {
+            break;
+        }
+        point -= current->getPosition();
+    }
+
+    removeHovered(current);
+
+    current->setHovered(true);
+}
+
+void client::MainWindow::removeHovered(client::Widget* widget) {
+    widget->setHovered(false);
+    for (Widget* child : widget->children) {
+        removeHovered(child);
+    }
+}

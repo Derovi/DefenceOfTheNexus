@@ -20,6 +20,14 @@ class ImageButton : public Widget {
 
     void setWidth(int width);
 
+    int getHoverWidth() const;
+
+    void setHoverWidth(int hoverWidth);
+
+    int getHoverSize() const;
+
+    void setHoverSize(int hoverSize);
+
     void setImage(QImage image);
 
     QImage getImage();
@@ -38,6 +46,10 @@ class ImageButton : public Widget {
     QImage hoverImage;
 
     std::shared_ptr<TextView> textChildren;
+
+    int hoverWidth;
+
+    int hoverHeight;
 };
 
 }

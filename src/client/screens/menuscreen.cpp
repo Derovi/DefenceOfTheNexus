@@ -20,7 +20,7 @@ void client::MenuScreen::onResumed() {
 
 }
 
-client::MenuScreen::MenuScreen() {
+client::MenuScreen::MenuScreen() : Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto fullScreenButton = new ImageButton(QPoint(408, 24), 72, 72);
@@ -40,6 +40,7 @@ client::MenuScreen::MenuScreen() {
     auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
     startButton->setImage(QImage(":/interface/button"));
     startButton->setHoverImage(QImage(":/interface/button-hover"));
+    startButton->setHoverWidth(1329);
     startButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::make_shared<GameScreen>());
     });
@@ -49,6 +50,7 @@ client::MenuScreen::MenuScreen() {
     auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
     optionsButton->setImage(QImage(":/interface/button"));
     optionsButton->setHoverImage(QImage(":/interface/button-hover"));
+    optionsButton->setHoverWidth(1329);
     optionsButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
@@ -58,6 +60,7 @@ client::MenuScreen::MenuScreen() {
     auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
     exitButton->setImage(QImage(":/interface/button"));
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
+    exitButton->setHoverWidth(1329);
     exitButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->getUiThread()->terminate();
         QCoreApplication::quit();

@@ -4,6 +4,11 @@
 #include "mainwindow.h"
 #include "windowmanager.h"
 
+client::Screen::Screen() {
+    setHeight(2160);
+    setWidth(3840);
+}
+
 void client::Screen::pause() {
     if (state == PAUSED) {
         return;

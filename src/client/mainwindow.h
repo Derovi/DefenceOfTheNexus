@@ -38,6 +38,10 @@ class MainWindow : public QWidget {
   private:
     void draw();
 
+    void removeHovered(Widget* widget);
+
+    void hover(QPoint point);
+
     QStack<std::shared_ptr<Screen>> screens;
 
     QThread* uiThread;

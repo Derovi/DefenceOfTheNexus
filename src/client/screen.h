@@ -12,7 +12,7 @@ enum ScreenState {
 
 class Screen : public client::Widget {
   public:
-    Screen() {}
+    Screen();
 
     void pause();
 
