@@ -36,7 +36,6 @@ class TextView : public Widget {
 
     int getTextWidth() const;
 
-  private:
     void paint(QPainter& painter) override;
 
   private:

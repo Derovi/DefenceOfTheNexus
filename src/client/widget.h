@@ -56,6 +56,8 @@ class Widget : public QObject {
 
     std::shared_ptr<WindowManager> windowManager;
 
+    virtual void paint(QPainter& painter) {};
+
   public slots:
 
     // called my main window
@@ -73,8 +75,6 @@ class Widget : public QObject {
 
   protected:
     QPoint position;
-
-    virtual void paint(QPainter& painter) {};
 
     virtual void clicked(QPoint point) {};
 

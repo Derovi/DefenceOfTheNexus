@@ -14,6 +14,13 @@ void client::ImageButton::paint(QPainter &painter) {
     } else {
         painter.drawImage(boundsRect(), image);
     }
+    if (textChildren != nullptr) {
+        textChildren->setPosition(getPosition() + QPoint(
+                getWidth() / 2.0 - textChildren->getTextWidth() / 2.0,
+                getHeght() / 2.0 - textChildren->getTextHeight() / 2.0
+                ));
+        textChildren->paint(painter);
+    }
 }
 
 void client::ImageButton::setWidth(int width) {
@@ -38,4 +45,12 @@ const QImage& client::ImageButton::getHoverImage() const {
 
 void client::ImageButton::setHoverImage(const QImage& hoverImage) {
     ImageButton::hoverImage = hoverImage;
+}
+
+const std::shared_ptr<TextView>& client::ImageButton::getTextChildren() const {
+    return textChildren;
+}
+
+void client::ImageButton::setTextChildren(const std::shared_ptr<TextView>& textChildren) {
+    ImageButton::textChildren = textChildren;
 }

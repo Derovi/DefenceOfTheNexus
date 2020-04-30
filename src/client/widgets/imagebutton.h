@@ -28,12 +28,16 @@ class ImageButton : public Widget {
 
     void setHoverImage(const QImage& hoverImage);
 
+    const std::shared_ptr<TextView>& getTextChildren() const;
+
+    void setTextChildren(const std::shared_ptr<TextView>& textChildren);
+
   private:
     QImage image;
 
     QImage hoverImage;
 
-    TextView* textChildren;
+    std::shared_ptr<TextView> textChildren;
 };
 
 }
