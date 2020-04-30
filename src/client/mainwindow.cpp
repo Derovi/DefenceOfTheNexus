@@ -117,6 +117,9 @@ void client::MainWindow::hover(QPoint point) {
     }
 
     Widget* current = screens.top().get();
+
+    removeHovered(current);
+
     while (!current->children.empty()) {
         bool found = false;
         for (Widget* child : current->children) {
@@ -130,8 +133,6 @@ void client::MainWindow::hover(QPoint point) {
         }
         point -= current->getPosition();
     }
-
-    removeHovered(current);
 
     current->setHovered(true);
 }

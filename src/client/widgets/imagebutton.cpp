@@ -9,7 +9,6 @@ client::ImageButton::ImageButton(QPoint position, int height, int width):
 }
 
 void client::ImageButton::paint(QPainter& painter) {
-
     if (is_hovered && !hoverImage.isNull()) {
         painter.drawImage(QRect(boundsRect().center().x() - hoverWidth / 2,
                                 boundsRect().center().y() - hoverHeight / 2,
