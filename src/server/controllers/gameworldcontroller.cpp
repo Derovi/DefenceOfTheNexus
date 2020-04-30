@@ -60,3 +60,7 @@ void server::GameWorldController::removeObject(int64_t id) {
     gameWorld->getObjects().remove(id);
     controllers.remove(id);
 }
+
+const QHash<int64_t, std::shared_ptr<server::Controller>>& server::GameWorldController::getControllers() {
+    return controllers;
+}

@@ -38,4 +38,4 @@ class SpriteController {
 
 }
 
-#endif //SPRITECONTROLLER_H
+#endif  // SPRITECONTROLLER_H

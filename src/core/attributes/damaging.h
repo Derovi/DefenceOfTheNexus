@@ -1,8 +1,9 @@
 #ifndef DAMAGING_H
 #define DAMAGING_H
 
+#include <memory>
+
 #include <QString>
-#include <bits/shared_ptr.h>
 
 #include "../attribute.h"
 
@@ -10,6 +11,8 @@ namespace core {
 
 class Damaging : public Attribute {
   public:
+    inline static const QString attributeName = "damaging";
+
     Damaging();
 
     Damaging(int damage, double attackRadius, double attackDelay,
@@ -27,19 +30,17 @@ class Damaging : public Attribute {
 
     const QString& getBulletType() const;
 
-    virtual void setDamage(int damage);
+    void setDamage(int damage);
 
-    virtual void setAttackRadius(double radius);
+    void setAttackRadius(double radius);
 
-    virtual void setAttackDelay(double delay);
+    void setAttackDelay(double delay);
 
-    virtual void setCurrentDelay(double delay);
+    void setCurrentDelay(double delay);
 
-    virtual void setBulletType(const QString& newType);
+    void setBulletType(const QString& newType);
 
-    virtual void set(const Damaging& properties);
-
-    static const QString attributeName;
+    void set(const Damaging& properties);
 
     QString getAttributeName() override;
 
@@ -55,4 +56,4 @@ class Damaging : public Attribute {
 
 }  // namespace core
 
-#endif // DAMAGING_H
+#endif  // DAMAGING_H

@@ -5,12 +5,12 @@
 
 #include "damaging.h"
 
-core::Damaging::Damaging(): damage(0), attackDelay(0), attackRadius(0) {}
+core::Damaging::Damaging(): damage(0), attackDelay(0), attackRadius(0), currentDelay(0) {}
 
 core::Damaging::Damaging(int damage, double attackRadius, double attackDelay,
                          QString bulletType):
         damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
-        bulletType(std::move(bulletType)) {}
+        bulletType(std::move(bulletType)), currentDelay(0) {}
 
 int core::Damaging::getDamage() const {
     return damage;
@@ -62,8 +62,6 @@ QString core::Damaging::getAttributeName() {
     return attributeName;
 }
 
-const QString core::Damaging::attributeName = "damaging";
-
 std::shared_ptr<core::Attribute> core::Damaging::clone() {
-    return std::shared_ptr<Attribute>(new Damaging(*this));
+    return std::make_shared<core::Damaging>(*this);
 }

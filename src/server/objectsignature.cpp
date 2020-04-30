@@ -3,8 +3,17 @@
 #include "../core/attribute.h"
 #include "objectsignature.h"
 
-server::ObjectSignature::ObjectSignature(QString typeName, QPolygonF hitbox):
-        typeName(typeName), hitbox(std::move(hitbox)) {}
+server::ObjectSignature::ObjectSignature(const QString& typeName, const QPolygonF& hitbox):
+    typeName(typeName), hitbox(std::move(hitbox)) {}
+
+server::ObjectSignature::ObjectSignature(const core::Object& object) {
+    this->typeName = object.getTypeName();
+    this->hitbox = object.getHitbox();
+    this->strategies = object.getStrategies();
+    for (const auto& attribute : object.getAttributes()) {
+        attributes.push_back(attribute->clone());
+    }
+}
 
 void server::ObjectSignature::setHitbox(const QPolygonF& newHitbox) {
     hitbox = newHitbox;
@@ -14,8 +23,8 @@ QLinkedList<std::shared_ptr<core::Attribute>>& server::ObjectSignature::getAttri
     return attributes;
 }
 
-void
-server::ObjectSignature::setAttributes(const QLinkedList<std::shared_ptr<core::Attribute>>& attributes) {
+void server::ObjectSignature::setAttributes(
+    const QLinkedList<std::shared_ptr<core::Attribute>>& attributes) {
     this->attributes = attributes;
 }
 
@@ -28,7 +37,7 @@ void server::ObjectSignature::setStrategies(const QStringList& strategies) {
 }
 
 bool server::ObjectSignature::hasAttribute(const QString& name) {
-    for (std::shared_ptr<core::Attribute> attribute : attributes) {
+    for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return true;
         }
@@ -44,12 +53,13 @@ void server::ObjectSignature::setTypeName(const QString& typeName) {
     this->typeName = typeName;
 }
 
-const QLinkedList<std::shared_ptr<core::Attribute>>& server::ObjectSignature::getAttributes() const {
+const QLinkedList<std::shared_ptr<core::Attribute>>&
+server::ObjectSignature::getAttributes() const {
     return attributes;
 }
 
 std::shared_ptr<core::Attribute> server::ObjectSignature::getAttribute(const QString& name) {
-    for (std::shared_ptr<core::Attribute> attribute : attributes) {
+    for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return attribute;
         }
@@ -59,15 +69,6 @@ std::shared_ptr<core::Attribute> server::ObjectSignature::getAttribute(const QSt
 
 const QPolygonF& server::ObjectSignature::getHitbox() const {
     return hitbox;
-}
-
-server::ObjectSignature::ObjectSignature(core::Object object) {
-    this->typeName = object.getTypeName();
-    this->hitbox = object.getHitbox();
-    this->strategies = object.getStrategies();
-    for (std::shared_ptr<core::Attribute> attribute : object.getAttributes()) {
-        attributes.push_back(attribute->clone());
-    }
 }
 
 const QStringList& server::ObjectSignature::getStrategies() const {

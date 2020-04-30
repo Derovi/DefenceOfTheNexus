@@ -10,6 +10,8 @@ namespace client {
 
 class ObjectGraphicsDescription {
   public:
+    ObjectGraphicsDescription();
+
     int getWidth() const;
 
     void setWidth(int width);

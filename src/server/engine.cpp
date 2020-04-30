@@ -1,42 +1,41 @@
+#include "engine.h"
+
 #include <QDateTime>
 #include <QThread>
-#include <QQueue>
-#include <QDebug>
-#include <QDateTime>
 
+#include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
 
 #include "commandexecutor.h"
-#include "engine.h"
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
-        gameConfiguration(gameConfiguration), finished(false) {
+    gameConfiguration(gameConfiguration), finished(false) {
     gameWorld = world_generator::generate(gameConfiguration);
-    gameWorldController = std::shared_ptr<GameWorldController>(new GameWorldController(gameWorld));
-    commandExecutor = CommandExecutor(gameWorld);
-    commandQueue = std::shared_ptr<QQueue<core::Command>>(new QQueue<core::Command>());
+    gameWorldController = std::make_shared<GameWorldController>(gameWorld);
+    commandExecutor = CommandExecutor(gameWorldController);
+    commandQueue = std::make_shared<Queue<core::Command>>();
+}
+
+server::Engine::~Engine() {
+    mainThread->quit();
 }
 
 void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
-        // time when last tick execution was started
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
-        while (!finished && gameWorld) {
+        while (!finished && gameWorld != nullptr) {
             QDateTime currentTickStartTime = QDateTime::currentDateTime();
 
-            // first, execute all commands from clients
             executeCommands();
             // make changes on game world
-            gameWorldController->tick(static_cast<double>(
-                                              lastTickStartTime.msecsTo(currentTickStartTime)));
-
-            // sleep until next tick
-            QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
-                            currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+            gameWorldController->tick(lastTickStartTime.msecsTo(currentTickStartTime));
 
             lastTickStartTime = currentTickStartTime;
+            // sleep until next tick
+            QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
+                currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
         }
     }));
     mainThread->start();
@@ -67,17 +66,12 @@ bool server::Engine::isFinished() const {
     return finished;
 }
 
-std::shared_ptr<QQueue<core::Command>> server::Engine::getCommandQueue() const {
+std::shared_ptr<Queue<core::Command>> server::Engine::getCommandQueue() const {
     return commandQueue;
 }
 
 void server::Engine::executeCommands() {
     while (!commandQueue->empty()) {
-        commandExecutor.executeCommand(commandQueue->front());
-        commandQueue->pop_front();
+        commandExecutor.executeCommand(commandQueue->pop());
     }
-}
-
-server::Engine::~Engine() {
-    mainThread->quit();
 }

@@ -15,7 +15,9 @@ class WindowManager;
 
 class Widget : public QObject {
   public:
-    Widget(const QPoint& position = QPoint(0,0));
+    explicit Widget(const QPoint& position = QPoint(0,0));
+
+    virtual ~Widget();
 
     void setPosition(const QPoint& position);
 
@@ -35,9 +37,9 @@ class Widget : public QObject {
 
     void setOnClick(std::function<void(QPoint)> action);
 
-    std::shared_ptr<Widget> getParent();
+    Widget* getParent();
 
-    void setParent(const std::shared_ptr<Widget>& parent);
+    void setParent(Widget* parent);
 
     void addChild(Widget* child);
 
@@ -49,7 +51,7 @@ class Widget : public QObject {
 
     int getWidth();
 
-    WindowManager* windowManager;
+    std::shared_ptr<WindowManager> windowManager;
 
   public slots:
 
@@ -62,9 +64,9 @@ class Widget : public QObject {
 
     void wheel(QWheelEvent* event);
 
-    void setHeight(int height);
+    virtual void setHeight(int height);
 
-    void setWidth(int width);
+    virtual void setWidth(int width);
 
   protected:
     QPoint position;
@@ -85,7 +87,7 @@ class Widget : public QObject {
 
     bool is_hovered = false;
 
-    std::shared_ptr<Widget> parent = nullptr;
+    Widget* parent = nullptr;
 };
 
 }  // namespace client

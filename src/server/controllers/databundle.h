@@ -1,6 +1,7 @@
 #ifndef DATABUNDLE_H
 #define DATABUNDLE_H
 
+#include <QDebug>
 #include <QHash>
 #include <QString>
 
@@ -42,4 +43,4 @@ bool DataBundle::assign(const QString& name, std::shared_ptr<T>& variable) {
 
 }
 
-#endif //DATABUNDLE_H
+#endif // DATABUNDLE_H

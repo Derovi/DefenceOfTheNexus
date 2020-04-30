@@ -1,5 +1,7 @@
 #include "serializer.h"
 
+utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
+
 std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
     if (result == std::nullopt) {
@@ -55,11 +57,11 @@ utils::Serializer::deserializeAttribute(const QString& serialized,
 }
 
 void utils::Serializer::setPrettyPrinting(bool prettyPrinting) {
-
+    this->prettyPrinting = prettyPrinting;
 }
 
 bool utils::Serializer::isPrettyPrinting() {
-    return false;
+    return prettyPrinting;
 }
 
 std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Object& object) {
@@ -220,7 +222,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
         if (!i.isDouble()) {
             return std::nullopt;
         }
-        vec[it].setY(qreal(i.toDouble()));
+        vec[it++].setY(qreal(i.toDouble()));
     }
     if (!json["typeName"].isString()) {
         return std::nullopt;
@@ -513,7 +515,7 @@ utils::Serializer::objectSignatureDeserializer(const QJsonObject& serialized) {
         if (!i.isDouble()) {
             return std::nullopt;
         }
-        vec[it].setY(qreal(i.toDouble()));
+        vec[it++].setY(qreal(i.toDouble()));
     }
     server::ObjectSignature signature(serialized["typeName"].toString(), QPolygonF(vec));
     QStringList strategies;

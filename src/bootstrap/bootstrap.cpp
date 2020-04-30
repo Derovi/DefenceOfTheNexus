@@ -9,6 +9,7 @@
 #include "../utils/factory.h"
 #include "../utils/lang.h"
 #include "../server/strategies/movestrategy.h"
+#include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
 #include "../client/mainwindow.h"
@@ -20,6 +21,12 @@ void registerStrategies() {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
                                                          new server::MoveStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::PathStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                                 static_cast<server::Strategy*>(
+                                                         new server::PathStrategy(object)));
                                      });
 }
 
@@ -47,6 +54,35 @@ void registerSpriteControllers() {
                                                  return std::shared_ptr<client::SpriteController>(
                                                          new client::UnitSpriteController(object));
                                              });
+}
+
+void registerObjectSignatures() {
+    QFile file(":/data/objects");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    utils::Serializer serializer;
+    std::optional<QJsonObject> signatures = serializer.stringToJsonObject(
+            QString(file.readAll()));
+    if (!signatures) {
+        return;
+    }
+
+    for (auto iter = signatures.value().begin();
+         iter != signatures.value().end();
+         ++iter) {
+        if (!iter->isObject()) {
+            continue;
+        }
+        QJsonObject object = iter->toObject();
+        object.insert("typeName", iter.key());
+        auto signature = serializer.objectSignatureDeserializer(object);
+        if (signature == std::nullopt) {
+            continue;
+        }
+        utils::Factory::registerObjectSignature(iter.key(), signature.value());
+    }
 }
 
 void registerGraphicsDescriptions() {
@@ -97,6 +133,7 @@ int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();
+    registerObjectSignatures();
     registerGraphicsDescriptions();
     utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
@@ -122,7 +159,7 @@ int main(int argc, char** argv) {
             break;
         }
         core::Command command = core::Command::fromCommandLine(line);
-        engine->getCommandQueue()->push_back(core::Command::fromCommandLine(line));
+        engine->getCommandQueue()->push(core::Command::fromCommandLine(line));
     }
     delete engine;
     delete server;

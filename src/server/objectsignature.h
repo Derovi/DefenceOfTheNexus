@@ -16,15 +16,15 @@ namespace server {
 
 class ObjectSignature {
   public:
-    ObjectSignature() = delete;
+    ObjectSignature() = default;
 
     // Copies current object attributes states.
-    // Example: if objet has 47/100 hp, then objects,
+    // Example: if object has 47/100 hp, then objects,
     // summoned with creates signature will have 47/100 hp.
-    explicit ObjectSignature(core::Object object);
+    explicit ObjectSignature(const core::Object& object);
 
-    explicit ObjectSignature(QString typeName,
-                             QPolygonF hitbox = QPolygonF());
+    explicit ObjectSignature(const QString& typeName,
+                             const QPolygonF& hitbox = QPolygonF());
 
     virtual ~ObjectSignature() = default;
 
@@ -63,4 +63,4 @@ class ObjectSignature {
 }  // namespace server
 
 
-#endif //OBJECTSIGNATURE_H
+#endif  // OBJECTSIGNATURE_H

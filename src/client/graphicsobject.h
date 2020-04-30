@@ -8,7 +8,7 @@ namespace client {
 
 class GraphicsObject {
   public:
-    GraphicsObject(const std::shared_ptr<core::Object>& object);
+    explicit GraphicsObject(const std::shared_ptr<core::Object>& object);
 
     void update(const QTransform& painterTransform, uint64_t timeDeltaMSec);
 

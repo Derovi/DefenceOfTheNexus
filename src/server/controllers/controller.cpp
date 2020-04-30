@@ -3,7 +3,8 @@
 #include <QVector>
 
 #include "../../utils/factory.h"
-#include "../../core/attribute.h"
+#include "controller.h"
+
 
 server::Controller::Controller(std::shared_ptr<core::Object> object): object(object) {
     addStrategies(object->getStrategies());
@@ -33,10 +34,7 @@ void server::Controller::addStrategies(const QStringList& strategyNames) {
         }
     }
     prepare();
-    DataBundle dataBundle = createDataBundle();
-    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
-        strategy->assign(dataBundle);
-    }
+    linkStrategies();
 }
 
 void server::Controller::removeStrategies(const QStringList& strategyNames) {
@@ -47,10 +45,7 @@ void server::Controller::removeStrategies(const QStringList& strategyNames) {
         strategies.remove(strategyName);
     }
     prepare();
-    DataBundle dataBundle = createDataBundle();
-    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
-        strategy->assign(dataBundle);
-    }
+    linkStrategies();
 }
 
 std::shared_ptr<core::Object> server::Controller::getObject() {
@@ -63,12 +58,11 @@ void server::Controller::tick(std::shared_ptr<core::GameWorld> world, double tim
     }
 }
 
-server::DataBundle server::Controller::createDataBundle() {
-    DataBundle dataBundle;
+server::DataBundle server::Controller::createDataBundle(DataBundle baseBundle) {
     for (std::shared_ptr<core::Attribute> attribute : object->getAttributes()) {
-        dataBundle.registerVariable(attribute->getAttributeName(), attribute);
+        baseBundle.registerVariable(attribute->getAttributeName(), attribute);
     }
-    return dataBundle;
+    return baseBundle;
 }
 
 const QLinkedList<std::shared_ptr<server::Strategy>>&
@@ -120,3 +114,17 @@ void server::Controller::prepareStrategy(std::shared_ptr<server::Strategy> strat
     }
 }
 
+void server::Controller::linkStrategies(const server::DataBundle& baseBundle) {
+    DataBundle dataBundle = createDataBundle(baseBundle);
+    //qDebug() << "link!" << object->getId() << strategiesByPriority.size();
+    for (std::shared_ptr<Strategy> strategy : strategiesByPriority) {
+        //qDebug() << "assign!";
+        strategy->assign(dataBundle);
+    }
+}
+
+void server::Controller::cancelTargets() {
+    for (auto strategy : strategiesByPriority) {
+        strategy->cancelTargets();
+    }
+}

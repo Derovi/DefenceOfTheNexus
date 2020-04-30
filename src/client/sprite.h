@@ -12,9 +12,9 @@ class Sprite {
   public:
     Sprite() = default;
 
-    Sprite(const QPixmap& source, int rows = 1, int columns = 1, int framesPerSec = 30);
+    explicit Sprite(const QPixmap& source, int rows = 1, int columns = 1, int framesPerSec = 30);
 
-    Sprite(const SpriteDescription& spriteDescription);
+    explicit Sprite(const SpriteDescription& spriteDescription);
 
     void update(uint64_t timeDeltaMSec = 42);
 
@@ -81,7 +81,7 @@ class Sprite {
 
     int columns;
 
-    uint64_t lastUpdateTime;
+    int64_t lastUpdateTime;
 
     bool reverseDirection;
 
