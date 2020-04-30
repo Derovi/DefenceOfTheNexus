@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 project(defenceofnexus)
 
 set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fsanitize=address")
 
 if (APPLE)
     set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5*/5*/clang_64")
@@ -63,9 +64,8 @@ add_executable(defenceofnexus
         src/client/screens/gamescreen.cpp
         src/client/widgets/gamemap.cpp
         src/server/strategies/pathstrategy.cpp
-        src/client/widgets/gamemap.h 
-        src/utils/colors.h 
-        src/client/graphicsobject.cpp 
+        src/client/widgets/gamemap.h
+        src/client/graphicsobject.cpp
         src/client/graphicsobject.h 
         src/client/sprite.cpp 
         src/client/sprite.h 
@@ -82,7 +82,7 @@ add_executable(defenceofnexus
         src/utils/lang.cpp
         src/server/performers/miningperformer.cpp
         src/core/attributes/mining.cpp
-        src/server/strategies/minestrategy.cpp)
+        src/server/strategies/minestrategy.cpp src/client/spritecontrollers/resourcespritecontroller.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
