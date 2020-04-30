@@ -43,7 +43,7 @@ client::MainWindow::MainWindow() {
                             currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
             lastTickStartTime = currentTickStartTime;
         }
-    }));
+    });
     openScreen(std::make_shared<MenuScreen>());
     uiThread->start();
 }
