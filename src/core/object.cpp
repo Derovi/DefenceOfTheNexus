@@ -37,10 +37,6 @@ void core::Object::setRotationAngle(float angle) {
     rotationAngle = angle;
 }
 
-bool core::Object::isIntersect(const core::Object& object) const {
-    return object.hitbox.intersects(hitbox);
-}
-
 void core::Object::setId(uint64_t newId) {
     id = newId;
 }
@@ -99,4 +95,26 @@ QPolygonF core::Object::getRotatedHitbox() const {
     QMatrix matrix;
     matrix.rotate(rotationAngle);
     return matrix.map(getHitbox());
+}
+
+bool core::Object::isIntersect(const QPointF& point) const {
+    return getHitboxOnMap().contains(point);
+}
+
+bool core::Object::isIntersect(const QRectF& rect) const {
+    return getHitboxOnMap().intersects(QPolygonF(rect));
+}
+
+bool core::Object::isIntersect(const QPolygonF& polygon) const {
+    return getHitboxOnMap().intersects(polygon);
+}
+
+bool core::Object::isIntersect(const core::Object& object) const {
+    return object.getHitboxOnMap().intersects(getHitboxOnMap());
+}
+
+QPolygonF core::Object::getHitboxOnMap() const {
+    auto hitboxOnMap = getRotatedHitbox();
+    hitboxOnMap.translate(getPosition());
+    return hitboxOnMap;
 }
