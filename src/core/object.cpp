@@ -1,4 +1,5 @@
 #include <utility>
+#include <QtGui/QMatrix>
 
 #include "attribute.h"
 #include "object.h"
@@ -95,5 +96,7 @@ const QStringList& core::Object::getStrategies() const {
 }
 
 QPolygonF core::Object::getRotatedHitbox() const {
-    return getHitbox();
+    QMatrix matrix;
+    matrix.rotate(rotationAngle);
+    return matrix.map(getHitbox());
 }
