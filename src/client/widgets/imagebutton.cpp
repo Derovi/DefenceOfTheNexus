@@ -19,12 +19,11 @@ void client::ImageButton::paint(QPainter& painter) {
         painter.drawImage(boundsRect(), image);
     }
     if (textChildren != nullptr) {
-        qDebug() << textChildren->getWidth() << textChildren->getHeght();
         textChildren->setPosition(getPosition() + QPoint(
                 getWidth() / 2.0 - textChildren->getTextWidth() / 2.0,
-                getHeght() / 2.0 - textChildren->getTextHeight() / 2.0
+                getHeght() / 2.0 + textChildren->getTextHeight() / 2.0
         ));
-        textChildren->paint(painter);
+        textChildren->draw();
     }
 }
 

@@ -134,7 +134,6 @@ void client::Widget::click(QPoint point) {
     if (onClick != nullptr) {
         onClick(point);
     }
-    //qDebug() << "click!!!";
     clicked(point);
 }
 
