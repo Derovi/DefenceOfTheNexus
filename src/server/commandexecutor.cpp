@@ -128,6 +128,10 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
         return false;
     }
 
+    for (const auto& strategy : object->getStrategies()) {
+        gameWorldController->getControllers()[objectId]->cancelTargets();
+    }
+
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
     qDebug() << "click command!";
@@ -173,9 +177,17 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
         || !target.value()->hasAttribute("resource")) {
         return false;
     }
+
+    for (const auto& strategy : miner.value()->getStrategies()) {
+        gameWorldController->getControllers()[minerId]->cancelTargets();
+    }
     qDebug() << minerId << " wanna mine " << resourceId << endl;
+
+    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+
     DataBundle bundle;
     bundle.registerVariable("miningTarget", target.value());
+    bundle.registerVariable("destinationPoint", destPoint);
     gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
     return true;
 }

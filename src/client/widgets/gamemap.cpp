@@ -116,9 +116,10 @@ void client::GameMap::clicked(QPoint point) {
     if (object != nullptr && object->hasAttribute("resource")) {
         commandQueue->push(core::Command("mine_resource", {
            "0", QString::number(object->getId())}));
+    } else {
+        commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
+                                                                QString::number(point.y())}));
     }
-    commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
-                                                            QString::number(point.y())}));
 }
 
 const std::shared_ptr<Queue<core::Command>>& client::GameMap::getCommandQueue() const {
