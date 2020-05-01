@@ -1,13 +1,13 @@
+#include <QDebug>
+
 #include "textview.h"
 
 client::TextView::TextView(const QPoint& position, const QString& text, const QFont& font,
                            const QColor& color,
                            int height, int width):
         Widget(position), text(text), font(font), color(color) {
-    if (height > 0 && width > 0) {
-        setHeight(height);
-        setWidth(width);
-    }
+    setHeight(height);
+    setWidth(width);
 }
 
 void client::TextView::paint(QPainter& painter) {
@@ -15,7 +15,7 @@ void client::TextView::paint(QPainter& painter) {
     QPen pen = painter.pen();
     pen.setColor(color);
     painter.setPen(pen);
-    if (width != -1 && height != -1) {
+    if (width > 0 && height > 0) {
         painter.drawText(QRect(position.x(), position.y(), width, height), Qt::AlignCenter, text);
     } else {
         painter.drawText(position, text);

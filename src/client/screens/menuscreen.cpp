@@ -20,8 +20,13 @@ void client::MenuScreen::onResumed() {
 
 }
 
-client::MenuScreen::MenuScreen() : Screen() {
+client::MenuScreen::MenuScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
+
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont font(fontFamily);
+    font.setPixelSize(100);
 
     auto fullScreenButton = new ImageButton(QPoint(408, 24), 72, 72);
     fullScreenButton->setImage(QImage(":/images/fullScreen"));
@@ -41,6 +46,9 @@ client::MenuScreen::MenuScreen() : Screen() {
     startButton->setImage(QImage(":/interface/button"));
     startButton->setHoverImage(QImage(":/interface/button-hover"));
     startButton->setHoverWidth(1329);
+    startButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("start"), font));
+    startButton->getTextChildren()->setColor(QColor(249,192,6));
     startButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::make_shared<GameScreen>());
     });
@@ -72,14 +80,11 @@ client::MenuScreen::MenuScreen() : Screen() {
                                  QApplication::font(),
                                  Qt::blue);
 
-    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
-    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+
     textView->setFont(fontFamily);
 
 
     textView->setTextSize(50);
-    textView->setHeight(300);
-    textView->setWidth(400);
 
     addChild(textView);
 }
