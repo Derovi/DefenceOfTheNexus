@@ -16,9 +16,9 @@ void client::TextView::paint(QPainter& painter) {
     pen.setColor(color);
     painter.setPen(pen);
     if (width > 0 && height > 0) {
-        painter.drawText(QRect(position.x(), position.y(), width, height), Qt::AlignCenter, text);
+        painter.drawText(QRect(0, 0, width, height), Qt::AlignCenter, text);
     } else {
-        painter.drawText(position, text);
+        painter.drawText(QPoint(0, 0), text);
     }
 }
 
@@ -55,7 +55,7 @@ int client::TextView::getTextSize() const {
 }
 
 int client::TextView::getTextHeight() const {
-    return QFontMetrics(font).height();
+    return QFontMetrics(font).capHeight();
 }
 
 int client::TextView::getTextWidth() const {
