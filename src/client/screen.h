@@ -2,6 +2,7 @@
 #define SCREEN_H
 
 #include "widget.h"
+#include "sprite.h"
 
 namespace client {
 
@@ -11,7 +12,7 @@ enum ScreenState {
 
 class Screen : public client::Widget {
   public:
-    Screen() {}
+    Screen();
 
     void pause();
 
@@ -23,8 +24,16 @@ class Screen : public client::Widget {
 
     ScreenState getState() const;
 
+    const Sprite& getBackground() const;
+
+    void setBackground(const Sprite& background);
+
+    void draw() override;
+
   private:
     ScreenState state = CURRENT;
+
+    Sprite background;
 };
 
 }

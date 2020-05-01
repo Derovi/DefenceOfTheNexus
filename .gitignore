@@ -1,6 +1,7 @@
 .idea/
 build/
 cmake-build-debug/
+cmake-build-debug-mingw/
 cmake-build-release/
 cmake-build-debug-mingw/
 *.pro.user

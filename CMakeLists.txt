@@ -24,6 +24,8 @@ add_executable(defenceofnexus
         resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
+        resources/other.qrc
+        resources/interface.qrc
         src/core/object.cpp
         src/core/attributes/damageable.cpp
         src/core/attributes/damaging.cpp
@@ -68,7 +70,9 @@ add_executable(defenceofnexus
         src/client/widgets/textview.cpp
         src/client/spritecontrollers/resourcespritecontroller.cpp
         src/server/strategies/minestrategy.cpp
-        src/utils/lang.cpp)
+        src/utils/lang.cpp
+        src/client/screens/optionsscreen.cpp
+        src/client/widgets/chooser.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
