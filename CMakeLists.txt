@@ -65,7 +65,7 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
-        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h)
+        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h src/client/widgets/chooser.cpp src/client/widgets/chooser.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
