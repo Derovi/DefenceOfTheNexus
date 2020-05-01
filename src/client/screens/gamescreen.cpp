@@ -43,7 +43,7 @@ client::GameScreen::GameScreen() {
     gameMap->setCommandQueue(engine->getCommandQueue());
 
     gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                          QPoint(2000, 1000));
+                                          QPoint(2000, 1000), 100);
 
     gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
                                           QPoint(3000, 2000));
