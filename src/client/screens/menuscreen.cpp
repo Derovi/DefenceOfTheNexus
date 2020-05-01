@@ -59,6 +59,9 @@ client::MenuScreen::MenuScreen(): Screen() {
     optionsButton->setImage(QImage(":/interface/button"));
     optionsButton->setHoverImage(QImage(":/interface/button-hover"));
     optionsButton->setHoverWidth(1329);
+    optionsButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("options"), font));
+    optionsButton->getTextChildren()->setColor(QColor(249,192,6));
     optionsButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
@@ -69,6 +72,9 @@ client::MenuScreen::MenuScreen(): Screen() {
     exitButton->setImage(QImage(":/interface/button"));
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);
+    exitButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("exit"), font));
+    exitButton->getTextChildren()->setColor(QColor(249,192,6));
     exitButton->setOnClick([=](QPoint point) {
         MainWindow::getInstance()->getUiThread()->terminate();
         QCoreApplication::quit();
@@ -86,5 +92,5 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     textView->setTextSize(50);
 
-    addChild(textView);
+    //addChild(textView);
 }
