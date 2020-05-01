@@ -23,7 +23,6 @@ client::App::App() {
     //showFullScreen();
     settings = std::make_shared<QSettings>("DOTN", "Defence Of the Nexus");
     if (settings->contains("properties")) {
-        qDebug() << "found!";
         properties::load(utils::Serializer().stringToJsonObject(
                 settings->value("properties").toString()).value());
     }
