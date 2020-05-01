@@ -94,6 +94,6 @@ const QStringList& core::Object::getStrategies() const {
     return strategies;
 }
 
-QPolygon core::Object::getRotatedHitbox() const {
-    return getHitbox().map
+QPolygonF core::Object::getRotatedHitbox() const {
+    return getHitbox();
 }
