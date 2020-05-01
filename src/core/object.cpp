@@ -1,4 +1,5 @@
 #include <utility>
+#include <QtGui/QMatrix>
 
 #include "attribute.h"
 #include "object.h"
@@ -16,7 +17,7 @@ QPointF core::Object::getPosition() const {
     return position;
 }
 
-const QPolygonF& core::Object::getHitbox() const {
+QPolygonF core::Object::getHitbox() const {
     return hitbox;
 }
 
@@ -93,4 +94,10 @@ std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name)
 
 const QStringList& core::Object::getStrategies() const {
     return strategies;
+}
+
+QPolygonF core::Object::getRotatedHitbox() const {
+    QMatrix matrix;
+    matrix.rotate(rotationAngle);
+    return matrix.map(getHitbox());
 }

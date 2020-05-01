@@ -20,7 +20,7 @@ server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object
 bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object, int timeDelta,
                                            std::shared_ptr<core::GameWorld> gameWorld,
                                            std::shared_ptr<core::Moving> moving) {
-    QPolygonF hitbox = object->getHitbox();
+    QPolygonF hitbox = object->getRotatedHitbox();
 
     QPointF nextPosition = server::moving_performer::getNextPosition(object, timeDelta, *moving);
     for (auto& vertex : hitbox) {
@@ -31,7 +31,7 @@ bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object,
         if (obj->getId() == object->getId()) {
             continue;
         }
-        QPolygonF gameObject = obj->getHitbox();
+        QPolygonF gameObject = obj->getRotatedHitbox();
         for (auto& vertex : gameObject) {
             vertex += obj->getPosition();
         }
