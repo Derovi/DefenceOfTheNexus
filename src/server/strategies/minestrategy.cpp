@@ -2,8 +2,8 @@
 
 #include "../performers/miningperformer.h"
 
-server::MineStrategy::MineStrategy(std::shared_ptr<core::Object> object)
-    : Strategy(object), mining(nullptr), miningTarget(nullptr) {}
+server::MineStrategy::MineStrategy(std::shared_ptr<core::Object> object):
+    Strategy(object), mining(nullptr), miningTarget(nullptr) {}
 
 void server::MineStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
     if (miningTarget != nullptr) {

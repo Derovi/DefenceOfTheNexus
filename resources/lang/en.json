@@ -1,4 +1,7 @@
 {
   "title": "English",
-  "example": "Text example"
+  "example": "Text example",
+  "start": "Start",
+  "options": "Options",
+  "exit": "Exit"
 }

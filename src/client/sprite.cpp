@@ -158,3 +158,7 @@ void client::Sprite::setBackAndForthMode(bool backAndForthMode) {
     Sprite::backAndForthMode = backAndForthMode;
 }
 
+bool client::Sprite::isNull() {
+    return rows == 0;
+}
+

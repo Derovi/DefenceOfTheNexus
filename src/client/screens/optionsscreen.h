@@ -1,14 +1,15 @@
-#ifndef MENUSCREEN_H
-#define MENUSCREEN_H
+#ifndef OPTIONS_SCREEN_H
+#define OPTIONS_SCREEN_H
 
 #include <QPushButton>
+
 #include "../screen.h"
 
 namespace client {
 
-class MenuScreen : public Screen {
+class OptionsScreen : public Screen {
   public:
-    MenuScreen();
+    OptionsScreen();
   private:
     void onPaused() override;
 
@@ -17,4 +18,4 @@ class MenuScreen : public Screen {
 
 }
 
-#endif //MENUSCREEN_H
+#endif  // OPTIONS_SCREEN_H
