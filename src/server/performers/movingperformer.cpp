@@ -3,47 +3,41 @@
 #include "movingperformer.h"
 
 void
-server::moving_performer::move(std::shared_ptr<core::Object> object, int timeDelta,
+server::moving_performer::move(const std::shared_ptr<core::Object>& object, int64_t timeDelta,
                                const core::Moving& moving) {
     object->setPosition(getNextPosition(object, timeDelta, moving));
 }
 
 void
-server::moving_performer::moveIfNoObstacles(std::shared_ptr<core::Object> object, int timeDelta,
-                                            std::shared_ptr<core::GameWorld> gameWorld,
-                                            std::shared_ptr<core::Moving> moving) {
+server::moving_performer::moveIfNoObstacles(const std::shared_ptr<core::Object>& object,
+                                            int64_t timeDelta,
+                                            const std::shared_ptr<core::GameWorld>& gameWorld,
+                                            const std::shared_ptr<core::Moving>& moving) {
     if (!isObstacles(object, timeDelta, gameWorld, moving)) {
         server::moving_performer::move(object, timeDelta, *moving);
     }
 }
 
-bool server::moving_performer::isObstacles(std::shared_ptr<core::Object> object, int timeDelta,
-                                           std::shared_ptr<core::GameWorld> gameWorld,
-                                           std::shared_ptr<core::Moving> moving) {
-    QPolygonF hitbox = object->getRotatedHitbox();
-
-    QPointF nextPosition = server::moving_performer::getNextPosition(object, timeDelta, *moving);
-    for (auto& vertex : hitbox) {
-        vertex += nextPosition;
-    }
-
-    for (auto obj : gameWorld->getObjects()) {
-        if (obj->getId() == object->getId()) {
+bool server::moving_performer::isObstacles(const std::shared_ptr<core::Object>& object,
+                                           int64_t timeDelta,
+                                           const std::shared_ptr<core::GameWorld>& gameWorld,
+                                           const std::shared_ptr<core::Moving>& moving) {
+    QPolygonF objectPolygon = object->getRotatedHitbox();
+    objectPolygon.translate(getNextPosition(object, timeDelta, *moving));
+    for (const std::shared_ptr<core::Object>& otherObject : gameWorld->getObjects()) {
+        if (otherObject->getId() == object->getId()) {
             continue;
         }
-        QPolygonF gameObject = obj->getRotatedHitbox();
-        for (auto& vertex : gameObject) {
-            vertex += obj->getPosition();
-        }
-        if (gameObject.intersects(hitbox)) {
+        if (otherObject->isIntersect(objectPolygon)) {
             return true;
         }
     }
     return false;
 }
 
-QPointF server::moving_performer::getNextPosition(std::shared_ptr<core::Object> object,
-                                                  int timeDelta, const core::Moving& moving) {
-    return object->getPosition() + (moving.getDirection()
-            * static_cast<float>(moving.getSpeed() * timeDelta / 1000.0)).toPointF();
+QPointF server::moving_performer::getNextPosition(const std::shared_ptr<core::Object>& object,
+                                                  int64_t timeDelta, const core::Moving& moving) {
+    return object->getPosition() +
+           (moving.getDirection() *
+            static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
 }

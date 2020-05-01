@@ -30,6 +30,8 @@ class Object {
 
     QPolygonF getRotatedHitbox() const;
 
+    QPolygonF getHitboxOnMap() const;
+
     float getRotationAngle() const;
 
     const QString& getTypeName() const;
@@ -57,6 +59,12 @@ class Object {
     void setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes);
 
     void setStrategies(const QStringList& strategies);
+
+    bool isIntersect(const QPointF& point) const;
+
+    bool isIntersect(const QRectF& rect) const;
+
+    bool isIntersect(const QPolygonF& polygon) const;
 
     bool isIntersect(const Object& object) const;
 
