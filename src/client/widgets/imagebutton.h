@@ -40,6 +40,10 @@ class ImageButton : public Widget {
 
     void setTextChildren(const std::shared_ptr<TextView>& textChildren);
 
+    int getHoverHeight() const;
+
+    void setHoverHeight(int hoverHeight);
+
   private:
     QImage image;
 

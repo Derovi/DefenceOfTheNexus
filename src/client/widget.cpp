@@ -3,7 +3,7 @@
 
 #include "widget.h"
 #include "windowmanager.h"
-#include "mainwindow.h"
+#include "app.h"
 
 client::Widget::Widget(const QPoint& position):
         position(position), windowManager(nullptr), width(0), height(0),
@@ -58,7 +58,7 @@ QPoint client::Widget::absolutePosition() {
 }
 
 void client::Widget::draw() {
-    QPainter painter(MainWindow::getInstance());
+    QPainter painter(App::getInstance());
     painter.translate(window_manager::get_real_x(absolutePosition().x()),
                       window_manager::get_real_y(absolutePosition().y()));
     painter.setTransform(QTransform(window_manager::getTransform()), true);

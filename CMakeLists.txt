@@ -51,7 +51,7 @@ add_executable(defenceofnexus
         src/server/objectsignature.cpp
         src/client/windowmanager.cpp
         src/client/widget.cpp
-        src/client/mainwindow.cpp
+        src/client/app.cpp
         src/client/screen.cpp
         src/client/screens/menuscreen.cpp
         src/client/widgets/imagebutton.cpp

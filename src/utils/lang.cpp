@@ -6,7 +6,7 @@
 #include "lang.h"
 #include "serializer.h"
 
-const QString utils::Lang::get(const QString& key) {
+const QString& utils::Lang::get(const QString& key) {
     if (!langMap.contains(key)) {
         return "";
     }
@@ -44,6 +44,30 @@ void utils::Lang::loadEntry(QString path, const QJsonObject& jsonObject) {
             langMap.insert(path + valueName, value.toString());
         }
     }
+}
+
+QStringList utils::Lang::getLanguages() {
+    QDir directory(":/lang/");
+    QStringList result;
+    for (const QFileInfo& info : directory.entryInfoList()) {
+        result.push_back(info.baseName());
+        qDebug() << "info: " << info.baseName();
+    }
+    return result;
+}
+
+QString utils::Lang::getTitle(const QString& lang) {
+    QDir directory(":/lang/");
+
+    QFile langFile(":/lang/" + lang);
+    QFile baseLangFile(":/lang/" + lang);
+
+    if (!langFile.open(QIODevice::ReadOnly) ||
+        !baseLangFile.open(QIODevice::ReadOnly)) {
+        return "null";
+    }
+    auto langJson = Serializer().stringToJsonObject(QString(langFile.readAll()));
+    return langJson->value("title").toString();
 }
 
 QHash<QString, QString> utils::Lang::langMap;

@@ -38,6 +38,8 @@ class TextView : public Widget {
 
     void paint(QPainter& painter) override;
 
+    QString getDrawingText() const;
+
   private:
     QString text;
 

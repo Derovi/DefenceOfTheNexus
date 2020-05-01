@@ -2,7 +2,7 @@
 
 #include "gamescreen.h"
 
-#include "../mainwindow.h"
+#include "../app.h"
 #include "../widgets/gamemap.h"
 #include "../widgets/imagebutton.h"
 #include "../../server/engine.h"
@@ -29,7 +29,7 @@ client::GameScreen::GameScreen() : Screen() {
     closeButton->setOnClick([=](QPoint point) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
-            MainWindow::getInstance()->closeScreen();
+            App::getInstance()->closeScreen();
         });
         thread->start();
     });

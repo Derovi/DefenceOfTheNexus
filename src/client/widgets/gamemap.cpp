@@ -1,6 +1,6 @@
 #include <QDebug>
 
-#include "../mainwindow.h"
+#include "../app.h"
 
 #include "gamemap.h"
 
@@ -66,7 +66,7 @@ void client::GameMap::paint(QPainter& painter) {
 }
 
     if (showHitBoxes) {
-        QPainter hitBoxPainter(MainWindow::getInstance());
+        QPainter hitBoxPainter(App::getInstance());
         hitBoxPainter.setTransform(painter.transform());
 
         QFont font = hitBoxPainter.font();

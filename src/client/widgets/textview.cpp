@@ -1,5 +1,7 @@
 #include <QDebug>
 
+#include "../../utils/lang.h"
+
 #include "textview.h"
 
 client::TextView::TextView(const QPoint& position, const QString& text, const QFont& font,
@@ -16,9 +18,9 @@ void client::TextView::paint(QPainter& painter) {
     pen.setColor(color);
     painter.setPen(pen);
     if (width > 0 && height > 0) {
-        painter.drawText(QRect(0, 0, width, height), Qt::AlignCenter, text);
+        painter.drawText(QRect(0, 0, width, height), Qt::AlignCenter, getDrawingText());
     } else {
-        painter.drawText(QPoint(0, 0), text);
+        painter.drawText(QPoint(0, 0), getDrawingText());
     }
 }
 
@@ -59,5 +61,13 @@ int client::TextView::getTextHeight() const {
 }
 
 int client::TextView::getTextWidth() const {
-    return QFontMetrics(font).width(text);
+    return QFontMetrics(font).width(getDrawingText());
+}
+
+QString client::TextView::getDrawingText() const {
+    QString drawingText = text;
+    if (text.startsWith("::")) {
+        drawingText = utils::Lang::get(text.right(text.size() - 2));
+    }
+    return drawingText;
 }

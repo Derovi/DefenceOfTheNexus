@@ -10,6 +10,7 @@ namespace client {
 class OptionsScreen : public Screen {
   public:
     OptionsScreen();
+
   private:
     void onPaused() override;
 

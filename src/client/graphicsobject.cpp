@@ -3,7 +3,7 @@
 #include "../utils/factory.h"
 
 #include "graphicsobject.h"
-#include "mainwindow.h"
+#include "app.h"
 #include "spritecontrollers/unitspritecontroller.h"
 
 client::GraphicsObject::GraphicsObject(const std::shared_ptr<core::Object>& object):
@@ -31,7 +31,7 @@ int client::GraphicsObject::getWidth() const {
 }
 
 void client::GraphicsObject::update(const QTransform& painterTransform, uint64_t timeDeltaMSec) {
-    QPainter objectPainter(MainWindow::getInstance());
+    QPainter objectPainter(App::getInstance());
     objectPainter.setTransform(painterTransform);
     objectPainter.translate(object->getPosition().x(), object->getPosition().y());
     for (const std::shared_ptr<SpriteController>& spriteController : spriteControllers) {

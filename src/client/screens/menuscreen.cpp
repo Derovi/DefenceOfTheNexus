@@ -4,7 +4,7 @@
 
 #include "../../utils/lang.h"
 #include "../widgets/imagebutton.h"
-#include "../mainwindow.h"
+#include "../app.h"
 #include "../properties.h"
 #include "../widgets/textview.h"
 
@@ -22,11 +22,6 @@ void client::MenuScreen::onResumed() {
 
 client::MenuScreen::MenuScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
-
-    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
-    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-    QFont font(fontFamily);
-    font.setPixelSize(100);
 
     auto fullScreenButton = new ImageButton(QPoint(408, 24), 72, 72);
     fullScreenButton->setImage(QImage(":/images/fullScreen"));
@@ -47,10 +42,11 @@ client::MenuScreen::MenuScreen(): Screen() {
     startButton->setHoverImage(QImage(":/interface/button-hover"));
     startButton->setHoverWidth(1329);
     startButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("start"), font));
-    startButton->getTextChildren()->setColor(QColor(249,192,6));
+            std::make_shared<TextView>(QPoint(0, 0), "::start",
+                                       App::getInstance()->getFont()));
+    startButton->getTextChildren()->setColor(QColor(249, 192, 6));
     startButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->openScreen(std::make_shared<GameScreen>());
+        App::getInstance()->openScreen(std::make_shared<GameScreen>());
     });
 
     addChild(startButton);
@@ -60,10 +56,11 @@ client::MenuScreen::MenuScreen(): Screen() {
     optionsButton->setHoverImage(QImage(":/interface/button-hover"));
     optionsButton->setHoverWidth(1329);
     optionsButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("options"), font));
-    optionsButton->getTextChildren()->setColor(QColor(249,192,6));
+            std::make_shared<TextView>(QPoint(0, 0), "::options",
+                                       App::getInstance()->getFont()));
+    optionsButton->getTextChildren()->setColor(QColor(249, 192, 6));
     optionsButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->openScreen(std::make_shared<OptionsScreen>());
+        App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
 
     addChild(optionsButton);
@@ -73,24 +70,13 @@ client::MenuScreen::MenuScreen(): Screen() {
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);
     exitButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("exit"), font));
-    exitButton->getTextChildren()->setColor(QColor(249,192,6));
+            std::make_shared<TextView>(QPoint(0, 0), "::exit",
+                    App::getInstance()->getFont()));
+    exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
     exitButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->getUiThread()->terminate();
+        App::getInstance()->getUiThread()->terminate();
         QCoreApplication::quit();
     });
 
     addChild(exitButton);
-
-    auto textView = new TextView(QPoint(1000, 1008), utils::Lang::get("example"),
-                                 QApplication::font(),
-                                 Qt::blue);
-
-
-    textView->setFont(fontFamily);
-
-
-    textView->setTextSize(50);
-
-    //addChild(textView);
 }

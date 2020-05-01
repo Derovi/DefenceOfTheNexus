@@ -9,14 +9,20 @@
 #include <QDebug>
 #include <QApplication>
 #include <QMouseEvent>
+#include <QtGui/QFontDatabase>
 
-#include "mainwindow.h"
+#include "app.h"
 #include "properties.h"
 #include "windowmanager.h"
 #include "screens/menuscreen.h"
 
-client::MainWindow::MainWindow() {
+client::App::App() {
     //showFullScreen();
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    font = QFont(fontFamily);
+    font.setPixelSize(100);
+
     instance = this;
     uiThread = QThread::create([&] {
         // time when last tick execution was started
@@ -50,29 +56,29 @@ client::MainWindow::MainWindow() {
     uiThread->start();
 }
 
-void client::MainWindow::mousePressEvent(QMouseEvent* event) {
+void client::App::mousePressEvent(QMouseEvent* event) {
     if (!screens.empty()) {
         screens.top()->click(QPoint(window_manager::get_x4k(event->pos().x()),
                 window_manager::get_y4k(event->pos().y())));
     }
 }
 
-void client::MainWindow::draw() {
+void client::App::draw() {
     if (!screens.empty()) {
         QPainter painter(this);
         screens.top()->draw();
     }
 }
 
-QThread* client::MainWindow::getUiThread() const {
+QThread* client::App::getUiThread() const {
     return uiThread;
 }
 
-void client::MainWindow::paintEvent(QPaintEvent*) {
+void client::App::paintEvent(QPaintEvent*) {
     draw();
 }
 
-void client::MainWindow::runOnUiThread(std::function<void()> callback) {
+void client::App::runOnUiThread(std::function<void()> callback) {
     QTimer* timer = new QTimer();
     timer->moveToThread(qApp->thread());
     timer->setSingleShot(true);
@@ -83,14 +89,14 @@ void client::MainWindow::runOnUiThread(std::function<void()> callback) {
     QMetaObject::invokeMethod(timer, "start", Qt::QueuedConnection, Q_ARG(int, 0));
 }
 
-void client::MainWindow::openScreen(const std::shared_ptr<Screen>& screen) {
+void client::App::openScreen(const std::shared_ptr<Screen>& screen) {
     if (!screens.empty()) {
         screens.top()->pause();
     }
     screens.push(screen);
 }
 
-void client::MainWindow::closeScreen() {
+void client::App::closeScreen() {
     if (screens.empty()) {
         return;
     }
@@ -101,17 +107,17 @@ void client::MainWindow::closeScreen() {
     screens.top()->resume();
 }
 
-client::MainWindow* client::MainWindow::getInstance() {
+client::App* client::App::getInstance() {
     return instance;
 }
 
-client::MainWindow* client::MainWindow::instance = nullptr;
+client::App* client::App::instance = nullptr;
 
-void client::MainWindow::wheelEvent(QWheelEvent* event) {
+void client::App::wheelEvent(QWheelEvent* event) {
     screens.top()->wheel(event);
 }
 
-void client::MainWindow::hover(QPoint point) {
+void client::App::hover(QPoint point) {
     if (screens.empty()) {
         return;
     }
@@ -137,9 +143,13 @@ void client::MainWindow::hover(QPoint point) {
     current->setHovered(true);
 }
 
-void client::MainWindow::removeHovered(client::Widget* widget) {
+void client::App::removeHovered(client::Widget* widget) {
     widget->setHovered(false);
     for (Widget* child : widget->children) {
         removeHovered(child);
     }
+}
+
+const QFont& client::App::getFont() const {
+    return font;
 }
