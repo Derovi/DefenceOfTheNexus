@@ -17,6 +17,6 @@ void client::OptionsScreen::onResumed() {
 
 }
 
-client::OptionsScreen::OptionsScreen() : Screen() {
+client::OptionsScreen::OptionsScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/options"), 1, 1));
 }
