@@ -35,10 +35,10 @@ class PathStrategy : public Strategy {
     inline static const QStringList requiredAttributes = {"moving"};
     inline static const QStringList startAfter = {};
 
+    bool isRounding;
     uint32_t destIntersectionUpdate;
     std::shared_ptr<core::Moving> moving;
     std::shared_ptr<QPointF> destPoint;
-    QQueue<QPointF> path;
 };
 
 }  // namespace server

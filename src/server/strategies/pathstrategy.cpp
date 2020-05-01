@@ -11,7 +11,7 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-    Strategy(object), moving(nullptr), destPoint(nullptr) {}
+    isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -28,7 +28,10 @@ void PathStrategy::cancelTargets() {
 
 void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
     if (destPoint == nullptr) {
+        moving->setSpeed(0);
         return;
+    } else {
+        moving->setSpeed(moving->getMaxSpeed());
     }
     if (qFuzzyIsNull(moving->getSpeed())) {
         moving->setDirection(QVector2D(0, 0));
@@ -75,7 +78,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
                          -v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
     };
 
-    if (!path.empty()) {
+    if (isRounding) {
         auto currentDirection = moving->getDirection();
         for (int it = 0; it < 8; ++it) {
             currentDirection = rotateCounterClockwise(currentDirection);
@@ -89,7 +92,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
             }
         }
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
-            path.clear();
+            isRounding = false;
             return;
         }
         direction = currentDirection;
@@ -99,12 +102,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             return;
         }
-        if (it == 0) {
-            path.append(getObject()->getPosition());
-            if (path.size() > 10) {
-                path.pop_front();
-            }
-        }
+        isRounding = true;
         direction = rotateClockwise(direction);
     }
     moving->setDirection(QVector2D(0, 0));
