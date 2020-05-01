@@ -63,3 +63,35 @@ const std::shared_ptr<client::ImageButton>& client::Chooser::getRightButton() co
 const std::shared_ptr<client::TextView>& client::Chooser::getTextView() const {
     return textView;
 }
+
+const QImage& client::Chooser::getBackground() const {
+    return background;
+}
+
+void client::Chooser::setBackground(const QImage& background) {
+    Chooser::background = background;
+}
+
+const std::function<void(int)>& client::Chooser::getOnChanged() const {
+    return onChanged;
+}
+
+void client::Chooser::setOnChanged(const std::function<void(int)>& onChanged) {
+    Chooser::onChanged = onChanged;
+}
+
+const QStringList& client::Chooser::getOptions() const {
+    return options;
+}
+
+void client::Chooser::setOptions(const QStringList& options) {
+    Chooser::options = options;
+}
+
+int client::Chooser::getTextWidth() const {
+    return textWidth;
+}
+
+void client::Chooser::setTextWidth(int textWidth) {
+    Chooser::textWidth = textWidth;
+}
