@@ -11,7 +11,7 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-    isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
+        isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -52,15 +52,12 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         auto targetObject = world->objectAt(*destPoint);
         if (targetObject != nullptr) {
             auto directMoving = std::static_pointer_cast<core::Moving>(moving->clone());
-            auto pointShift = moving_performer::getNextPosition(getObject(),
-                timeDelta, *directMoving) - targetObject->getPosition();
 
-            auto hitboxOnMap = getObject()->getHitbox();
-            for (auto& point : hitboxOnMap) {
-                point += pointShift;
-            }
+            auto hitboxOnMap = getObject()->getRotatedHitbox();
+            hitboxOnMap.translate(moving_performer::getNextPosition(getObject(),
+                                                                    timeDelta, *directMoving));
 
-            if (targetObject->getHitbox().intersects(hitboxOnMap)) {
+            if (targetObject->isIntersect(hitboxOnMap)) {
                 destPoint = nullptr;
                 moving->setDirection(direction);
                 return;
@@ -80,7 +77,9 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
 
     if (isRounding) {
         auto currentDirection = moving->getDirection();
-        for (int it = 0; it < 8; ++it) {
+        for (int it = 0;
+             it < 8;
+             ++it) {
             currentDirection = rotateCounterClockwise(currentDirection);
             moving->setDirection(currentDirection);
             if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
@@ -97,7 +96,9 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         }
         direction = currentDirection;
     }
-    for (int it = 0; it < 8; ++it) {
+    for (int it = 0;
+         it < 8;
+         ++it) {
         moving->setDirection(direction);
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             return;
