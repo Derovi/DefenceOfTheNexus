@@ -41,6 +41,9 @@ class GameWorld {
     summonObject(const server::ObjectSignature& signature, const QPoint& position,
                  float rotationAngle = 0);
 
+    void buildWall(int x1, int y1, int x2, int y2, const server::ObjectSignature& wall,
+                   const server::ObjectSignature& column);
+
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);

@@ -22,5 +22,29 @@
         "columns": 20
       }
     }
+  },
+  "wall1": {
+    "width": 100,
+    "height": 100,
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "moving": {
+        "resource": ":/sprites/wall1",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "column1": {
+    "width": 100,
+    "height": 100,
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "moving": {
+        "resource": ":/sprites/column1",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }

@@ -3,5 +3,7 @@
         <file alias="background">sprites/background.png</file>
         <file alias="unit1">sprites/unit1.png</file>
         <file alias="flame">sprites/flame.png</file>
+        <file alias="wall1">sprites/wall1.jpg</file>
+        <file alias="column1">sprites/column1.jpg</file>
     </qresource>
 </RCC>

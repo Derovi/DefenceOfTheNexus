@@ -47,5 +47,45 @@
     },
     "strategies": [
     ]
+  },
+  "wall1": {
+    "attributes": {
+    },
+    "hitbox": {
+      "x": [
+        0,
+        0,
+        100,
+        100
+      ],
+      "y": [
+        0,
+        100,
+        100,
+        0
+      ]
+    },
+    "strategies": [
+    ]
+  },
+  "column 1": {
+    "attributes": {
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        0,
+        50,
+        0
+      ],
+      "y": [
+        0,
+        50,
+        0,
+        -50
+      ]
+    },
+    "strategies": [
+    ]
   }
 }

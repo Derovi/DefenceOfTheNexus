@@ -43,10 +43,13 @@ client::GameScreen::GameScreen() {
     gameMap->setCommandQueue(engine->getCommandQueue());
 
     gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                          QPoint(2000, 1000));
+                                          QPoint(2000, 2000));
 
-    gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
-                                          QPoint(3000, 2000));
+  //  gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
+    //                                      QPoint(3000, 2000));
+    gameMap->getGameWorld()->buildWall(0, 1500, 2000, 1500,
+                                       utils::Factory::getObjectSignature("wall1").value(),
+                                       utils::Factory::getObjectSignature("test1").value());
 
     gameMap->setShowHitBoxes(true);
     engine->start();
