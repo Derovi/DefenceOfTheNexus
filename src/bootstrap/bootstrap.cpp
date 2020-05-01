@@ -135,7 +135,6 @@ int main(int argc, char** argv) {
     registerSpriteControllers();
     registerObjectSignatures();
     registerGraphicsDescriptions();
-    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
     client::App w;

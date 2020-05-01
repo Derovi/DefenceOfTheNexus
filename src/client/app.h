@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QThread>
 #include <QStack>
+#include <QtCore/QSettings>
 
 #include "widget.h"
 #include "screen.h"
@@ -37,6 +38,10 @@ class App : public QWidget {
 
     const QFont& getFont() const;
 
+    const std::shared_ptr<QSettings>& getSettings() const;
+
+    ~App() override;
+
   private:
     void draw();
 
@@ -49,6 +54,8 @@ class App : public QWidget {
     QFont font;
 
     QThread* uiThread;
+
+    std::shared_ptr<QSettings> settings;
 
     static App* instance;
 };

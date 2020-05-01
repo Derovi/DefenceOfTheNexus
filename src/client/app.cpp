@@ -11,6 +11,9 @@
 #include <QMouseEvent>
 #include <QtGui/QFontDatabase>
 
+#include "../utils/serializer.h"
+#include "../utils/lang.h"
+
 #include "app.h"
 #include "properties.h"
 #include "windowmanager.h"
@@ -18,6 +21,15 @@
 
 client::App::App() {
     //showFullScreen();
+    settings = std::make_shared<QSettings>("DOTN", "Defence Of the Nexus");
+    if (settings->contains("properties")) {
+        qDebug() << "found!";
+        properties::load(utils::Serializer().stringToJsonObject(
+                settings->value("properties").toString()).value());
+    }
+
+    utils::Lang::load(client::properties::lang, client::properties::baseLang);
+
     int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
     QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
     font = QFont(fontFamily);
@@ -42,7 +54,7 @@ client::App::App() {
                     setFixedHeight(properties::height);
                 }
                 hover(QPoint(window_manager::get_x4k(mapFromGlobal(cursor().pos()).x()),
-                        window_manager::get_y4k(mapFromGlobal(cursor().pos()).y())));
+                             window_manager::get_y4k(mapFromGlobal(cursor().pos()).y())));
                 update();
             });
 
@@ -59,7 +71,7 @@ client::App::App() {
 void client::App::mousePressEvent(QMouseEvent* event) {
     if (!screens.empty()) {
         screens.top()->click(QPoint(window_manager::get_x4k(event->pos().x()),
-                window_manager::get_y4k(event->pos().y())));
+                                    window_manager::get_y4k(event->pos().y())));
     }
 }
 
@@ -76,6 +88,12 @@ QThread* client::App::getUiThread() const {
 
 void client::App::paintEvent(QPaintEvent*) {
     draw();
+}
+
+client::App::~App() {
+    settings->setValue("properties",
+                          utils::Serializer().jsonObjectToString(properties::serialize()));
+    settings->sync();
 }
 
 void client::App::runOnUiThread(std::function<void()> callback) {
@@ -152,4 +170,8 @@ void client::App::removeHovered(client::Widget* widget) {
 
 const QFont& client::App::getFont() const {
     return font;
+}
+
+const std::shared_ptr<QSettings>& client::App::getSettings() const {
+    return settings;
 }
