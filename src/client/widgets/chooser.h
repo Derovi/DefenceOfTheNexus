@@ -23,6 +23,22 @@ class Chooser : public Widget {
 
     const std::shared_ptr<TextView>& getTextView() const;
 
+    const std::function<void(int)>& getOnChanged() const;
+
+    void setOnChanged(const std::function<void(int)>& onChanged);
+
+    void setBackground(const QImage& background);
+
+    const QImage& getBackground() const;
+
+    const QStringList& getOptions() const;
+
+    void setOptions(const QStringList& options);
+
+    int getTextWidth() const;
+
+    void setTextWidth(int textWidth);
+
   private:
     void leftClick();
 

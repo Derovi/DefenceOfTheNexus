@@ -3,5 +3,6 @@
   "example": "Text example",
   "start": "Start",
   "options": "Options",
-  "exit": "Exit"
+  "exit": "Exit",
+  "back": "Back"
 }
