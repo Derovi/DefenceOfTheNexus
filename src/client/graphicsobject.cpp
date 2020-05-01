@@ -34,6 +34,7 @@ void client::GraphicsObject::update(const QTransform& painterTransform, uint64_t
     QPainter objectPainter(MainWindow::getInstance());
     objectPainter.setTransform(painterTransform);
     objectPainter.translate(object->getPosition().x(), object->getPosition().y());
+    objectPainter.rotate(object->getRotationAngle());
     for (const std::shared_ptr<SpriteController>& spriteController : spriteControllers) {
         int textureHeight = height;
         int textureWidth = width;

@@ -68,23 +68,19 @@ void client::GameMap::paint(QPainter& painter) {
 }
 
     if (showHitBoxes) {
-        QPainter hitBoxPainter(MainWindow::getInstance());
-        hitBoxPainter.setTransform(painter.transform());
-
-        QFont font = hitBoxPainter.font();
-        font.setPointSize(40);
-        font.setBold(true);
-        hitBoxPainter.setFont(font);
         for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
-            QPolygon polygon;
-            for (auto point : object->getHitbox()) {
-                polygon.append(QPoint(point.x() + object->getPosition().x(),
-                                      point.y() + object->getPosition().y()));
-            }
+            QPainter hitBoxPainter(MainWindow::getInstance());
+            hitBoxPainter.setTransform(painter.transform());
+            QFont font = hitBoxPainter.font();
+            font.setPointSize(40);
+            font.setBold(true);
+            hitBoxPainter.setFont(font);
+            hitBoxPainter.translate(object->getPosition().x(), object->getPosition().y());
+            hitBoxPainter.rotate(object->getRotationAngle());
             hitBoxPainter.setPen(QPen(QBrush(Qt::green),
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
-            hitBoxPainter.drawPolygon(polygon);
+            hitBoxPainter.drawPolygon(object->getHitbox());
             hitBoxPainter.setPen(QPen(QBrush(QColor(0, 0, 0)),
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
