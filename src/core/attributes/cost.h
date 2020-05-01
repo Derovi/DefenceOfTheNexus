@@ -4,35 +4,27 @@
 #include <memory>
 #include <QMap>
 #include <QtCore/QHash>
+#include "resource.h"
+
 #include "../object.h"
 
 namespace core {
-
-struct ResCost {
-    int iron;
-    int wood;
-    int stone;
-};
 
 class Cost : public Attribute {
   public:
     Cost();
 
-    explicit Cost(QMap<std::shared_ptr<core::Object>, core::ResCost>& hashMap);
+    explicit Cost(QVector<Resource> cost);
 
-    QMap<std::shared_ptr<core::Object>, core::ResCost>& getCost();
+    bool isEnough(const Resource& playerResource) const;
 
-    void setCost(QMap<std::shared_ptr<core::Object>, core::ResCost>);
+    bool isEnough(const QVector<Resource>& playerResources) const;
 
-    static QString attributeName;
-
-    QString getAttributeName() override;
-
-    std::shared_ptr<Attribute> clone() override;
-
+    // false if not enough
+    bool pay(QVector<Resource>& playerResources) const;
 
   private:
-    QMap<std::shared_ptr<core::Object>, core::ResCost> cost;
+    QVector<Resource> cost;
 };
 
 } // namespace core

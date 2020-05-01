@@ -1,24 +1,41 @@
 #include "cost.h"
 
-core::Cost::Cost(QMap<std::shared_ptr<core::Object>, core::ResCost>& hashMap) {
-    cost = hashMap;
+#include <utility>
+#include "resource.h"
+
+core::Cost::Cost(QVector<Resource>  cost) : cost(std::move(cost)) {}
+
+core::Cost::Cost() {}
+
+bool core::Cost::isEnough(const core::Resource& playerResource) const {
+    for (const Resource& resource : cost) {
+        if (resource.getType() == playerResource.getType()) {
+            return playerResource.getAmount() >= resource.getAmount();
+        }
+    }
+    return true;
 }
 
-QMap<std::shared_ptr<core::Object>, core::ResCost>& core::Cost::getCost() {
-    return cost;
+bool core::Cost::isEnough(const QVector<Resource>& playerResources) const {
+    for (const Resource& playerResource : playerResources) {
+        if (!isEnough(playerResource)) {
+            return false;
+        }
+    }
+    return true;
 }
 
-void core::Cost::setCost(QMap<std::shared_ptr<core::Object>, core::ResCost> newCost) {
-    cost = newCost;
-}
-
-QString core::Cost::getAttributeName() {
-    return attributeName;
-}
-
-QString core::Cost::attributeName = "cost";
-
-std::shared_ptr<core::Attribute> core::Cost::clone() {
-    return std::make_shared<core::Cost>(*this);
-
+bool core::Cost::pay(QVector<Resource>& playerResources) const {
+    if (!isEnough(playerResources)) {
+        return false;
+    }
+    for (Resource& playerResource : playerResources) {
+        for (const Resource& resource : cost) {
+            if (playerResource.getType() == resource.getType()) {
+                playerResource.setAmount(playerResource.getAmount() - resource.getAmount());
+                break;
+            }
+        }
+    }
+    return true;
 }

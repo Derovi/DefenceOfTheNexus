@@ -16,7 +16,7 @@ QPointF core::Object::getPosition() const {
     return position;
 }
 
-const QPolygonF& core::Object::getHitbox() const {
+QPolygonF core::Object::getHitbox() const {
     return hitbox;
 }
 
@@ -92,4 +92,8 @@ std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name)
 
 const QStringList& core::Object::getStrategies() const {
     return strategies;
+}
+
+QPolygon core::Object::getRotatedHitbox() const {
+    return getHitbox().map
 }

@@ -26,7 +26,9 @@ class Object {
 
     QPointF getPosition() const;
 
-    const QPolygonF& getHitbox() const;
+    QPolygonF getHitbox() const;
+
+    QPolygon getRotatedHitbox() const;
 
     float getRotationAngle() const;
 
