@@ -11,9 +11,17 @@ class UnitSpriteController : public SpriteController {
   public:
     explicit UnitSpriteController(const std::shared_ptr<core::Object>& object);
 
-    const std::shared_ptr<Sprite>& getMoveSprite() const;
+    std::shared_ptr<Sprite> getMoveSprite() const;
+
+    std::shared_ptr<Sprite> getStandSprite() const;
+
+    std::shared_ptr<Sprite> getAttackSprite() const;
 
     void setMoveSprite(const std::shared_ptr<Sprite>& moveSprite);
+
+    void setStandSprite(const std::shared_ptr<Sprite>& standSprite);
+
+    void setAttackSprite(const std::shared_ptr<Sprite>& attackSprite);
 
     QString getName() override;
 
@@ -26,6 +34,8 @@ class UnitSpriteController : public SpriteController {
     std::shared_ptr<Sprite> moveSprite;
 
     std::shared_ptr<Sprite> standSprite;
+
+    std::shared_ptr<Sprite> attackSprite;
 };
 
 }

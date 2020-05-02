@@ -13,6 +13,12 @@
         "miningSpeed": 4,
         "miningDelay": 1000,
         "miningRadius": 500
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
       }
     },
     "hitbox": {
@@ -30,7 +36,8 @@
     "strategies": [
       "mineStrategy",
       "pathStrategy",
-      "moveStrategy"
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
 
@@ -51,6 +58,10 @@
 
   "test2": {
     "attributes": {
+      "damageable": {
+        "health": 100,
+        "maxHealth": 100
+      }
     },
     "hitbox": {
       "x": [

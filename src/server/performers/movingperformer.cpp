@@ -1,10 +1,13 @@
-#include <QDebug>
-
 #include "movingperformer.h"
+
+#include <cmath>
+
+#include <QDebug>
 
 void
 server::moving_performer::move(const std::shared_ptr<core::Object>& object, int64_t timeDelta,
                                const core::Moving& moving) {
+    object->setRotationAngle(std::atan2(moving.getDirection().y(), moving.getDirection().x()));
     object->setPosition(getNextPosition(object, timeDelta, moving));
 }
 

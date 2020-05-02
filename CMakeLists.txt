@@ -72,7 +72,8 @@ add_executable(defenceofnexus
         src/server/strategies/minestrategy.cpp
         src/utils/lang.cpp
         src/client/screens/optionsscreen.cpp
-        src/client/widgets/chooser.cpp)
+        src/client/widgets/chooser.cpp
+        src/server/strategies/attackstrategy.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

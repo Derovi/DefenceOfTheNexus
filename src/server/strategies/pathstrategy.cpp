@@ -11,7 +11,7 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-        isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
+    isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -77,9 +77,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
 
     if (isRounding) {
         auto currentDirection = moving->getDirection();
-        for (int it = 0;
-             it < 8;
-             ++it) {
+        for (int it = 0; it < 8; ++it) {
             currentDirection = rotateCounterClockwise(currentDirection);
             moving->setDirection(currentDirection);
             if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
@@ -96,9 +94,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         }
         direction = currentDirection;
     }
-    for (int it = 0;
-         it < 8;
-         ++it) {
+    for (int it = 0; it < 8; ++it) {
         moving->setDirection(direction);
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             return;
