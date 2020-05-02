@@ -3,5 +3,7 @@
   "start": "Старт",
   "options": "Налады",
   "exit": "Выхад",
-  "back": "Назад"
+  "back": "Назад",
+  "full_screen_mode": "Поўнаэкранны",
+  "window_screen_mode": "У акне"
 }

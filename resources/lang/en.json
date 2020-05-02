@@ -4,5 +4,7 @@
   "start": "Start",
   "options": "Options",
   "exit": "Exit",
-  "back": "Back"
+  "back": "Back",
+  "full_screen_mode": "Fullscreen",
+  "window_screen_mode": "Window"
 }

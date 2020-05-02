@@ -4,5 +4,7 @@
   "start": "Старт",
   "options": "Настройки",
   "exit": "Выход",
-  "back": "Назад"
+  "back": "Назад",
+  "full_screen_mode": "Полноэкранный",
+  "window_screen_mode": "В окне"
 }

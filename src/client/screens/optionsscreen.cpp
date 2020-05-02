@@ -22,6 +22,30 @@ void client::OptionsScreen::onResumed() {
 client::OptionsScreen::OptionsScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/options"), 1, 1));
 
+    auto screenModeChooser = new Chooser(QPoint(1340, 948), 232, 1260);
+    screenModeChooser->getTextView()->setFont(App::getInstance()->getFont());
+    screenModeChooser->getTextView()->setColor(QColor(249, 192, 6));
+    screenModeChooser->setBackground(QImage(":/interface/chooser"));
+    screenModeChooser->getLeftButton()->setImage(QImage(":/interface/left-button"));
+    screenModeChooser->getLeftButton()->setHoverImage(QImage(":/interface/left-button-hover"));
+    screenModeChooser->getLeftButton()->setHoverWidth(150);
+    screenModeChooser->getLeftButton()->setHoverHeight(232);
+    screenModeChooser->getRightButton()->setImage(QImage(":/interface/right-button"));
+    screenModeChooser->getRightButton()->setHoverImage(QImage(":/interface/right-button-hover"));
+    screenModeChooser->getRightButton()->setHoverWidth(150);
+    screenModeChooser->getRightButton()->setHoverHeight(232);
+    screenModeChooser->setTextWidth(921);
+    screenModeChooser->setButtonWidth(138);
+    screenModeChooser->getOptions().push_back("::full_screen_mode");
+    screenModeChooser->getOptions().push_back("::window_screen_mode");
+    screenModeChooser->setSelected(properties::fullscreen ? 0 : 1);
+
+    screenModeChooser->setOnChanged([&](int selected) {
+        properties::fullscreen = selected == 0;
+    });
+
+    addChild(screenModeChooser);
+
     auto languageChooser = new Chooser(QPoint(1340, 1210), 232, 1260);
     languageChooser->getTextView()->setFont(App::getInstance()->getFont());
     languageChooser->getTextView()->setColor(QColor(249, 192, 6));

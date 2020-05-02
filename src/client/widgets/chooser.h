@@ -27,6 +27,8 @@ class Chooser : public Widget {
 
     const QStringList& getOptions() const;
 
+    QStringList& getOptions();
+
     void setOptions(const QStringList& options);
 
     int getTextWidth() const;

@@ -8,7 +8,7 @@
 
 const QString& utils::Lang::get(const QString& key) {
     if (!langMap.contains(key)) {
-        return "";
+        return key;
     }
     return langMap[key];
 }

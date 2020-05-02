@@ -133,3 +133,7 @@ client::ImageButton* client::Chooser::getRightButton() const {
 client::TextView* client::Chooser::getTextView() const {
     return textView;
 }
+
+QStringList& client::Chooser::getOptions() {
+    return options;
+}
