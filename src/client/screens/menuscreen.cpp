@@ -23,13 +23,13 @@ void client::MenuScreen::onResumed() {
 client::MenuScreen::MenuScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto game_name = new TextView(QPoint(1200, 750), "::game_name",
+    auto game_name = new TextView(QPoint(1200, 500), "::game_name",
                                   App::getInstance()->getFont());
     game_name->setColor(QColor(249, 192, 6));
     game_name->setTextSize(180);
     addChild(game_name);
 
-    auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
+    auto startButton = new ImageButton(QPoint(1510, 686), 232, 921);
     startButton->setImage(QImage(":/interface/button"));
     startButton->setHoverImage(QImage(":/interface/button-hover"));
     startButton->setHoverWidth(1329);
@@ -43,7 +43,7 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     addChild(startButton);
 
-    auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
+    auto optionsButton = new ImageButton(QPoint(1510, 942), 232, 921);
     optionsButton->setImage(QImage(":/interface/button"));
     optionsButton->setHoverImage(QImage(":/interface/button-hover"));
     optionsButton->setHoverWidth(1329);
@@ -57,7 +57,7 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     addChild(optionsButton);
 
-    auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
+    auto exitButton = new ImageButton(QPoint(1510, 1210), 232, 921);
     exitButton->setImage(QImage(":/interface/button"));
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);

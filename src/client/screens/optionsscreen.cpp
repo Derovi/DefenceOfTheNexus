@@ -22,13 +22,13 @@ void client::OptionsScreen::onResumed() {
 client::OptionsScreen::OptionsScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto game_name = new TextView(QPoint(1650, 800), "::options",
+    auto game_name = new TextView(QPoint(1650, 500), "::options",
                                   App::getInstance()->getFont());
     game_name->setColor(QColor(249, 192, 6));
     game_name->setTextSize(180);
     addChild(game_name);
 
-    auto screenModeChooser = new Chooser(QPoint(1340, 948), 232, 1260);
+    auto screenModeChooser = new Chooser(QPoint(1340, 686), 232, 1260);
     screenModeChooser->getTextView()->setFont(App::getInstance()->getFont());
     screenModeChooser->getTextView()->setColor(QColor(249, 192, 6));
     screenModeChooser->setBackground(QImage(":/interface/chooser"));
@@ -52,7 +52,7 @@ client::OptionsScreen::OptionsScreen(): Screen() {
 
     addChild(screenModeChooser);
 
-    auto languageChooser = new Chooser(QPoint(1340, 1210), 232, 1260);
+    auto languageChooser = new Chooser(QPoint(1340, 942), 232, 1260);
     languageChooser->getTextView()->setFont(App::getInstance()->getFont());
     languageChooser->getTextView()->setColor(QColor(249, 192, 6));
     languageChooser->setBackground(QImage(":/interface/chooser"));
@@ -82,7 +82,7 @@ client::OptionsScreen::OptionsScreen(): Screen() {
     });
     addChild(languageChooser);
 
-    auto backButton = new ImageButton(QPoint(1510, 1472), 232, 921);
+    auto backButton = new ImageButton(QPoint(1510, 1210), 232, 921);
     backButton->setImage(QImage(":/interface/button"));
     backButton->setHoverImage(QImage(":/interface/button-hover"));
     backButton->setHoverWidth(1329);
