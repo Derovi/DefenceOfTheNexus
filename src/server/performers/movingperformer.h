@@ -10,7 +10,8 @@
 
 namespace server::moving_performer {
 
-void move(const std::shared_ptr<core::Object>& object, int64_t timeDelta, const core::Moving& moving);
+void
+move(const std::shared_ptr<core::Object>& object, int64_t timeDelta, const core::Moving& moving);
 
 void moveIfNoObstacles(const std::shared_ptr<core::Object>& object, int64_t timeDelta,
                        const std::shared_ptr<core::GameWorld>& gameWorld,
@@ -19,6 +20,9 @@ void moveIfNoObstacles(const std::shared_ptr<core::Object>& object, int64_t time
 bool isObstacles(const std::shared_ptr<core::Object>& object, int64_t timeDelta,
                  const std::shared_ptr<core::GameWorld>& gameWorld,
                  const std::shared_ptr<core::Moving>& moving);
+
+bool isIntersect(const std::shared_ptr<core::Object>& object,
+                 const std::shared_ptr<core::GameWorld>& gameWorld);
 
 QPointF getNextPosition(const std::shared_ptr<core::Object>& object,
                         int64_t timeDelta, const core::Moving& moving);

@@ -1,10 +1,12 @@
 #include <memory>
+#include <cmath>
 
 #include <QDebug>
 
 #include "gameworld.h"
 #include "attributes/resource.h"
 #include "object.h"
+#include "../server/performers/movingperformer.h"
 
 int core::GameWorld::getHeight() const {
     return height;
@@ -76,8 +78,31 @@ core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0) {}
 
 void core::GameWorld::buildWall(int x1, int y1, int x2, int y2, const server::ObjectSignature& wall,
                                 const server::ObjectSignature& column) {
-    summonObject(column,QPoint(x1,y1));
-    summonObject(column,QPoint(x2,y2));
-    for(int j=x1+100;j<=x2-100;j+=100)
-        summonObject(wall,QPoint(j,y1));
+    long double dx = x2 - x1;
+    long double dy = y2 - y1;
+    long double ang;
+    if (dx == 0) {
+        ang = 0;
+    } else { ang = atan2(dy, dx); }
+    long double dz = sqrt(dx * dx + dy * dy);
+    int all = dz / 100;
+    dx /= dz;
+    dy /= dz;
+    int kol = 0;
+    int MAX_WALL_LENGTH = 10;
+    for (int j = 0;
+         j < all;
+         j++) {
+        if (kol == MAX_WALL_LENGTH || j == all - 1) {
+            kol = 0;
+        }
+
+        if (kol == 0) {
+          //  if(!server::moving_performer::isIntersect(make_shared))
+            summonObject(column, QPoint(x1 + dx * j*100, y1 + dy * j*100), ang);
+        } else {
+            summonObject(wall, QPoint(x1 + dx * j*100, y1 + dy * j*100), ang);
+        }
+        kol++;
+    }
 }

@@ -47,7 +47,7 @@ client::GameScreen::GameScreen() {
 
     //  gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
     //                                      QPoint(3000, 2000));
-    gameMap->getGameWorld()->buildWall(0, 1500, 2000, 1500,
+    gameMap->getGameWorld()->buildWall(0, 1500, 2000, 500,
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
 

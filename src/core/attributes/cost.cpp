@@ -3,7 +3,7 @@
 #include <utility>
 #include "resource.h"
 
-core::Cost::Cost(QVector<Resource>  cost) : cost(std::move(cost)) {}
+core::Cost::Cost(QVector<Resource> cost): cost(std::move(cost)) {}
 
 core::Cost::Cost() {}
 
@@ -38,4 +38,19 @@ bool core::Cost::pay(QVector<Resource>& playerResources) const {
         }
     }
     return true;
+}
+
+const QVector<core::Resource>& core::Cost::getCost() const {
+    return cost;
+}
+
+QString core::Cost::getAttributeName() {
+    return attributeName;
+}
+
+QString core::Cost::attributeName = "cost";
+
+std::shared_ptr<core::Attribute> core::Cost::clone() {
+    return std::make_shared<core::Cost>(*this);
+
 }

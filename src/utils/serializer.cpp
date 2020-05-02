@@ -669,15 +669,12 @@ utils::Serializer::costSerializer(const std::shared_ptr<core::Attribute>& attrib
     }
     auto iter = object->getCost().begin();
     while (iter != object->getCost().end()) {
-        std::optional<QJsonObject> result = objectSerializer(*iter.key());
+        std::optional<QJsonObject> result = resourceSerializer(std::make_shared<core::Resource>(*iter));
         if (result == std::nullopt) {
             return result;
         }
         QJsonObject thisObj;
         thisObj.insert("object", result.value());
-        thisObj.insert("wood", iter.value().wood);
-        thisObj.insert("iron", iter.value().iron);
-        thisObj.insert("stone", iter.value().stone);
         ++iter;
         ans.push_back(thisObj);
     }
@@ -711,34 +708,21 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     QJsonArray array = serialized["all"].toArray();
-    QMap<std::shared_ptr<core::Object>, core::ResCost> cost;
+    QVector<core::Resource>cost;
     for (const auto obj : array) {
         if (!obj.isObject()) {
             return std::nullopt;
         }
         QJsonObject myObj = obj.toObject();
-        if (!myObj["wood"].isDouble()) {
+        if(!myObj["object"].isObject()){
             return std::nullopt;
         }
-        int wood = myObj["wood"].toDouble();
-        if (!myObj["iron"].isDouble()) {
-            return std::nullopt;
-        }
-        int iron = myObj["iron"].toDouble();
-        if (!myObj["stone"].isDouble()) {
-            return std::nullopt;
-        }
-        int stone = myObj["stone"].toDouble();
-        if (!myObj["object"].isObject()) {
-            return std::nullopt;
-        }
-        core::ResCost thisCost{iron, wood, stone};
         QJsonObject jsonOfObject = myObj["object"].toObject();
-        auto res = objectDeserializer(jsonOfObject);
+        auto res = resourceDeserializer(jsonOfObject);
         if (res == std::nullopt) {
             return std::nullopt;
         }
-        cost[std::make_shared<core::Object>(res.value())] = thisCost;
+        cost.push_back(*dynamic_cast<core::Resource*>(res.value().get()));
     }
     auto object = new core::Cost(cost);
     return std::make_shared<core::Cost>(*object);
