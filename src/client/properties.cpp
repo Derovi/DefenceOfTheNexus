@@ -2,7 +2,7 @@
 
 QString client::properties::baseLang = "en";
 
-QString client::properties::lang = "ru";
+QString client::properties::lang = "by";
 
 int client::properties::width = 1200;
 

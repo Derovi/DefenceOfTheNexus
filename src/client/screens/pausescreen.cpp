@@ -22,7 +22,7 @@ void client::PauseScreen::onResumed() {
 
 }
 
-client::PauseScreen::PauseScreen() : Screen() {
+client::PauseScreen::PauseScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/pause"), 1, 1));
 
     auto game_name = new TextView(QPoint(1700, 500), "::pause",
@@ -54,30 +54,39 @@ client::PauseScreen::PauseScreen() : Screen() {
     saveGameButton->setHoverImage(QImage(":/interface/button-hover"));
     saveGameButton->setHoverWidth(1329);
     saveGameButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "::save-game",
+            std::make_shared<TextView>(QPoint(0, 0), "::save_game",
                                        App::getInstance()->getFont()));
     saveGameButton->getTextChildren()->setColor(QColor(249, 192, 6));
     saveGameButton->setOnClick([=](QPoint point) {
         QString fileName = QFileDialog::getSaveFileName(App::getInstance(),
-                                                        utils::Lang::get("save-game"), "",
-                                                        utils::Lang::get("save-game-choose"));
-        utils::Serializer serializer;
-        serializer.setPrettyPrinting(true);
+                                                        utils::Lang::get("save_game"), ".gsv",
+                                                        "(*.gsv)");
+
+        core::GameWorld* gameWorld = nullptr;
+        for (std::shared_ptr<Screen>& screen : App::getInstance()->getScreens()) {
+            auto* gameScreen = dynamic_cast<GameScreen*>(screen.get());
+            if (gameScreen) {
+                gameWorld = gameScreen->getGameMap()->getGameWorld().get();
+            }
+        }
+
+        if (!gameWorld) {
+            return;
+        }
 
         QFile file(fileName);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text)) {
             return;
         }
 
-        core::GameWorld* gameWorld;
-        for (std::shared_ptr<Screen>& screen : App::getInstance()->getScreens()) {
-            auto* gameScreen = dynamic_cast<GameScreen*>(screen.get());
-            if (gameScreen) {
-                //gameWorld = gameScreen->get
-            }
-        }
+        utils::Serializer serializer;
+        serializer.setPrettyPrinting(true);
 
-        //serializer.serializeGameWorld(App::getInstance().getE);
+        QTextStream stream(&file);
+
+        stream << serializer.serializeGameWorld(*gameWorld).value();
+
+        file.close();
     });
 
     addChild(saveGameButton);

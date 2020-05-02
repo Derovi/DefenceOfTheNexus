@@ -18,8 +18,12 @@ void client::GameScreen::onResumed() {
 
 }
 
+client::GameMap* client::GameScreen::getGameMap() const {
+    return gameMap;
+}
+
 client::GameScreen::GameScreen() : Screen() {
-    auto gameMap = new GameMap();
+    gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
     background.setBackAndForthMode(true);

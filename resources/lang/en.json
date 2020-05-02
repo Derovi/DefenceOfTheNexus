@@ -10,5 +10,6 @@
   "full_screen_mode": "Fullscreen",
   "window_screen_mode": "Window",
   "exit_menu": "To menu",
-  "resume": "Resume"
+  "resume": "Resume",
+  "save_game": "Save game"
 }

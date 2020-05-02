@@ -10,5 +10,6 @@
   "full_screen_mode": "Полноэкранный",
   "window_screen_mode": "В окне",
   "exit_menu": "В меню",
-  "resume": "Вернуться"
+  "resume": "Вернуться",
+  "save_game": "Сохранить"
 }
