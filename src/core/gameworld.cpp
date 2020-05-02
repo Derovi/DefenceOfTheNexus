@@ -94,7 +94,7 @@ core::GameWorld::buildWall(int x1, int y1, int x2, int y2, const server::ObjectS
     dx /= dz;
     dy /= dz;
     int kol = 0;
-    int MAX_WALL_LENGTH = 10;
+    int MAX_WALL_LENGTH = 3;
     ang *= (long double) 180 / 3.1415926;
     int WALL_WIDTH = 50;
     QVector<QPoint> vec;
