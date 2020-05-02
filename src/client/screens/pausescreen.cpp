@@ -8,34 +8,37 @@
 #include "../properties.h"
 #include "../widgets/textview.h"
 
-#include "menuscreen.h"
-#include "gamescreen.h"
+#include "pausescreen.h"
 #include "optionsscreen.h"
 
-void client::MenuScreen::onPaused() {
+void client::PauseScreen::onPaused() {
 
 }
 
-void client::MenuScreen::onResumed() {
+void client::PauseScreen::onResumed() {
 
 }
 
-client::MenuScreen::MenuScreen(): Screen() {
+client::PauseScreen::PauseScreen() : Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
-    startButton->setImage(QImage(":/interface/button"));
-    startButton->setHoverImage(QImage(":/interface/button-hover"));
-    startButton->setHoverWidth(1329);
-    startButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "::start",
+    auto resumeButton = new ImageButton(QPoint(1510, 948), 232, 921);
+    resumeButton->setImage(QImage(":/interface/button"));
+    resumeButton->setHoverImage(QImage(":/interface/button-hover"));
+    resumeButton->setHoverWidth(1329);
+    resumeButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), "::resume",
                                        App::getInstance()->getFont()));
-    startButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    startButton->setOnClick([=](QPoint point) {
-        App::getInstance()->openScreen(std::make_shared<GameScreen>());
+    resumeButton->getTextChildren()->setColor(QColor(249, 192, 6));
+    resumeButton->setOnClick([=](QPoint point) {
+        QThread* thread = QThread::create([&] {
+            QThread::msleep(1);
+            App::getInstance()->closeScreen();
+        });
+        thread->start();
     });
 
-    addChild(startButton);
+    addChild(resumeButton);
 
     auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
     optionsButton->setImage(QImage(":/interface/button"));
@@ -56,12 +59,16 @@ client::MenuScreen::MenuScreen(): Screen() {
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);
     exitButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "::exit",
-                    App::getInstance()->getFont()));
+            std::make_shared<TextView>(QPoint(0, 0), "::exit-menu",
+                                       App::getInstance()->getFont()));
     exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
     exitButton->setOnClick([=](QPoint point) {
-        App::getInstance()->getUiThread()->terminate();
-        QCoreApplication::quit();
+        QThread* thread = QThread::create([&] {
+            QThread::msleep(1);
+            App::getInstance()->closeScreen();
+            App::getInstance()->closeScreen();
+        });
+        thread->start();
     });
 
     addChild(exitButton);

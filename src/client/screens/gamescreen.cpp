@@ -8,6 +8,7 @@
 #include "../../server/engine.h"
 #include "../../core/attributes/moving.h"
 #include "../../utils/factory.h"
+#include "pausescreen.h"
 
 void client::GameScreen::onPaused() {
 
@@ -24,17 +25,13 @@ client::GameScreen::GameScreen() : Screen() {
     background.setBackAndForthMode(true);
     gameMap->setBackground(background);
     addChild(gameMap);
-    auto closeButton = new ImageButton(QPoint(24, 24), 72, 72);
-    closeButton->setImage(QImage(":/images/cancel"));
-    closeButton->setOnClick([=](QPoint point) {
-        QThread* thread = QThread::create([&] {
-            QThread::msleep(1);
-            App::getInstance()->closeScreen();
-        });
-        thread->start();
+    auto pauseButton = new ImageButton(QPoint(24, 24), 72, 72);
+    pauseButton->setImage(QImage(":/images/cancel"));
+    pauseButton->setOnClick([=](QPoint point) {
+        App::getInstance()->openScreen(std::make_shared<PauseScreen>());
     });
 
-    addChild(closeButton);
+    addChild(pauseButton);
 
     GameConfiguration gameConfiguration;
     engine = std::shared_ptr<server::Engine>(new server::Engine(gameConfiguration));
