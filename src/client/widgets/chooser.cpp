@@ -40,6 +40,7 @@ void client::Chooser::paint(QPainter& painter) {
     if (!options.empty()) {
         textView->setText(options[selected]);
     }
+    update();
 }
 
 void client::Chooser::leftClick() {
@@ -117,7 +118,7 @@ void client::Chooser::update() {
     rightButton->setHeight(height);
 
     textView->setPosition(QPoint(
-            (width - textWidth) / 2 + getTextWidth() / 2.0 - textView->getTextWidth() / 2.0,
+            getWidth() / 2.0 - textView->getTextWidth() / 2.0,
             getHeght() / 2.0 + textView->getTextHeight() / 2.0
     ));
 }
