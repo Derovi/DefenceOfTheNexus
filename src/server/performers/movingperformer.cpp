@@ -42,16 +42,3 @@ QPointF server::moving_performer::getNextPosition(const std::shared_ptr<core::Ob
             static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
 }
 
-bool server::moving_performer::isIntersect(const std::shared_ptr<core::Object>& object,
-                                           const std::shared_ptr<core::GameWorld>& gameWorld) {
-    QPolygonF objectPolygon = object->getRotatedHitbox();
-    for (const std::shared_ptr<core::Object>& otherObject : gameWorld->getObjects()) {
-        if (otherObject->getId() == object->getId()) {
-            continue;
-        }
-        if (otherObject->isIntersect(objectPolygon)) {
-            return true;
-        }
-    }
-    return false;
-}

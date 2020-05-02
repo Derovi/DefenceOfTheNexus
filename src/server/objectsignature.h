@@ -50,7 +50,8 @@ class ObjectSignature {
 
     bool hasAttribute(const QString& name);
 
-    std::shared_ptr<core::Attribute> getAttribute(const QString& name);
+    std::shared_ptr<core::Attribute> getAttribute(const QString& name) const;
+
 
   private:
     QString typeName;

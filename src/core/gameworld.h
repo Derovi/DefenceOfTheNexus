@@ -44,6 +44,8 @@ class GameWorld {
     void buildWall(int x1, int y1, int x2, int y2, const server::ObjectSignature& wall,
                    const server::ObjectSignature& column);
 
+    bool isIntersectsWithObjects(const QPolygonF& polygon);
+
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);

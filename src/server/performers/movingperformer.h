@@ -21,8 +21,9 @@ bool isObstacles(const std::shared_ptr<core::Object>& object, int64_t timeDelta,
                  const std::shared_ptr<core::GameWorld>& gameWorld,
                  const std::shared_ptr<core::Moving>& moving);
 
-bool isIntersect(const std::shared_ptr<core::Object>& object,
-                 const std::shared_ptr<core::GameWorld>& gameWorld);
+bool isIntersect(const QPolygonF& polygon,
+                 const std::shared_ptr<core::GameWorld>& gameWorld
+);
 
 QPointF getNextPosition(const std::shared_ptr<core::Object>& object,
                         int64_t timeDelta, const core::Moving& moving);

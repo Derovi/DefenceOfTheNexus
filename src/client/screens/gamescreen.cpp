@@ -50,8 +50,11 @@ client::GameScreen::GameScreen() {
     gameMap->getGameWorld()->buildWall(0, 1500, 2000, 500,
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
+    gameMap->getGameWorld()->buildWall(2000, 1500, 0, 500,
+                                       utils::Factory::getObjectSignature("wall1").value(),
+                                       utils::Factory::getObjectSignature("column1").value());
 
-    gameMap->setShowHitBoxes(true);
+    // gameMap->setShowHitBoxes(true);
     engine->start();
 }
 
