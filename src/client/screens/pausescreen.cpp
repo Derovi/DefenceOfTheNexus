@@ -20,7 +20,13 @@ void client::PauseScreen::onResumed() {
 }
 
 client::PauseScreen::PauseScreen() : Screen() {
-    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
+    setBackground(Sprite(QPixmap(":/backgrounds/pause"), 1, 1));
+
+    auto game_name = new TextView(QPoint(1700, 800), "::pause",
+                                  App::getInstance()->getFont());
+    game_name->setColor(QColor(249, 192, 6));
+    game_name->setTextSize(180);
+    addChild(game_name);
 
     auto resumeButton = new ImageButton(QPoint(1510, 948), 232, 921);
     resumeButton->setImage(QImage(":/interface/button"));
@@ -59,7 +65,7 @@ client::PauseScreen::PauseScreen() : Screen() {
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);
     exitButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "::exit-menu",
+            std::make_shared<TextView>(QPoint(0, 0), "::exit_menu",
                                        App::getInstance()->getFont()));
     exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
     exitButton->setOnClick([=](QPoint point) {

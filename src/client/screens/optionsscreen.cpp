@@ -20,7 +20,13 @@ void client::OptionsScreen::onResumed() {
 }
 
 client::OptionsScreen::OptionsScreen(): Screen() {
-    setBackground(Sprite(QPixmap(":/backgrounds/options"), 1, 1));
+    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
+
+    auto game_name = new TextView(QPoint(1650, 800), "::options",
+                                  App::getInstance()->getFont());
+    game_name->setColor(QColor(249, 192, 6));
+    game_name->setTextSize(180);
+    addChild(game_name);
 
     auto screenModeChooser = new Chooser(QPoint(1340, 948), 232, 1260);
     screenModeChooser->getTextView()->setFont(App::getInstance()->getFont());

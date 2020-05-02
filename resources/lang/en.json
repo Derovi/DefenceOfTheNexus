@@ -1,4 +1,6 @@
 {
+  "game_name": "Defence of the Nexus",
+  "pause": "Pause",
   "title": "English",
   "example": "Text example",
   "start": "Start",
@@ -6,5 +8,7 @@
   "exit": "Exit",
   "back": "Back",
   "full_screen_mode": "Fullscreen",
-  "window_screen_mode": "Window"
+  "window_screen_mode": "Window",
+  "exit_menu": "To menu",
+  "resume": "Resume"
 }

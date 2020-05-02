@@ -23,6 +23,12 @@ void client::MenuScreen::onResumed() {
 client::MenuScreen::MenuScreen(): Screen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
+    auto game_name = new TextView(QPoint(1200, 750), "::game_name",
+                                  App::getInstance()->getFont());
+    game_name->setColor(QColor(249, 192, 6));
+    game_name->setTextSize(180);
+    addChild(game_name);
+
     auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
     startButton->setImage(QImage(":/interface/button"));
     startButton->setHoverImage(QImage(":/interface/button-hover"));
