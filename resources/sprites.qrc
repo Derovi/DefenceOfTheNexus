@@ -6,7 +6,7 @@
         <file alias="tower2">sprites/tower2.png</file>
         <file alias="rocket1">sprites/rocket1.png</file>
         <file alias="rocket2">sprites/rocket2.png</file>
-        <file alias="flame">sprites/flame.png</file>
-        <file alias="bullet">sprites/bullet.png</file>
+        <file alias="flame">sprites/towers/flame.png</file>
+        <file alias="bullet">sprites/towers/bullet.png</file>
     </qresource>
 </RCC>
