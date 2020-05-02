@@ -36,7 +36,7 @@ int core::Resource::mine(int speed) {
 
     //! Randomly picks either 0 or 1 with given probability (%)
     static const auto random = [](int probability) -> int {
-        std::mt19937 rnd(42);
+        static std::mt19937 rnd(42);
         std::uniform_int_distribution<> uPercents(0, 99);
         return uPercents(rnd) < probability;
     };
