@@ -174,3 +174,7 @@ const QFont& client::App::getFont() const {
 const std::shared_ptr<QSettings>& client::App::getSettings() const {
     return settings;
 }
+
+QStack<std::shared_ptr<client::Screen>>& client::App::getScreens() {
+    return screens;
+}

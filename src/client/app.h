@@ -40,6 +40,8 @@ class App : public QWidget {
 
     const std::shared_ptr<QSettings>& getSettings() const;
 
+    QStack<std::shared_ptr<Screen>>& getScreens();
+
     ~App() override;
 
   private:
@@ -58,6 +60,7 @@ class App : public QWidget {
     std::shared_ptr<QSettings> settings;
 
     static App* instance;
+
 };
 
 }  // namespace client
