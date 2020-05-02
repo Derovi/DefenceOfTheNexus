@@ -22,7 +22,7 @@ client::GameMap* client::GameScreen::getGameMap() const {
     return gameMap;
 }
 
-client::GameScreen::GameScreen() : Screen() {
+client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld) : Screen() {
     gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
@@ -38,16 +38,20 @@ client::GameScreen::GameScreen() : Screen() {
     addChild(pauseButton);
 
     GameConfiguration gameConfiguration;
-    engine = std::shared_ptr<server::Engine>(new server::Engine(gameConfiguration));
+    engine = std::make_shared<server::Engine>(gameConfiguration);
+
+    if (savedGameWorld != nullptr) {
+        engine->setGameWorld(savedGameWorld);
+    } else {
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+                                              QPoint(2000, 1000));
+
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
+                                              QPoint(3000, 2000));
+    }
 
     gameMap->setGameWorld(engine->getGameWorld());
     gameMap->setCommandQueue(engine->getCommandQueue());
-
-    gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                          QPoint(2000, 1000));
-
-    gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
-                                          QPoint(3000, 2000));
 
     gameMap->setShowHitBoxes(true);
     engine->start();

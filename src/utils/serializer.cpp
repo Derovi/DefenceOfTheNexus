@@ -73,6 +73,11 @@ std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Objec
     position.insert("y", object.getPosition().y());
     json.insert("position", position);
     json.insert("rotationAngle", object.getRotationAngle());
+    QJsonArray strategies;
+    for (const auto& strategy : object.getStrategies()) {
+        strategies.push_back(strategy);
+    }
+    json["strategies"] = strategies;
     QPolygonF hitbox = object.getHitbox();
     int iter = 0;
     QJsonArray xArray, yArray;
@@ -162,46 +167,46 @@ utils::Serializer::movingSerializer(const std::shared_ptr<core::Attribute>& attr
     return json;
 }
 
-std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObject& json) {
+std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObject& serialized) {
 
-    if (!json["id"].isString()) {
-        return std::nullopt;
-    }
-    QString idStr = json["id"].toString();
-    bool ok = false;
-    uint64_t id = idStr.toULongLong(&ok);
+    bool ok;
+    uint64_t id = serialized["id"].toVariant().toULongLong(&ok);
     if (!ok) {
         return std::nullopt;
     }
+
+    QStringList strategies;
+    QJsonArray json;
+    if (!serialized["strategies"].isArray()) {
+        return std::nullopt;
+    }
+    json = serialized["strategies"].toArray();
+    for (const auto& strategy : json) {
+        if (!strategy.isString()) {
+            return std::nullopt;
+        }
+        strategies.push_back(strategy.toString());
+    }
+
     QJsonObject pos;
-    if (!json["position"].isObject()) {
+    if (!serialized["position"].isObject()) {
         return std::nullopt;
     }
-    pos = (json["position"]).toObject();
-    auto iterPos = pos.begin();
-    if (!(*iterPos).isDouble()) {
-        return std::nullopt;
-    }
-    double x = (*iterPos).toDouble();
-    ++iterPos;
-    if (!(*iterPos).isDouble()) {
-        return std::nullopt;
-    }
-    double y = (*iterPos).toDouble();
-    ++iterPos;
-    QPointF point(x, y);
-    if (!json["rotationAngle"].isDouble()) {
+    pos = (serialized["position"]).toObject();
+    QPointF point(pos.value("x").toVariant().toInt(), pos.value("y").toVariant().toInt());
+    if (!serialized["rotationAngle"].isDouble()) {
         return std::nullopt;
     }
     QVector<QPointF> vec;
-    if (!json["hitbox"].isObject()) {
+    if (!serialized["hitbox"].isObject()) {
         return std::nullopt;
     }
-    pos = json["hitbox"].toObject();
-    iterPos = pos.begin();
+    pos = serialized["hitbox"].toObject();
+    auto iterPos = pos.begin();
     if (!(*iterPos).isArray()) {
         return std::nullopt;
     }
+
     QJsonArray xArray = (*iterPos).toArray();
     ++iterPos;
     if (!(*iterPos).isArray()) {
@@ -224,16 +229,19 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
         }
         vec[it++].setY(qreal(i.toDouble()));
     }
-    if (!json["typeName"].isString()) {
+    if (!serialized["typeName"].isString()) {
         return std::nullopt;
     }
-    core::Object ans = core::Object(id, json["typeName"].toString(), point, QPolygonF(vec),
-                                    json["rotationAngle"].toDouble());
+    core::Object ans = core::Object(id, serialized["typeName"].toString(), point, QPolygonF(vec),
+                                    serialized["rotationAngle"].toDouble());
+
+    ans.setStrategies(strategies);
+
     QJsonObject attributes;
-    if (!json["attributes"].isObject()) {
+    if (!serialized["attributes"].isObject()) {
         return std::nullopt;
     }
-    attributes = json["attributes"].toObject();
+    attributes = serialized["attributes"].toObject();
     QLinkedList<std::shared_ptr<core::Attribute> > objectAttributes;
     auto iter = attributes.begin();
     while (iter != attributes.end()) {
@@ -414,7 +422,7 @@ utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
         resVector.push_back(*dynamic_cast<core::Resource*>(resource.value().get()));
     }
     ans.setResources(resVector);
-    if (serialized["objects"].isObject()) {
+    if (!serialized["objects"].isObject()) {
         return std::nullopt;
     }
     QJsonObject objects = serialized["objects"].toObject();

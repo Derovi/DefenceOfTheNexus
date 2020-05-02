@@ -1,8 +1,10 @@
 #include <QCoreApplication>
 #include <QtWidgets/QPushButton>
 #include <QtGui/QFontDatabase>
+#include <QtWidgets/QFileDialog>
 
 #include "../../utils/lang.h"
+#include "../../utils/serializer.h"
 #include "../widgets/imagebutton.h"
 #include "../app.h"
 #include "../properties.h"
@@ -43,7 +45,45 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     addChild(startButton);
 
-    auto optionsButton = new ImageButton(QPoint(1510, 942), 232, 921);
+    auto loadGameButton = new ImageButton(QPoint(1510, 942), 232, 921);
+    loadGameButton->setImage(QImage(":/interface/button"));
+    loadGameButton->setHoverImage(QImage(":/interface/button-hover"));
+    loadGameButton->setHoverWidth(1329);
+    loadGameButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), "::load_game",
+                                       App::getInstance()->getFont()));
+    loadGameButton->getTextChildren()->setColor(QColor(249, 192, 6));
+    loadGameButton->setOnClick([=](QPoint point) {
+        QString fileName = QFileDialog::getOpenFileName(App::getInstance(),
+                                                        utils::Lang::get("save_game"), ".gsv",
+                                                        "(*.gsv)");
+        QFile file(fileName);
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            return;
+        }
+
+        utils::Serializer serializer;
+
+        std::shared_ptr<core::GameWorld> gameWorld;
+
+        QTextStream stream(&file);
+
+        auto deserialized = serializer.deserializeGameWorld(stream.readAll());
+
+        file.close();
+
+        if (deserialized == std::nullopt) {
+            return;
+        }
+
+        gameWorld = std::make_shared<core::GameWorld>(deserialized.value());
+
+        App::getInstance()->openScreen(std::make_shared<GameScreen>(gameWorld));
+    });
+
+    addChild(loadGameButton);
+
+    auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
     optionsButton->setImage(QImage(":/interface/button"));
     optionsButton->setHoverImage(QImage(":/interface/button-hover"));
     optionsButton->setHoverWidth(1329);
@@ -57,7 +97,7 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     addChild(optionsButton);
 
-    auto exitButton = new ImageButton(QPoint(1510, 1210), 232, 921);
+    auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
     exitButton->setImage(QImage(":/interface/button"));
     exitButton->setHoverImage(QImage(":/interface/button-hover"));
     exitButton->setHoverWidth(1329);

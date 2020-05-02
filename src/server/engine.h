@@ -31,6 +31,8 @@ class Engine {
 
     std::shared_ptr<Queue<core::Command>> getCommandQueue() const;
 
+    void setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld);
+
     void finish();
 
     bool isFinished() const;
