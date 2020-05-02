@@ -165,6 +165,7 @@ utils::Serializer::miningSerializer(const std::shared_ptr<core::Attribute>& attr
     json.insert("miningSpeed", object->getMiningSpeed());
     json.insert("miningDelay", object->getMiningDelay());
     json.insert("miningRadius", object->getMiningRadius());
+    json.insert("mining", object->isMining());
     return json;
 }
 
@@ -359,6 +360,7 @@ utils::Serializer::miningDeserializer(const QJsonObject& serialized) {
     object->setMiningSpeed((serialized["miningSpeed"]).toInt());
     object->setMiningDelay((serialized["miningDelay"]).toInt());
     object->setMiningRadius((serialized["miningRadius"]).toDouble());
+    object->setMining(serialized["mining"].toBool(false));
     return object;
 }
 

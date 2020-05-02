@@ -2,11 +2,12 @@
 
 namespace core {
 
-Mining::Mining(): miningSpeed(0), miningRadius(0), miningDelay(0), currentDelay(0) {}
+Mining::Mining():
+    mining(false), miningSpeed(0), miningRadius(0), miningDelay(0), currentDelay(0) {}
 
 Mining::Mining(int miningSpeed, int miningDelay, double miningRadius):
-        miningSpeed(miningSpeed), miningRadius(miningRadius), miningDelay(miningDelay),
-        currentDelay(0) {}
+    mining(false), miningSpeed(miningSpeed), miningRadius(miningRadius), miningDelay(miningDelay),
+    currentDelay(0) {}
 
 int Mining::getMiningSpeed() const {
     return miningSpeed;
@@ -24,6 +25,10 @@ double Mining::getMiningRadius() const {
     return miningRadius;
 }
 
+bool Mining::isMining() const {
+    return mining;
+}
+
 void Mining::setMiningSpeed(int speed) {
     miningSpeed = speed;
 }
@@ -38,6 +43,10 @@ void Mining::setCurrentDelay(int delay) {
 
 void Mining::setMiningRadius(double radius) {
     miningRadius = radius;
+}
+
+void Mining::setMining(bool mining) {
+    this->mining = mining;
 }
 
 QString Mining::getAttributeName() {

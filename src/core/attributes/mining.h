@@ -25,6 +25,8 @@ class Mining : public Attribute {
 
     double getMiningRadius() const;
 
+    bool isMining() const;
+
     void setMiningSpeed(int speed);
 
     void setMiningDelay(int delay);
@@ -33,11 +35,14 @@ class Mining : public Attribute {
 
     void setMiningRadius(double radius);
 
+    void setMining(bool mining);
+
     QString getAttributeName() override;
 
     std::shared_ptr<Attribute> clone() override;
 
   private:
+    bool mining;
     int miningSpeed;
     int miningDelay;
     int currentDelay;
