@@ -74,6 +74,8 @@ void client::GameMap::paint(QPainter& painter) {
             font.setBold(true);
             hitBoxPainter.setFont(font);
             hitBoxPainter.translate(object->getPosition().x(), object->getPosition().y());
+            hitBoxPainter.drawText(QPoint(20, 0),
+                                   QString::number(object->getId()));
             hitBoxPainter.rotate(object->getRotationAngle());
             hitBoxPainter.setPen(QPen(QBrush(Qt::green),
                                       8, Qt::SolidLine,
@@ -82,8 +84,6 @@ void client::GameMap::paint(QPainter& painter) {
             hitBoxPainter.setPen(QPen(QBrush(QColor(0, 0, 0)),
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
-            hitBoxPainter.drawText(object->getPosition() - QPoint(20, 0),
-                                   QString::number(object->getId()));
         }
     }
 }
