@@ -9,12 +9,11 @@ namespace client {
 class MenuScreen : public Screen {
   public:
     MenuScreen();
+
   private:
     void onPaused() override;
 
     void onResumed() override;
-
-    QPushButton* button;
 };
 
 }

@@ -10,7 +10,7 @@ namespace client {
 
 class Sprite {
   public:
-    Sprite() = default;
+    Sprite() : rows(0), columns(0) {}
 
     explicit Sprite(const QPixmap& source, int rows = 1, int columns = 1, int framesPerSec = 30);
 
@@ -19,6 +19,8 @@ class Sprite {
     void update(uint64_t timeDeltaMSec = 42);
 
     void draw(QPainter& painter, const QRect& destination);
+
+    bool isNull();
 
     void pause();
 
@@ -98,4 +100,4 @@ class Sprite {
 
 }
 
-#endif //SPRITE_H
+#endif  // SPRITE_H

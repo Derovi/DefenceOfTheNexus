@@ -1,13 +1,15 @@
+#include <QDebug>
+
+#include "../../utils/lang.h"
+
 #include "textview.h"
 
 client::TextView::TextView(const QPoint& position, const QString& text, const QFont& font,
                            const QColor& color,
                            int height, int width):
         Widget(position), text(text), font(font), color(color) {
-    if (height > 0 && width > 0) {
-        setHeight(height);
-        setWidth(width);
-    }
+    setHeight(height);
+    setWidth(width);
 }
 
 void client::TextView::paint(QPainter& painter) {
@@ -15,10 +17,10 @@ void client::TextView::paint(QPainter& painter) {
     QPen pen = painter.pen();
     pen.setColor(color);
     painter.setPen(pen);
-    if (width != -1 && height != -1) {
-        painter.drawText(QRect(position.x(), position.y(), width, height), Qt::AlignCenter, text);
+    if (width > 0 && height > 0) {
+        painter.drawText(QRect(0, 0, width, height), Qt::AlignCenter, getDrawingText());
     } else {
-        painter.drawText(position, text);
+        painter.drawText(QPoint(0, 0), getDrawingText());
     }
 }
 
@@ -52,4 +54,20 @@ void client::TextView::setTextSize(int textSize) {
 
 int client::TextView::getTextSize() const {
     return font.pixelSize();
+}
+
+int client::TextView::getTextHeight() const {
+    return QFontMetrics(font).capHeight();
+}
+
+int client::TextView::getTextWidth() const {
+    return QFontMetrics(font).width(getDrawingText());
+}
+
+QString client::TextView::getDrawingText() const {
+    QString drawingText = text;
+    if (text.startsWith("::")) {
+        drawingText = utils::Lang::get(text.right(text.size() - 2));
+    }
+    return drawingText;
 }

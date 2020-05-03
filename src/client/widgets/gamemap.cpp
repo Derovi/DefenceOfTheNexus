@@ -1,11 +1,11 @@
 #include <QDebug>
 
-#include "../mainwindow.h"
+#include "../app.h"
 
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr),
+        Widget(position), commandQueue(nullptr),
         showHitBoxes(false), showSprites(true) {
     setHeight(height);
     setWidth(width);
@@ -57,9 +57,7 @@ void client::GameMap::paint(QPainter& painter) {
     }
 
     // update graphics objects
-    int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
-
-    lastPaintTime = QDateTime::currentDateTime();
+    int64_t deltaTime = getDeltaTime();
 
     if (showSprites) {
         for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
@@ -69,7 +67,7 @@ void client::GameMap::paint(QPainter& painter) {
 
     if (showHitBoxes) {
         for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
-            QPainter hitBoxPainter(MainWindow::getInstance());
+            QPainter hitBoxPainter(App::getInstance());
             hitBoxPainter.setTransform(painter.transform());
             QFont font = hitBoxPainter.font();
             font.setPointSize(40);

@@ -12,7 +12,7 @@
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
-#include "../client/mainwindow.h"
+#include "../client/app.h"
 #include "../client/properties.h"
 
 void registerStrategies() {
@@ -135,10 +135,9 @@ int main(int argc, char** argv) {
     registerSpriteControllers();
     registerObjectSignatures();
     registerGraphicsDescriptions();
-    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
-    client::MainWindow w;
+    client::App w;
     w.show();
 
     return a.exec();

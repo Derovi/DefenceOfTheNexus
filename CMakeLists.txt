@@ -23,6 +23,8 @@ add_executable(defenceofnexus
         resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
+        resources/other.qrc
+        resources/interface.qrc
         src/core/object.cpp
         src/core/attributes/damageable.cpp
         src/core/attributes/damaging.cpp
@@ -49,7 +51,7 @@ add_executable(defenceofnexus
         src/server/objectsignature.cpp
         src/client/windowmanager.cpp
         src/client/widget.cpp
-        src/client/mainwindow.cpp
+        src/client/app.cpp
         src/client/screen.cpp
         src/client/screens/menuscreen.cpp
         src/client/widgets/imagebutton.cpp
@@ -63,7 +65,7 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
-        src/utils/lang.cpp)
+        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h src/client/widgets/chooser.cpp src/client/widgets/chooser.h src/client/screens/pausescreen.cpp src/client/screens/pausescreen.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

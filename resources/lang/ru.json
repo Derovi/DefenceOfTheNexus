@@ -1,4 +1,15 @@
 {
+  "game_name": "Defence of the Nexus",
+  "pause": "Пауза",
   "title": "Русский",
-  "example": "Пример текста."
+  "example": "Пример текста.",
+  "start": "Старт",
+  "options": "Настройки",
+  "exit": "Выход",
+  "back": "Назад",
+  "full_screen_mode": "Полноэкранный",
+  "window_screen_mode": "В окне",
+  "exit_menu": "В меню",
+  "resume": "Вернуться",
+  "save_game": "Сохранить"
 }

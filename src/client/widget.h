@@ -8,6 +8,7 @@
 #include <QPoint>
 #include <QPainter>
 #include <QtGui/QWheelEvent>
+#include <QtCore/QDateTime>
 
 namespace client {
 
@@ -51,18 +52,24 @@ class Widget : public QObject {
 
     int getWidth();
 
+    int64_t getDeltaTime() const;
+
     std::shared_ptr<WindowManager> windowManager;
+
+    void setLastPaintTime(const QDateTime& lastPaintTime);
+
+    virtual void paint(QPainter& painter) {};
 
   public slots:
 
     // called my main window
-    void draw();
+    virtual void draw();
 
-    void click(QPoint point);
+    virtual void click(QPoint point);
 
-    void mouse(QPoint point);
+    virtual void mouse(QPoint point);
 
-    void wheel(QWheelEvent* event);
+    virtual void wheel(QWheelEvent* event);
 
     virtual void setHeight(int height);
 
@@ -71,13 +78,16 @@ class Widget : public QObject {
   protected:
     QPoint position;
 
-    virtual void paint(QPainter& painter) {};
-
     virtual void clicked(QPoint point) {};
 
     virtual void mouseMoved(QPoint point) {};
 
     virtual void wheelEvent(QWheelEvent* event) {};
+
+  public:
+    const QDateTime& getLastPaintTime() const;
+
+  protected:
 
     std::function<void(QPoint)> onClick;
 
@@ -88,6 +98,8 @@ class Widget : public QObject {
     bool is_hovered = false;
 
     Widget* parent = nullptr;
+
+    QDateTime lastPaintTime;
 };
 
 }  // namespace client
