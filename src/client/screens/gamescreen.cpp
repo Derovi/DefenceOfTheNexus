@@ -19,6 +19,13 @@ void client::GameScreen::onResumed() {
     setLastPaintTime(QDateTime::currentDateTime());
 }
 
+void client::GameScreen::draw() {
+    if (paused) {
+        return;
+    }
+    Screen::draw();
+}
+
 client::GameMap* client::GameScreen::getGameMap() const {
     return gameMap;
 }

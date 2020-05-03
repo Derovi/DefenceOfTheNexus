@@ -17,6 +17,8 @@ class GameScreen : public Screen {
 
     GameMap* getGameMap() const;
 
+    void draw() override;
+
   private:
     void onPaused() override;
 
