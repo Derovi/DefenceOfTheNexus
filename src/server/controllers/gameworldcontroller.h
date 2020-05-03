@@ -24,6 +24,8 @@ class GameWorldController {
 
     void removeObject(int64_t id);
 
+    const QHash<int64_t, std::shared_ptr<Controller>>& getControllers();
+
     ~GameWorldController() = default;
 
   private:

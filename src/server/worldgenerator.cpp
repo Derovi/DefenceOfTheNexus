@@ -1,6 +1,6 @@
-#include "../core/gameworld.h"
-
 #include "worldgenerator.h"
+
+#include "../core/gameworld.h"
 
 std::shared_ptr<core::GameWorld> server::world_generator::generate(const GameConfiguration& configuration) {
     std::shared_ptr<core::GameWorld> gameWorld(new core::GameWorld());

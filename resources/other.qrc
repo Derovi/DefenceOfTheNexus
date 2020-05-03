@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="pacifico">fonts/pacifico.ttf</file>
+    </qresource>
+</RCC>

@@ -5,8 +5,8 @@
 
 core::Object::Object(uint64_t id, QString typeName, QPointF position, QPolygonF hitbox,
                      float rotationAngle):
-        id(id), typeName(typeName), position(position), hitbox(std::move(hitbox)),
-        rotationAngle(rotationAngle) {}
+    id(id), typeName(std::move(typeName)), position(position), hitbox(std::move(hitbox)),
+    rotationAngle(rotationAngle) {}
 
 uint64_t core::Object::getId() const {
     return id;
@@ -49,7 +49,7 @@ QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() {
 }
 
 void core::Object::setAttributes(const QLinkedList<std::shared_ptr<Attribute>>& attributes) {
-    Object::attributes = attributes;
+    this->attributes = attributes;
 }
 
 QStringList& core::Object::getStrategies() {
@@ -57,10 +57,10 @@ QStringList& core::Object::getStrategies() {
 }
 
 void core::Object::setStrategies(const QStringList& strategies) {
-    Object::strategies = strategies;
+    this->strategies = strategies;
 }
 
-bool core::Object::hasAttribute(const QString& name) {
+bool core::Object::hasAttribute(const QString& name) const {
     for (const auto& attribute : attributes) {
         if (attribute->getAttributeName() == name) {
             return true;
@@ -74,7 +74,7 @@ const QString& core::Object::getTypeName() const {
 }
 
 void core::Object::setTypeName(const QString& typeName) {
-    Object::typeName = typeName;
+    this->typeName = typeName;
 }
 
 const QLinkedList<std::shared_ptr<core::Attribute>>& core::Object::getAttributes() const {
@@ -88,4 +88,8 @@ std::shared_ptr<core::Attribute> core::Object::getAttribute(const QString& name)
         }
     }
     return nullptr;
+}
+
+const QStringList& core::Object::getStrategies() const {
+    return strategies;
 }

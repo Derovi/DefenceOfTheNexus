@@ -3,25 +3,26 @@
 
 #include <QQueue>
 
+#include "../utils/queue.h"
 #include "../core/command.h"
 
 namespace server {
 
 class Server {
   public:
-    std::shared_ptr<QQueue<core::Command>> getCommandQueue();
+    std::shared_ptr<Queue<core::Command>> getCommandQueue();
 
-    void registerCommandQueue(std::shared_ptr<QQueue<core::Command>> commandQueue);
+    void registerCommandQueue(std::shared_ptr<Queue<core::Command>> commandQueue);
 
     void start();
 
     void finish();
 
   private:
-    std::shared_ptr<QQueue<core::Command>> commandQueue;
+    std::shared_ptr<Queue<core::Command>> commandQueue;
 };
 
-}
+}  // namespace server
 
 
-#endif //SERVER_H
+#endif  // SERVER_H

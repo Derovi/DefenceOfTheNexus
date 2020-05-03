@@ -21,5 +21,4 @@ class GameConfiguration {
     int tickPerSec = 60;
 };
 
-
-#endif //GAMECONFIGURATION_H
+#endif  // GAMECONFIGURATION_H

@@ -12,7 +12,7 @@
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
-#include "../client/mainwindow.h"
+#include "../client/app.h"
 #include "../client/properties.h"
 
 void registerStrategies() {
@@ -22,7 +22,7 @@ void registerStrategies() {
                                                  static_cast<server::Strategy*>(
                                                          new server::MoveStrategy(object)));
                                      });
-    utils::Factory::registerStrategy("pathStrategy",
+    utils::Factory::registerStrategy(server::PathStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
                                                  static_cast<server::Strategy*>(
@@ -56,6 +56,35 @@ void registerSpriteControllers() {
                                              });
 }
 
+void registerObjectSignatures() {
+    QFile file(":/data/objects");
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    utils::Serializer serializer;
+    std::optional<QJsonObject> signatures = serializer.stringToJsonObject(
+            QString(file.readAll()));
+    if (!signatures) {
+        return;
+    }
+
+    for (auto iter = signatures.value().begin();
+         iter != signatures.value().end();
+         ++iter) {
+        if (!iter->isObject()) {
+            continue;
+        }
+        QJsonObject object = iter->toObject();
+        object.insert("typeName", iter.key());
+        auto signature = serializer.objectSignatureDeserializer(object);
+        if (signature == std::nullopt) {
+            continue;
+        }
+        utils::Factory::registerObjectSignature(iter.key(), signature.value());
+    }
+}
+
 void registerGraphicsDescriptions() {
     QFile file(":/data/graphics");
     if (!file.open(QIODevice::ReadOnly)) {
@@ -77,12 +106,13 @@ void registerGraphicsDescriptions() {
         }
         QJsonObject json = valueRef.toObject();
         client::ObjectGraphicsDescription description;
-        if (!json.contains("width") || !json.contains("height") ||
-            !json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
+        if (!json.contains("spriteControllers") || !json.contains("spriteDescriptions")) {
             continue;
         }
-        description.setWidth(json.value("width").toInt(50));
-        description.setHeight(json.value("height").toInt(50));
+        if (json.contains("width") && json.contains("height")) {
+            description.setWidth(json.value("width").toInt(50));
+            description.setHeight(json.value("height").toInt(50));
+        }
         for (const auto& entry : json.value("spriteControllers").toArray(QJsonArray())) {
             if (!entry.isString()) {
                 continue;
@@ -103,11 +133,11 @@ int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();
+    registerObjectSignatures();
     registerGraphicsDescriptions();
-    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
-    client::MainWindow w;
+    client::App w;
     w.show();
 
     return a.exec();
@@ -128,7 +158,7 @@ int main(int argc, char** argv) {
             break;
         }
         core::Command command = core::Command::fromCommandLine(line);
-        engine->getCommandQueue()->push_back(core::Command::fromCommandLine(line));
+        engine->getCommandQueue()->push(core::Command::fromCommandLine(line));
     }
     delete engine;
     delete server;

@@ -32,8 +32,13 @@ class TextView : public Widget {
 
     int getTextSize() const;
 
-  private:
+    int getTextHeight() const;
+
+    int getTextWidth() const;
+
     void paint(QPainter& painter) override;
+
+    QString getDrawingText() const;
 
   private:
     QString text;

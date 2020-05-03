@@ -23,6 +23,7 @@ namespace utils {
 
 class Serializer {
   public:
+    Serializer(bool prettyPrinting = true);
 
     std::optional<QString> serializeGameWorld(const core::GameWorld& gameWorld);
 
@@ -101,7 +102,7 @@ class Serializer {
 
   private:
 
-    bool prettyPrinting = true;
+    bool prettyPrinting;
 };
 
 }  // namespace utils

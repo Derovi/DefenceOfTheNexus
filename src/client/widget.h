@@ -8,6 +8,7 @@
 #include <QPoint>
 #include <QPainter>
 #include <QtGui/QWheelEvent>
+#include <QtCore/QDateTime>
 
 namespace client {
 
@@ -15,7 +16,9 @@ class WindowManager;
 
 class Widget : public QObject {
   public:
-    Widget(const QPoint& position = QPoint(0,0));
+    explicit Widget(const QPoint& position = QPoint(0,0));
+
+    virtual ~Widget();
 
     void setPosition(const QPoint& position);
 
@@ -35,9 +38,9 @@ class Widget : public QObject {
 
     void setOnClick(std::function<void(QPoint)> action);
 
-    std::shared_ptr<Widget> getParent();
+    Widget* getParent();
 
-    void setParent(const std::shared_ptr<Widget>& parent);
+    void setParent(Widget* parent);
 
     void addChild(Widget* child);
 
@@ -49,33 +52,42 @@ class Widget : public QObject {
 
     int getWidth();
 
-    WindowManager* windowManager;
+    int64_t getDeltaTime() const;
+
+    std::shared_ptr<WindowManager> windowManager;
+
+    void setLastPaintTime(const QDateTime& lastPaintTime);
+
+    virtual void paint(QPainter& painter) {};
 
   public slots:
 
     // called my main window
-    void draw();
+    virtual void draw();
 
-    void click(QPoint point);
+    virtual void click(QPoint point);
 
-    void mouse(QPoint point);
+    virtual void mouse(QPoint point);
 
-    void wheel(QWheelEvent* event);
+    virtual void wheel(QWheelEvent* event);
 
-    void setHeight(int height);
+    virtual void setHeight(int height);
 
-    void setWidth(int width);
+    virtual void setWidth(int width);
 
   protected:
     QPoint position;
-
-    virtual void paint(QPainter& painter) {};
 
     virtual void clicked(QPoint point) {};
 
     virtual void mouseMoved(QPoint point) {};
 
     virtual void wheelEvent(QWheelEvent* event) {};
+
+  public:
+    const QDateTime& getLastPaintTime() const;
+
+  protected:
 
     std::function<void(QPoint)> onClick;
 
@@ -85,7 +97,9 @@ class Widget : public QObject {
 
     bool is_hovered = false;
 
-    std::shared_ptr<Widget> parent = nullptr;
+    Widget* parent = nullptr;
+
+    QDateTime lastPaintTime;
 };
 
 }  // namespace client

@@ -1,5 +1,7 @@
 #include "objectgraphicsdescription.h"
 
+client::ObjectGraphicsDescription::ObjectGraphicsDescription(): height(0), width(0) {}
+
 int client::ObjectGraphicsDescription::getWidth() const {
     return width;
 }

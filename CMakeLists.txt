@@ -23,6 +23,8 @@ add_executable(defenceofnexus
         resources/data.qrc
         resources/images.qrc
         resources/sprites.qrc
+        resources/other.qrc
+        resources/interface.qrc
         src/core/object.cpp
         src/core/attributes/damageable.cpp
         src/core/attributes/damaging.cpp
@@ -42,44 +44,28 @@ add_executable(defenceofnexus
         src/utils/factory.cpp
         src/server/strategies/strategy.cpp
         src/server/strategies/movestrategy.cpp
+        src/server/strategies/pathstrategy.cpp
         src/server/performers/movingperformer.cpp
         src/server/performers/damagingperformer.cpp
         src/server/performers/damageableperformer.cpp
         src/server/objectsignature.cpp
         src/client/windowmanager.cpp
-        src/client/windowmanager.h
         src/client/widget.cpp
-        src/client/widget.h
-        src/client/mainwindow.cpp
-        src/client/mainwindow.h
-        src/client/properties.h
+        src/client/app.cpp
         src/client/screen.cpp
-        src/client/screen.h
         src/client/screens/menuscreen.cpp
-        src/client/screens/menuscreen.h
         src/client/widgets/imagebutton.cpp
-        src/client/widgets/imagebutton.h
         src/client/properties.cpp
         src/client/screens/gamescreen.cpp
         src/client/widgets/gamemap.cpp
-        src/server/strategies/pathstrategy.cpp
-        src/client/widgets/gamemap.h 
-        src/utils/colors.h 
-        src/client/graphicsobject.cpp 
-        src/client/graphicsobject.h 
-        src/client/sprite.cpp 
-        src/client/sprite.h 
-        src/client/spritecontroller.cpp 
-        src/client/spritecontroller.h 
-        src/client/spritecontrollers/unitspritecontroller.cpp 
-        src/client/spritecontrollers/unitspritecontroller.h 
-        src/client/objectgraphicsdescription.cpp 
-        src/client/objectgraphicsdescription.h 
-        src/client/spritedescription.cpp 
-        src/client/spritedescription.h 
+        src/client/graphicsobject.cpp
+        src/client/sprite.cpp
+        src/client/spritecontroller.cpp
+        src/client/spritecontrollers/unitspritecontroller.cpp
+        src/client/objectgraphicsdescription.cpp
+        src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
-        src/client/widgets/textview.h 
-        src/utils/lang.cpp src/utils/lang.h)
+        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h src/client/widgets/chooser.cpp src/client/widgets/chooser.h src/client/screens/pausescreen.cpp src/client/screens/pausescreen.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

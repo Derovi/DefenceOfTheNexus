@@ -3,13 +3,13 @@
 
 #include "widget.h"
 #include "windowmanager.h"
-#include "mainwindow.h"
+#include "app.h"
 
-client::Widget::Widget(const QPoint& position): position(position) {
+client::Widget::Widget(const QPoint& position):
+        position(position), windowManager(nullptr), width(0), height(0),
+        lastPaintTime(QDateTime::currentDateTime()) {}
 
-}
-
-std::shared_ptr<client::Widget> client::Widget::getParent() {
+client::Widget* client::Widget::getParent() {
     return parent;
 }
 
@@ -17,18 +17,24 @@ int client::Widget::getHeght() {
     return height;
 }
 
+client::Widget::~Widget() {
+    qDebug() << "delete";
+    for (Widget* child : children) {
+        delete child;
+    }
+}
 
 int client::Widget::getWidth() {
     return width;
 }
 
-void client::Widget::setParent(const std::shared_ptr<client::Widget>& parent) {
+void client::Widget::setParent(client::Widget* parent) {
     this->parent = parent;
 }
 
-void client::Widget::addChild(client::Widget* child) {
+void client::Widget::addChild(Widget* child) {
     children.push_back(child);
-    child->setParent(std::shared_ptr<Widget>(this));
+    child->setParent(this);
 }
 
 void client::Widget::setPosition(const QPoint& position) {
@@ -52,14 +58,15 @@ QPoint client::Widget::absolutePosition() {
 }
 
 void client::Widget::draw() {
-    QPainter painter(MainWindow::getInstance());
+    QPainter painter(App::getInstance());
     painter.translate(window_manager::get_real_x(absolutePosition().x()),
                       window_manager::get_real_y(absolutePosition().y()));
     painter.setTransform(QTransform(window_manager::getTransform()), true);
     paint(painter);
-    for (Widget* interfacePart : children) {
+    for (const auto& interfacePart : children) {
         interfacePart->draw();
     }
+    lastPaintTime = QDateTime::currentDateTime();
 }
 
 bool client::Widget::isPointOnWidget(const QPoint& point) {
@@ -80,7 +87,7 @@ bool client::Widget::isHovered() {
 void client::Widget::mouse(QPoint point) {
     is_hovered = true;
     mouseMoved(point);
-    for (Widget* child : children) {
+    for (const auto& child : children) {
         if (child->isPointOnWidget(point)) {
             child->mouse(QPoint(point.x() - child->getPosition().x(),
                                 point.y() - child->getPosition().y()));
@@ -108,19 +115,27 @@ QRect client::Widget::boundsRect() {
 
 void client::Widget::click(QPoint point) {
     bool is_clicked = false;
-    for (Widget* child : children) {
-        if (child->isPointOnWidget(point)) {
+
+    for (int index = static_cast<int>(children.size()) - 1;
+         index >= 0;
+         --index) {
+        if (!children[index]) {
+            continue;
+        }
+        if (children[index]->isPointOnWidget(point)) {
             is_clicked = true;
-            child->click(QPoint(point.x() - child->getPosition().x(),
-                                point.y() - child->getPosition().y()));
+            children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
+                                          point.y() - children[index]->getPosition().y()));
+            break;
         }
     }
-    if (!is_clicked) {
-        if (onClick != nullptr) {
-            onClick(point);
-        }
-        clicked(point);
+    if (is_clicked) {
+        return;
     }
+    if (onClick != nullptr) {
+        onClick(point);
+    }
+    clicked(point);
 }
 
 void client::Widget::setOnClick(std::function<void(QPoint)> action) {
@@ -129,7 +144,7 @@ void client::Widget::setOnClick(std::function<void(QPoint)> action) {
 
 void client::Widget::wheel(QWheelEvent* event) {
     bool handled = false;
-    for (Widget* child : children) {
+    for (const auto& child : children) {
         if (child->isPointOnWidget(event->pos() - absolutePosition())) {
             handled = true;
             child->wheel(event);
@@ -146,4 +161,16 @@ void client::Widget::setHeight(int height) {
 
 void client::Widget::setWidth(int width) {
     Widget::width = width;
+}
+
+const QDateTime& client::Widget::getLastPaintTime() const {
+    return lastPaintTime;
+}
+
+int64_t client::Widget::getDeltaTime() const {
+    return getLastPaintTime().msecsTo(QDateTime::currentDateTime());
+}
+
+void client::Widget::setLastPaintTime(const QDateTime& lastPaintTime) {
+    Widget::lastPaintTime = lastPaintTime;
 }

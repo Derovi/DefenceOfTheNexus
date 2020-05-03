@@ -21,7 +21,7 @@ class SpriteController {
 
     virtual QString getName() = 0;
 
-    void update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec);
+    virtual void update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec);
 
   protected:
     virtual void onUpdate(uint64_t timeDeltaMSec) = 0;
@@ -38,4 +38,4 @@ class SpriteController {
 
 }
 
-#endif //SPRITECONTROLLER_H
+#endif  // SPRITECONTROLLER_H

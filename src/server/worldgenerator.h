@@ -12,6 +12,6 @@ namespace server::world_generator {
 
 std::shared_ptr<core::GameWorld> generate(const GameConfiguration& configuration);
 
-}
+}  // namespace server::world_generator
 
-#endif //WORLDGENERATOR_H
+#endif  // WORLDGENERATOR_H
