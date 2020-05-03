@@ -126,6 +126,7 @@ void client::Widget::click(QPoint point) {
             is_clicked = true;
             children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
                                           point.y() - children[index]->getPosition().y()));
+            break;
         }
     }
     if (is_clicked) {
