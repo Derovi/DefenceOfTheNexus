@@ -5,7 +5,7 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), lastPaintTime(QDateTime::currentDateTime()), commandQueue(nullptr),
+        Widget(position), commandQueue(nullptr),
         showHitBoxes(false), showSprites(true) {
     setHeight(height);
     setWidth(width);
@@ -57,9 +57,7 @@ void client::GameMap::paint(QPainter& painter) {
     }
 
     // update graphics objects
-    int64_t deltaTime = lastPaintTime.msecsTo(QDateTime::currentDateTime());
-
-    lastPaintTime = QDateTime::currentDateTime();
+    int64_t deltaTime = getDeltaTime();
 
     if (showSprites) {
         for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
@@ -110,8 +108,14 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point) {
     point = getTransformToMap().map(point);
-    commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
-                                                                 QString::number(point.y())}));
+    auto object = gameWorld->objectAt(point);
+    if (object != nullptr && object->hasAttribute("resource")) {
+        commandQueue->push(core::Command("mine_resource", {
+           "0", QString::number(object->getId())}));
+    } else {
+        commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
+                                                                QString::number(point.y())}));
+    }
 }
 
 const std::shared_ptr<Queue<core::Command>>& client::GameMap::getCommandQueue() const {

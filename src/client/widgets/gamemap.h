@@ -81,8 +81,6 @@ class GameMap : public Widget {
 
     QHash<int64_t, std::shared_ptr<GraphicsObject>> graphicsObjects;
 
-    QDateTime lastPaintTime;
-
     std::shared_ptr<Queue<core::Command>> commandQueue;
 
     Sprite background;
@@ -96,4 +94,4 @@ class GameMap : public Widget {
 
 }
 
-#endif //GAMEMAP_H
+#endif  // GAMEMAP_H

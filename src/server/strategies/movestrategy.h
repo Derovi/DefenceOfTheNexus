@@ -11,13 +11,13 @@ class MoveStrategy : public server::Strategy {
   public:
     explicit MoveStrategy(std::shared_ptr<core::Object> object);
 
-    void tick(std::shared_ptr<core::GameWorld> world, double timeDelta) override;
+    ~MoveStrategy() override = default;
+
+    void tick(std::shared_ptr<core::GameWorld> world, int timeDelta) override;
 
     QString getName() override;
 
     static QString name;
-
-    ~MoveStrategy() = default;
 
     QStringList getRequiredAttributes() override;
 

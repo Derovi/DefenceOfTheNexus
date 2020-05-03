@@ -22,16 +22,27 @@ void core::GameWorld::setWidth(int width) {
     this->width = width;
 }
 
-QVector<core::Resource>& core::GameWorld::getResources() {
+QVector<QPair<core::ResourceType, int>>& core::GameWorld::getResources() {
     return resources;
 }
 
-const QVector<core::Resource>& core::GameWorld::getResources() const {
+const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getResources() const {
     return resources;
 }
 
-void core::GameWorld::setResources(const QVector<core::Resource>& resources) {
-    this->resources = resources;
+void core::GameWorld::setResources(const QVector<QPair<core::ResourceType, int>>& resources) {
+    GameWorld::resources = resources;
+}
+
+void core::GameWorld::addResources(core::ResourceType type, int amount) {
+    auto it = std::find_if(resources.begin(), resources.end(), [type](const auto& resource) {
+        return resource.first == type;
+    });
+    if (it == resources.end()) {
+        resources.append(QPair(type, amount));
+    } else {
+        it->second += amount;
+    }
 }
 
 QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() {
@@ -40,6 +51,17 @@ QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() {
 
 void core::GameWorld::setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects) {
     this->objects = objects;
+}
+
+std::shared_ptr<core::Object> core::GameWorld::objectAt(QPointF point) {
+    for (const auto& object : objects) {
+        QPointF mapped(point.x() - object->getPosition().x(),
+                       point.y() - object->getPosition().y());
+        if (object->getHitbox().containsPoint(mapped, Qt::OddEvenFill)) {
+            return object;
+        }
+    }
+    return nullptr;
 }
 
 const QHash<int64_t, std::shared_ptr<core::Object>>& core::GameWorld::getObjects() const {

@@ -17,7 +17,7 @@ void client::GameScreen::onResumed() {
 
 }
 
-client::GameScreen::GameScreen() {
+client::GameScreen::GameScreen() : Screen() {
     auto gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
@@ -47,6 +47,9 @@ client::GameScreen::GameScreen() {
 
     gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
                                           QPoint(3000, 2000));
+
+    gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("resourcebundle-stone").value(),
+            QPoint(2200, 1000));
 
     gameMap->setShowHitBoxes(true);
     engine->start();

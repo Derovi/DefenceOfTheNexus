@@ -11,7 +11,7 @@
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
-    gameConfiguration(gameConfiguration), finished(false) {
+    gameConfiguration(gameConfiguration), finished(false), mainThread(nullptr) {
     gameWorld = world_generator::generate(gameConfiguration);
     gameWorldController = std::make_shared<GameWorldController>(gameWorld);
     commandExecutor = CommandExecutor(gameWorldController);
@@ -19,7 +19,9 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
 }
 
 server::Engine::~Engine() {
-    mainThread->quit();
+    if (mainThread != nullptr) {
+        mainThread->quit();
+    }
 }
 
 void server::Engine::start() {

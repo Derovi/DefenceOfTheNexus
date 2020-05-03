@@ -37,6 +37,7 @@ void server::CommandExecutor::registerCommands() {
     // change_speed_command <object_id> <new_speed>
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
+    registerCommand("mine_resource", &CommandExecutor::mineResource);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -127,6 +128,10 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
         return false;
     }
 
+    for (const auto& strategy : object->getStrategies()) {
+        gameWorldController->getControllers()[objectId]->cancelTargets();
+    }
+
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
     qDebug() << "click command!";
@@ -143,6 +148,47 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
     for (QString argument : arguments) {
         qDebug() << argument;
     }
+    return true;
+}
+
+bool server::CommandExecutor::mineResource(const QStringList& arguments) {
+    if (arguments.size() != 2) {
+        return false;
+    }
+    bool isOk = true;
+    uint64_t minerId = arguments[0].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    uint64_t resourceId = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    auto miner = getGameWorld()->getObjects().find(minerId);
+    if (miner == getGameWorld()->getObjects().end()
+        || !miner.value()->hasAttribute("mining")) {
+        return false;
+    }
+
+    auto target = getGameWorld()->getObjects().find(resourceId);
+    if (target == getGameWorld()->getObjects().end()
+        || !target.value()->hasAttribute("resource")) {
+        return false;
+    }
+
+    for (const auto& strategy : miner.value()->getStrategies()) {
+        gameWorldController->getControllers()[minerId]->cancelTargets();
+    }
+    qDebug() << minerId << " wanna mine " << resourceId << endl;
+
+    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+
+    DataBundle bundle;
+    bundle.registerVariable("miningTarget", target.value());
+    bundle.registerVariable("destinationPoint", destPoint);
+    gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
     return true;
 }
 

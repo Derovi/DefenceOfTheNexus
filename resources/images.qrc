@@ -7,4 +7,8 @@
         <file alias="restart">images/restart.png</file>
         <file alias="resume">images/resume.png</file>
     </qresource>
+    <qresource prefix="/backgrounds">
+        <file alias="menu">backgrounds/menu.png</file>
+        <file alias="options">backgrounds/options.png</file>
+    </qresource>
 </RCC>

@@ -22,5 +22,17 @@
         "columns": 20
       }
     }
+  },
+  "resourcebundle-stone": {
+    "width": 150,
+    "height": 150,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/rock1",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }

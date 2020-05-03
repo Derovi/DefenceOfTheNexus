@@ -36,6 +36,7 @@ class CommandExecutor {
 
     bool changeMoveTargetCommand(const QStringList& arguments);
 
+    bool mineResource(const QStringList& arguments);
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
     QHash<QString, bool (CommandExecutor::*)(const QStringList&)> commands;

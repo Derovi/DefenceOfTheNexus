@@ -6,7 +6,8 @@
 #include "mainwindow.h"
 
 client::Widget::Widget(const QPoint& position):
-        position(position), windowManager(nullptr), width(0), height(0) {}
+        position(position), windowManager(nullptr), width(0), height(0),
+        lastPaintTime(QDateTime::currentDateTime()) {}
 
 client::Widget* client::Widget::getParent() {
     return parent;
@@ -65,6 +66,7 @@ void client::Widget::draw() {
     for (const auto& interfacePart : children) {
         interfacePart->draw();
     }
+    lastPaintTime = QDateTime::currentDateTime();
 }
 
 bool client::Widget::isPointOnWidget(const QPoint& point) {
@@ -114,14 +116,16 @@ QRect client::Widget::boundsRect() {
 void client::Widget::click(QPoint point) {
     bool is_clicked = false;
 
-    for (int index = static_cast<int>(children.size()) - 1; index >= 0; --index) {
+    for (int index = static_cast<int>(children.size()) - 1;
+         index >= 0;
+         --index) {
         if (!children[index]) {
             continue;
         }
         if (children[index]->isPointOnWidget(point)) {
             is_clicked = true;
             children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
-                                point.y() - children[index]->getPosition().y()));
+                                          point.y() - children[index]->getPosition().y()));
         }
     }
     if (is_clicked) {
@@ -130,7 +134,6 @@ void client::Widget::click(QPoint point) {
     if (onClick != nullptr) {
         onClick(point);
     }
-    //qDebug() << "click!!!";
     clicked(point);
 }
 
@@ -157,4 +160,12 @@ void client::Widget::setHeight(int height) {
 
 void client::Widget::setWidth(int width) {
     Widget::width = width;
+}
+
+const QDateTime& client::Widget::getLastPaintTime() const {
+    return lastPaintTime;
+}
+
+int64_t client::Widget::getDeltaTime() const {
+    return getLastPaintTime().msecsTo(QDateTime::currentDateTime());
 }

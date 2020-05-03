@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <QtWidgets/QPushButton>
+#include <QtGui/QFontDatabase>
 
 #include "../../utils/lang.h"
 #include "../widgets/imagebutton.h"
@@ -9,6 +10,7 @@
 
 #include "menuscreen.h"
 #include "gamescreen.h"
+#include "optionsscreen.h"
 
 void client::MenuScreen::onPaused() {
 
@@ -18,15 +20,13 @@ void client::MenuScreen::onResumed() {
 
 }
 
-client::MenuScreen::MenuScreen() {
-    auto closeButton = new ImageButton(QPoint(24, 24), 72, 72);
-    closeButton->setImage(QImage(":/images/cancel"));
-    closeButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->getUiThread()->terminate();
-        QCoreApplication::quit();
-    });
+client::MenuScreen::MenuScreen(): Screen() {
+    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    addChild(closeButton);
+    int fontId = QFontDatabase::addApplicationFont(":/fonts/pacifico");
+    QString fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    QFont font(fontFamily);
+    font.setPixelSize(100);
 
     auto fullScreenButton = new ImageButton(QPoint(408, 24), 72, 72);
     fullScreenButton->setImage(QImage(":/images/fullScreen"));
@@ -42,20 +42,55 @@ client::MenuScreen::MenuScreen() {
 
     addChild(fullScreenButton);
 
-    auto startButton = new ImageButton(QPoint(1000, 100), 500, 500);
-    startButton->setImage(QImage(":/images/resume"));
+    auto startButton = new ImageButton(QPoint(1510, 948), 232, 921);
+    startButton->setImage(QImage(":/interface/button"));
+    startButton->setHoverImage(QImage(":/interface/button-hover"));
+    startButton->setHoverWidth(1329);
+    startButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("start"), font));
+    startButton->getTextChildren()->setColor(QColor(249,192,6));
     startButton->setOnClick([=](QPoint point) {
-        MainWindow::getInstance()->openScreen(std::shared_ptr<Screen>(new GameScreen()));
+        MainWindow::getInstance()->openScreen(std::make_shared<GameScreen>());
     });
 
     addChild(startButton);
 
-    auto textView = new TextView(QPoint(1000, 50), utils::Lang::get("example"), QApplication::font(),
-                                      Qt::blue);
+    auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
+    optionsButton->setImage(QImage(":/interface/button"));
+    optionsButton->setHoverImage(QImage(":/interface/button-hover"));
+    optionsButton->setHoverWidth(1329);
+    optionsButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("options"), font));
+    optionsButton->getTextChildren()->setColor(QColor(249,192,6));
+    optionsButton->setOnClick([=](QPoint point) {
+        MainWindow::getInstance()->openScreen(std::make_shared<OptionsScreen>());
+    });
+
+    addChild(optionsButton);
+
+    auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
+    exitButton->setImage(QImage(":/interface/button"));
+    exitButton->setHoverImage(QImage(":/interface/button-hover"));
+    exitButton->setHoverWidth(1329);
+    exitButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), utils::Lang::get("exit"), font));
+    exitButton->getTextChildren()->setColor(QColor(249,192,6));
+    exitButton->setOnClick([=](QPoint point) {
+        MainWindow::getInstance()->getUiThread()->terminate();
+        QCoreApplication::quit();
+    });
+
+    addChild(exitButton);
+
+    auto textView = new TextView(QPoint(1000, 1008), utils::Lang::get("example"),
+                                 QApplication::font(),
+                                 Qt::blue);
+
+
+    textView->setFont(fontFamily);
+
 
     textView->setTextSize(50);
-    textView->setHeight(300);
-    textView->setWidth(400);
 
-    addChild(textView);
+    //addChild(textView);
 }

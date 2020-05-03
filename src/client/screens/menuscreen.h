@@ -13,8 +13,6 @@ class MenuScreen : public Screen {
     void onPaused() override;
 
     void onResumed() override;
-
-    QPushButton* button;
 };
 
 }

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/interface">
+        <file alias="button">interface/button.png</file>
+        <file alias="button-hover">interface/button-hover.png</file>
+    </qresource>
+</RCC>
