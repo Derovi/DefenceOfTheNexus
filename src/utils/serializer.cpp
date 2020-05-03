@@ -1,6 +1,6 @@
 #include "serializer.h"
 
-utils::Serializer::Serializer(bool prettyPrinting): prettyPrinting(prettyPrinting) {}
+utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
 
 std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
@@ -669,7 +669,8 @@ utils::Serializer::costSerializer(const std::shared_ptr<core::Attribute>& attrib
     }
     auto iter = object->getCost().begin();
     while (iter != object->getCost().end()) {
-        std::optional<QJsonObject> result = resourceSerializer(std::make_shared<core::Resource>(*iter));
+        std::optional<QJsonObject> result = resourceSerializer(
+                std::make_shared<core::Resource>(*iter));
         if (result == std::nullopt) {
             return result;
         }
@@ -708,13 +709,13 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     QJsonArray array = serialized["all"].toArray();
-    QVector<core::Resource>cost;
+    QVector<core::Resource> cost;
     for (const auto obj : array) {
         if (!obj.isObject()) {
             return std::nullopt;
         }
         QJsonObject myObj = obj.toObject();
-        if(!myObj["object"].isObject()){
+        if (!myObj["object"].isObject()) {
             return std::nullopt;
         }
         QJsonObject jsonOfObject = myObj["object"].toObject();

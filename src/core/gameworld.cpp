@@ -103,9 +103,7 @@ core::GameWorld::buildWall(int x1, int y1, int x2, int y2, const server::ObjectS
     vec.push_back(QPoint(50, WALL_WIDTH / 2));
     vec.push_back(QPoint(50, -WALL_WIDTH / 2));
     wall.setHitbox(QPolygonF(vec));
-    for (int j = 0;
-         j < all;
-         j++) {
+    for (int j = 0; j < all; j++) {
         if (kol == MAX_WALL_LENGTH || j == all - 1) {
             kol = 0;
         }

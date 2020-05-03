@@ -22,6 +22,3 @@ std::shared_ptr<core::Attribute> core::Wall::clone() {
     return std::make_shared<core::Wall>(*this);
 
 }
-
-
-

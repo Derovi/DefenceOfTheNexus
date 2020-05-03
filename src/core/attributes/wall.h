@@ -33,5 +33,4 @@ class Wall : public Attribute {
 
 }  // namespace core
 
-
 #endif //WALL_H
