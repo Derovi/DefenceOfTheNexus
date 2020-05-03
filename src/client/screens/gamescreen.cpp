@@ -48,22 +48,22 @@ client::GameScreen::GameScreen() {
     //  gameMap->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
     //                                      QPoint(3000, 2000));
 
-    gameMap->getGameWorld()->buildWall(0, 1500, 2000, 500,
+    gameMap->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(2000, 500),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
-    gameMap->getGameWorld()->buildWall(0, 1500, -100, 50,
+    gameMap->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(-100, 50),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
-    gameMap->getGameWorld()->buildWall(2000, 1500, 0, 500,
+    gameMap->getGameWorld()->buildWall(QPoint(2000, 1500), QPoint(0, 500),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
-    gameMap->getGameWorld()->buildWall(500, 1500, 0, 500,
+    gameMap->getGameWorld()->buildWall(QPoint(500, 1500), QPoint(0, 500),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
-    gameMap->getGameWorld()->buildWall(200, 200, 800, 800,
+    gameMap->getGameWorld()->buildWall(QPoint(200, 200), QPoint(800, 800),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
-    gameMap->getGameWorld()->buildWall(-100, 500, 3, 9000,
+    gameMap->getGameWorld()->buildWall(QPoint(-100, 500), QPoint(3, 9000),
                                        utils::Factory::getObjectSignature("wall1").value(),
                                        utils::Factory::getObjectSignature("column1").value());
     // gameMap->setShowHitBoxes(true);

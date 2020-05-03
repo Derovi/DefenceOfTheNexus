@@ -11,9 +11,9 @@ class DefaultSpriteController : public SpriteController {
   public:
     explicit DefaultSpriteController(const std::shared_ptr<core::Object>& object);
 
-    const std::shared_ptr<Sprite>& getMoveSprite() const;
+    const std::shared_ptr<Sprite>& getDefaultSprite() const;
 
-    void setMoveSprite(const std::shared_ptr<Sprite>& moveSprite);
+    void setDefaultSprite(const std::shared_ptr<Sprite>& sprite);
 
     QString getName() override;
 
@@ -24,8 +24,6 @@ class DefaultSpriteController : public SpriteController {
 
   private:
     std::shared_ptr<Sprite> defaultSprite;
-
-    std::shared_ptr<Sprite> standSprite;
 };
 
 }

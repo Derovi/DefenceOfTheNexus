@@ -52,5 +52,4 @@ QString core::Cost::attributeName = "cost";
 
 std::shared_ptr<core::Attribute> core::Cost::clone() {
     return std::make_shared<core::Cost>(*this);
-
 }
