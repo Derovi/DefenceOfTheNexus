@@ -8,5 +8,19 @@
         <file alias="rocket2">sprites/rocket2.png</file>
         <file alias="flame">sprites/towers/flame.png</file>
         <file alias="bullet">sprites/towers/bullet.png</file>
+        <file alias="iron1">sprites/iron1.png</file>
+        <file alias="iron2">sprites/iron2.png</file>
+        <file alias="iron3">sprites/iron3.png</file>
+        <file alias="iron4">sprites/iron4.png</file>
+        <file alias="rock1">sprites/rock1.png</file>
+        <file alias="rock2">sprites/rock2.png</file>
+        <file alias="rock3">sprites/rock3.png</file>
+        <file alias="rock4">sprites/rock4.png</file>
+        <file alias="tree1">sprites/tree1.png</file>
+        <file alias="tree2">sprites/tree2.png</file>
+        <file alias="wood1">sprites/wood1.png</file>
+        <file alias="wall1">sprites/wall1.png</file>
+        <file alias="wall2">sprites/wall2.png</file>
+        <file alias="column1">sprites/column1.png</file>
     </qresource>
 </RCC>

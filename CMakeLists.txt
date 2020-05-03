@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.7)
 project(defenceofnexus)
 
 set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fsanitize=address")
 
 if (APPLE)
     set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5*/5*/clang_64")
@@ -30,6 +31,8 @@ add_executable(defenceofnexus
         src/core/attributes/damaging.cpp
         src/core/attributes/moving.cpp
         src/core/attributes/resource.cpp
+        src/core/attributes/wall.cpp
+        src/core/attributes/cost.cpp
         src/core/gameworld.cpp
         src/server/controllers/gameworldcontroller.cpp
         src/server/controllers/controller.cpp
@@ -58,6 +61,8 @@ add_executable(defenceofnexus
         src/client/properties.cpp
         src/client/screens/gamescreen.cpp
         src/client/widgets/gamemap.cpp
+        src/server/performers/miningperformer.cpp
+        src/core/attributes/mining.cpp
         src/client/graphicsobject.cpp
         src/client/sprite.cpp
         src/client/spritecontroller.cpp
@@ -65,7 +70,13 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
-        src/utils/lang.cpp src/client/screens/optionsscreen.cpp src/client/screens/optionsscreen.h src/client/widgets/chooser.cpp src/client/widgets/chooser.h src/client/screens/pausescreen.cpp src/client/screens/pausescreen.h)
+        src/client/screens/pausescreen.cpp
+        src/client/spritecontrollers/resourcespritecontroller.cpp
+        src/server/strategies/minestrategy.cpp
+        src/utils/lang.cpp
+        src/client/screens/optionsscreen.cpp
+        src/client/widgets/chooser.cpp
+        src/client/spritecontrollers/defaultspritecontroller.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

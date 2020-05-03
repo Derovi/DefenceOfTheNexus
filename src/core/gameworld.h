@@ -25,11 +25,13 @@ class GameWorld {
 
     void setWidth(int width);
 
-    QVector<core::Resource>& getResources();
+    QVector<QPair<core::ResourceType, int>>& getResources();
 
-    const QVector<core::Resource>& getResources() const;
+    const QVector<QPair<core::ResourceType, int>>& getResources() const;
 
-    void setResources(const QVector<core::Resource>& resources);
+    void setResources(const QVector<QPair<core::ResourceType, int>>& resources);
+
+    void addResources(core::ResourceType type, int amount);
 
     QHash<int64_t, std::shared_ptr<core::Object>>& getObjects();
 
@@ -37,9 +39,16 @@ class GameWorld {
 
     void setObjects(const QHash<int64_t, std::shared_ptr<core::Object>>& objects);
 
+    std::shared_ptr<core::Object> objectAt(QPointF point);
+
     std::shared_ptr<core::Object>
     summonObject(const server::ObjectSignature& signature, const QPoint& position,
                  float rotationAngle = 0);
+
+    void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
+                   const server::ObjectSignature& columnSignature);
+
+    bool isIntersectsWithObjects(const QPolygonF& polygon);
 
     int getLastSummonedId() const;
 
@@ -52,7 +61,7 @@ class GameWorld {
 
     int lastSummonedId;
 
-    QVector<core::Resource> resources;
+    QVector<QPair<core::ResourceType, int>> resources;
     QHash<int64_t, std::shared_ptr<core::Object>> objects;
 };
 

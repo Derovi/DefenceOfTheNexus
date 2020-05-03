@@ -16,6 +16,8 @@ class Sprite {
 
     explicit Sprite(const SpriteDescription& spriteDescription);
 
+    virtual ~Sprite() = default;
+
     void update(uint64_t timeDeltaMSec = 42);
 
     void draw(QPainter& painter, const QRect& destination);

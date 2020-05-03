@@ -1,15 +1,24 @@
-#include "../performers/movingperformer.h"
 #include "movestrategy.h"
 
-void server::MoveStrategy::tick(std::shared_ptr<core::GameWorld> world, double timeDelta) {
-    moving_performer::moveIfNoObstacles(getObject(), timeDelta, world, moving);
+#include <cmath>
+
+#include "../performers/movingperformer.h"
+
+void server::MoveStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
+    if (moving != nullptr) {
+        moving_performer::moveIfNoObstacles(getObject(), timeDelta, world, moving);
+        auto direction = moving->getDirection().normalized();
+        if (!qFuzzyIsNull(direction.x()) && !qFuzzyIsNull(direction.y())) {
+            getObject()->setRotationAngle(std::atan2(direction.y(), direction.x()));
+        }
+    }
 }
 
 QString server::MoveStrategy::getName() {
     return name;
 }
 
-server::MoveStrategy::MoveStrategy(std::shared_ptr<core::Object> object) : Strategy(object) {}
+server::MoveStrategy::MoveStrategy(std::shared_ptr<core::Object> object): Strategy(object) {}
 
 void server::MoveStrategy::assign(server::DataBundle& dataBundle) {
     dataBundle.assign("moving", moving);

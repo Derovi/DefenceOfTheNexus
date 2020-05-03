@@ -4,6 +4,7 @@
 #include <QApplication>
 
 #include "../client/spritecontrollers/unitspritecontroller.h"
+#include "../client/spritecontrollers/defaultspritecontroller.h"
 #include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
@@ -14,19 +15,28 @@
 #include "../server/server.h"
 #include "../client/app.h"
 #include "../client/properties.h"
+#include "../core/attributes/mining.h"
+#include "../server/strategies/minestrategy.h"
+#include "../client/spritecontrollers/resourcespritecontroller.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(
-                                                         new server::MoveStrategy(object)));
+                                             static_cast<server::Strategy*>(
+                                                 new server::MoveStrategy(object)));
                                      });
     utils::Factory::registerStrategy(server::PathStrategy::name,
                                      [](std::shared_ptr<core::Object> object) {
                                          return std::shared_ptr<server::Strategy>(
-                                                 static_cast<server::Strategy*>(
-                                                         new server::PathStrategy(object)));
+                                             static_cast<server::Strategy*>(
+                                                 new server::PathStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::MineStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                             static_cast<server::Strategy*>(
+                                                 new server::MineStrategy(object)));
                                      });
 }
 
@@ -46,13 +56,27 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Resource::attributeName,
                                       utils::Serializer::resourceSerializer,
                                       utils::Serializer::resourceDeserializer);
+
+    utils::Factory::registerAttribute(core::Mining::attributeName,
+                                      utils::Serializer::miningSerializer,
+                                      utils::Serializer::miningDeserializer);
 }
 
 void registerSpriteControllers() {
     utils::Factory::registerSpriteController(client::UnitSpriteController::name,
                                              [](std::shared_ptr<core::Object> object) {
                                                  return std::shared_ptr<client::SpriteController>(
-                                                         new client::UnitSpriteController(object));
+                                                     new client::UnitSpriteController(object));
+                                             });
+    utils::Factory::registerSpriteController(client::ResourceSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                     new client::ResourceSpriteController(object));
+                                             });
+    utils::Factory::registerSpriteController(client::DefaultSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                         new client::DefaultSpriteController(object));
                                              });
 }
 
@@ -64,14 +88,12 @@ void registerObjectSignatures() {
 
     utils::Serializer serializer;
     std::optional<QJsonObject> signatures = serializer.stringToJsonObject(
-            QString(file.readAll()));
+        QString(file.readAll()));
     if (!signatures) {
         return;
     }
 
-    for (auto iter = signatures.value().begin();
-         iter != signatures.value().end();
-         ++iter) {
+    for (auto iter = signatures.value().begin(); iter != signatures.value().end(); ++iter) {
         if (!iter->isObject()) {
             continue;
         }
@@ -93,13 +115,11 @@ void registerGraphicsDescriptions() {
 
     utils::Serializer serializer;
     std::optional<QJsonObject> descriptions = serializer.stringToJsonObject(
-            QString(file.readAll()));
+        QString(file.readAll()));
     if (!descriptions) {
         return;
     }
-    for (auto iter = descriptions.value().begin();
-         iter != descriptions.value().end();
-         ++iter) {
+    for (auto iter = descriptions.value().begin(); iter != descriptions.value().end(); ++iter) {
         auto valueRef = iter.value();
         if (!valueRef.isObject()) {
             continue;
@@ -122,8 +142,8 @@ void registerGraphicsDescriptions() {
         for (const QString& spriteName : json.value("spriteDescriptions").toObject().keys()) {
             QJsonObject spriteJson = json.value("spriteDescriptions")[spriteName].toObject();
             description.getSpriteDescriptions().insert(spriteName, SpriteDescription(
-                    spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
-                    spriteJson["columns"].toInt()));
+                spriteJson["resource"].toString(), spriteJson["rows"].toInt(),
+                spriteJson["columns"].toInt()));
         }
         utils::Factory::registerObjectGraphicsDescription(iter.key(), description);
     }

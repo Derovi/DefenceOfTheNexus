@@ -21,15 +21,21 @@ class Resource : public Attribute {
 
     Resource() = delete;
 
-    explicit Resource(ResourceType type, int amount = 0);
+    explicit Resource(ResourceType type, int amount = 0, double miningSpeedModifier = 1);
+
+    int getAmount() const;
 
     ResourceType getType() const;
 
-    int getAmount() const;
+    double getMiningSpeedModifier() const;
 
     void setAmount(int amount);
 
     void setType(ResourceType newType);
+
+    void setMiningSpeedModifier(double modifier);
+
+    int mine(int speed);
 
     QString getAttributeName() override;
 
@@ -38,6 +44,7 @@ class Resource : public Attribute {
   private:
     ResourceType type;
     int amount;
+    double miningSpeedModifier;
 };
 
 }  // namespace core

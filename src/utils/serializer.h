@@ -9,15 +9,19 @@
 #include <QtGlobal>
 #include <QJsonDocument>
 
-#include "../core/command.h"
-#include "../core/object.h"
 #include "../core/attributes/resource.h"
 #include "../core/attributes/moving.h"
-#include "../core/gameworld.h"
 #include "../core/attributes/damaging.h"
 #include "../core/attributes/damageable.h"
-#include "factory.h"
+#include "../core/attributes/mining.h"
+#include "../core/command.h"
+#include "../core/object.h"
+#include "../core/gameworld.h"
+#include "../core/attributes/cost.h"
+#include "../core/attributes/wall.h"
 #include "../server/objectsignature.h"
+
+#include "factory.h"
 
 namespace utils {
 
@@ -46,8 +50,8 @@ class Serializer {
     std::optional<core::Command> deserializeCommand(const QString& serialized);
 
     std::optional<std::shared_ptr<core::Attribute>> deserializeAttribute(const QString& serialized,
-                                                                   std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                                                                           const QJsonObject&)> deserializer);
+                                                                         std::function<std::optional<std::shared_ptr<core::Attribute>>(
+                                                                                 const QJsonObject&)> deserializer);
 
     void setPrettyPrinting(bool prettyPrinting);
 
@@ -74,6 +78,14 @@ class Serializer {
     static std::optional<QJsonObject>
     movingSerializer(const std::shared_ptr<core::Attribute>& moving);
 
+    static std::optional<QJsonObject>
+    miningSerializer(const std::shared_ptr<core::Attribute>& moving);
+
+    static std::optional<QJsonObject>
+    wallSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
+    static std::optional<QJsonObject>
+    costSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
 
@@ -95,6 +107,15 @@ class Serializer {
 
     static std::optional<std::shared_ptr<core::Attribute>>
     movingDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    miningDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    wallDeserializer(const QJsonObject& serialized);
+
+    std::optional<std::shared_ptr<core::Attribute>>
+    costDeserializer(const QJsonObject& serialized);
 
     QString jsonObjectToString(const QJsonObject& jsonObject);
 
