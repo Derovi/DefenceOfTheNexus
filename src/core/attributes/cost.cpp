@@ -7,17 +7,17 @@ core::Cost::Cost(QVector<Resource> cost): cost(std::move(cost)) {}
 
 core::Cost::Cost() {}
 
-bool core::Cost::isEnough(const core::Resource& playerResource) const {
+bool core::Cost::isEnough(const QPair<ResourceType, int>& playerResource) const {
     for (const Resource& resource : cost) {
-        if (resource.getType() == playerResource.getType()) {
-            return playerResource.getAmount() >= resource.getAmount();
+        if (resource.getType() == playerResource.first) {
+            return playerResource.second >= resource.getAmount();
         }
     }
     return true;
 }
 
-bool core::Cost::isEnough(const QVector<Resource>& playerResources) const {
-    for (const Resource& playerResource : playerResources) {
+bool core::Cost::isEnough(const QVector<QPair<ResourceType, int>>& playerResources) const {
+    for (const QPair<ResourceType, int>& playerResource : playerResources) {
         if (!isEnough(playerResource)) {
             return false;
         }
@@ -25,14 +25,14 @@ bool core::Cost::isEnough(const QVector<Resource>& playerResources) const {
     return true;
 }
 
-bool core::Cost::pay(QVector<Resource>& playerResources) const {
+bool core::Cost::pay(QVector<QPair<ResourceType, int>>& playerResources) const {
     if (!isEnough(playerResources)) {
         return false;
     }
-    for (Resource& playerResource : playerResources) {
+    for (QPair<ResourceType, int>& playerResource : playerResources) {
         for (const Resource& resource : cost) {
-            if (playerResource.getType() == resource.getType()) {
-                playerResource.setAmount(playerResource.getAmount() - resource.getAmount());
+            if (playerResource.first == resource.getType()) {
+                playerResource.second -= resource.getAmount();
                 break;
             }
         }

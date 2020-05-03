@@ -16,14 +16,14 @@ class Cost : public Attribute {
 
     explicit Cost(QVector<Resource> cost);
 
-    bool isEnough(const Resource& playerResource) const;
+    bool isEnough(const QPair<ResourceType, int>& playerResource) const;
 
-    bool isEnough(const QVector<Resource>& playerResources) const;
+    bool isEnough(const QVector<QPair<ResourceType, int>>& playerResources) const;
 
     const QVector<Resource>& getCost() const;
 
     // false if not enough
-    bool pay(QVector<Resource>& playerResources) const;
+    bool pay(QVector<QPair<ResourceType, int>>& playerResources) const;
 
     static QString attributeName;
 
