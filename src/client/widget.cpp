@@ -169,3 +169,7 @@ const QDateTime& client::Widget::getLastPaintTime() const {
 int64_t client::Widget::getDeltaTime() const {
     return getLastPaintTime().msecsTo(QDateTime::currentDateTime());
 }
+
+void client::Widget::setLastPaintTime(const QDateTime& lastPaintTime) {
+    Widget::lastPaintTime = lastPaintTime;
+}

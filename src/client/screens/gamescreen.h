@@ -22,6 +22,8 @@ class GameScreen : public Screen {
 
     void onResumed() override;
 
+    bool paused;
+
     std::shared_ptr<server::Engine> engine;
 
     GameMap* gameMap;

@@ -11,18 +11,20 @@
 #include "pausescreen.h"
 
 void client::GameScreen::onPaused() {
-
+    paused = true;
 }
 
 void client::GameScreen::onResumed() {
-
+    paused = false;
+    setLastPaintTime(QDateTime::currentDateTime());
 }
 
 client::GameMap* client::GameScreen::getGameMap() const {
     return gameMap;
 }
 
-client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld) : Screen() {
+client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld):
+        Screen(), paused(false) {
     gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
@@ -44,10 +46,10 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         engine->setGameWorld(savedGameWorld);
     } else {
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                              QPoint(2000, 1000));
+                                             QPoint(2000, 1000));
 
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
-                                              QPoint(3000, 2000));
+                                             QPoint(3000, 2000));
     }
 
     gameMap->setGameWorld(engine->getGameWorld());
