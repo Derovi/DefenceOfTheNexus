@@ -20,8 +20,8 @@ client::UnitSpriteController::UnitSpriteController(const std::shared_ptr<core::O
         SpriteController(object) {
     auto description = utils::Factory::getObjectGraphicsDescription(object->getTypeName());
     if (description != std::nullopt && description->getSpriteDescriptions().contains("moving")) {
-        moveSprite = std::shared_ptr<Sprite>(
-                new Sprite(description->getSpriteDescriptions()["moving"]));
+        moveSprite = std::make_shared<Sprite>(
+                *new Sprite(description->getSpriteDescriptions()["moving"]));
         addSprite(moveSprite);
     }
 }

@@ -17,6 +17,8 @@
 #include "../core/command.h"
 #include "../core/object.h"
 #include "../core/gameworld.h"
+#include "../core/attributes/cost.h"
+#include "../core/attributes/wall.h"
 #include "../server/objectsignature.h"
 
 #include "factory.h"
@@ -48,8 +50,8 @@ class Serializer {
     std::optional<core::Command> deserializeCommand(const QString& serialized);
 
     std::optional<std::shared_ptr<core::Attribute>> deserializeAttribute(const QString& serialized,
-                                                                   std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                                                                           const QJsonObject&)> deserializer);
+                                                                         std::function<std::optional<std::shared_ptr<core::Attribute>>(
+                                                                                 const QJsonObject&)> deserializer);
 
     void setPrettyPrinting(bool prettyPrinting);
 
@@ -79,6 +81,12 @@ class Serializer {
     static std::optional<QJsonObject>
     miningSerializer(const std::shared_ptr<core::Attribute>& moving);
 
+    static std::optional<QJsonObject>
+    wallSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
+    static std::optional<QJsonObject>
+    costSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
     static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
 
     static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
@@ -102,6 +110,12 @@ class Serializer {
 
     static std::optional<std::shared_ptr<core::Attribute>>
     miningDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    wallDeserializer(const QJsonObject& serialized);
+
+    std::optional<std::shared_ptr<core::Attribute>>
+    costDeserializer(const QJsonObject& serialized);
 
     QString jsonObjectToString(const QJsonObject& jsonObject);
 

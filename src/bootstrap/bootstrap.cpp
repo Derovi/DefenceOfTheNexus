@@ -4,6 +4,7 @@
 #include <QApplication>
 
 #include "../client/spritecontrollers/unitspritecontroller.h"
+#include "../client/spritecontrollers/defaultspritecontroller.h"
 #include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
@@ -71,6 +72,11 @@ void registerSpriteControllers() {
                                              [](std::shared_ptr<core::Object> object) {
                                                  return std::shared_ptr<client::SpriteController>(
                                                      new client::ResourceSpriteController(object));
+                                             });
+    utils::Factory::registerSpriteController(client::DefaultSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                         new client::DefaultSpriteController(object));
                                              });
 }
 

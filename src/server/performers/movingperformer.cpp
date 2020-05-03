@@ -41,3 +41,4 @@ QPointF server::moving_performer::getNextPosition(const std::shared_ptr<core::Ob
            (moving.getDirection() *
             static_cast<float>(moving.getSpeed() * timeDelta / 1000)).toPointF();
 }
+
