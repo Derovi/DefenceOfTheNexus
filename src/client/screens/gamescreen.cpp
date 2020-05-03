@@ -20,9 +20,6 @@ void client::GameScreen::onResumed() {
 }
 
 void client::GameScreen::draw() {
-    if (paused) {
-        return;
-    }
     Screen::draw();
 }
 
