@@ -61,13 +61,11 @@ class Chooser : public Widget {
     std::function<void(int selected)> onChanged;
 
     ImageButton* leftButton;
-
     ImageButton* rightButton;
 
     TextView* textView;
 
     int buttonWidth;
-
     int textWidth;
 
     int selected;
