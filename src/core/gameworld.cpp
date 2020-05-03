@@ -126,7 +126,9 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     vec.push_back(QPoint(50, WALL_WIDTH / 2));
     vec.push_back(QPoint(50, -WALL_WIDTH / 2));
     wall.setHitbox(QPolygonF(vec));
-    for (int j = 0; j < all; j++) {
+    for (int j = 0;
+         j < all;
+         j++) {
         if (kol == MAX_WALL_LENGTH || j == all - 1) {
             kol = 0;
         }
@@ -176,4 +178,102 @@ bool core::GameWorld::isIntersectsWithObjects(const QPolygonF& polygon) {
         }
     }
     return false;
+}
+
+std::shared_ptr<core::Object>
+core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& position,
+                       float rotationAngle) {
+    QPolygonF hitbox = signature.getHitbox();
+    QMatrix matrix;
+    matrix.rotate(rotationAngle);
+    matrix.map(hitbox);
+    hitbox.translate(position.x(), position.y());
+    if (isIntersectsWithObjects(hitbox)) {
+        return nullptr;
+    }
+    if ((signature.getAttribute("cost") != nullptr) &&
+        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources))) {
+        return nullptr;
+    }
+    return summonObject(signature, position, rotationAngle);
+}
+
+std::pair<core::Object, bool>
+core::GameWorld::checkBuildStatus(const server::ObjectSignature& signature, const QPoint& position,
+                                  float rotationAngle) {
+    bool ok = true;
+    QPolygonF hitbox = signature.getHitbox();
+    QMatrix matrix;
+    matrix.rotate(rotationAngle);
+    matrix.map(hitbox);
+    hitbox.translate(position.x(), position.y());
+    if (isIntersectsWithObjects(hitbox)) {
+        ok = false;
+    }
+    if ((signature.getAttribute("cost") != nullptr) &&
+        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources))) {
+        ok = false;
+    }
+    core::Object ans = Object(lastSummonedId,
+                              signature.getTypeName(),
+                              position,
+                              signature.getHitbox(),
+                              rotationAngle);
+    ans.setStrategies(signature.getStrategies());
+    for (const auto& attribute : signature.getAttributes()) {
+        ans.getAttributes().push_back(attribute->clone());
+    }
+    return std::make_pair(ans, ok);
+}
+
+QVector<std::pair<core::Object, bool> >
+core::GameWorld::checkWallStatus(QPoint start, QPoint finish,
+                                 const server::ObjectSignature& wallSignature,
+                                 const server::ObjectSignature& columnSignature) {
+    QVector<std::pair<core::Object, bool>> ans;
+    const int WALL_WIDTH = 50;
+    const int MAX_WALL_LENGTH = 3;
+    server::ObjectSignature wall(wallSignature);
+    long double dx = finish.x() - start.x();
+    long double dy = finish.y() - start.y();
+    long double ang;
+    if (dx == 0) {
+        ang = 0;
+    } else { ang = atan2(dy, dx); }
+    long double dz = sqrt(dx * dx + dy * dy);
+    int all = dz / 100;
+    dx /= dz;
+    dy /= dz;
+    int kol = 0;
+    ang *= 180 / M_PI;
+    QVector<QPoint> vec;
+    vec.push_back(QPoint(-50, -WALL_WIDTH / 2));
+    vec.push_back(QPoint(-50, WALL_WIDTH / 2));
+    vec.push_back(QPoint(50, WALL_WIDTH / 2));
+    vec.push_back(QPoint(50, -WALL_WIDTH / 2));
+    wall.setHitbox(QPolygonF(vec));
+    for (int j = 0;
+         j < all;
+         j++) {
+        if (kol == MAX_WALL_LENGTH || j == all - 1) {
+            kol = 0;
+        }
+        if (kol == 0) {
+            QPoint firstPoint(start.x() + dx * j * 100,
+                              start.y() + dy * j * 100);
+            QPoint secondPoint(start.x() + dx * j * 100 + dx * 25,
+                               start.y() + dy * j * 100 + dy * 25);
+            ans.push_back({checkBuildStatus(columnSignature, firstPoint, ang).first,
+                           checkBuildStatus(columnSignature, secondPoint, ang).second});
+        } else {
+            QPoint firstPoint(start.x() + dx * j * 100,
+                              start.y() + dy * j * 100);
+            QPoint secondPoint(start.x() + dx * j * 100 + dx * 25,
+                               start.y() + dy * j * 100 + dy * 25);
+            ans.push_back({checkBuildStatus(wall, firstPoint, ang).first,
+                           checkBuildStatus(wall, secondPoint, ang).second});
+        }
+        kol++;
+    }
+    return ans;
 }

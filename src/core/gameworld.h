@@ -54,6 +54,18 @@ class GameWorld {
 
     void setLastSummonedId(int lastSummonedId);
 
+    std::shared_ptr<core::Object>
+    build(const server::ObjectSignature& signature, const QPoint& position,
+                 float rotationAngle = 0);
+
+    std::pair<core::Object,bool>
+    checkBuildStatus(const server::ObjectSignature& signature, const QPoint& position,
+          float rotationAngle = 0);
+    QVector<std::pair<core::Object,bool> >
+    checkWallStatus(QPoint start, QPoint finish, const server::ObjectSignature& wall,
+                    const server::ObjectSignature& columnSignature);
+
+
   private:
 
     int height;
