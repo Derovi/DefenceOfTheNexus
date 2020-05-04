@@ -21,7 +21,9 @@ class SpriteController {
 
     virtual QString getName() = 0;
 
-    virtual void update(QPainter& painter, const QRect& target, uint64_t timeDeltaMSec);
+    virtual void update(uint64_t timeDeltaMSec);
+
+    virtual void draw(QPainter& painter, const QRect& target);
 
   protected:
     virtual void onUpdate(uint64_t timeDeltaMSec) = 0;

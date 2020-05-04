@@ -46,9 +46,9 @@ void client::GraphicsObject::update(const QTransform& painterTransform, uint64_t
             textureWidth = objectGraphicsDescription.value().getWidth();
             textureHeight = objectGraphicsDescription.value().getHeight();
         }
-        spriteController->update(objectPainter,
-                                 QRect(-textureWidth / 2.0, -textureHeight / 2.0, textureWidth,
-                                       textureHeight),
-                                 timeDeltaMSec);
+        spriteController->update(timeDeltaMSec);
+        spriteController->draw(objectPainter,
+                               QRect(-textureWidth / 2.0, -textureHeight / 2.0, textureWidth,
+                                     textureHeight));
     }
 }
