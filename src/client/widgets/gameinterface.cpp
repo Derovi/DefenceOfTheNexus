@@ -3,6 +3,8 @@
 #include "../screens/gamescreen.h"
 #include "../../core/attributes/damageable.h"
 #include "../app.h"
+#include "../../core/attributes/damaging.h"
+#include "../../core/attributes/mining.h"
 
 #include <utility>
 
@@ -30,6 +32,23 @@ client::GameInterface::GameInterface(QPoint position,
     addChild(stoneView);
     addChild(woodView);
     addChild(ironView);
+
+    damageIcon = QImage(":/interface/icon-damage");
+    miningIcon = QImage(":/interface/icon-mining");
+    armorIcon = QImage(":/interface/icon-armor");
+
+
+    QFont font60 = App::getInstance()->getFont();
+    font60.setPixelSize(60);
+    damageView = new TextView(QPoint(1146, 138), "damage", font60);
+    miningView = new TextView(QPoint(1146, 220), "mining", font60);
+    armorView = new TextView(QPoint(1146, 302), "armor", font60);
+
+    addChild(damageView);
+    addChild(miningView);
+    addChild(armorView);
+
+    slotIcon = QImage(":/interface/icon-slot");
 }
 
 void client::GameInterface::paint(QPainter& painter) {
@@ -40,6 +59,12 @@ void client::GameInterface::paint(QPainter& painter) {
             graphicsObject = object;
         }
     }
+
+    if (!graphicsObject) {
+        return;
+    }
+
+    auto object = graphicsObject->getObject();
 
     // Unit icon
     unitIcon->setGraphicsObject(graphicsObject);
@@ -84,4 +109,21 @@ void client::GameInterface::paint(QPainter& painter) {
     stoneView->setText(QString::number(stone));
     woodView->setText(QString::number(wood));
     ironView->setText(QString::number(iron));
+
+    // Attributes
+    painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
+    painter.drawImage(QRect(1058, 182, 60, 60), miningIcon);
+    painter.drawImage(QRect(1058, 264, 60, 60), armorIcon);
+
+    auto damaging = std::dynamic_pointer_cast<core::Damaging>(
+            graphicsObject->getObject()->getAttribute(core::Damaging::attributeName));
+    damageView->setText(QString::number(damaging ? damaging->getDamage() : 0));
+
+    auto mining = std::dynamic_pointer_cast<core::Mining>(
+            graphicsObject->getObject()->getAttribute(core::Mining::attributeName));
+    miningView->setText(QString::number(mining ? mining->getMiningSpeed() : 0));
+
+    //!TODO armor display
+    auto armor = nullptr;
+    armorView->setText(QString::number(0) + "%");
 }

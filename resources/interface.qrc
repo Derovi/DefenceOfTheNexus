@@ -19,5 +19,6 @@
         <file alias="icon-damage">interface/icon-damage.png</file>
         <file alias="icon-mining">interface/icon-mining.png</file>
         <file alias="icon-armor">interface/icon-armor.png</file>
+        <file alias="icon-slot">interface/icon-slot.png</file>
     </qresource>
 </RCC>
