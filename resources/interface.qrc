@@ -8,6 +8,7 @@
         <file alias="right-button">interface/right-button.png</file>
         <file alias="right-button-hover">interface/right-button-hover.png</file>
         <file alias="health-bar-background">interface/health-bar-background.png</file>
+        <file alias="health-bar-line">interface/health-bar-line.png</file>
         <file alias="button-ai">interface/button-ai.png</file>
         <file alias="button-stop">interface/button-stop.png</file>
         <file alias="button-kill">interface/button-kill.png</file>

@@ -16,6 +16,12 @@ class GameInterface : public Widget {
     void paint(QPainter& painter) override;
 
   private:
+    QImage stoneIcon;
+
+    QImage woodIcon;
+
+    QImage ironIcon;
+
     std::shared_ptr<core::GameWorld> gameWorld;
 
     UnitIcon* unitIcon;

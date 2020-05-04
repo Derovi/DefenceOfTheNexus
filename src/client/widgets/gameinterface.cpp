@@ -10,12 +10,17 @@ client::GameInterface::GameInterface(QPoint position,
                                      int selectedUnitId):
         Widget(position), gameWorld(std::move(gameWorld)), selectedUnitId(selectedUnitId) {
     unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
+    unitIcon->setBackground(QImage(":/interface/icon-background"));
     addChild(unitIcon);
 
     healthBar = new HealthBar(QPoint(1058, 0));
     healthBar->setBackground(QImage(":/interface/health-bar-background"));
     healthBar->setHealthLine(QImage(":/interface/health-bar-line"));
     addChild(healthBar);
+
+    stoneIcon = QImage(":/icon-stone");
+    woodIcon = QImage(":/icon-wood");
+    ironIcon = QImage(":/icon-iron");
 }
 
 void client::GameInterface::paint(QPainter& painter) {
@@ -45,4 +50,9 @@ void client::GameInterface::paint(QPainter& painter) {
         healthBar->setCurrentHp(0);
         healthBar->setMaxHp(0);
     }
+
+    // Resources
+    painter.drawImage(QRect(0,0,114,114), stoneIcon);
+    painter.drawImage(QRect(0,158,114,114), woodIcon);
+    painter.drawImage(QRect(0,316,114,114), ironIcon);
 }
