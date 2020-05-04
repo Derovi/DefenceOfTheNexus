@@ -49,6 +49,9 @@ QRect client::Sprite::getFrameBounds() const {
 }
 
 void client::Sprite::draw(QPainter& painter, const QRect& destination) {
+    if (source.isNull()) {
+        return;
+    }
     QRect dest = destination;
     QTransform transform = QTransform(-1, 0, 0, 1, 0, 0);
     if (mirroring) {

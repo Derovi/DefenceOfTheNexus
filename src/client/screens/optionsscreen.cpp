@@ -93,7 +93,9 @@ client::OptionsScreen::OptionsScreen(): Screen() {
     backButton->setOnClick([=](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
-            App::getInstance()->closeScreen();
+            App::runOnUiThread([&] {
+                App::getInstance()->closeScreen();
+            });
         });
         thread->start();
     });

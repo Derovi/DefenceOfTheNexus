@@ -6,6 +6,7 @@
 #include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
+#include "../client/app.h"
 
 #include "commandexecutor.h"
 #include "worldgenerator.h"
