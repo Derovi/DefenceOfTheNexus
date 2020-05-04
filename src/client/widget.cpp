@@ -136,7 +136,7 @@ void client::Widget::click(QPoint point, bool leftButton) {
     if (onClick != nullptr) {
         onClick(point, leftButton);
     }
-    clicked(point);
+    clicked(point, leftButton);
 }
 
 void client::Widget::setOnClick(std::function<void(QPoint, bool)> action) {

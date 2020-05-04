@@ -18,6 +18,10 @@ class GameInterface : public Widget {
 
     void paint(QPainter& painter) override;
 
+    int getSelectedUnitId() const;
+
+    void setSelectedUnitId(int selectedUnitId);
+
   private:
     QImage stoneIcon;
     QImage woodIcon;

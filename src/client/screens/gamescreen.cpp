@@ -27,6 +27,10 @@ client::GameMap* client::GameScreen::getGameMap() const {
     return gameMap;
 }
 
+client::GameInterface* client::GameScreen::getInterface() const {
+    return interface;
+}
+
 client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld):
         Screen(), paused(false) {
     gameMap = new GameMap();

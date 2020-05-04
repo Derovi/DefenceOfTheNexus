@@ -3,6 +3,7 @@
 #include "../app.h"
 
 #include "gamemap.h"
+#include "../screens/gamescreen.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position), commandQueue(nullptr),
@@ -22,8 +23,9 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     if (gameWorld->getObjects().contains(0)) {
-        centerWindow(QPoint(gameWorld->getObjects()[0]->getPosition().x() + 1,
-                           gameWorld->getObjects()[0]->getPosition().y() + 1));
+        int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+        centerWindow(QPoint(gameWorld->getObjects()[objectId]->getPosition().x() + 1,
+                            gameWorld->getObjects()[objectId]->getPosition().y() + 1));
     }
 
     // paint transform
@@ -62,8 +64,8 @@ void client::GameMap::paint(QPainter& painter) {
     if (showSprites) {
         for (std::shared_ptr<GraphicsObject> graphicsObject : graphicsObjects.values()) {
             graphicsObject->update(painter.transform(), deltaTime);
+        }
     }
-}
 
     if (showHitBoxes) {
         for (const std::shared_ptr<core::Object>& object : gameWorld->getObjects().values()) {
@@ -106,15 +108,25 @@ QTransform client::GameMap::getTransformToMap() const {
     return getTransformToWidget().inverted();
 }
 
-void client::GameMap::clicked(QPoint point) {
+void client::GameMap::clicked(QPoint point, bool leftButton) {
     point = getTransformToMap().map(point);
-    auto object = gameWorld->objectAt(point);
-    if (object != nullptr && object->hasAttribute("resource")) {
+    if (leftButton) {
+        auto object = gameWorld->objectAt(point);
+        if (object) {
+            dynamic_cast<GameScreen*>(getParent())->getInterface()->setSelectedUnitId(
+                    object->getId());
+        }
+        return;
+    }
+    int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+    auto target = gameWorld->objectAt(point);
+    if (target != nullptr && target->hasAttribute("resource")) {
         commandQueue->push(core::Command("mine_resource", {
-           "0", QString::number(object->getId())}));
+                QString::number(objectId), QString::number(target->getId())}));
     } else {
-        commandQueue->push(core::Command("change_move_target", {"0", QString::number(point.x()),
-                                                                QString::number(point.y())}));
+        commandQueue->push(
+                core::Command("change_move_target", {QString::number(objectId), QString::number(point.x()),
+                                                     QString::number(point.y())}));
     }
 }
 
@@ -208,15 +220,17 @@ void client::GameMap::drawBackground(QPainter& painter) {
     for (int x = (displayBounds.x() / background.getFrameWidth() - 1) * background.getFrameWidth();
          x < displayBounds.x() + displayBounds.width();
          x += background.getFrameWidth()) {
-        for (int y = (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
+        for (int y =
+                (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
              y < displayBounds.y() + displayBounds.height();
              y += background.getFrameHeight()) {
             background.draw(painter,
-                           QRect(x, y, background.getFrameWidth(), background.getFrameHeight()));
+                            QRect(x, y, background.getFrameWidth(), background.getFrameHeight()));
         }
     }
 }
 
-const QHash<int64_t, std::shared_ptr<client::GraphicsObject>>& client::GameMap::getGraphicsObjects() const {
+const QHash<int64_t, std::shared_ptr<client::GraphicsObject>>&
+client::GameMap::getGraphicsObjects() const {
     return graphicsObjects;
 }

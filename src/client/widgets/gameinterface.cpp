@@ -81,6 +81,14 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     slotIcon = QImage(":/interface/icon-slot");
 }
 
+int client::GameInterface::getSelectedUnitId() const {
+    return selectedUnitId;
+}
+
+void client::GameInterface::setSelectedUnitId(int selectedUnitId) {
+    GameInterface::selectedUnitId = selectedUnitId;
+}
+
 void client::GameInterface::paint(QPainter& painter) {
     GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
     std::shared_ptr<GraphicsObject> graphicsObject = nullptr;

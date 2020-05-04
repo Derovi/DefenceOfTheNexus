@@ -78,7 +78,7 @@ class Widget : public QObject {
   protected:
     QPoint position;
 
-    virtual void clicked(QPoint point) {};
+    virtual void clicked(QPoint point, bool leftButton) {};
 
     virtual void mouseMoved(QPoint point) {};
 

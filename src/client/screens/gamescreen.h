@@ -20,6 +20,8 @@ class GameScreen : public Screen {
 
     void draw() override;
 
+    GameInterface* getInterface() const;
+
   private:
     void onPaused() override;
 

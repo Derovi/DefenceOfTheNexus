@@ -69,7 +69,7 @@ class GameMap : public Widget {
   protected:
     void paint(QPainter& painter) override;
 
-    void clicked(QPoint point) override;
+    void clicked(QPoint point, bool leftButton) override;
 
   public:
     const std::shared_ptr<Queue<core::Command>>& getCommandQueue() const;
