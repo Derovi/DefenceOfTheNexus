@@ -1,61 +1,51 @@
-#include <QDebug>
-#include "healthbar.h"
+#ifndef HEALTHBAR_H
+#define HEALTHBAR_H
 
-client::HealthBar::HealthBar(QPoint position, int currentHP, int maxHP) : Widget(position) {
-    setCurrentHp(currentHP);
-    setMaxHp(maxHP);
-}
+#include "../widget.h"
+#include "../sprite.h"
 
-int client::HealthBar::getCurrentHp() const {
-    return currentHP;
-}
+namespace client {
+class HealthBar : public Widget {
+  public:
+    HealthBar(QPoint position = QPoint(0, 0), int currentHP = 100,
+              int maxHP = 100);
 
-void client::HealthBar::setCurrentHp(int currentHp) {
-    this->currentHP = currentHp;
-}
+    int getCurrentHp() const;
 
-int client::HealthBar::getMaxHp() const {
-    return maxHP;
-}
+    void setCurrentHp(int currentHp);
 
-void client::HealthBar::setMaxHp(int maxHp) {
-    this->maxHP = maxHp;
-}
+    int getMaxHp() const;
 
-const QImage& client::HealthBar::getBackground() const {
-    return background;
-}
+    void setMaxHp(int maxHp);
 
-void client::HealthBar::setBackground(const QImage& background) {
-    HealthBar::background = background;
-}
+    const QImage& getBackground() const;
 
-const QImage& client::HealthBar::getHealthLine() const {
-    return healthLine;
-}
+    void setBackground(const QImage& background);
 
-void client::HealthBar::setHealthLine(const QImage& healthLine) {
-    HealthBar::healthLine = healthLine;
-}
+    const QImage& getHealthLine() const;
 
-int client::HealthBar::getWidth() const {
-    return width;
-}
+    void setHealthLine(const QImage& healthLine);
 
-void client::HealthBar::setWidth(int width) {
-    HealthBar::width = width;
-}
+    int getWidth() const;
 
-int client::HealthBar::getHeight() const {
-    return height;
-}
+    void setWidth(int width);
 
-void client::HealthBar::setHeight(int height) {
-    this->height = height;
-}
+    int getHeight() const;
 
-void client::HealthBar::paint(QPainter& painter) {
-    painter.drawImage(QRect(1296, 1593, 1250, 70), background);
-    QRect rect(0, 0, width * currentHP / maxHP, 50);
-    painter.drawImage(1306, 1603, healthLine.copy(rect));
-}
+    void setHeight(int height);
+
+    void paint(QPainter& painter) override;
+
+  private:
+    int currentHP;
+    int maxHP;
+
+    int width;
+    int height;
+
+    QImage background;
+    QImage healthLine;
+
+};
+} // namespace client
+#endif //HEALTHBAR_H

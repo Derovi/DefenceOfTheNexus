@@ -1,4 +1,5 @@
 #include <QDebug>
+
 #include "healthbar.h"
 
 client::HealthBar::HealthBar(QPoint position, int currentHP, int maxHP) : Widget(position) {
