@@ -37,7 +37,6 @@ client::GameInterface::GameInterface(QPoint position,
     miningIcon = QImage(":/interface/icon-mining");
     armorIcon = QImage(":/interface/icon-armor");
 
-
     QFont font60 = App::getInstance()->getFont();
     font60.setPixelSize(60);
     damageView = new TextView(QPoint(1146, 138), "damage", font60);
@@ -47,6 +46,34 @@ client::GameInterface::GameInterface(QPoint position,
     addChild(damageView);
     addChild(miningView);
     addChild(armorView);
+
+    aiButton = new ImageButton(QPoint(2040, 100), 66,266);
+    stopButton = new ImageButton(QPoint(2040, 188), 66, 266);
+    killButton = new ImageButton(QPoint(2040, 276), 66, 266);
+
+    aiButton->setImage(QImage(":/interface/button-ai"));
+    stopButton->setImage(QImage(":/interface/button-stop"));
+    killButton->setImage(QImage(":/interface/button-kill"));
+
+    aiButton->setOnClick([&](QPoint point) {
+        GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
+        gameMap->getCommandQueue()->push(core::Command("ai",
+                {QString::number(selectedUnitId)}));
+    });
+    stopButton->setOnClick([&](QPoint point) {
+        GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
+        gameMap->getCommandQueue()->push(core::Command("stop",
+                                                       {QString::number(selectedUnitId)}));
+    });
+    killButton->setOnClick([&](QPoint point) {
+        GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
+        gameMap->getCommandQueue()->push(core::Command("kill",
+                                                       {QString::number(selectedUnitId)}));
+    });
+
+    addChild(aiButton);
+    addChild(stopButton);
+    addChild(killButton);
 
     slotIcon = QImage(":/interface/icon-slot");
 }
