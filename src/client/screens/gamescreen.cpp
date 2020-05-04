@@ -82,7 +82,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     engine->start();
 
 
-    interface = new GameInterface(QPoint(0, 1500), gameMap->getGameWorld());
+    interface = new GameInterface(QPoint(152, 1710), gameMap->getGameWorld());
     addChild(interface);
 }
 

@@ -7,5 +7,16 @@
         <file alias="left-button-hover">interface/left-button-hover.png</file>
         <file alias="right-button">interface/right-button.png</file>
         <file alias="right-button-hover">interface/right-button-hover.png</file>
+        <file alias="health-bar-background">interface/health-bar-background.png</file>
+        <file alias="button-ai">interface/button-ai.png</file>
+        <file alias="button-stop">interface/button-stop.png</file>
+        <file alias="button-kill">interface/button-kill.png</file>
+        <file alias="icon-background">interface/icon-background.png</file>
+        <file alias="icon-iron">interface/icon-iron.png</file>
+        <file alias="icon-stone">interface/icon-stone.png</file>
+        <file alias="icon-wood">interface/icon-wood.png</file>
+        <file alias="icon-damage">interface/icon-damage.png</file>
+        <file alias="icon-mining">interface/icon-mining.png</file>
+        <file alias="icon-armor">interface/icon-armor.png</file>
     </qresource>
 </RCC>

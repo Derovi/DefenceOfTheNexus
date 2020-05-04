@@ -13,6 +13,8 @@ client::GameInterface::GameInterface(QPoint position,
     addChild(unitIcon);
 
     healthBar = new HealthBar(QPoint(1058, 0));
+    healthBar->setBackground(QImage(":/interface/health-bar-background"));
+    healthBar->setHealthLine(QImage(":/interface/health-bar-line"));
     addChild(healthBar);
 }
 

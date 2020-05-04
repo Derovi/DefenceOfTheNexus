@@ -16,7 +16,13 @@ class UnitIcon : public Widget {
 
     void paint(QPainter& painter) override;
 
+    const QImage& getBackground() const;
+
+    void setBackground(const QImage& background);
+
   private:
+    QImage background;
+
     std::shared_ptr<GraphicsObject> graphicsObject;
 };
 
