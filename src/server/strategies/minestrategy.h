@@ -32,8 +32,9 @@ class MineStrategy : public Strategy {
 
     inline static const QStringList startAfter = {};
 
-    std::shared_ptr<core::Object> miningTarget;
+    std::shared_ptr<QPointF> destPoint;
     std::shared_ptr<core::Mining> mining;
+    std::shared_ptr<core::Object> miningTarget;
 };
 
 }  // namespace server

@@ -59,6 +59,14 @@ void client::ImageButton::setTextChildren(const std::shared_ptr<TextView>& textC
     ImageButton::textChildren = textChildren;
 }
 
+int client::ImageButton::getHoverHeight() const {
+    return hoverHeight;
+}
+
+void client::ImageButton::setHoverHeight(int hoverHeight) {
+    ImageButton::hoverHeight = hoverHeight;
+}
+
 int client::ImageButton::getHoverWidth() const {
     return hoverWidth;
 }

@@ -40,7 +40,6 @@
       "attackStrategy"
     ]
   },
-
   "resourcebundle-stone": {
     "attributes": {
       "resource": {
@@ -55,7 +54,6 @@
     },
     "strategies": []
   },
-
   "test2": {
     "attributes": {
       "damageable": {
@@ -74,6 +72,46 @@
         0,
         50,
         0,
+        -50
+      ]
+    },
+    "strategies": [
+    ]
+  },
+  "wall1": {
+    "attributes": {
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        -50,
+        50,
+        50
+      ],
+      "y": [
+        -50,
+        50,
+        50,
+        -50
+      ]
+    },
+    "strategies": [
+    ]
+  },
+  "column1": {
+    "attributes": {
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        -50,
+        50,
+        50
+      ],
+      "y": [
+        -50,
+        50,
+        50,
         -50
       ]
     },

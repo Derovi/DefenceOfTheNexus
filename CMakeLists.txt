@@ -31,6 +31,8 @@ add_executable(defenceofnexus
         src/core/attributes/damaging.cpp
         src/core/attributes/moving.cpp
         src/core/attributes/resource.cpp
+        src/core/attributes/wall.cpp
+        src/core/attributes/cost.cpp
         src/core/gameworld.cpp
         src/server/controllers/gameworldcontroller.cpp
         src/server/controllers/controller.cpp
@@ -52,7 +54,7 @@ add_executable(defenceofnexus
         src/server/objectsignature.cpp
         src/client/windowmanager.cpp
         src/client/widget.cpp
-        src/client/mainwindow.cpp
+        src/client/app.cpp
         src/client/screen.cpp
         src/client/screens/menuscreen.cpp
         src/client/widgets/imagebutton.cpp
@@ -68,12 +70,14 @@ add_executable(defenceofnexus
         src/client/objectgraphicsdescription.cpp
         src/client/spritedescription.cpp
         src/client/widgets/textview.cpp
+        src/client/screens/pausescreen.cpp
         src/client/spritecontrollers/resourcespritecontroller.cpp
         src/server/strategies/minestrategy.cpp
         src/utils/lang.cpp
         src/client/screens/optionsscreen.cpp
         src/client/widgets/chooser.cpp
-        src/server/strategies/attackstrategy.cpp)
+        src/server/strategies/attackstrategy.cpp
+        src/client/spritecontrollers/defaultspritecontroller.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

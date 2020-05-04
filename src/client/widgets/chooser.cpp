@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QtCore/QPoint>
 
 #include "chooser.h"
 
@@ -6,30 +7,40 @@ client::Chooser::Chooser(QPoint position, int height, int width):
         Widget(position), selected(0), textWidth(width * 3 / 4) {
     setHeight(height);
     setWidth(width);
-    int buttonWidth = (width - textWidth) / 2;
-    leftButton = std::make_shared<ImageButton>(absolutePosition(), height, buttonWidth);
+
+    leftButton = new ImageButton();
     leftButton->setOnClick([&](const QPoint& point) {
         leftClick();
     });
-    rightButton = std::make_shared<ImageButton>(absolutePosition() + QPoint(width - buttonWidth, 0),
-                                                height, buttonWidth);
+
+    rightButton = new ImageButton();
     rightButton->setOnClick([&](const QPoint& point) {
         rightClick();
     });
 
-    textView = std::make_shared<TextView>(absolutePosition() + QPoint(buttonWidth, 0));
+    textView = new TextView();
+
+    addChild(leftButton);
+
+    addChild(rightButton);
+
+    addChild(textView);
+
+    update();
+}
+
+void client::Chooser::setSelected(int selected) {
+    Chooser::selected = selected;
 }
 
 void client::Chooser::paint(QPainter& painter) {
     if (!background.isNull()) {
-        painter.drawImage(QRect(0,0,width, height), background);
+        painter.drawImage(QRect((width - textWidth) / 2, 0, textWidth, height), background);
     }
-    leftButton->draw();
-    rightButton->draw();
     if (!options.empty()) {
         textView->setText(options[selected]);
     }
-    textView->draw();
+    update();
 }
 
 void client::Chooser::leftClick() {
@@ -37,7 +48,9 @@ void client::Chooser::leftClick() {
         return;
     }
     selected = (selected + options.size() - 1) % options.size();
-    onChanged(selected);
+    if (onChanged) {
+        onChanged(selected);
+    }
 }
 
 void client::Chooser::rightClick() {
@@ -45,21 +58,83 @@ void client::Chooser::rightClick() {
         return;
     }
     selected = (selected + 1) % options.size();
-    onChanged(selected);
+    if (onChanged) {
+        onChanged(selected);
+    }
 }
 
 int client::Chooser::getSelected() const {
     return selected;
 }
 
-const std::shared_ptr<client::ImageButton>& client::Chooser::getLeftButton() const {
+const QImage& client::Chooser::getBackground() const {
+    return background;
+}
+
+void client::Chooser::setBackground(const QImage& background) {
+    Chooser::background = background;
+}
+
+const std::function<void(int)>& client::Chooser::getOnChanged() const {
+    return onChanged;
+}
+
+void client::Chooser::setOnChanged(const std::function<void(int)>& onChanged) {
+    Chooser::onChanged = onChanged;
+}
+
+const QStringList& client::Chooser::getOptions() const {
+    return options;
+}
+
+void client::Chooser::setOptions(const QStringList& options) {
+    Chooser::options = options;
+}
+
+int client::Chooser::getTextWidth() const {
+    return textWidth;
+}
+
+void client::Chooser::setTextWidth(int textWidth) {
+    Chooser::textWidth = textWidth;
+    update();
+}
+
+int client::Chooser::getButtonWidth() const {
+    return buttonWidth;
+}
+
+void client::Chooser::setButtonWidth(int buttonWidth) {
+    Chooser::buttonWidth = buttonWidth;
+    update();
+}
+
+void client::Chooser::update() {
+    leftButton->setWidth(buttonWidth);
+    leftButton->setHeight(height);
+
+    rightButton->setPosition(QPoint(width - buttonWidth, 0));
+    rightButton->setWidth(buttonWidth);
+    rightButton->setHeight(height);
+
+    textView->setPosition(QPoint(
+            getWidth() / 2.0 - textView->getTextWidth() / 2.0,
+            getHeght() / 2.0 + textView->getTextHeight() / 2.0
+    ));
+}
+
+client::ImageButton* client::Chooser::getLeftButton() const {
     return leftButton;
 }
 
-const std::shared_ptr<client::ImageButton>& client::Chooser::getRightButton() const {
+client::ImageButton* client::Chooser::getRightButton() const {
     return rightButton;
 }
 
-const std::shared_ptr<client::TextView>& client::Chooser::getTextView() const {
+client::TextView* client::Chooser::getTextView() const {
     return textView;
+}
+
+QStringList& client::Chooser::getOptions() {
+    return options;
 }

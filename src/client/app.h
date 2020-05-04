@@ -1,9 +1,10 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef APP_H
+#define APP_H
 
 #include <QWidget>
 #include <QThread>
 #include <QStack>
+#include <QtCore/QSettings>
 
 #include "widget.h"
 #include "screen.h"
@@ -12,10 +13,10 @@ namespace client {
 
 class WindowManager;
 
-class MainWindow : public QWidget {
+class App : public QWidget {
 
   public:
-    MainWindow();
+    App();
 
     void paintEvent(QPaintEvent*);
 
@@ -31,9 +32,17 @@ class MainWindow : public QWidget {
   public:
     QThread* getUiThread() const;
 
-    static MainWindow* getInstance();
+    static App* getInstance();
 
     static void runOnUiThread(std::function<void()> callback);
+
+    const QFont& getFont() const;
+
+    const std::shared_ptr<QSettings>& getSettings() const;
+
+    QStack<std::shared_ptr<Screen>>& getScreens();
+
+    ~App() override;
 
   private:
     void draw();
@@ -44,11 +53,16 @@ class MainWindow : public QWidget {
 
     QStack<std::shared_ptr<Screen>> screens;
 
+    QFont font;
+
     QThread* uiThread;
 
-    static MainWindow* instance;
+    std::shared_ptr<QSettings> settings;
+
+    static App* instance;
+
 };
 
 }  // namespace client
 
-#endif // MAINWINDOW_H
+#endif //APP_H

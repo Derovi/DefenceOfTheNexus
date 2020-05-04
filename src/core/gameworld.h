@@ -45,6 +45,11 @@ class GameWorld {
     summonObject(const server::ObjectSignature& signature, const QPoint& position,
                  float rotationAngle = 0);
 
+    void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
+                   const server::ObjectSignature& columnSignature);
+
+    bool isIntersectsWithObjects(const QPolygonF& polygon);
+
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);

@@ -9,6 +9,7 @@ namespace client {
 class MenuScreen : public Screen {
   public:
     MenuScreen();
+
   private:
     void onPaused() override;
 

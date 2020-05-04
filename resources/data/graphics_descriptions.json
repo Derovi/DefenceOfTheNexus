@@ -34,5 +34,25 @@
         "columns": 1
       }
     }
+  },
+  "wall1": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/wall1",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "column1": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/column1",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }

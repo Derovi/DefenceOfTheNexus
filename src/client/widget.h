@@ -56,6 +56,8 @@ class Widget : public QObject {
 
     std::shared_ptr<WindowManager> windowManager;
 
+    void setLastPaintTime(const QDateTime& lastPaintTime);
+
     virtual void paint(QPainter& painter) {};
 
   public slots:

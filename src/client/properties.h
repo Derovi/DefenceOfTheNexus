@@ -2,6 +2,7 @@
 #define PROPERTIES_H
 
 #include <QString>
+#include <QJsonObject>
 
 namespace client::properties {
 
@@ -16,6 +17,10 @@ extern int width;
 extern int height;
 
 extern int frameRate;
+
+QJsonObject serialize();
+
+void load(QJsonObject json);
 
 }  // namespace properies
 

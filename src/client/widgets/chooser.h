@@ -17,16 +17,42 @@ class Chooser : public Widget {
 
     int getSelected() const;
 
-    const std::shared_ptr<ImageButton>& getLeftButton() const;
+    const std::function<void(int)>& getOnChanged() const;
 
-    const std::shared_ptr<ImageButton>& getRightButton() const;
+    void setOnChanged(const std::function<void(int)>& onChanged);
 
-    const std::shared_ptr<TextView>& getTextView() const;
+    void setBackground(const QImage& background);
+
+    const QImage& getBackground() const;
+
+    const QStringList& getOptions() const;
+
+    QStringList& getOptions();
+
+    void setOptions(const QStringList& options);
+
+    int getTextWidth() const;
+
+    void setTextWidth(int textWidth);
+
+    int getButtonWidth() const;
+
+    void setButtonWidth(int buttonWidth);
+
+    ImageButton* getLeftButton() const;
+
+    ImageButton* getRightButton() const;
+
+    TextView* getTextView() const;
+
+    void setSelected(int selected);
 
   private:
     void leftClick();
 
     void rightClick();
+
+    void update();
 
     QStringList options;
 
@@ -34,12 +60,12 @@ class Chooser : public Widget {
 
     std::function<void(int selected)> onChanged;
 
-    std::shared_ptr<ImageButton> leftButton;
+    ImageButton* leftButton;
+    ImageButton* rightButton;
 
-    std::shared_ptr<ImageButton> rightButton;
+    TextView* textView;
 
-    std::shared_ptr<TextView> textView;
-
+    int buttonWidth;
     int textWidth;
 
     int selected;

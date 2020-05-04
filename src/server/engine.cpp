@@ -77,3 +77,10 @@ void server::Engine::executeCommands() {
         commandExecutor.executeCommand(commandQueue->pop());
     }
 }
+
+void server::Engine::setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld) {
+    this->gameWorld = gameWorld;
+    gameWorldController = std::make_shared<GameWorldController>(gameWorld);
+    commandExecutor = CommandExecutor(gameWorldController);
+    commandQueue = std::make_shared<Queue<core::Command>>();
+}

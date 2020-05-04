@@ -1,7 +1,7 @@
 #include <QDebug>
 
 #include "screen.h"
-#include "mainwindow.h"
+#include "app.h"
 #include "windowmanager.h"
 
 client::Screen::Screen() {
@@ -38,7 +38,7 @@ void client::Screen::setBackground(const client::Sprite& background) {
 }
 
 void client::Screen::draw() {
-    QPainter painter(MainWindow::getInstance());
+    QPainter painter(App::getInstance());
     painter.translate(window_manager::get_real_x(absolutePosition().x()),
                       window_manager::get_real_y(absolutePosition().y()));
     painter.setTransform(QTransform(window_manager::getTransform()), true);

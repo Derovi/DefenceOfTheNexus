@@ -9,7 +9,11 @@ class Lang {
   public:
     static void load(const QString& lang, const QString& baseLang);
 
-    static const QString get(const QString& key);
+    static QStringList getLanguages();
+
+    static const QString& get(const QString& key);
+
+    static QString getTitle(const QString& lang);
 
   private:
     static QHash<QString, QString> langMap;

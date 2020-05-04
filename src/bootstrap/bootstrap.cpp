@@ -4,6 +4,7 @@
 #include <QApplication>
 
 #include "../client/spritecontrollers/unitspritecontroller.h"
+#include "../client/spritecontrollers/defaultspritecontroller.h"
 #include "../client/objectgraphicsdescription.h"
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
@@ -12,7 +13,7 @@
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
 #include "../server/server.h"
-#include "../client/mainwindow.h"
+#include "../client/app.h"
 #include "../client/properties.h"
 #include "../core/attributes/mining.h"
 #include "../server/strategies/minestrategy.h"
@@ -78,6 +79,11 @@ void registerSpriteControllers() {
                                              [](std::shared_ptr<core::Object> object) {
                                                  return std::shared_ptr<client::SpriteController>(
                                                      new client::ResourceSpriteController(object));
+                                             });
+    utils::Factory::registerSpriteController(client::DefaultSpriteController::name,
+                                             [](std::shared_ptr<core::Object> object) {
+                                                 return std::shared_ptr<client::SpriteController>(
+                                                         new client::DefaultSpriteController(object));
                                              });
 }
 
@@ -156,10 +162,9 @@ int main(int argc, char** argv) {
     registerSpriteControllers();
     registerObjectSignatures();
     registerGraphicsDescriptions();
-    utils::Lang::load(client::properties::lang, client::properties::baseLang);
 
     QApplication a(argc, argv);
-    client::MainWindow w;
+    client::App w;
     w.show();
 
     return a.exec();
