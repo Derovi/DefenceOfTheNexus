@@ -12,7 +12,8 @@ client::GameInterface::GameInterface(QPoint position,
     unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
     addChild(unitIcon);
 
-    healthBar = new HealthBar();
+    healthBar = new HealthBar(QPoint(1058, 0));
+    addChild(healthBar);
 }
 
 void client::GameInterface::paint(QPainter& painter) {

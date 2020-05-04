@@ -2,9 +2,10 @@
 
 #include "healthbar.h"
 
-client::HealthBar::HealthBar(QPoint position, int currentHP, int maxHP) : Widget(position) {
-    setCurrentHp(currentHP);
-    setMaxHp(maxHP);
+client::HealthBar::HealthBar(QPoint position, int width, int height, int currentHP, int maxHP):
+        Widget(position), currentHP(currentHP), maxHP(maxHP) {
+    setWidth(width);
+    setHeight(height);
 }
 
 int client::HealthBar::getCurrentHp() const {
@@ -39,28 +40,12 @@ void client::HealthBar::setHealthLine(const QImage& healthLine) {
     HealthBar::healthLine = healthLine;
 }
 
-int client::HealthBar::getWidth() const {
-    return width;
-}
-
-void client::HealthBar::setWidth(int width) {
-    HealthBar::width = width;
-}
-
-int client::HealthBar::getHeight() const {
-    return height;
-}
-
-void client::HealthBar::setHeight(int height) {
-    this->height = height;
-}
-
 void client::HealthBar::paint(QPainter& painter) {
-    painter.drawImage(QRect(1296, 1593, 1250, 70), background);
-    int overlayWidth = width;
+    painter.drawImage(QRect(0, 0, getWidth(), 70), background);
+    int overlayWidth = getWidth();
     if (maxHP != 0) {
-        overlayWidth = width * currentHP / maxHP;
+        overlayWidth = getWidth() * currentHP / maxHP;
     }
     QRect rect(0, 0, overlayWidth, 50);
-    painter.drawImage(1306, 1603, healthLine.copy(rect));
+    painter.drawImage(0, 0, healthLine.copy(rect));
 }

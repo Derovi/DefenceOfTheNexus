@@ -7,8 +7,9 @@
 namespace client {
 class HealthBar : public Widget {
   public:
-    HealthBar(QPoint position = QPoint(0, 0), int currentHP = 100,
-              int maxHP = 100);
+    HealthBar(QPoint position = QPoint(0, 0), int width = 1250, int height = 70,
+              int currentHP = 0,
+              int maxHP = 0);
 
     int getCurrentHp() const;
 
@@ -26,22 +27,11 @@ class HealthBar : public Widget {
 
     void setHealthLine(const QImage& healthLine);
 
-    int getWidth() const;
-
-    void setWidth(int width);
-
-    int getHeight() const;
-
-    void setHeight(int height);
-
     void paint(QPainter& painter) override;
 
   private:
     int currentHP;
     int maxHP;
-
-    int width;
-    int height;
 
     QImage background;
     QImage healthLine;
