@@ -113,7 +113,7 @@ QRect client::Widget::boundsRect() {
                  height - bound_width);
 }
 
-void client::Widget::click(QPoint point) {
+void client::Widget::click(QPoint point, bool leftButton) {
     bool is_clicked = false;
 
     for (int index = static_cast<int>(children.size()) - 1;
@@ -125,7 +125,8 @@ void client::Widget::click(QPoint point) {
         if (children[index]->isPointOnWidget(point)) {
             is_clicked = true;
             children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
-                                          point.y() - children[index]->getPosition().y()));
+                                          point.y() - children[index]->getPosition().y()),
+                                                  leftButton);
             break;
         }
     }
@@ -133,12 +134,12 @@ void client::Widget::click(QPoint point) {
         return;
     }
     if (onClick != nullptr) {
-        onClick(point);
+        onClick(point, leftButton);
     }
     clicked(point);
 }
 
-void client::Widget::setOnClick(std::function<void(QPoint)> action) {
+void client::Widget::setOnClick(std::function<void(QPoint, bool)> action) {
     this->onClick = action;
 }
 

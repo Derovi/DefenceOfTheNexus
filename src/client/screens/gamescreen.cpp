@@ -37,7 +37,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     addChild(gameMap);
     auto pauseButton = new ImageButton(QPoint(24, 24), 72, 72);
     pauseButton->setImage(QImage(":/images/cancel"));
-    pauseButton->setOnClick([=](QPoint point) {
+    pauseButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<PauseScreen>());
     });
 
@@ -52,27 +52,28 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                              QPoint(2000, 1000));
 
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("resourcebundle-stone").value(),
-                                              QPoint(2200, 1000));
+        engine->getGameWorld()->summonObject(
+                utils::Factory::getObjectSignature("resourcebundle-stone").value(),
+                QPoint(2200, 1000));
 
         engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(2000, 500),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(-100, 50),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(2000, 1500), QPoint(0, 500),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(500, 1500), QPoint(0, 500),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(200, 200), QPoint(800, 800),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(-100, 500), QPoint(3, 9000),
-                                           utils::Factory::getObjectSignature("wall1").value(),
-                                           utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
     }
 
     gameMap->setGameWorld(engine->getGameWorld());
@@ -81,8 +82,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     gameMap->setShowHitBoxes(true);
     engine->start();
 
-
-    interface = new GameInterface(QPoint(152, 1710), gameMap->getGameWorld());
+    interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());
     addChild(interface);
 }
 

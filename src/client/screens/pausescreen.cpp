@@ -39,7 +39,7 @@ client::PauseScreen::PauseScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::resume",
                                        App::getInstance()->getFont()));
     resumeButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    resumeButton->setOnClick([=](QPoint point) {
+    resumeButton->setOnClick([=](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::getInstance()->closeScreen();
@@ -57,7 +57,7 @@ client::PauseScreen::PauseScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::save_game",
                                        App::getInstance()->getFont()));
     saveGameButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    saveGameButton->setOnClick([=](QPoint point) {
+    saveGameButton->setOnClick([=](QPoint point, bool leftButton) {
         QString fileName = QFileDialog::getSaveFileName(App::getInstance(),
                                                         utils::Lang::get("save_game"), ".gsv",
                                                         "(*.gsv)");
@@ -99,7 +99,7 @@ client::PauseScreen::PauseScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::options",
                                        App::getInstance()->getFont()));
     optionsButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    optionsButton->setOnClick([=](QPoint point) {
+    optionsButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
 
@@ -113,7 +113,7 @@ client::PauseScreen::PauseScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::exit_menu",
                                        App::getInstance()->getFont()));
     exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    exitButton->setOnClick([=](QPoint point) {
+    exitButton->setOnClick([=](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::getInstance()->closeScreen();

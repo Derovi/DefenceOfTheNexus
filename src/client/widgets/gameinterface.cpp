@@ -8,10 +8,13 @@
 
 #include <utility>
 
-client::GameInterface::GameInterface(QPoint position,
+client::GameInterface::GameInterface(QPoint position, int height, int width,
                                      std::shared_ptr<core::GameWorld> gameWorld,
                                      int selectedUnitId):
         Widget(position), gameWorld(std::move(gameWorld)), selectedUnitId(selectedUnitId) {
+    setHeight(height);
+    setWidth(width);
+
     unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
     unitIcon->setBackground(QImage(":/interface/icon-background"));
     addChild(unitIcon);
@@ -47,7 +50,7 @@ client::GameInterface::GameInterface(QPoint position,
     addChild(miningView);
     addChild(armorView);
 
-    aiButton = new ImageButton(QPoint(2040, 100), 66,266);
+    aiButton = new ImageButton(QPoint(2040, 100), 66, 266);
     stopButton = new ImageButton(QPoint(2040, 188), 66, 266);
     killButton = new ImageButton(QPoint(2040, 276), 66, 266);
 
@@ -55,17 +58,17 @@ client::GameInterface::GameInterface(QPoint position,
     stopButton->setImage(QImage(":/interface/button-stop"));
     killButton->setImage(QImage(":/interface/button-kill"));
 
-    aiButton->setOnClick([&](QPoint point) {
+    aiButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameMap->getCommandQueue()->push(core::Command("ai",
-                {QString::number(selectedUnitId)}));
+                                                       {QString::number(selectedUnitId)}));
     });
-    stopButton->setOnClick([&](QPoint point) {
+    stopButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameMap->getCommandQueue()->push(core::Command("stop",
                                                        {QString::number(selectedUnitId)}));
     });
-    killButton->setOnClick([&](QPoint point) {
+    killButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameMap->getCommandQueue()->push(core::Command("kill",
                                                        {QString::number(selectedUnitId)}));

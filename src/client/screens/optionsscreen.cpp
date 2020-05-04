@@ -90,7 +90,7 @@ client::OptionsScreen::OptionsScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::back",
                                        App::getInstance()->getFont()));
     backButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    backButton->setOnClick([=](QPoint point) {
+    backButton->setOnClick([=](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::getInstance()->closeScreen();

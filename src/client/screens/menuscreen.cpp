@@ -39,7 +39,7 @@ client::MenuScreen::MenuScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::start",
                                        App::getInstance()->getFont()));
     startButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    startButton->setOnClick([=](QPoint point) {
+    startButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<GameScreen>());
     });
 
@@ -53,7 +53,7 @@ client::MenuScreen::MenuScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::load_game",
                                        App::getInstance()->getFont()));
     loadGameButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    loadGameButton->setOnClick([=](QPoint point) {
+    loadGameButton->setOnClick([=](QPoint point, bool leftButton) {
         QString fileName = QFileDialog::getOpenFileName(App::getInstance(),
                                                         utils::Lang::get("save_game"), ".gsv",
                                                         "(*.gsv)");
@@ -91,7 +91,7 @@ client::MenuScreen::MenuScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::options",
                                        App::getInstance()->getFont()));
     optionsButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    optionsButton->setOnClick([=](QPoint point) {
+    optionsButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
 
@@ -105,7 +105,7 @@ client::MenuScreen::MenuScreen(): Screen() {
             std::make_shared<TextView>(QPoint(0, 0), "::exit",
                     App::getInstance()->getFont()));
     exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    exitButton->setOnClick([=](QPoint point) {
+    exitButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->getUiThread()->terminate();
         QCoreApplication::quit();
     });

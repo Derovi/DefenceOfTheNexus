@@ -9,12 +9,12 @@ client::Chooser::Chooser(QPoint position, int height, int width):
     setWidth(width);
 
     leftButton = new ImageButton();
-    leftButton->setOnClick([&](const QPoint& point) {
+    leftButton->setOnClick([&](const QPoint& point, bool leftButton) {
         leftClick();
     });
 
     rightButton = new ImageButton();
-    rightButton->setOnClick([&](const QPoint& point) {
+    rightButton->setOnClick([&](const QPoint& point, bool leftButton) {
         rightClick();
     });
 

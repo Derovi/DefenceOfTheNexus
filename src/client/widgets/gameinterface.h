@@ -13,7 +13,8 @@ namespace client {
 
 class GameInterface : public Widget {
   public:
-    GameInterface(QPoint position, std::shared_ptr<core::GameWorld> gameWorld, int selectedUnitId = 0);
+    GameInterface(QPoint position, int height, int width,
+                  std::shared_ptr<core::GameWorld> gameWorld, int selectedUnitId = 0);
 
     void paint(QPainter& painter) override;
 

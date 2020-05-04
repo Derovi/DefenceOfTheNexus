@@ -69,7 +69,8 @@ client::App::App() {
 void client::App::mousePressEvent(QMouseEvent* event) {
     if (!screens.empty()) {
         screens.top()->click(QPoint(window_manager::get_x4k(event->pos().x()),
-                                    window_manager::get_y4k(event->pos().y())));
+                                    window_manager::get_y4k(event->pos().y())),
+                                            event->button() == Qt::LeftButton);
     }
 }
 

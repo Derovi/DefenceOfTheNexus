@@ -36,7 +36,7 @@ class Widget : public QObject {
 
     bool isHovered();
 
-    void setOnClick(std::function<void(QPoint)> action);
+    void setOnClick(std::function<void(QPoint, bool)> action);
 
     Widget* getParent();
 
@@ -65,7 +65,7 @@ class Widget : public QObject {
     // called my main window
     virtual void draw();
 
-    virtual void click(QPoint point);
+    virtual void click(QPoint point, bool leftButton);
 
     virtual void mouse(QPoint point);
 
@@ -89,7 +89,7 @@ class Widget : public QObject {
 
   protected:
 
-    std::function<void(QPoint)> onClick;
+    std::function<void(QPoint, bool)> onClick;
 
     int height;
     int width;
