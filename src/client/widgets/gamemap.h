@@ -76,6 +76,10 @@ class GameMap : public Widget {
 
     void setCommandQueue(const std::shared_ptr<Queue<core::Command>>& commandQueue);
 
+    bool isFixed() const;
+
+    void setFixed(bool fixed);
+
   private:
     QRect displayBounds;
 
@@ -87,9 +91,13 @@ class GameMap : public Widget {
 
     Sprite background;
 
+    int cameraSpeed;
+
     bool showHitBoxes;
 
     bool showSprites;
+
+    bool fixed;
 
     void drawBackground(QPainter& painter);
 };

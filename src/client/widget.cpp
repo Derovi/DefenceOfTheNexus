@@ -96,10 +96,10 @@ void client::Widget::mouse(QPoint point) {
 }
 
 bool client::Widget::isPointInBounds(const QPoint& point) {
-    return point.x() >= position.x() + bound_width / 2 &&
-           point.y() >= position.y() + bound_width / 2 &&
-           point.x() <= position.x() + width - bound_width / 2 &&
-           point.y() <= position.y() + height - bound_width / 2;
+    return point.x() >= position.x() + boundsWidth / 2 &&
+           point.y() >= position.y() + boundsWidth / 2 &&
+           point.x() <= position.x() + width - boundsWidth / 2 &&
+           point.y() <= position.y() + height - boundsWidth / 2;
 }
 
 bool client::Widget::isPointOnBounds(const QPoint& point) {
@@ -107,10 +107,10 @@ bool client::Widget::isPointOnBounds(const QPoint& point) {
 }
 
 QRect client::Widget::boundsRect() {
-    return QRect(bound_width / 2,
-                 bound_width / 2,
-                 width - bound_width,
-                 height - bound_width);
+    return QRect(boundsWidth / 2,
+                 boundsWidth / 2,
+                 width - boundsWidth,
+                 height - boundsWidth);
 }
 
 void client::Widget::click(QPoint point, bool leftButton) {
@@ -174,4 +174,12 @@ int64_t client::Widget::getDeltaTime() const {
 
 void client::Widget::setLastPaintTime(const QDateTime& lastPaintTime) {
     Widget::lastPaintTime = lastPaintTime;
+}
+
+int client::Widget::getBoundsWidth() const {
+    return boundsWidth;
+}
+
+void client::Widget::setBoundsWidth(int boundsWidth) {
+    Widget::boundsWidth = boundsWidth;
 }

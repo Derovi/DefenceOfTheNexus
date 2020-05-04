@@ -1,16 +1,26 @@
 #include <QDebug>
 
 #include "../app.h"
+#include "../screens/gamescreen.h"
+#include "../windowmanager.h"
 
 #include "gamemap.h"
-#include "../screens/gamescreen.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position), commandQueue(nullptr),
-        showHitBoxes(false), showSprites(true) {
+        showHitBoxes(false), showSprites(true), fixed(false), cameraSpeed(60) {
     setHeight(height);
     setWidth(width);
+    setBoundsWidth(30);
     setDisplayBounds(QRect(0, 0, width, height));
+}
+
+bool client::GameMap::isFixed() const {
+    return fixed;
+}
+
+void client::GameMap::setFixed(bool fixed) {
+    GameMap::fixed = fixed;
 }
 
 const QRect& client::GameMap::getDisplayBounds() const {
@@ -22,10 +32,22 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
-    if (gameWorld->getObjects().contains(0)) {
-        int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
-        centerWindow(QPoint(gameWorld->getObjects()[objectId]->getPosition().x() + 1,
-                            gameWorld->getObjects()[objectId]->getPosition().y() + 1));
+    if (fixed) {
+        if (gameWorld->getObjects().contains(0)) {
+            int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+            centerWindow(QPoint(gameWorld->getObjects()[objectId]->getPosition().x() + 1,
+                                gameWorld->getObjects()[objectId]->getPosition().y() + 1));
+        }
+    } else {
+        QPoint cursor = QPoint(window_manager::get_x4k(
+                App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).x()),
+        window_manager::get_y4k(
+                App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).y()));
+        if (isPointOnBounds(cursor)) {
+            QVector2D vector(cursor.x() - 1920, cursor.y() - 1080);
+            vector.normalize();
+            centerWindow(getWindowCenter() + vector.toPoint() * cameraSpeed);
+        }
     }
 
     // paint transform
@@ -125,8 +147,9 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
                 QString::number(objectId), QString::number(target->getId())}));
     } else {
         commandQueue->push(
-                core::Command("change_move_target", {QString::number(objectId), QString::number(point.x()),
-                                                     QString::number(point.y())}));
+                core::Command("change_move_target",
+                              {QString::number(objectId), QString::number(point.x()),
+                               QString::number(point.y())}));
     }
 }
 

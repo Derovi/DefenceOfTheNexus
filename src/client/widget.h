@@ -52,6 +52,10 @@ class Widget : public QObject {
 
     int getWidth();
 
+    int getBoundsWidth() const;
+
+    void setBoundsWidth(int boundsWidth);
+
     int64_t getDeltaTime() const;
 
     std::shared_ptr<WindowManager> windowManager;
@@ -93,7 +97,7 @@ class Widget : public QObject {
 
     int height;
     int width;
-    int bound_width = 0;
+    int boundsWidth = 0;
 
     bool is_hovered = false;
 
