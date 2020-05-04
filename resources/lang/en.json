@@ -11,5 +11,6 @@
   "window_screen_mode": "Window",
   "exit_menu": "To menu",
   "resume": "Resume",
-  "save_game": "Save game"
+  "save_game": "Save game",
+  "load_game": "Load game"
 }

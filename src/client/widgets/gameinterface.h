@@ -6,6 +6,7 @@
 #include "../../core/gameworld.h"
 #include "uniticon.h"
 #include "healthbar.h"
+#include "textview.h"
 
 namespace client {
 
@@ -27,6 +28,12 @@ class GameInterface : public Widget {
     UnitIcon* unitIcon;
 
     HealthBar* healthBar;
+
+    TextView* stoneView;
+
+    TextView* woodView;
+
+    TextView* ironView;
 
     int selectedUnitId;
 };
