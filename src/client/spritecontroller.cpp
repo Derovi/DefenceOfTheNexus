@@ -8,7 +8,7 @@ client::SpriteController::SpriteController(const std::shared_ptr<core::Object>& 
 
 void client::SpriteController::update(uint64_t timeDeltaMSec) {
     onUpdate(timeDeltaMSec);
-    for (auto sprite : sprites) {
+    for (const auto& sprite : sprites) {
         sprite->update(timeDeltaMSec);
     }
 }
@@ -22,7 +22,7 @@ void client::SpriteController::removeSprite(const std::shared_ptr<Sprite>& sprit
 }
 
 void client::SpriteController::draw(QPainter& painter, const QRect& target) {
-    for (auto sprite : sprites) {
+    for (const auto& sprite : sprites) {
         sprite->draw(painter, target);
     }
 }

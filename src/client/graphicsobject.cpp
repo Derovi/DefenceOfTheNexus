@@ -52,3 +52,9 @@ void client::GraphicsObject::update(const QTransform& painterTransform, uint64_t
                                      textureHeight));
     }
 }
+
+void client::GraphicsObject::drawTo(QPainter& painter, const QRect& dest) {
+    for (const std::shared_ptr<SpriteController>& spriteController : spriteControllers) {
+        spriteController->draw(painter, dest);
+    }
+}

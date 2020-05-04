@@ -12,6 +12,8 @@ class GraphicsObject {
 
     void update(const QTransform& painterTransform, uint64_t timeDeltaMSec);
 
+    void drawTo(QPainter& painter, const QRect& dest);
+
     const std::shared_ptr<core::Object>& getObject() const;
 
     int getHeight() const;
