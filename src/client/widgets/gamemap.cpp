@@ -216,3 +216,7 @@ void client::GameMap::drawBackground(QPainter& painter) {
         }
     }
 }
+
+const QHash<int64_t, std::shared_ptr<client::GraphicsObject>>& client::GameMap::getGraphicsObjects() const {
+    return graphicsObjects;
+}

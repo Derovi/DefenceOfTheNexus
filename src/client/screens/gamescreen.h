@@ -4,6 +4,7 @@
 #include "../screen.h"
 #include "../../server/engine.h"
 #include "../widgets/gamemap.h"
+#include "../widgets/gameinterface.h"
 
 namespace client {
 
@@ -27,6 +28,8 @@ class GameScreen : public Screen {
     bool paused;
 
     std::shared_ptr<server::Engine> engine;
+
+    GameInterface* interface;
 
     GameMap* gameMap;
 };

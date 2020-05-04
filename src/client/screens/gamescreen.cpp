@@ -80,6 +80,10 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
 
     gameMap->setShowHitBoxes(true);
     engine->start();
+
+
+    interface = new GameInterface(QPoint(0, 1500), gameMap->getGameWorld());
+    addChild(interface);
 }
 
 const std::shared_ptr<server::Engine>& client::GameScreen::getEngine() const {
