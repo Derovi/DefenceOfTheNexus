@@ -57,6 +57,10 @@ void client::HealthBar::setHeight(int height) {
 
 void client::HealthBar::paint(QPainter& painter) {
     painter.drawImage(QRect(1296, 1593, 1250, 70), background);
-    QRect rect(0, 0, width * currentHP / maxHP, 50);
+    int overlayWidth = width;
+    if (maxHP != 0) {
+        overlayWidth = width * currentHP / maxHP;
+    }
+    QRect rect(0, 0, overlayWidth, 50);
     painter.drawImage(1306, 1603, healthLine.copy(rect));
 }

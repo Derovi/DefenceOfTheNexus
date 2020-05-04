@@ -5,6 +5,7 @@
 
 #include "../../core/gameworld.h"
 #include "uniticon.h"
+#include "healthbar.h"
 
 namespace client {
 
@@ -18,6 +19,8 @@ class GameInterface : public Widget {
     std::shared_ptr<core::GameWorld> gameWorld;
 
     UnitIcon* unitIcon;
+
+    HealthBar* healthBar;
 
     int selectedUnitId;
 };

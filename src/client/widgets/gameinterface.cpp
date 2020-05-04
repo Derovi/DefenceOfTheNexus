@@ -1,6 +1,7 @@
 #include "gameinterface.h"
 #include "gamemap.h"
 #include "../screens/gamescreen.h"
+#include "../../core/attributes/damageable.h"
 
 #include <utility>
 
@@ -8,9 +9,10 @@ client::GameInterface::GameInterface(QPoint position,
                                      std::shared_ptr<core::GameWorld> gameWorld,
                                      int selectedUnitId):
         Widget(position), gameWorld(std::move(gameWorld)), selectedUnitId(selectedUnitId) {
-    unitIcon = new UnitIcon(QPoint(1000, 0), 500, 500);
-
+    unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
     addChild(unitIcon);
+
+    healthBar = new HealthBar();
 }
 
 void client::GameInterface::paint(QPainter& painter) {
@@ -21,5 +23,23 @@ void client::GameInterface::paint(QPainter& painter) {
             graphicsObject = object;
         }
     }
+
+    // Unit icon
     unitIcon->setGraphicsObject(graphicsObject);
+
+    // Health bar
+    if (graphicsObject) {
+        auto damageable = std::dynamic_pointer_cast<core::Damageable>(
+                graphicsObject->getObject()->getAttribute(core::Damageable::attributeName));
+        if (damageable) {
+            healthBar->setCurrentHp(damageable->getHealth());
+            healthBar->setMaxHp(damageable->getMaxHealth());
+        } else {
+            healthBar->setCurrentHp(0);
+            healthBar->setMaxHp(0);
+        }
+    } else {
+        healthBar->setCurrentHp(0);
+        healthBar->setMaxHp(0);
+    }
 }
