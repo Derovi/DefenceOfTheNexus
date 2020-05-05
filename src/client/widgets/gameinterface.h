@@ -30,6 +30,7 @@ class GameInterface : public Widget {
     QImage damageIcon;
     QImage miningIcon;
     QImage armorIcon;
+    QImage speedIcon;
 
     QImage slotIcon;
 
@@ -45,6 +46,7 @@ class GameInterface : public Widget {
     TextView* damageView;
     TextView* miningView;
     TextView* armorView;
+    TextView* speedView;
 
     ImageButton* aiButton;
     ImageButton* stopButton;
