@@ -26,13 +26,13 @@
         <file alias="rock">sprites/resources/stone/rock.png</file>
         <file alias="cobblestone">sprites/resources/stone/cobblestone.png</file>
 
-        <file alias="small-stone">sprites/resources/stone/small.png</file>
-        <file alias="medium-stone">sprites/resources/stone/medium.png</file>
-        <file alias="big-stone">sprites/resources/stone/big.png</file>
+        <file alias="small">sprites/resources/stone/small.png</file>
+        <file alias="medium">sprites/resources/stone/medium.png</file>
+        <file alias="big">sprites/resources/stone/big.png</file>
     </qresource>
 
     <qresource prefix="/sprites/resources/iron">
-        <file alias="iron-stone">sprites/resources/iron/stone.png</file>
-        <file alias="iron-rock">sprites/resources/iron/rock.png</file>
+        <file alias="stone">sprites/resources/iron/stone.png</file>
+        <file alias="rock">sprites/resources/iron/rock.png</file>
     </qresource>
 </RCC>

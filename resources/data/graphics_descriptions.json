@@ -54,5 +54,101 @@
         "columns": 1
       }
     }
+  },
+  "conifer": {
+    "width": 100,
+    "height": 200,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/tree/conifer",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "fir": {
+    "width": 100,
+    "height": 180,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/tree/fir",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "oak": {
+    "width": 180,
+    "height": 200,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/tree/oak",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "wite": {
+    "width": 60,
+    "height": 100,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/tree/wite",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "stone": {
+    "width": 100,
+    "height": 100,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/stone",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "rock": {
+    "width": 100,
+    "height": 100,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/rock",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "cobblestone": {
+    "width": 130,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/cobblestone",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "iron": {
+    "width": 140,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/iron/stone",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }

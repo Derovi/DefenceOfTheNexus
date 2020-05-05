@@ -106,5 +106,126 @@
     },
     "strategies": [
     ]
+  },
+  "conifer": {
+    "attributes": {
+      "resource": {
+        "resourceType": 0,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "oak": {
+    "attributes": {
+      "resource": {
+        "resourceType": 0,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "fir": {
+    "attributes": {
+      "resource": {
+        "resourceType": 0,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "wite": {
+    "attributes": {
+      "resource": {
+        "resourceType": 0,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "rock": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "stone": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "cobblestone": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "iron": {
+    "attributes": {
+      "resource": {
+        "resourceType": 2,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
   }
 }
+
