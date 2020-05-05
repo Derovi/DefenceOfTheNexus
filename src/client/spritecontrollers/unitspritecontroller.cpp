@@ -5,55 +5,52 @@
 #include "../../utils/factory.h"
 #include "unitspritecontroller.h"
 #include "../../core/attributes/moving.h"
+#include "../../core/attributes/damaging.h"
 
 void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
-    if (!getObject()->hasAttribute("moving")) {
-        moveSprite->setFirstFrame(1);
-        moveSprite->setLastFrame(1);
-    } else {
-        auto moving = std::dynamic_pointer_cast<core::Moving>(getObject()->getAttribute("moving"));
-        moveSprite->setMirroring(moving->getDirection().x() < 0);
+    clearSprites();
+    if (getObject()->hasAttribute("damaging")) {
+        auto damaging = std::dynamic_pointer_cast<core::Damaging>(getObject()->getAttribute("damaging"));
+        if (damaging->isAttacking()) {
+            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getAttackDelay();
+            progress += 0.5;
+            if (progress >= 1) {
+                --progress;
+            }
+            attackSprite->jump(attackSprite->getFrameCount() * progress);
+            addSprite(attackSprite);
+            return;
+        }
     }
+    if (getObject()->hasAttribute("moving")) {
+        auto moving = std::dynamic_pointer_cast<core::Moving>(getObject()->getAttribute("moving"));
+        if (moving->getSpeed() > 0.01) {
+            runSprite->setMirroring(moving->getDirection().x() < 0);
+            idleSprite->setMirroring(moving->getDirection().x() < 0);
+            addSprite(runSprite);
+            return;
+        }
+    }
+    addSprite(idleSprite);
 }
 
 client::UnitSpriteController::UnitSpriteController(const std::shared_ptr<core::Object>& object):
-        SpriteController(object), moveSprite(nullptr), standSprite(nullptr), attackSprite(nullptr) {
+        SpriteController(object), runSprite(nullptr), idleSprite(nullptr), attackSprite(nullptr) {
     auto description = utils::Factory::getObjectGraphicsDescription(object->getTypeName());
-    if (description == std::nullopt) {
+    if (!description) {
         return;
     }
     const auto& spriteDescriptions = description->getSpriteDescriptions();
-    if (spriteDescriptions.contains("moving")) {
-        moveSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["moving"]);
-        addSprite(moveSprite);
+    if (spriteDescriptions.contains("idle")) {
+        idleSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["idle"]);
+    }
+    if (spriteDescriptions.contains("run")) {
+        runSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["run"]);
     }
     if (spriteDescriptions.contains("attack")) {
         attackSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["attack"]);
+        attackSprite->setFramesPerSec(1);
     }
-}
-
-std::shared_ptr<client::Sprite> client::UnitSpriteController::getMoveSprite() const {
-    return moveSprite;
-}
-
-std::shared_ptr<client::Sprite> client::UnitSpriteController::getStandSprite() const {
-    return standSprite;
-}
-
-std::shared_ptr<client::Sprite> client::UnitSpriteController::getAttackSprite() const {
-    return attackSprite;
-}
-
-void client::UnitSpriteController::setMoveSprite(const std::shared_ptr<Sprite>& moveSprite) {
-    UnitSpriteController::moveSprite = moveSprite;
-}
-
-void client::UnitSpriteController::setStandSprite(const std::shared_ptr<Sprite>& standSprite) {
-    this->standSprite = standSprite;
-}
-
-void client::UnitSpriteController::setAttackSprite(const std::shared_ptr<Sprite>& attackSprite) {
-    this->attackSprite = attackSprite;
 }
 
 QString client::UnitSpriteController::getName() {
@@ -61,3 +58,27 @@ QString client::UnitSpriteController::getName() {
 }
 
 QString client::UnitSpriteController::name = "unit";
+
+const std::shared_ptr<client::Sprite>& client::UnitSpriteController::getRunSprite() const {
+    return runSprite;
+}
+
+void client::UnitSpriteController::setRunSprite(const std::shared_ptr<Sprite>& runSprite) {
+    UnitSpriteController::runSprite = runSprite;
+}
+
+const std::shared_ptr<client::Sprite>& client::UnitSpriteController::getIdleSprite() const {
+    return idleSprite;
+}
+
+void client::UnitSpriteController::setIdleSprite(const std::shared_ptr<Sprite>& idleSprite) {
+    UnitSpriteController::idleSprite = idleSprite;
+}
+
+const std::shared_ptr<client::Sprite>& client::UnitSpriteController::getAttackSprite() const {
+    return attackSprite;
+}
+
+void client::UnitSpriteController::setAttackSprite(const std::shared_ptr<Sprite>& attackSprite) {
+    UnitSpriteController::attackSprite = attackSprite;
+}

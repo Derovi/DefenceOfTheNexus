@@ -8,10 +8,10 @@ AttackStrategy::AttackStrategy(std::shared_ptr<core::Object> object):
     Strategy(object), target(nullptr), damaging(nullptr) {}
 
 void AttackStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
+    damaging->setAttacking(false);
     if (target == nullptr) {
         return;
     }
-    damaging->setAttacking(false);
     if (!damaging_performer::isDamageable(getObject(), damaging, target)) {
         if (destPoint != nullptr) {
             *destPoint = target->getPosition();
@@ -21,6 +21,7 @@ void AttackStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta)
         if (destPoint != nullptr) {
             *destPoint = getObject()->getPosition();
         }
+        damaging->setAttacking(true);
         damaging_performer::damage(world, getObject(), damaging, target, timeDelta);
     }
 }

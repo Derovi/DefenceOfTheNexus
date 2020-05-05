@@ -100,12 +100,43 @@ void client::GameInterface::setSelectedUnitId(int selectedUnitId) {
 
 void client::GameInterface::paint(QPainter& painter) {
     GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
+
+    // Resources
+    painter.drawImage(QRect(0, 0, 114, 114), stoneIcon);
+    painter.drawImage(QRect(0, 158, 114, 114), woodIcon);
+    painter.drawImage(QRect(0, 316, 114, 114), ironIcon);
+
+    int stone = 0;
+    int wood = 0;
+    int iron = 0;
+
+    for (auto resource : gameWorld->getResources()) {
+        if (resource.first == core::ResourceType::kStone) {
+            stone = resource.second;
+        }
+        if (resource.first == core::ResourceType::kWood) {
+            wood = resource.second;
+        }
+        if (resource.first == core::ResourceType::kIron) {
+            iron = resource.second;
+        }
+    }
+
+    stoneView->setText(QString::number(stone));
+    woodView->setText(QString::number(wood));
+    ironView->setText(QString::number(iron));
+
     std::shared_ptr<GraphicsObject> graphicsObject = nullptr;
     for (auto& object : gameMap->getGraphicsObjects()) {
         if (object->getObject()->getId() == selectedUnitId) {
             graphicsObject = object;
         }
     }
+
+    //Attributes icons
+    painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
+    painter.drawImage(QRect(1058, 182, 60, 60), miningIcon);
+    painter.drawImage(QRect(1058, 264, 60, 60), armorIcon);
 
     if (!graphicsObject) {
         return;
@@ -139,35 +170,7 @@ void client::GameInterface::paint(QPainter& painter) {
         healthBar->setMaxHp(0);
     }
 
-    // Resources
-    painter.drawImage(QRect(0, 0, 114, 114), stoneIcon);
-    painter.drawImage(QRect(0, 158, 114, 114), woodIcon);
-    painter.drawImage(QRect(0, 316, 114, 114), ironIcon);
-
-    int stone = 0;
-    int wood = 0;
-    int iron = 0;
-
-    for (auto resource : gameWorld->getResources()) {
-        if (resource.first == core::ResourceType::kStone) {
-            stone = resource.second;
-        }
-        if (resource.first == core::ResourceType::kWood) {
-            wood = resource.second;
-        }
-        if (resource.first == core::ResourceType::kIron) {
-            iron = resource.second;
-        }
-    }
-
-    stoneView->setText(QString::number(stone));
-    woodView->setText(QString::number(wood));
-    ironView->setText(QString::number(iron));
-
     // Attributes
-    painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
-    painter.drawImage(QRect(1058, 182, 60, 60), miningIcon);
-    painter.drawImage(QRect(1058, 264, 60, 60), armorIcon);
 
     auto damaging = std::dynamic_pointer_cast<core::Damaging>(
             graphicsObject->getObject()->getAttribute(core::Damaging::attributeName));

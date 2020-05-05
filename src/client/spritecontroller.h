@@ -30,6 +30,8 @@ class SpriteController {
 
     void addSprite(const std::shared_ptr<Sprite>& sprite);
 
+    void clearSprites();
+
     void removeSprite(const std::shared_ptr<Sprite>& sprite);
 
   private:

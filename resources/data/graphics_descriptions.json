@@ -4,10 +4,30 @@
     "height": 100,
     "spriteControllers": ["unit"],
     "spriteDescriptions": {
-      "moving": {
-        "resource": ":/sprites/unit1",
-        "rows": 1,
-        "columns": 20
+      "idle": {
+        "resource": ":/units/unit4_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit4_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit4_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit4_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit4_die",
+        "rows": 20,
+        "columns": 1
       }
     }
   },
@@ -16,10 +36,30 @@
     "height": 100,
     "spriteControllers": ["unit"],
     "spriteDescriptions": {
-      "moving": {
-        "resource": ":/sprites/unit1",
-        "rows": 1,
-        "columns": 20
+      "idle": {
+        "resource": ":/units/unit2_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit2_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit2_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit2_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit2_die",
+        "rows": 20,
+        "columns": 1
       }
     }
   },
@@ -56,7 +96,7 @@
     }
   },
   "scorpion": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit1_idle",
@@ -86,7 +126,7 @@
     }
   },
   "mage": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit2_idle",
@@ -116,7 +156,7 @@
     }
   },
   "ogre": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit3_idle",
@@ -146,7 +186,7 @@
     }
   },
   "warrior": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit4_idle",
@@ -176,7 +216,7 @@
     }
   },
   "pumpkin": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit5_idle",
@@ -206,7 +246,7 @@
     }
   },
   "scout": {
-    "spriteControllers": ["default"],
+    "spriteControllers": ["unit"],
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit6_idle",
