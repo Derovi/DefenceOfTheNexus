@@ -124,8 +124,15 @@ void client::GameInterface::paint(QPainter& painter) {
             healthBar->setCurrentHp(damageable->getHealth());
             healthBar->setMaxHp(damageable->getMaxHealth());
         } else {
-            healthBar->setCurrentHp(0);
-            healthBar->setMaxHp(0);
+            auto resource = std::dynamic_pointer_cast<core::Resource>(
+                    graphicsObject->getObject()->getAttribute(core::Resource::attributeName));
+            if (resource) {
+                healthBar->setCurrentHp(resource->getAmount());
+                healthBar->setMaxHp(200);
+            } else {
+                healthBar->setCurrentHp(0);
+                healthBar->setMaxHp(0);
+            }
         }
     } else {
         healthBar->setCurrentHp(0);

@@ -115,6 +115,7 @@ utils::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& at
     }
     json.insert("resourceType", static_cast<int>(object->getType()));
     json.insert("amount", object->getAmount());
+    json.insert("maxAmount", object->getMaxAmount());
     json.insert("miningSpeedModifier", object->getMiningSpeedModifier());
     return json;
 }
@@ -287,10 +288,11 @@ utils::Serializer::resourceDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     int amount = serialized["amount"].toDouble();
+    int maxAmount = serialized["maxAmount"].toDouble();
     int type = serialized["resourceType"].toDouble();
     core::ResourceType resType = static_cast<core::ResourceType>(type);
     double modifier = serialized["miningSpeedModifier"].toDouble();
-    return std::make_shared<core::Resource>(resType, amount, modifier);
+    return std::make_shared<core::Resource>(resType, amount, maxAmount, modifier);
 }
 
 std::optional<std::shared_ptr<core::Attribute>>

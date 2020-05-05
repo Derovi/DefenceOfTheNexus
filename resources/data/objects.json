@@ -48,6 +48,7 @@
       "resource": {
         "resourceType": 1,
         "amount": 200,
+        "maxAmount": 200,
         "miningSpeedModifier": 2
       }
     },

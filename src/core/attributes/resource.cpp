@@ -3,8 +3,8 @@
 #include <cmath>
 #include <random>
 
-core::Resource::Resource(core::ResourceType type, int amount, double miningSpeedModifier):
-        type(type), amount(amount), miningSpeedModifier(1) {}
+core::Resource::Resource(core::ResourceType type, int amount, int maxAmount, double miningSpeedModifier):
+        type(type), amount(amount), maxAmount(maxAmount), miningSpeedModifier(1) {}
 
 core::ResourceType core::Resource::getType() const {
     return type;
@@ -57,4 +57,12 @@ QString core::Resource::getAttributeName() {
 
 std::shared_ptr<core::Attribute> core::Resource::clone() {
     return std::make_shared<core::Resource>(*this);
+}
+
+int core::Resource::getMaxAmount() const {
+    return maxAmount;
+}
+
+void core::Resource::setMaxAmount(int maxAmount) {
+    Resource::maxAmount = maxAmount;
 }
