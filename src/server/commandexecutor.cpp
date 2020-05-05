@@ -38,6 +38,7 @@ void server::CommandExecutor::registerCommands() {
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
     registerCommand("mine_resource", &CommandExecutor::mineResource);
+    registerCommand("attack", &CommandExecutor::attackCommand);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -151,6 +152,7 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
     return true;
 }
 
+// mine_resource <miner id> <target id>
 bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     if (arguments.size() != 2) {
         return false;
@@ -189,6 +191,48 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     bundle.registerVariable("miningTarget", target.value());
     bundle.registerVariable("destinationPoint", destPoint);
     gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
+    return true;
+}
+
+// attack <attacker id> <target id>
+bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
+    if (arguments.size() != 2) {
+        return false;
+    }
+    bool isOk = true;
+    uint64_t attackerId = arguments[0].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    uint64_t targetId = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    auto attacker = getGameWorld()->getObjects().find(attackerId);
+    if (attacker == getGameWorld()->getObjects().end()
+        || !attacker.value()->hasAttribute("damaging")) {
+        return false;
+    }
+
+    auto target = getGameWorld()->getObjects().find(targetId);
+    if (target == getGameWorld()->getObjects().end()
+        || !target.value()->hasAttribute("damageable")) {
+        return false;
+    }
+
+    for (const auto& strategy : attacker.value()->getStrategies()) {
+        gameWorldController->getControllers()[attackerId]->cancelTargets();
+    }
+    qDebug() << attackerId << " wanna attack " << targetId << endl;
+
+    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+
+    DataBundle bundle;
+    bundle.registerVariable("attackTarget", target.value());
+    bundle.registerVariable("destinationPoint", destPoint);
+    gameWorldController->getControllers()[attackerId]->linkStrategies(bundle);
     return true;
 }
 

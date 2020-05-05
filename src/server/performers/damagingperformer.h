@@ -9,8 +9,13 @@
 
 namespace server::damaging_performer {
 
+// checks whether attackRadius < distanceToTarget
+bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Damaging> damaging,
+                  std::shared_ptr<core::Object> target);
+
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
-            std::shared_ptr<core::Damaging> damaging, int timeDelta);
+            std::shared_ptr<core::Damaging> damaging, std::shared_ptr<core::Object> target,
+            int timeDelta);
 
 }  // namespace server::damaging_performer
 

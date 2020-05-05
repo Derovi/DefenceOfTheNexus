@@ -7,10 +7,6 @@
 void server::MoveStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
     if (moving != nullptr) {
         moving_performer::moveIfNoObstacles(getObject(), timeDelta, world, moving);
-        auto direction = moving->getDirection().normalized();
-        if (!qFuzzyIsNull(direction.x()) && !qFuzzyIsNull(direction.y())) {
-            getObject()->setRotationAngle(std::atan2(direction.y(), direction.x()));
-        }
     }
 }
 

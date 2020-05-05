@@ -129,6 +129,7 @@ utils::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& at
     json.insert("radius", object->getAttackRadius());
     json.insert("delay", object->getAttackDelay());
     json.insert("bulletType", object->getBulletType());
+    json.insert("attacking", object->isAttacking());
     return json;
 }
 
@@ -303,6 +304,7 @@ utils::Serializer::damagingDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     object->setAttackRadius((serialized["radius"]).toDouble());
+    object->setAttacking(serialized["attacking"].toBool(false));
     return std::make_shared<core::Damaging>(*object);
 }
 

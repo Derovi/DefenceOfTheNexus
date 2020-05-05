@@ -18,6 +18,7 @@
 #include "../core/attributes/mining.h"
 #include "../server/strategies/minestrategy.h"
 #include "../client/spritecontrollers/resourcespritecontroller.h"
+#include "../server/strategies/attackstrategy.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -37,6 +38,12 @@ void registerStrategies() {
                                          return std::shared_ptr<server::Strategy>(
                                              static_cast<server::Strategy*>(
                                                  new server::MineStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::AttackStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                             static_cast<server::Strategy*>(
+                                                 new server::AttackStrategy(object)));
                                      });
 }
 

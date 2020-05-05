@@ -17,21 +17,43 @@ void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
 }
 
 client::UnitSpriteController::UnitSpriteController(const std::shared_ptr<core::Object>& object):
-        SpriteController(object) {
+        SpriteController(object), moveSprite(nullptr), standSprite(nullptr), attackSprite(nullptr) {
     auto description = utils::Factory::getObjectGraphicsDescription(object->getTypeName());
-    if (description != std::nullopt && description->getSpriteDescriptions().contains("moving")) {
-        moveSprite = std::make_shared<Sprite>(
-                *new Sprite(description->getSpriteDescriptions()["moving"]));
+    if (description == std::nullopt) {
+        return;
+    }
+    const auto& spriteDescriptions = description->getSpriteDescriptions();
+    if (spriteDescriptions.contains("moving")) {
+        moveSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["moving"]);
         addSprite(moveSprite);
+    }
+    if (spriteDescriptions.contains("attack")) {
+        attackSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["attack"]);
     }
 }
 
-const std::shared_ptr<client::Sprite>& client::UnitSpriteController::getMoveSprite() const {
+std::shared_ptr<client::Sprite> client::UnitSpriteController::getMoveSprite() const {
     return moveSprite;
+}
+
+std::shared_ptr<client::Sprite> client::UnitSpriteController::getStandSprite() const {
+    return standSprite;
+}
+
+std::shared_ptr<client::Sprite> client::UnitSpriteController::getAttackSprite() const {
+    return attackSprite;
 }
 
 void client::UnitSpriteController::setMoveSprite(const std::shared_ptr<Sprite>& moveSprite) {
     UnitSpriteController::moveSprite = moveSprite;
+}
+
+void client::UnitSpriteController::setStandSprite(const std::shared_ptr<Sprite>& standSprite) {
+    this->standSprite = standSprite;
+}
+
+void client::UnitSpriteController::setAttackSprite(const std::shared_ptr<Sprite>& attackSprite) {
+    this->attackSprite = attackSprite;
 }
 
 QString client::UnitSpriteController::getName() {

@@ -17,7 +17,7 @@ class DataBundle {
     void registerVariable(const QString& name, std::shared_ptr<T> variable);
 
     // true if successfully assigned (variable in bundle not exists or has type T)
-    template<class T>
+    template<typename T>
     bool assign(const QString& name, std::shared_ptr<T>& variable);
 
   private:
@@ -30,7 +30,7 @@ void DataBundle::registerVariable(const QString& name, std::shared_ptr<T> variab
     data.insert(name, variable);
 }
 
-template<class T>
+template<typename T>
 bool DataBundle::assign(const QString& name, std::shared_ptr<T>& variable) {
     if (!data.contains(name)) {
         return false;

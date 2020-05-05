@@ -5,12 +5,12 @@
 
 #include "damaging.h"
 
-core::Damaging::Damaging(): damage(0), attackDelay(0), attackRadius(0), currentDelay(0) {}
+core::Damaging::Damaging(): attacking(false), damage(0), attackDelay(0), attackRadius(0),
+                            currentDelay(0) {}
 
-core::Damaging::Damaging(int damage, double attackRadius, double attackDelay,
-                         QString bulletType):
-        damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
-        bulletType(std::move(bulletType)), currentDelay(0) {}
+core::Damaging::Damaging(int damage, double attackRadius, double attackDelay, QString bulletType):
+    damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
+    bulletType(std::move(bulletType)), currentDelay(0), attacking(false) {}
 
 int core::Damaging::getDamage() const {
     return damage;
@@ -20,11 +20,11 @@ double core::Damaging::getAttackRadius() const {
     return attackRadius;
 }
 
-double core::Damaging::getAttackDelay() const {
+int core::Damaging::getAttackDelay() const {
     return attackDelay;
 }
 
-double core::Damaging::getCurrentDelay() const {
+int core::Damaging::getCurrentDelay() const {
     return currentDelay;
 }
 
@@ -32,11 +32,11 @@ void core::Damaging::setAttackRadius(double radius) {
     attackRadius = radius;
 }
 
-void core::Damaging::setAttackDelay(double delay) {
+void core::Damaging::setAttackDelay(int delay) {
     attackDelay = delay;
 }
 
-void core::Damaging::setCurrentDelay(double delay) {
+void core::Damaging::setCurrentDelay(int delay) {
     currentDelay = delay;
 }
 
@@ -52,6 +52,14 @@ void core::Damaging::set(const core::Damaging& properties) {
 
 const QString& core::Damaging::getBulletType() const {
     return bulletType;
+}
+
+bool core::Damaging::isAttacking() const {
+    return attacking;
+}
+
+void core::Damaging::setAttacking(bool attacking) {
+    this->attacking = attacking;
 }
 
 void core::Damaging::setBulletType(const QString& newType) {

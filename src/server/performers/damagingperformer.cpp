@@ -3,14 +3,27 @@
 #include <cmath>
 
 #include <QLineF>
+#include <QDebug>
 
 #include "../../core/attributes/damageable.h"
 #include "damageableperformer.h"
 
 namespace server::damaging_performer {
 
+bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Damaging> damaging,
+                  std::shared_ptr<core::Object> target) {
+    float angle = object->getRotationAngle();
+    double length = damaging->getAttackRadius();
+    QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
+    QPolygonF attackLine;
+    attackLine.append(object->getPosition());
+    attackLine.append(object->getPosition() + attackDirection);
+    return attackLine.intersects(target->getHitboxOnMap());
+}
+
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
-            std::shared_ptr<core::Damaging> damaging, int timeDelta) {
+            std::shared_ptr<core::Damaging> damaging, std::shared_ptr<core::Object> target,
+            int timeDelta) {
     int delayLeft = damaging->getCurrentDelay() - timeDelta;
     if (delayLeft > 0) {
         damaging->setCurrentDelay(delayLeft);
@@ -18,22 +31,13 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
     }
     damaging->setCurrentDelay(damaging->getAttackDelay());
 
-    float angle = object->getRotationAngle();
-    double length = damaging->getAttackRadius();
-    QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
-    //! TODO: could be optimized
-    //! TODO: fix bug - attack line considired as on map while hitbox is not
-    QPolygonF attackLine;
-    attackLine.append(object->getPosition());
-    attackLine.append(object->getPosition() + attackDirection);
-    for (auto target : world->getObjects()) {
-        if (target == object || !attackLine.intersects(target->getHitbox())) {
-            continue;
-        }
+    if (isDamageable(object, damaging, target)) {
         std::shared_ptr<core::Damageable> damageable = std::dynamic_pointer_cast<core::Damageable>(
-                target->getAttribute("damageable"));
-        if (damageable != nullptr) {
+            target->getAttribute("damageable"));
+        if (damageable != nullptr && damageable->getHealth() > 0) {
             damageable_performer::inflictDamage(world, target, damageable, damaging->getDamage());
+        } else {
+            damaging->setAttacking(false);
         }
     }
 }

@@ -36,6 +36,7 @@ class PathStrategy : public Strategy {
     inline static const QStringList startAfter = {};
 
     bool isRounding;
+    bool roundingStyle;
     uint32_t destIntersectionUpdate;
     std::shared_ptr<core::Moving> moving;
     std::shared_ptr<QPointF> destPoint;
