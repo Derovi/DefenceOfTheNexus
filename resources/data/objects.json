@@ -19,6 +19,9 @@
         "radius": 150,
         "delay": 250,
         "bulletType": ""
+      },
+      "builder": {
+        "list": ["test2", "column1"]
       }
     },
     "hitbox": {

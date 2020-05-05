@@ -5,6 +5,7 @@
 #include "../app.h"
 #include "../../core/attributes/damaging.h"
 #include "../../core/attributes/mining.h"
+#include "../../core/attributes/builder.h"
 
 #include <utility>
 
@@ -166,4 +167,12 @@ void client::GameInterface::paint(QPainter& painter) {
     armorView->setText(QString::number(0) + "%");
 
     // Build slots
+    auto builder = std::dynamic_pointer_cast<core::Builder>(
+            object->getAttribute(core::Builder::attributeName));
+    if (builder) {
+        for (int idx = 0; idx < 15 && idx < builder->getBuildList().size(); ++idx) {
+            QString slot = builder->getBuildList().value(idx);
+            painter.drawImage(QRect(2784, 0, 114, 114), slotIcon);
+        }
+    }
 }
