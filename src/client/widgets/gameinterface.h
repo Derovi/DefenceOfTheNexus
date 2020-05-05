@@ -31,6 +31,7 @@ class GameInterface : public Widget {
     QImage damageIcon;
     QImage miningIcon;
     QImage armorIcon;
+    QImage speedIcon;
 
     std::shared_ptr<core::GameWorld> gameWorld;
 
@@ -46,6 +47,7 @@ class GameInterface : public Widget {
     TextView* damageView;
     TextView* miningView;
     TextView* armorView;
+    TextView* speedView;
 
     ImageButton* aiButton;
     ImageButton* stopButton;

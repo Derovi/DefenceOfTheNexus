@@ -40,16 +40,19 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     damageIcon = QImage(":/interface/icon-damage");
     miningIcon = QImage(":/interface/icon-mining");
     armorIcon = QImage(":/interface/icon-armor");
+    speedIcon = QImage(":/interface/icon-speed");
 
     QFont font60 = App::getInstance()->getFont();
     font60.setPixelSize(60);
     damageView = new TextView(QPoint(1146, 138), "damage", font60);
     miningView = new TextView(QPoint(1146, 220), "mining", font60);
     armorView = new TextView(QPoint(1146, 302), "armor", font60);
+    speedView = new TextView(QPoint(1146, 384), "speed", font60);
 
     addChild(damageView);
     addChild(miningView);
     addChild(armorView);
+    addChild(speedView);
 
     aiButton = new ImageButton(QPoint(2040, 100), 66, 266);
     stopButton = new ImageButton(QPoint(2040, 188), 66, 266);
@@ -171,6 +174,10 @@ void client::GameInterface::paint(QPainter& painter) {
     }
 
     // Attributes
+    painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
+    painter.drawImage(QRect(1058, 182, 60, 60), miningIcon);
+    painter.drawImage(QRect(1058, 264, 60, 60), armorIcon);
+    painter.drawImage(QRect(1058, 346, 60, 60), speedIcon);
 
     auto damaging = std::dynamic_pointer_cast<core::Damaging>(
             graphicsObject->getObject()->getAttribute(core::Damaging::attributeName));
@@ -183,7 +190,6 @@ void client::GameInterface::paint(QPainter& painter) {
     //!TODO armor display
     auto armor = nullptr;
     armorView->setText(QString::number(0) + "%");
-
     // Build slots
     auto builder = std::dynamic_pointer_cast<core::Builder>(
             object->getAttribute(core::Builder::attributeName));
@@ -197,4 +203,6 @@ void client::GameInterface::paint(QPainter& painter) {
             }
         }
     }
+    //! ToDo: speed display
+    speedView->setText(QString::number(0) + "%");
 }

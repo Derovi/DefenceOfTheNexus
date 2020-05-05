@@ -20,5 +20,6 @@
         <file alias="icon-mining">interface/icon-mining.png</file>
         <file alias="icon-armor">interface/icon-armor.png</file>
         <file alias="icon-slot">interface/icon-slot.png</file>
+        <file alias="icon-speed">interface/icon-speed.png</file>
     </qresource>
 </RCC>
