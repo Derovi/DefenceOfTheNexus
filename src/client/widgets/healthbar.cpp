@@ -60,5 +60,5 @@ void client::HealthBar::paint(QPainter& painter) {
         ));
     }
     QRect rect(0, 0, overlayWidth, 50);
-    painter.drawImage(0, 0, healthLine.copy(rect));
+    painter.drawImage(10, 10, healthLine.copy(rect));
 }
