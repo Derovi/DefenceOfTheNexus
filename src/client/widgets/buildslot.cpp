@@ -1,7 +1,9 @@
 #include <QDebug>
 
 #include "buildslot.h"
+
 #include "../screens/gamescreen.h"
+#include "../../utils/factory.h"
 
 client::BuildSlot::BuildSlot(QPoint position, int height, int width):
         Widget(position), hoverHeight(height), hoverWidth(width) {
@@ -22,6 +24,22 @@ void client::BuildSlot::paint(QPainter& painter) {
     } else {
         painter.drawImage(boundsRect(), image);
     }
+    auto graphicsDescription = utils::Factory::getObjectGraphicsDescription(objectType);
+    if (!graphicsDescription) {
+        return;
+    }
+    if (graphicsDescription->getSpriteDescriptions().empty()) {
+        return;
+    }
+    auto spriteDescription = graphicsDescription->getSpriteDescriptions().begin().value();
+    if (spriteResource != spriteDescription.getResourceName()) {
+        spriteResource = spriteDescription.getResourceName();
+        iconSprite = Sprite(spriteDescription);
+    }
+    QMatrix matrix;
+    matrix.translate(0.15 * boundsRect().width(), 0.15 * boundsRect().height());
+    matrix.scale(0.7, 0.7);
+    iconSprite.draw(painter, matrix.mapRect(boundsRect()));
 }
 
 void client::BuildSlot::setImage(QImage image) {

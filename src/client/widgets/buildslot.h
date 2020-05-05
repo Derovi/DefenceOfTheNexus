@@ -5,6 +5,7 @@
 #include <QImage>
 
 #include "../widget.h"
+#include "../sprite.h"
 
 namespace client {
 
@@ -40,6 +41,9 @@ class BuildSlot : public Widget {
     void setObjectType(const QString& objectType);
 
   private:
+    Sprite iconSprite;
+    QString spriteResource;
+
     QImage image;
 
     QImage hoverImage;
