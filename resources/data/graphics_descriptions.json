@@ -69,7 +69,7 @@
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit1_walk",
+        "resource": ":/units/unit1_walk",
         "rows": 20,
         "columns": 1
       },
@@ -99,7 +99,7 @@
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit2_walk",
+        "resource": ":/units/unit2_walk",
         "rows": 20,
         "columns": 1
       },
@@ -124,12 +124,12 @@
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit3_run",
+        "resource": ":/units/unit3_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit3_walk",
+        "resource": ":/units/unit3_walk",
         "rows": 20,
         "columns": 1
       },
@@ -219,7 +219,7 @@
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit6_walk",
+        "resource": ":/units/unit6_walk",
         "rows": 20,
         "columns": 1
       },

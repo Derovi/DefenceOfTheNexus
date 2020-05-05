@@ -112,8 +112,9 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     long double dy = finish.y() - start.y();
     long double ang;
     if (dx == 0) {
-        ang = 0;
-    } else { ang = atan2(dy, dx); }
+        dx+=1/100;
+    }
+    ang = atan2(dy, dx);
     long double dz = sqrt(dx * dx + dy * dy);
     int all = dz / 100;
     dx /= dz;
