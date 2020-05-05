@@ -226,6 +226,171 @@
       "y": [50, 50, -50, -50]
     },
     "strategies": []
+  },
+  "ore": {
+    "attributes": {
+      "resource": {
+        "resourceType": 2,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "small-stone": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "medium-stone": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "big-stone": {
+    "attributes": {
+      "resource": {
+        "resourceType": 1,
+        "amount": 200,
+        "maxAmount": 200,
+        "miningSpeedModifier": 2
+      }
+    },
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "gover": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "nexus": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "resource-bundle": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "big-barrack": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "medium-barrack": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "grass": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "dirt-rock": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "big-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "medium-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "small-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "long-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "special-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
+  },
+  "high-tower": {
+    "attributes": {},
+    "hitbox": {
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
+    },
+    "strategies": []
   }
+
 }
 

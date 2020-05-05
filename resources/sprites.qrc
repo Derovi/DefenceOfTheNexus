@@ -35,4 +35,26 @@
         <file alias="stone">sprites/resources/iron/stone.png</file>
         <file alias="rock">sprites/resources/iron/rock.png</file>
     </qresource>
+
+    <qresource prefix="/sprites/buildings">
+        <file alias="nexus">sprites/buildings/nexus.png</file>
+        <file alias="gover">sprites/buildings/gover.png</file>
+        <file alias="resource-bundle">sprites/buildings/resource-bundle.png</file>
+        <file alias="big-barrack">sprites/buildings/big-barrack.png</file>
+        <file alias="medium-barrack">sprites/buildings/medium-barrack.png</file>
+    </qresource>
+
+    <qresource prefix="/sprites/setting">
+        <file alias="dirt">sprites/setting/dirt.png</file>
+        <file alias="grass">sprites/setting/grass.png</file>
+    </qresource>
+
+    <qresource prefix="/sprites/towers">
+        <file alias="big">sprites/towers/big.png</file>
+        <file alias="medium">sprites/towers/medium.png</file>
+        <file alias="long">sprites/towers/long.png</file>
+        <file alias="small">sprites/towers/small.png</file>
+        <file alias="special">sprites/towers/special.png</file>
+        <file alias="high">sprites/towers/high.png</file>
+    </qresource>
 </RCC>

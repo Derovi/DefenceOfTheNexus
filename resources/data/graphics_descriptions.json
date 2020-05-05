@@ -150,5 +150,209 @@
         "columns": 1
       }
     }
+  },
+  "ore": {
+    "width": 140,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/iron/rock",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "small-stone": {
+    "width": 130,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/small",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "medium-stone": {
+    "width": 130,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/medium",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "big-stone": {
+    "width": 130,
+    "height": 110,
+    "spriteControllers": ["resource"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/resources/stone/big",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "nexus": {
+    "width": 250,
+    "height": 310,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/buildings/nexus",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "gover": {
+    "width": 268,
+    "height": 276,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/buildings/gover",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "medium-barrack": {
+    "width": 260,
+    "height": 190,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/buildings/medium-barrack",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "big-barrack": {
+    "width": 200,
+    "height": 200,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/buildings/big-barrack",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "resource-bundle": {
+    "width": 146,
+    "height": 214,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/buildings/resource-bundle",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "dirt-rock": {
+    "width": 112,
+    "height": 110,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/setting/dirt",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "grass": {
+    "width": 36,
+    "height": 36,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/setting/grass",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "big-tower": {
+    "width": 130,
+    "height": 130,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/big",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "medium-tower": {
+    "width": 130,
+    "height": 130,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/medium",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "small-tower": {
+    "width": 140,
+    "height": 140,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/small",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "long-tower": {
+    "width": 120,
+    "height": 166,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/long",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "special-tower": {
+    "width": 114,
+    "height": 156,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/special",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "high-tower": {
+    "width": 90,
+    "height": 170,
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/towers/high",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }
