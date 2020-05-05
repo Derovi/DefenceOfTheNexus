@@ -56,8 +56,35 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                              QPoint(2000, 1000));
 
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test2").value(),
-                                             QPoint(3000, 2000));
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
+                                             QPoint(200, 200));
+        engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
+                                             QPoint(700, 200));
+        engine->getGameWorld()->buildWall(QPoint(1000,0),QPoint(1000,300), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("ogre").value(),
+                                             QPoint(1200, 200));
+        engine->getGameWorld()->buildWall(QPoint(1500,0),QPoint(1500,300), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scout").value(),
+                                             QPoint(1700, 200));
+        engine->getGameWorld()->buildWall(QPoint(2000,0),QPoint(2000,300), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+
+        engine->getGameWorld()->buildWall(QPoint(0,0),QPoint(0,3000), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+
+        engine->getGameWorld()->buildWall(QPoint(0,3000),QPoint(3000,3000), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+
+        engine->getGameWorld()->buildWall(QPoint(3000,3000),QPoint(3000,0), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+
+        engine->getGameWorld()->buildWall(QPoint(3000,0),QPoint(0,0), utils::Factory::getObjectSignature("wall1").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+
 
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("resourcebundle-stone").value(),
@@ -65,7 +92,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
                                              QPoint(2200, 1200));
 
-        engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(2000, 500),
+       /* engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(2000, 500),
                                           utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(-100, 50),
@@ -82,7 +109,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
                                           utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->buildWall(QPoint(-100, 500), QPoint(3, 9000),
                                           utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value());
+                                          utils::Factory::getObjectSignature("column1").value());*/
     }
 
     gameMap->setGameWorld(engine->getGameWorld());
