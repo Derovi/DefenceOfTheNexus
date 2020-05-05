@@ -6,6 +6,7 @@
 #include "../../core/attributes/damaging.h"
 #include "../../core/attributes/mining.h"
 #include "../../core/attributes/builder.h"
+#include "../../core/attributes/moving.h"
 
 #include <utility>
 
@@ -203,6 +204,11 @@ void client::GameInterface::paint(QPainter& painter) {
             }
         }
     }
-    //! ToDo: speed display
-    speedView->setText(QString::number(0) + "%");
+    auto moving = std::dynamic_pointer_cast<core::Moving>(
+            graphicsObject->getObject()->getAttribute(core::Moving::attributeName));
+    if (moving) {
+        speedView->setText(QString::number(static_cast<int>(moving->getMaxSpeed())));
+    } else {
+        speedView->setText(QString::number(0));
+    }
 }
