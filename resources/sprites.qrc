@@ -8,19 +8,31 @@
         <file alias="rocket2">sprites/rocket2.png</file>
         <file alias="flame">sprites/towers/flame.png</file>
         <file alias="bullet">sprites/towers/bullet.png</file>
-        <file alias="iron1">sprites/iron1.png</file>
-        <file alias="iron2">sprites/iron2.png</file>
-        <file alias="iron3">sprites/iron3.png</file>
-        <file alias="iron4">sprites/iron4.png</file>
-        <file alias="rock1">sprites/rock1.png</file>
-        <file alias="rock2">sprites/rock2.png</file>
-        <file alias="rock3">sprites/rock3.png</file>
-        <file alias="rock4">sprites/rock4.png</file>
-        <file alias="tree1">sprites/tree1.png</file>
-        <file alias="tree2">sprites/tree2.png</file>
         <file alias="wood1">sprites/wood1.png</file>
         <file alias="wall1">sprites/wall1.png</file>
         <file alias="wall2">sprites/wall2.png</file>
         <file alias="column1">sprites/column1.png</file>
+    </qresource>
+
+    <qresource prefix="/sprites/resources/tree">
+        <file alias="conifer">sprites/resources/tree/conifer.png</file>
+        <file alias="fir">sprites/resources/tree/fir.png</file>
+        <file alias="oak">sprites/resources/tree/oak.png</file>
+        <file alias="wite">sprites/resources/tree/wite.png</file>
+    </qresource>
+
+    <qresource prefix="/sprites/resources/stone">
+        <file alias="stone">sprites/resources/stone/stone.png</file>
+        <file alias="rock">sprites/resources/stone/rock.png</file>
+        <file alias="cobblestone">sprites/resources/stone/cobblestone.png</file>
+
+        <file alias="small-stone">sprites/resources/stone/small.png</file>
+        <file alias="medium-stone">sprites/resources/stone/medium.png</file>
+        <file alias="big-stone">sprites/resources/stone/big.png</file>
+    </qresource>
+
+    <qresource prefix="/sprites/resources/iron">
+        <file alias="iron-stone">sprites/resources/iron/stone.png</file>
+        <file alias="iron-rock">sprites/resources/iron/rock.png</file>
     </qresource>
 </RCC>

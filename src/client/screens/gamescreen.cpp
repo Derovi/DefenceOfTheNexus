@@ -35,8 +35,8 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         Screen(), paused(false) {
     gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
-    Sprite background(QPixmap(":/sprites/background"), 1, 4, 4);
-    background.setBackAndForthMode(true);
+    Sprite background(QPixmap(":/sprites/background"), 1, 1, 0);
+//    background.setBackAndForthMode(true);
     gameMap->setBackground(background);
     addChild(gameMap);
     auto pauseButton = new ImageButton(QPoint(24, 24), 72, 72);
