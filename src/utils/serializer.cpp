@@ -1,4 +1,5 @@
 #include "serializer.h"
+#include "../core/attributes/builder.h"
 
 utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
 
@@ -130,6 +131,17 @@ utils::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& at
     json.insert("delay", object->getAttackDelay());
     json.insert("bulletType", object->getBulletType());
     json.insert("attacking", object->isAttacking());
+    return json;
+}
+
+std::optional<QJsonObject>
+utils::Serializer::builderSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Builder*>(attribute.get());
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    QJsonObject json;
+    json.insert("list", QVariant(object->getBuildList()).toJsonValue());
     return json;
 }
 
@@ -322,6 +334,11 @@ utils::Serializer::damageableDeserializer(const QJsonObject& serialized) {
     }
     object->setMaxHealth(serialized["maxHealth"].toDouble());
     return std::make_shared<core::Damageable>(*object);
+}
+
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::builderDeserializer(const QJsonObject& serialized) {
+    return std::make_shared<core::Builder>(serialized.value("list").toVariant().toStringList());
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
@@ -619,7 +636,6 @@ std::optional<QJsonObject> utils::Serializer::commandSerializer(const core::Comm
     }
     json["arguments"] = arguments;
     return json;
-
 }
 
 std::optional<QString>

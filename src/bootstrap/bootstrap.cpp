@@ -69,9 +69,17 @@ void registerAttributes() {
                                       utils::Serializer::miningSerializer,
                                       utils::Serializer::miningDeserializer);
 
-    /*utils::Factory::registerAttribute(core::Builder::attributeName,
+    utils::Factory::registerAttribute(core::Wall::attributeName,
+                                      utils::Serializer::wallSerializer,
+                                      utils::Serializer::wallDeserializer);
+
+    utils::Factory::registerAttribute(core::Cost::attributeName,
+                                      utils::Serializer::costSerializer,
+                                      utils::Serializer::costDeserializer);
+
+    utils::Factory::registerAttribute(core::Builder::attributeName,
                                       utils::Serializer::builderSerializer,
-                                      utils::Serializer::builderDeserializer);*/
+                                      utils::Serializer::builderDeserializer);
 }
 
 void registerSpriteControllers() {
