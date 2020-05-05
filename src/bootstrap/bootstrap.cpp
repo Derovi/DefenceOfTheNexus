@@ -19,6 +19,7 @@
 #include "../server/strategies/minestrategy.h"
 #include "../client/spritecontrollers/resourcespritecontroller.h"
 #include "../server/strategies/attackstrategy.h"
+#include "../core/attributes/builder.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -67,6 +68,10 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Mining::attributeName,
                                       utils::Serializer::miningSerializer,
                                       utils::Serializer::miningDeserializer);
+
+    /*utils::Factory::registerAttribute(core::Builder::attributeName,
+                                      utils::Serializer::builderSerializer,
+                                      utils::Serializer::builderDeserializer);*/
 }
 
 void registerSpriteControllers() {

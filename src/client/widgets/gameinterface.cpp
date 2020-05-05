@@ -164,4 +164,6 @@ void client::GameInterface::paint(QPainter& painter) {
     //!TODO armor display
     auto armor = nullptr;
     armorView->setText(QString::number(0) + "%");
+
+    // Build slots
 }
