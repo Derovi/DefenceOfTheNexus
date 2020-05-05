@@ -54,5 +54,185 @@
         "columns": 1
       }
     }
+  },
+  "scorpion": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit1_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit1_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit1_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit1_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit1_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "mage": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit2_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit2_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit2_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit2_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit2_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "ogre": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit3_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit3_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit3_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit3_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit3_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "warrior": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit4_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit4_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit4_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit4_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit4_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "pumpkin": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit5_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit5_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit5_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit5_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit5_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "scout": {
+    "spriteControllers": ["default"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/sprites/unit6_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/sprites/unit6_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/sprites/unit6_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/sprites/unit6_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/sprites/unit6_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
   }
 }
