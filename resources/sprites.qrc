@@ -23,4 +23,42 @@
         <file alias="wall2">sprites/buildings/wall2.png</file>
         <file alias="column1">sprites/buildings/column1.png</file>
     </qresource>
+    <qresource prefix="/units">
+        <file alias="unit1_attack">sprites/units/scorpion/unit1_attack.png</file>
+        <file alias="unit1_die">sprites/units/scorpion/unit1_die.png</file>
+        <file alias="unit1_hurt">sprites/units/scorpion/unit1_hurt.png</file>
+        <file alias="unit1_idle">sprites/units/scorpion/unit1_idle.png</file>
+        <file alias="unit1_walk">sprites/units/scorpion/unit1_walk.png</file>
+        <file alias="unit1_run">sprites/units/scorpion/unit1_run.png</file>
+        <file alias="unit2_attack">sprites/units/mage/unit2_attack.png</file>
+        <file alias="unit2_die">sprites/units/mage/unit2_die.png</file>
+        <file alias="unit2_hurt">sprites/units/mage/unit2_hurt.png</file>
+        <file alias="unit2_idle">sprites/units/mage/unit2_idle.png</file>
+        <file alias="unit2_walk">sprites/units/mage/unit2_walk.png</file>
+        <file alias="unit2_run">sprites/units/mage/unit2_run.png</file>
+        <file alias="unit3_attack">sprites/units/ogre/unit3_attack.png</file>
+        <file alias="unit3_die">sprites/units/ogre/unit3_die.png</file>
+        <file alias="unit3_hurt">sprites/units/ogre/unit3_hurt.png</file>
+        <file alias="unit3_idle">sprites/units/ogre/unit3_idle.png</file>
+        <file alias="unit3_walk">sprites/units/ogre/unit3_walk.png</file>
+        <file alias="unit3_run">sprites/units/ogre/unit3_run.png</file>
+        <file alias="unit4_attack">sprites/units/warrior/unit4_attack.png</file>
+        <file alias="unit4_die">sprites/units/warrior/unit4_die.png</file>
+        <file alias="unit4_hurt">sprites/units/warrior/unit4_hurt.png</file>
+        <file alias="unit4_idle">sprites/units/warrior/unit4_idle.png</file>
+        <file alias="unit4_walk">sprites/units/warrior/unit4_walk.png</file>
+        <file alias="unit4_run">sprites/units/warrior/unit4_run.png</file>
+        <file alias="unit5_attack">sprites/units/pumpkin/unit5_attack.png</file>
+        <file alias="unit5_die">sprites/units/pumpkin/unit5_die.png</file>
+        <file alias="unit5_hurt">sprites/units/pumpkin/unit5_hurt.png</file>
+        <file alias="unit5_idle">sprites/units/pumpkin/unit5_idle.png</file>
+        <file alias="unit5_walk">sprites/units/pumpkin/unit5_walk.png</file>
+        <file alias="unit5_run">sprites/units/pumpkin/unit5_run.png</file>
+        <file alias="unit6_attack">sprites/units/scout/unit6_attack.png</file>
+        <file alias="unit6_die">sprites/units/scout/unit6_die.png</file>
+        <file alias="unit6_hurt">sprites/units/scout/unit6_hurt.png</file>
+        <file alias="unit6_idle">sprites/units/scout/unit6_idle.png</file>
+        <file alias="unit6_walk">sprites/units/scout/unit6_walk.png</file>
+        <file alias="unit6_run">sprites/units/scout/unit6_run.png</file>
+    </qresource>
 </RCC>
