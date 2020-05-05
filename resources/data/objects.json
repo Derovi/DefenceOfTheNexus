@@ -57,8 +57,8 @@
   "test2": {
     "attributes": {
       "damageable": {
-        "health": 100,
-        "maxHealth": 100
+        "health": 900,
+        "maxHealth": 1000
       }
     },
     "hitbox": {

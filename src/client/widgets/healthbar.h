@@ -3,6 +3,7 @@
 
 #include "../widget.h"
 #include "../sprite.h"
+#include "textview.h"
 
 namespace client {
 class HealthBar : public Widget {
@@ -30,12 +31,13 @@ class HealthBar : public Widget {
     void paint(QPainter& painter) override;
 
   private:
-    int currentHP;
-    int maxHP;
-
     QImage background;
     QImage healthLine;
 
+    TextView* hpView;
+
+    int currentHP;
+    int maxHP;
 };
 } // namespace client
 #endif //HEALTHBAR_H
