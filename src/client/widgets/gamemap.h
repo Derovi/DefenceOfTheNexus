@@ -61,6 +61,8 @@ class GameMap : public Widget {
 
     void setBackground(const QPixmap& background);
 
+    void buildCommand(const QString& objectType);
+
     const QHash<int64_t, std::shared_ptr<GraphicsObject>>& getGraphicsObjects() const;
 
   protected:

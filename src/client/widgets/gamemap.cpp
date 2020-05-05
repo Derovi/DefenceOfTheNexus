@@ -259,3 +259,7 @@ const QHash<int64_t, std::shared_ptr<client::GraphicsObject>>&
 client::GameMap::getGraphicsObjects() const {
     return graphicsObjects;
 }
+
+void client::GameMap::buildCommand(const QString& objectType) {
+
+}

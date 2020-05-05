@@ -15,6 +15,10 @@ class BuildSlot : public Widget {
 
     void paint(QPainter& painter) override;
 
+  protected:
+    void clicked(QPoint point, bool leftButton) override;
+
+  public:
     int getHoverWidth() const;
 
     void setHoverWidth(int hoverWidth);
@@ -31,10 +35,16 @@ class BuildSlot : public Widget {
 
     void setHoverHeight(int hoverHeight);
 
+    const QString& getObjectType() const;
+
+    void setObjectType(const QString& objectType);
+
   private:
     QImage image;
 
     QImage hoverImage;
+
+    QString objectType;
 
     int hoverWidth;
 
