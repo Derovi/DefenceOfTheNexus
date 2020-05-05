@@ -183,6 +183,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "mage": {
@@ -240,6 +243,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "ogre": {
@@ -297,6 +303,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "warrior": {
@@ -354,6 +363,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "pumpkin": {
@@ -411,6 +423,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "scout": {
@@ -468,6 +483,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   }
 }
