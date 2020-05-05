@@ -19,8 +19,8 @@
         <file alias="tree1">sprites/tree1.png</file>
         <file alias="tree2">sprites/tree2.png</file>
         <file alias="wood1">sprites/wood1.png</file>
-        <file alias="wall1">sprites/wall1.png</file>
-        <file alias="wall2">sprites/wall2.png</file>
-        <file alias="column1">sprites/column1.png</file>
+        <file alias="wall1">sprites/buildings/wall1.png</file>
+        <file alias="wall2">sprites/buildings/wall2.png</file>
+        <file alias="column1">sprites/buildings/column1.png</file>
     </qresource>
 </RCC>
