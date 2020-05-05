@@ -146,7 +146,7 @@
       "damaging": {
         "damage": 20,
         "radius": 150,
-        "delay": 250,
+        "delay": 400,
         "bulletType": ""
       }
     },
@@ -206,7 +206,7 @@
       "damaging": {
         "damage": 7,
         "radius": 150,
-        "delay": 250,
+        "delay": 1000,
         "bulletType": ""
       }
     },
@@ -266,7 +266,7 @@
       "damaging": {
         "damage": 10,
         "radius": 150,
-        "delay": 250,
+        "delay": 1500,
         "bulletType": ""
       }
     },
@@ -326,7 +326,7 @@
       "damaging": {
         "damage": 9,
         "radius": 150,
-        "delay": 250,
+        "delay": 400,
         "bulletType": ""
       }
     },
@@ -386,7 +386,7 @@
       "damaging": {
         "damage": 5,
         "radius": 150,
-        "delay": 250,
+        "delay": 800,
         "bulletType": ""
       }
     },
@@ -446,7 +446,7 @@
       "damaging": {
         "damage": 8,
         "radius": 150,
-        "delay": 250,
+        "delay": 600,
         "bulletType": ""
       }
     },
