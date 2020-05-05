@@ -62,6 +62,8 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("resourcebundle-stone").value(),
                 QPoint(2200, 1000));
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
+                                             QPoint(2200, 1200));
 
         engine->getGameWorld()->buildWall(QPoint(0, 1500), QPoint(2000, 500),
                                           utils::Factory::getObjectSignature("wall1").value(),

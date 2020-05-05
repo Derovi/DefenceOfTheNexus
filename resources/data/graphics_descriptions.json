@@ -59,27 +59,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit1_idle",
+        "resource": ":/units/unit1_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit1_run",
+        "resource": ":/units/unit1_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit1_walk",
+        "resource": ":/units/unit1_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit1_attack",
+        "resource": ":/units/unit1_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit1_die",
+        "resource": ":/units/unit1_die",
         "rows": 20,
         "columns": 1
       }
@@ -89,27 +89,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit2_idle",
+        "resource": ":/units/unit2_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit2_run",
+        "resource": ":/units/unit2_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit2_walk",
+        "resource": ":/units/unit2_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit2_attack",
+        "resource": ":/units/unit2_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit2_die",
+        "resource": ":/units/unit2_die",
         "rows": 20,
         "columns": 1
       }
@@ -119,27 +119,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit3_idle",
+        "resource": ":/units/unit3_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit3_run",
+        "resource": ":/units/unit3_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit3_walk",
+        "resource": ":/units/unit3_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit3_attack",
+        "resource": ":/units/unit3_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit3_die",
+        "resource": ":/units/unit3_die",
         "rows": 20,
         "columns": 1
       }
@@ -149,27 +149,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit4_idle",
+        "resource": ":/units/unit4_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit4_run",
+        "resource": ":/units/unit4_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit4_walk",
+        "resource": ":/units/unit4_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit4_attack",
+        "resource": ":/units/unit4_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit4_die",
+        "resource": ":/units/unit4_die",
         "rows": 20,
         "columns": 1
       }
@@ -179,27 +179,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit5_idle",
+        "resource": ":/units/unit5_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit5_run",
+        "resource": ":/units/unit5_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit5_walk",
+        "resource": ":/units/unit5_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit5_attack",
+        "resource": ":/units/unit5_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit5_die",
+        "resource": ":/units/unit5_die",
         "rows": 20,
         "columns": 1
       }
@@ -209,27 +209,27 @@
     "spriteControllers": ["default"],
     "spriteDescriptions": {
       "idle": {
-        "resource": ":/sprites/unit6_idle",
+        "resource": ":/units/unit6_idle",
         "rows": 20,
         "columns": 1
       },
       "run": {
-        "resource": ":/sprites/unit6_run",
+        "resource": ":/units/unit6_run",
         "rows": 20,
         "columns": 1
       },
       "default": {
-        "resource": ":/sprites/unit6_walk",
+        "resource": ":/units/unit6_walk",
         "rows": 20,
         "columns": 1
       },
       "attack": {
-        "resource": ":/sprites/unit6_attack",
+        "resource": ":/units/unit6_attack",
         "rows": 20,
         "columns": 1
       },
       "die": {
-        "resource": ":/sprites/unit6_die",
+        "resource": ":/units/unit6_die",
         "rows": 20,
         "columns": 1
       }

@@ -12,5 +12,13 @@
   "exit_menu": "To menu",
   "resume": "Resume",
   "save_game": "Save game",
-  "load_game": "Load game"
+  "load_game": "Load game",
+  "units":{
+    "scorpion": "scorpion",
+    "mage": "mage",
+    "pumkin": "pumkin",
+    "scout": "scout",
+    "warrior": "warrior",
+    "ogre": "ogre"
+  }
 }

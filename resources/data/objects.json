@@ -53,8 +53,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -131,6 +141,35 @@
         },
         "maxSpeed": 500,
         "speed": 500
+      },
+      "damaging": {
+        "damage": 20,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 200,
+      "maxHealth": 200
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 150,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 40,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -148,6 +187,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "mage": {
@@ -157,8 +199,37 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 400,
+        "speed": 400
+      },
+      "damaging": {
+        "damage": 7,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 50,
+      "maxHealth": 50
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -176,6 +247,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "ogre": {
@@ -185,8 +259,37 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 400,
+        "speed": 400
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 100,
+      "maxHealth": 100
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 150,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -204,6 +307,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "warrior": {
@@ -213,8 +319,37 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 200,
+        "speed": 200
+      },
+      "damaging": {
+        "damage": 9,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 120,
+      "maxHealth": 120
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -232,6 +367,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "pumpkin": {
@@ -241,8 +379,37 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 700,
+        "speed": 700
+      },
+      "damaging": {
+        "damage": 5,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 50,
+      "maxHealth": 50
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 30,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 10,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -260,6 +427,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "scout": {
@@ -271,6 +441,35 @@
         },
         "maxSpeed": 500,
         "speed": 500
+      },
+      "damaging": {
+        "damage": 8,
+        "radius": 150,
+        "delay": 250,
+        "bulletType": ""
+      }
+    },
+    "damageable": {
+      "health": 100,
+      "maxHealth": 100
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 100,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
@@ -288,6 +487,9 @@
       ]
     },
     "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   }
 }
