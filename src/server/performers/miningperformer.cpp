@@ -35,6 +35,7 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
             target->getAttribute("resource"));
     if (resource != nullptr) {
         int mined = resource->mine(mining->getMiningSpeed());
+        mining->setMining(true);
         world->addResources(resource->getType(), mined);
         qDebug() << "Mined " << mined << " of " << (int)resource->getType() << endl;
         if (resource->getAmount() == 0) {

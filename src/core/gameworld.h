@@ -48,11 +48,29 @@ class GameWorld {
     void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
                    const server::ObjectSignature& columnSignature);
 
-    bool isIntersectsWithObjects(const QPolygonF& polygon);
+    bool isIntersectsWithObjects(const QPolygonF& polygon) const;
 
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);
+
+    std::shared_ptr<core::Object>
+    build(const server::ObjectSignature& signature, const QPoint& position,
+          float rotationAngle = 0);
+
+    std::pair<core::Object, bool>
+    checkBuildStatus(const server::ObjectSignature& signature, const QPoint& position,
+                     float rotationAngle = 0) const;
+
+    std::pair<core::Object, bool>
+    checkBuildStatus(const server::ObjectSignature& signature,
+                     const QPoint& position,
+                     float rotationAngle,
+                     QVector<QPair<core::ResourceType, int>>& copyResources) const;
+
+    QVector<std::pair<core::Object, bool> >
+    checkWallStatus(QPoint start, QPoint finish, const server::ObjectSignature& wall,
+                    const server::ObjectSignature& columnSignature) const;
 
   private:
 

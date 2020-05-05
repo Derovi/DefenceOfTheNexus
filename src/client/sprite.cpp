@@ -96,7 +96,7 @@ void client::Sprite::update(uint64_t timeDeltaMSec) {
 }
 
 void client::Sprite::jump(int frameNumber) {
-    lastUpdateTime = frameNumber * framesPerSec;
+    lastUpdateTime = frameNumber * 1000 / framesPerSec;
 }
 
 bool client::Sprite::isReverseDirection() const {

@@ -6,6 +6,7 @@
 #include "../core/attributes/moving.h"
 
 #include "commandexecutor.h"
+#include "../utils/factory.h"
 
 server::CommandExecutor::CommandExecutor(
         std::shared_ptr<server::GameWorldController> gameWorldController):
@@ -34,10 +35,10 @@ void server::CommandExecutor::registerCommand(const QString& name,
 void server::CommandExecutor::registerCommands() {
     // test command
     registerCommand("test", &CommandExecutor::testCommand);
-    // change_speed_command <object_id> <new_speed>
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
     registerCommand("mine_resource", &CommandExecutor::mineResource);
+    registerCommand("attack", &CommandExecutor::attackCommand);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -128,9 +129,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
         return false;
     }
 
-    for (const auto& strategy : object->getStrategies()) {
-        gameWorldController->getControllers()[objectId]->cancelTargets();
-    }
+    gameWorldController->getControllers()[objectId]->cancelTargets();
 
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
@@ -151,6 +150,7 @@ bool server::CommandExecutor::testCommand(const QStringList& arguments) {
     return true;
 }
 
+// mine_resource <miner id> <target id>
 bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     if (arguments.size() != 2) {
         return false;
@@ -178,9 +178,7 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
         return false;
     }
 
-    for (const auto& strategy : miner.value()->getStrategies()) {
-        gameWorldController->getControllers()[minerId]->cancelTargets();
-    }
+    gameWorldController->getControllers()[minerId]->cancelTargets();
     qDebug() << minerId << " wanna mine " << resourceId << endl;
 
     auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
@@ -189,6 +187,68 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     bundle.registerVariable("miningTarget", target.value());
     bundle.registerVariable("destinationPoint", destPoint);
     gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
+    return true;
+}
+
+// mine_resource <miner id> <target id>
+bool server::CommandExecutor::buildCommand(const QStringList& arguments) {
+    if (arguments.size() != 3) {
+        return false;
+    }
+    QString objectType = arguments[0];
+
+    bool isOk = true;
+    int x = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    int y = arguments[2].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    //getGameWorld()->build();
+    return true;
+}
+
+// attack <attacker id> <target id>
+bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
+    if (arguments.size() != 2) {
+        return false;
+    }
+    bool isOk = true;
+    uint64_t attackerId = arguments[0].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    uint64_t targetId = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    auto attacker = getGameWorld()->getObjects().find(attackerId);
+    if (attacker == getGameWorld()->getObjects().end()
+        || !attacker.value()->hasAttribute("damaging")) {
+        return false;
+    }
+
+    auto target = getGameWorld()->getObjects().find(targetId);
+    if (target == getGameWorld()->getObjects().end()
+        || !target.value()->hasAttribute("damageable")) {
+        return false;
+    }
+
+    gameWorldController->getControllers()[attackerId]->cancelTargets();
+    qDebug() << attackerId << " wanna attack " << targetId << endl;
+
+    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+
+    DataBundle bundle;
+    bundle.registerVariable("attackTarget", target.value());
+    bundle.registerVariable("destinationPoint", destPoint);
+    gameWorldController->getControllers()[attackerId]->linkStrategies(bundle);
     return true;
 }
 

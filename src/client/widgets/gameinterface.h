@@ -8,6 +8,7 @@
 #include "healthbar.h"
 #include "textview.h"
 #include "imagebutton.h"
+#include "buildslot.h"
 
 namespace client {
 
@@ -31,9 +32,9 @@ class GameInterface : public Widget {
     QImage miningIcon;
     QImage armorIcon;
 
-    QImage slotIcon;
-
     std::shared_ptr<core::GameWorld> gameWorld;
+
+    QVector<BuildSlot*> buildSlots;
 
     UnitIcon* unitIcon;
     HealthBar* healthBar;

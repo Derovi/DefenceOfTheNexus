@@ -87,6 +87,9 @@ class Serializer {
     static std::optional<QJsonObject>
     costSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
+    static std::optional<QJsonObject>
+    builderSerializer(const std::shared_ptr<core::Attribute>& attribute);
+
     static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
 
     static std::optional<core::Command> commandDeserializer(const QJsonObject& serialized);
@@ -114,8 +117,11 @@ class Serializer {
     static std::optional<std::shared_ptr<core::Attribute>>
     wallDeserializer(const QJsonObject& serialized);
 
-    std::optional<std::shared_ptr<core::Attribute>>
+    static std::optional<std::shared_ptr<core::Attribute>>
     costDeserializer(const QJsonObject& serialized);
+
+    static std::optional<std::shared_ptr<core::Attribute>>
+    builderDeserializer(const QJsonObject& serialized);
 
     QString jsonObjectToString(const QJsonObject& jsonObject);
 

@@ -28,7 +28,7 @@ class MineStrategy : public Strategy {
     void cancelTargets() override;
 
   private:
-    inline static const QStringList requiredAttributes = {};
+    inline static const QStringList requiredAttributes = {"mining"};
 
     inline static const QStringList startAfter = {};
 

@@ -13,6 +13,16 @@
         "miningSpeed": 4,
         "miningDelay": 1000,
         "miningRadius": 500
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 1000,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "builder": {
+        "list": ["test2", "column1"]
       }
     },
     "hitbox": {
@@ -30,7 +40,8 @@
     "strategies": [
       "mineStrategy",
       "pathStrategy",
-      "moveStrategy"
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "resourcebundle-stone": {
@@ -38,17 +49,32 @@
       "resource": {
         "resourceType": 1,
         "amount": 200,
+        "maxAmount": 200,
         "miningSpeedModifier": 2
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "test2": {
     "attributes": {
+      "damageable": {
+        "health": 900,
+        "maxHealth": 1000
+      }
     },
     "hitbox": {
       "x": [
@@ -105,6 +131,366 @@
       ]
     },
     "strategies": [
+    ]
+  },
+  "scorpion": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 500,
+        "speed": 500
+      },
+      "damaging": {
+        "damage": 20,
+        "radius": 150,
+        "delay": 400,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 200,
+        "maxHealth": 200
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 150,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 40,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -120,
+        -120,
+        120,
+        0
+      ],
+      "y": [
+        -100,
+        100,
+        100,
+        -100
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "mage": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 400,
+        "speed": 400
+      },
+      "damaging": {
+        "damage": 7,
+        "radius": 150,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 50,
+        "maxHealth": 50
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        -50,
+        50,
+        50
+      ],
+      "y": [
+        -50,
+        50,
+        50,
+        -50
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "ogre": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 400,
+        "speed": 400
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 1500,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 100,
+        "maxHealth": 100
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 150,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -75,
+        -75,
+        75,
+        75
+      ],
+      "y": [
+        -75,
+        75,
+        75,
+        -75
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "warrior": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 200,
+        "speed": 200
+      },
+      "damaging": {
+        "damage": 9,
+        "radius": 150,
+        "delay": 400,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 120,
+        "maxHealth": 120
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -75,
+        -75,
+        75,
+        75
+      ],
+      "y": [
+        -75,
+        75,
+        75,
+        -75
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "pumpkin": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 700,
+        "speed": 700
+      },
+      "damaging": {
+        "damage": 5,
+        "radius": 150,
+        "delay": 800,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 50,
+        "maxHealth": 50
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 30,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 10,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -75,
+        -75,
+        75,
+        75
+      ],
+      "y": [
+        -75,
+        75,
+        75,
+        -75
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "scout": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 500,
+        "speed": 500
+      },
+      "damaging": {
+        "damage": 8,
+        "radius": 150,
+        "delay": 600,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 100,
+        "maxHealth": 100
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 100,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -75,
+        -75,
+        75,
+        75
+      ],
+      "y": [
+        -75,
+        75,
+        75,
+        -75
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
     ]
   },
   "conifer": {
@@ -386,11 +772,20 @@
   "high-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   }
-
 }
 

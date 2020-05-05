@@ -11,7 +11,8 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-        isRounding(false), Strategy(object), moving(nullptr), destPoint(nullptr) {}
+    Strategy(object), isRounding(false), roundingStyle(false), moving(nullptr),
+    destPoint(nullptr) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -24,6 +25,7 @@ void PathStrategy::assign(DataBundle& dataBundle) {
 
 void PathStrategy::cancelTargets() {
     destPoint = nullptr;
+    roundingStyle = !roundingStyle;
 }
 
 void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
@@ -75,12 +77,14 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
                          -v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
     };
 
+    static const auto rotate = [](const QVector2D& v, bool style) {
+        return (style ? rotateCounterClockwise(v) : rotateClockwise(v));
+    };
+
     if (isRounding) {
         auto currentDirection = moving->getDirection();
-        for (int it = 0;
-             it < 8;
-             ++it) {
-            currentDirection = rotateCounterClockwise(currentDirection);
+        for (int it = 0; it < 8; ++it) {
+            currentDirection = rotate(currentDirection, !roundingStyle);
             moving->setDirection(currentDirection);
             if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
                 break;
@@ -96,15 +100,13 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         }
         direction = currentDirection;
     }
-    for (int it = 0;
-         it < 8;
-         ++it) {
+    for (int it = 0; it < 8; ++it) {
         moving->setDirection(direction);
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             return;
         }
         isRounding = true;
-        direction = rotateClockwise(direction);
+        direction = rotate(direction, roundingStyle);
     }
     moving->setDirection(QVector2D(0, 0));
 }

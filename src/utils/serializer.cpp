@@ -1,4 +1,5 @@
 #include "serializer.h"
+#include "../core/attributes/builder.h"
 
 utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
 
@@ -114,6 +115,7 @@ utils::Serializer::resourceSerializer(const std::shared_ptr<core::Attribute>& at
     }
     json.insert("resourceType", static_cast<int>(object->getType()));
     json.insert("amount", object->getAmount());
+    json.insert("maxAmount", object->getMaxAmount());
     json.insert("miningSpeedModifier", object->getMiningSpeedModifier());
     return json;
 }
@@ -129,6 +131,18 @@ utils::Serializer::damagingSerializer(const std::shared_ptr<core::Attribute>& at
     json.insert("radius", object->getAttackRadius());
     json.insert("delay", object->getAttackDelay());
     json.insert("bulletType", object->getBulletType());
+    json.insert("attacking", object->isAttacking());
+    return json;
+}
+
+std::optional<QJsonObject>
+utils::Serializer::builderSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Builder*>(attribute.get());
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    QJsonObject json;
+    json.insert("list", QVariant(object->getBuildList()).toJsonValue());
     return json;
 }
 
@@ -274,10 +288,11 @@ utils::Serializer::resourceDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     int amount = serialized["amount"].toDouble();
+    int maxAmount = serialized["maxAmount"].toDouble();
     int type = serialized["resourceType"].toDouble();
     core::ResourceType resType = static_cast<core::ResourceType>(type);
     double modifier = serialized["miningSpeedModifier"].toDouble();
-    return std::make_shared<core::Resource>(resType, amount, modifier);
+    return std::make_shared<core::Resource>(resType, amount, maxAmount, modifier);
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
@@ -303,6 +318,7 @@ utils::Serializer::damagingDeserializer(const QJsonObject& serialized) {
         return std::nullopt;
     }
     object->setAttackRadius((serialized["radius"]).toDouble());
+    object->setAttacking(serialized["attacking"].toBool(false));
     return std::make_shared<core::Damaging>(*object);
 }
 
@@ -320,6 +336,11 @@ utils::Serializer::damageableDeserializer(const QJsonObject& serialized) {
     }
     object->setMaxHealth(serialized["maxHealth"].toDouble());
     return std::make_shared<core::Damageable>(*object);
+}
+
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::builderDeserializer(const QJsonObject& serialized) {
+    return std::make_shared<core::Builder>(serialized.value("list").toVariant().toStringList());
 }
 
 std::optional<std::shared_ptr<core::Attribute>>
@@ -617,7 +638,6 @@ std::optional<QJsonObject> utils::Serializer::commandSerializer(const core::Comm
     }
     json["arguments"] = arguments;
     return json;
-
 }
 
 std::optional<QString>

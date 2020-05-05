@@ -24,21 +24,25 @@ class Damaging : public Attribute {
 
     double getAttackRadius() const;
 
-    double getAttackDelay() const;
+    int getAttackDelay() const;
 
-    double getCurrentDelay() const;
+    int getCurrentDelay() const;
 
     const QString& getBulletType() const;
+
+    bool isAttacking() const;
 
     void setDamage(int damage);
 
     void setAttackRadius(double radius);
 
-    void setAttackDelay(double delay);
+    void setAttackDelay(int delay);
 
-    void setCurrentDelay(double delay);
+    void setCurrentDelay(int delay);
 
     void setBulletType(const QString& newType);
+
+    void setAttacking(bool attacking);
 
     void set(const Damaging& properties);
 
@@ -47,10 +51,11 @@ class Damaging : public Attribute {
     std::shared_ptr<Attribute> clone() override;
 
   private:
+    bool attacking;
     int damage;
+    int attackDelay;
+    int currentDelay;
     double attackRadius;
-    double attackDelay;
-    double currentDelay;
     QString bulletType;
 };
 

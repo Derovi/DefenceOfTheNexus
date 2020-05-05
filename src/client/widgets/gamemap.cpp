@@ -144,7 +144,9 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
     auto target = gameWorld->objectAt(point);
     if (target != nullptr && target->hasAttribute("resource")) {
         commandQueue->push(core::Command("mine_resource", {
-                QString::number(objectId), QString::number(target->getId())}));
+            QString::number(objectId), QString::number(target->getId())}));
+    } else if (target != nullptr && target->hasAttribute("damageable")) {
+        commandQueue->push(core::Command("attack", {QString::number(objectId), QString::number(target->getId())}));
     } else {
         commandQueue->push(
                 core::Command("change_move_target",
@@ -256,4 +258,8 @@ void client::GameMap::drawBackground(QPainter& painter) {
 const QHash<int64_t, std::shared_ptr<client::GraphicsObject>>&
 client::GameMap::getGraphicsObjects() const {
     return graphicsObjects;
+}
+
+void client::GameMap::buildCommand(const QString& objectType) {
+
 }

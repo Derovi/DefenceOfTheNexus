@@ -12,5 +12,13 @@
   "exit_menu": "В меню",
   "resume": "Вернуться",
   "save_game": "Сохранить",
-  "load_game": "Загрузить"
+  "load_game": "Загрузить",
+  "units":{
+    "scorpion": "скорпион",
+    "mage": "маг",
+    "pumkin": "тыквоголов",
+    "scout": "скаут",
+    "warrior": "воин",
+    "ogre": "огр"
+  }
 }

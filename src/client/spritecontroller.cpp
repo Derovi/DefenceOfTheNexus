@@ -26,3 +26,7 @@ void client::SpriteController::draw(QPainter& painter, const QRect& target) {
         sprite->draw(painter, target);
     }
 }
+
+void client::SpriteController::clearSprites() {
+    sprites.clear();
+}

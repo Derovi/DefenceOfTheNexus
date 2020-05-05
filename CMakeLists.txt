@@ -76,7 +76,11 @@ add_executable(defenceofnexus
         src/utils/lang.cpp
         src/client/screens/optionsscreen.cpp
         src/client/widgets/chooser.cpp
-        src/client/spritecontrollers/defaultspritecontroller.cpp src/client/widgets/gameinterface.cpp src/client/widgets/gameinterface.h src/client/widgets/uniticon.cpp src/client/widgets/uniticon.h src/client/widgets/healthbar.cpp src/client/widgets/healthbar.h)
+        src/client/spritecontrollers/defaultspritecontroller.cpp
+        src/client/widgets/gameinterface.cpp
+        src/client/widgets/uniticon.cpp
+        src/client/widgets/healthbar.cpp
+        src/server/strategies/attackstrategy.cpp src/core/attributes/builder.cpp src/core/attributes/builder.h src/client/widgets/buildslot.cpp src/client/widgets/buildslot.h src/client/mapinput.cpp src/client/mapinput.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

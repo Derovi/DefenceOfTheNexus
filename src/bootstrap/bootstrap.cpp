@@ -18,6 +18,8 @@
 #include "../core/attributes/mining.h"
 #include "../server/strategies/minestrategy.h"
 #include "../client/spritecontrollers/resourcespritecontroller.h"
+#include "../server/strategies/attackstrategy.h"
+#include "../core/attributes/builder.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -37,6 +39,12 @@ void registerStrategies() {
                                          return std::shared_ptr<server::Strategy>(
                                              static_cast<server::Strategy*>(
                                                  new server::MineStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::AttackStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                             static_cast<server::Strategy*>(
+                                                 new server::AttackStrategy(object)));
                                      });
 }
 
@@ -60,6 +68,18 @@ void registerAttributes() {
     utils::Factory::registerAttribute(core::Mining::attributeName,
                                       utils::Serializer::miningSerializer,
                                       utils::Serializer::miningDeserializer);
+
+    utils::Factory::registerAttribute(core::Wall::attributeName,
+                                      utils::Serializer::wallSerializer,
+                                      utils::Serializer::wallDeserializer);
+
+    utils::Factory::registerAttribute(core::Cost::attributeName,
+                                      utils::Serializer::costSerializer,
+                                      utils::Serializer::costDeserializer);
+
+    utils::Factory::registerAttribute(core::Builder::attributeName,
+                                      utils::Serializer::builderSerializer,
+                                      utils::Serializer::builderDeserializer);
 }
 
 void registerSpriteControllers() {

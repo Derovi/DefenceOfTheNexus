@@ -42,7 +42,9 @@ client::PauseScreen::PauseScreen(): Screen() {
     resumeButton->setOnClick([=](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
-            App::getInstance()->closeScreen();
+            App::runOnUiThread([&] {
+                App::getInstance()->closeScreen();
+            });
         });
         thread->start();
     });
@@ -100,9 +102,7 @@ client::PauseScreen::PauseScreen(): Screen() {
                                        App::getInstance()->getFont()));
     optionsButton->getTextChildren()->setColor(QColor(249, 192, 6));
     optionsButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::runOnUiThread([&] {
-            App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
-        });
+        App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
     });
 
     addChild(optionsButton);

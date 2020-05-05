@@ -37,6 +37,13 @@ class CommandExecutor {
     bool changeMoveTargetCommand(const QStringList& arguments);
 
     bool mineResource(const QStringList& arguments);
+
+    bool attackCommand(const QStringList& arguments);
+
+    bool buildCommand(const QStringList& arguments);
+
+    bool buildWallCommand(const QStringList& arguments) {};
+
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)
     QHash<QString, bool (CommandExecutor::*)(const QStringList&)> commands;

@@ -21,7 +21,7 @@ class Resource : public Attribute {
 
     Resource() = delete;
 
-    explicit Resource(ResourceType type, int amount = 0, double miningSpeedModifier = 1);
+    explicit Resource(ResourceType type, int amount = 0, int maxAmount = 0, double miningSpeedModifier = 1);
 
     int getAmount() const;
 
@@ -37,14 +37,21 @@ class Resource : public Attribute {
 
     int mine(int speed);
 
+    int getMaxAmount() const;
+
+    void setMaxAmount(int maxAmount);
+
     QString getAttributeName() override;
 
     std::shared_ptr<Attribute> clone() override;
 
   private:
     ResourceType type;
-    int amount;
+
     double miningSpeedModifier;
+
+    int amount;
+    int maxAmount;
 };
 
 }  // namespace core

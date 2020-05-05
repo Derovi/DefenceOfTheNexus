@@ -13,7 +13,7 @@ enum class WallType {
 
 class Wall : public Attribute {
   public:
-    Wall();
+    Wall() = delete;
 
     explicit Wall(WallType type);
 

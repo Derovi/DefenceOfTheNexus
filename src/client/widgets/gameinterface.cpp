@@ -5,6 +5,7 @@
 #include "../app.h"
 #include "../../core/attributes/damaging.h"
 #include "../../core/attributes/mining.h"
+#include "../../core/attributes/builder.h"
 
 #include <utility>
 
@@ -78,7 +79,15 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     addChild(stopButton);
     addChild(killButton);
 
-    slotIcon = QImage(":/interface/icon-slot");
+    QImage slotIcon = QImage(":/interface/icon-slot");
+    for (int row = 0; row < 3; ++row) {
+        for (int column = 0; column < 5; ++column) {
+            buildSlots.push_back(new BuildSlot(QPoint(2784 + column * 168, row * 156),
+                    114, 114));
+            buildSlots.back()->setImage(slotIcon);
+            addChild(buildSlots.back());
+        }
+    }
 }
 
 int client::GameInterface::getSelectedUnitId() const {
@@ -91,37 +100,6 @@ void client::GameInterface::setSelectedUnitId(int selectedUnitId) {
 
 void client::GameInterface::paint(QPainter& painter) {
     GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
-    std::shared_ptr<GraphicsObject> graphicsObject = nullptr;
-    for (auto& object : gameMap->getGraphicsObjects()) {
-        if (object->getObject()->getId() == selectedUnitId) {
-            graphicsObject = object;
-        }
-    }
-
-    if (!graphicsObject) {
-        return;
-    }
-
-    auto object = graphicsObject->getObject();
-
-    // Unit icon
-    unitIcon->setGraphicsObject(graphicsObject);
-
-    // Health bar
-    if (graphicsObject) {
-        auto damageable = std::dynamic_pointer_cast<core::Damageable>(
-                graphicsObject->getObject()->getAttribute(core::Damageable::attributeName));
-        if (damageable) {
-            healthBar->setCurrentHp(damageable->getHealth());
-            healthBar->setMaxHp(damageable->getMaxHealth());
-        } else {
-            healthBar->setCurrentHp(0);
-            healthBar->setMaxHp(0);
-        }
-    } else {
-        healthBar->setCurrentHp(0);
-        healthBar->setMaxHp(0);
-    }
 
     // Resources
     painter.drawImage(QRect(0, 0, 114, 114), stoneIcon);
@@ -148,10 +126,51 @@ void client::GameInterface::paint(QPainter& painter) {
     woodView->setText(QString::number(wood));
     ironView->setText(QString::number(iron));
 
-    // Attributes
+    std::shared_ptr<GraphicsObject> graphicsObject = nullptr;
+    for (auto& object : gameMap->getGraphicsObjects()) {
+        if (object->getObject()->getId() == selectedUnitId) {
+            graphicsObject = object;
+        }
+    }
+
+    //Attributes icons
     painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
     painter.drawImage(QRect(1058, 182, 60, 60), miningIcon);
     painter.drawImage(QRect(1058, 264, 60, 60), armorIcon);
+
+    if (!graphicsObject) {
+        return;
+    }
+
+    auto object = graphicsObject->getObject();
+
+    // Unit icon
+    unitIcon->setGraphicsObject(graphicsObject);
+
+    // Health bar
+    if (graphicsObject) {
+        auto damageable = std::dynamic_pointer_cast<core::Damageable>(
+                graphicsObject->getObject()->getAttribute(core::Damageable::attributeName));
+        if (damageable) {
+            healthBar->setCurrentHp(damageable->getHealth());
+            healthBar->setMaxHp(damageable->getMaxHealth());
+        } else {
+            auto resource = std::dynamic_pointer_cast<core::Resource>(
+                    graphicsObject->getObject()->getAttribute(core::Resource::attributeName));
+            if (resource) {
+                healthBar->setCurrentHp(resource->getAmount());
+                healthBar->setMaxHp(200);
+            } else {
+                healthBar->setCurrentHp(0);
+                healthBar->setMaxHp(0);
+            }
+        }
+    } else {
+        healthBar->setCurrentHp(0);
+        healthBar->setMaxHp(0);
+    }
+
+    // Attributes
 
     auto damaging = std::dynamic_pointer_cast<core::Damaging>(
             graphicsObject->getObject()->getAttribute(core::Damaging::attributeName));
@@ -164,4 +183,18 @@ void client::GameInterface::paint(QPainter& painter) {
     //!TODO armor display
     auto armor = nullptr;
     armorView->setText(QString::number(0) + "%");
+
+    // Build slots
+    auto builder = std::dynamic_pointer_cast<core::Builder>(
+            object->getAttribute(core::Builder::attributeName));
+    if (builder) {
+        for (int idx = 0; idx < buildSlots.size(); ++idx) {
+            if (idx < idx < builder->getBuildList().size()) {
+                QString slot = builder->getBuildList().value(idx);
+                buildSlots[idx]->setObjectType(slot);
+            } else {
+                buildSlots[idx]->setObjectType("");
+            }
+        }
+    }
 }

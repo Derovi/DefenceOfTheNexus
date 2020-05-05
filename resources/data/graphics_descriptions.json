@@ -4,10 +4,30 @@
     "height": 100,
     "spriteControllers": ["unit"],
     "spriteDescriptions": {
-      "moving": {
-        "resource": ":/sprites/unit1",
-        "rows": 1,
-        "columns": 20
+      "idle": {
+        "resource": ":/units/unit4_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit4_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit4_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit4_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit4_die",
+        "rows": 20,
+        "columns": 1
       }
     }
   },
@@ -16,10 +36,30 @@
     "height": 100,
     "spriteControllers": ["unit"],
     "spriteDescriptions": {
-      "moving": {
-        "resource": ":/sprites/unit1",
-        "rows": 1,
-        "columns": 20
+      "idle": {
+        "resource": ":/units/unit2_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit2_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit2_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit2_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit2_die",
+        "rows": 20,
+        "columns": 1
       }
     }
   },
@@ -106,11 +146,43 @@
   "stone": {
     "width": 100,
     "height": 100,
-    "spriteControllers": ["resource"],
+    "spriteControllers": [
+      "resource"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/resources/stone/stone",
         "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "scorpion": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit1_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit1_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit1_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit1_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit1_die",
+        "rows": 20,
         "columns": 1
       }
     }
@@ -166,11 +238,43 @@
   "small-stone": {
     "width": 130,
     "height": 110,
-    "spriteControllers": ["resource"],
+    "spriteControllers": [
+      "resource"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/resources/stone/small",
         "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "mage": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit2_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit2_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit2_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit2_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit2_die",
+        "rows": 20,
         "columns": 1
       }
     }
@@ -226,11 +330,43 @@
   "medium-barrack": {
     "width": 260,
     "height": 190,
-    "spriteControllers": ["default"],
+    "spriteControllers": [
+      "default"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/buildings/medium-barrack",
         "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "ogre": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit3_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit3_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit3_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit3_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit3_die",
+        "rows": 20,
         "columns": 1
       }
     }
@@ -286,11 +422,43 @@
   "big-tower": {
     "width": 130,
     "height": 130,
-    "spriteControllers": ["default"],
+    "spriteControllers": [
+      "default"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/towers/big",
         "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "warrior": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit4_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit4_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit4_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit4_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit4_die",
+        "rows": 20,
         "columns": 1
       }
     }
@@ -334,7 +502,9 @@
   "special-tower": {
     "width": 114,
     "height": 156,
-    "spriteControllers": ["default"],
+    "spriteControllers": [
+      "default"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/towers/special",
@@ -343,14 +513,76 @@
       }
     }
   },
+  "pumpkin": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit5_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit5_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit5_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit5_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit5_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
   "high-tower": {
     "width": 90,
     "height": 170,
-    "spriteControllers": ["default"],
+    "spriteControllers": [
+      "default"
+    ],
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/towers/high",
         "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "scout": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit6_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit6_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit6_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit6_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit6_die",
+        "rows": 20,
         "columns": 1
       }
     }
