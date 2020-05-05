@@ -45,9 +45,13 @@ client::App::App() {
             // make changes on game world
             runOnUiThread([&] {
                 if (properties::fullscreen) {
-                    showFullScreen();
+                    if (!isFullScreen()) {
+                        showFullScreen();
+                    }
                 } else {
-                    showNormal();
+                    if (isFullScreen()) {
+                        showNormal();
+                    }
                     setFixedWidth(properties::width);
                     setFixedHeight(properties::height);
                 }
