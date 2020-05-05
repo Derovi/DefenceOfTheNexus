@@ -148,11 +148,11 @@
         "radius": 150,
         "delay": 400,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 200,
+        "maxHealth": 200
       }
-    },
-    "damageable": {
-      "health": 200,
-      "maxHealth": 200
     },
     "cost": {
       "all": {
@@ -208,11 +208,11 @@
         "radius": 150,
         "delay": 1000,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 50,
+        "maxHealth": 50
       }
-    },
-    "damageable": {
-      "health": 50,
-      "maxHealth": 50
     },
     "cost": {
       "all": {
@@ -268,11 +268,11 @@
         "radius": 150,
         "delay": 1500,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 100,
+        "maxHealth": 100
       }
-    },
-    "damageable": {
-      "health": 100,
-      "maxHealth": 100
     },
     "cost": {
       "all": {
@@ -328,11 +328,11 @@
         "radius": 150,
         "delay": 400,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 120,
+        "maxHealth": 120
       }
-    },
-    "damageable": {
-      "health": 120,
-      "maxHealth": 120
     },
     "cost": {
       "all": {
@@ -388,11 +388,11 @@
         "radius": 150,
         "delay": 800,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 50,
+        "maxHealth": 50
       }
-    },
-    "damageable": {
-      "health": 50,
-      "maxHealth": 50
     },
     "cost": {
       "all": {
@@ -448,11 +448,11 @@
         "radius": 150,
         "delay": 600,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 100,
+        "maxHealth": 100
       }
-    },
-    "damageable": {
-      "health": 100,
-      "maxHealth": 100
     },
     "cost": {
       "all": {
