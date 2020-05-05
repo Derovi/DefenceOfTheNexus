@@ -6,6 +6,7 @@
 #include "../core/attributes/moving.h"
 
 #include "commandexecutor.h"
+#include "../utils/factory.h"
 
 server::CommandExecutor::CommandExecutor(
         std::shared_ptr<server::GameWorldController> gameWorldController):
@@ -186,6 +187,28 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     bundle.registerVariable("miningTarget", target.value());
     bundle.registerVariable("destinationPoint", destPoint);
     gameWorldController->getControllers()[minerId]->linkStrategies(bundle);
+    return true;
+}
+
+// mine_resource <miner id> <target id>
+bool server::CommandExecutor::buildCommand(const QStringList& arguments) {
+    if (arguments.size() != 3) {
+        return false;
+    }
+    QString objectType = arguments[0];
+
+    bool isOk = true;
+    int x = arguments[1].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    int y = arguments[2].toInt(&isOk);
+    if (!isOk) {
+        return false;
+    }
+
+    //getGameWorld()->build();
     return true;
 }
 
