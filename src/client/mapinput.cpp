@@ -38,6 +38,9 @@ void client::MapInput::append(const QPoint& point) {
         return;
     }
     if (objectSignature->hasAttribute(core::Wall::attributeName)) {
+        if (points.size() == 0) {
+            return;
+        }
         gameMap->getCommandQueue()->push(core::Command("build_wall",
                                                        {
                                                                objectType,
@@ -45,6 +48,7 @@ void client::MapInput::append(const QPoint& point) {
                                                                QString::number(points.first().y()),
                                                                QString::number(points[1].x()),
                                                                QString::number(points[1].y())}));
+        abort();
     } else {
         gameMap->getCommandQueue()->push(core::Command("build",
                                                        {
@@ -52,5 +56,6 @@ void client::MapInput::append(const QPoint& point) {
                                                                QString::number(points.first().x()),
                                                                QString::number(
                                                                        points.first().y())}));
+        abort();
     }
 }
