@@ -247,7 +247,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     gameMap->setGameWorld(engine->getGameWorld());
     gameMap->setCommandQueue(engine->getCommandQueue());
 
-    gameMap->setShowHitBoxes(true);
+    //gameMap->setShowHitBoxes(true);
     engine->start();
 
     interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());

@@ -6,8 +6,8 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 200,
+        "speed": 200
       },
       "mining": {
         "miningSpeed": 4,
@@ -17,7 +17,6 @@
       "damaging": {
         "damage": 10,
         "radius": 150,
-        "delay": 1000,
         "delay": 1000,
         "bulletType": ""
       },
@@ -140,8 +139,8 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 500,
-        "speed": 500
+        "maxSpeed": 35,
+        "speed": 350
       },
       "damaging": {
         "damage": 20,
