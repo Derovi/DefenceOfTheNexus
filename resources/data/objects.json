@@ -18,6 +18,7 @@
         "damage": 10,
         "radius": 150,
         "delay": 1000,
+        "delay": 1000,
         "bulletType": ""
       },
       "builder": {

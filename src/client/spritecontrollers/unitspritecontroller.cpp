@@ -27,6 +27,7 @@ void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
         if (moving->getSpeed() > 0.01) {
             runSprite->setMirroring(moving->getDirection().x() < 0);
             idleSprite->setMirroring(moving->getDirection().x() < 0);
+            attackSprite->setMirroring(moving->getDirection().x() < 0);
             addSprite(runSprite);
             return;
         }
