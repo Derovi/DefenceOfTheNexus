@@ -34,7 +34,6 @@ void server::CommandExecutor::registerCommand(const QString& name,
 void server::CommandExecutor::registerCommands() {
     // test command
     registerCommand("test", &CommandExecutor::testCommand);
-    // change_speed_command <object_id> <new_speed>
     registerCommand("change_speed", &CommandExecutor::changeSpeedCommand);
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
     registerCommand("mine_resource", &CommandExecutor::mineResource);
@@ -129,9 +128,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
         return false;
     }
 
-    for (const auto& strategy : object->getStrategies()) {
-        gameWorldController->getControllers()[objectId]->cancelTargets();
-    }
+    gameWorldController->getControllers()[objectId]->cancelTargets();
 
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
@@ -180,9 +177,7 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
         return false;
     }
 
-    for (const auto& strategy : miner.value()->getStrategies()) {
-        gameWorldController->getControllers()[minerId]->cancelTargets();
-    }
+    gameWorldController->getControllers()[minerId]->cancelTargets();
     qDebug() << minerId << " wanna mine " << resourceId << endl;
 
     auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
@@ -222,9 +217,7 @@ bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
         return false;
     }
 
-    for (const auto& strategy : attacker.value()->getStrategies()) {
-        gameWorldController->getControllers()[attackerId]->cancelTargets();
-    }
+    gameWorldController->getControllers()[attackerId]->cancelTargets();
     qDebug() << attackerId << " wanna attack " << targetId << endl;
 
     auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
