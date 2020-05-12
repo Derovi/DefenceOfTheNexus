@@ -16,7 +16,7 @@ void client::GameScreen::onPaused() {
 
 void client::GameScreen::onResumed() {
     paused = false;
-    setLastPaintTime(QDateTime::currentDateTime());
+    setLastPaintTime(std::chrono::steady_clock::now());
 }
 
 void client::GameScreen::draw() {

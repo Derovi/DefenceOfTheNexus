@@ -7,7 +7,7 @@
 
 client::Widget::Widget(const QPoint& position):
         position(position), windowManager(nullptr), width(0), height(0),
-        lastPaintTime(QDateTime::currentDateTime()) {}
+        lastPaintTime(std::chrono::steady_clock::now()) {}
 
 client::Widget* client::Widget::getParent() {
     return parent;
@@ -66,7 +66,7 @@ void client::Widget::draw() {
     for (const auto& interfacePart : children) {
         interfacePart->draw();
     }
-    lastPaintTime = QDateTime::currentDateTime();
+    lastPaintTime = std::chrono::steady_clock::now();
 }
 
 bool client::Widget::isPointOnWidget(const QPoint& point) {
@@ -164,15 +164,16 @@ void client::Widget::setWidth(int width) {
     Widget::width = width;
 }
 
-const QDateTime& client::Widget::getLastPaintTime() const {
+const std::chrono::steady_clock::time_point& client::Widget::getLastPaintTime() const {
     return lastPaintTime;
 }
 
 int64_t client::Widget::getDeltaTime() const {
-    return getLastPaintTime().msecsTo(QDateTime::currentDateTime());
+    return std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::steady_clock::now() - lastPaintTime).count();
 }
 
-void client::Widget::setLastPaintTime(const QDateTime& lastPaintTime) {
+void client::Widget::setLastPaintTime(const std::chrono::steady_clock::time_point& lastPaintTime) {
     Widget::lastPaintTime = lastPaintTime;
 }
 

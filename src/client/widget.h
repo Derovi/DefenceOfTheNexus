@@ -1,6 +1,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <chrono>
 #include <memory>
 #include <functional>
 
@@ -60,7 +61,7 @@ class Widget : public QObject {
 
     std::shared_ptr<WindowManager> windowManager;
 
-    void setLastPaintTime(const QDateTime& lastPaintTime);
+    void setLastPaintTime(const std::chrono::steady_clock::time_point& lastPaintTime);
 
     virtual void paint(QPainter& painter) {};
 
@@ -89,7 +90,7 @@ class Widget : public QObject {
     virtual void wheelEvent(QWheelEvent* event) {};
 
   public:
-    const QDateTime& getLastPaintTime() const;
+    const std::chrono::steady_clock::time_point& getLastPaintTime() const;
 
   protected:
 
@@ -103,7 +104,7 @@ class Widget : public QObject {
 
     Widget* parent = nullptr;
 
-    QDateTime lastPaintTime;
+    std::chrono::steady_clock::time_point lastPaintTime;
 };
 
 }  // namespace client
