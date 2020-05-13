@@ -9,6 +9,7 @@
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
 #include "../utils/lang.h"
+#include "../utils/keymanager.h"
 #include "../server/strategies/movestrategy.h"
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
@@ -169,13 +170,17 @@ void registerGraphicsDescriptions() {
     }
 }
 
+void registerKeys(){
+    utils::KeyManager::registerKeys();
+}
+
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();
     registerObjectSignatures();
     registerGraphicsDescriptions();
-
+    registerKeys();
     QApplication a(argc, argv);
     client::App w;
     w.show();
