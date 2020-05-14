@@ -32,8 +32,8 @@ class Factory {
     getSerializer(const QString& attributeName);
 
     static std::function<QJsonObject(
-            const std::shared_ptr<const core::GameWorld>& beforeChanges,
-            const std::shared_ptr<const core::GameWorld>& afterChanges,
+            const std::shared_ptr<const core::Attribute>& beforeChanges,
+            const std::shared_ptr<const core::Attribute>& afterChanges,
             const utils::KeyManager& keyManager)> getPartSerializer(const QString& attributeName);
 
     static std::function<std::optional<std::shared_ptr<core::Attribute>>(const QJsonObject&)>
@@ -74,8 +74,8 @@ class Factory {
             std::function<std::optional<std::shared_ptr<core::Attribute>>(
                     const QJsonObject&)> deserializer,
             std::function<QJsonObject(
-                    const std::shared_ptr<const core::GameWorld>& beforeChanges,
-                    const std::shared_ptr<const core::GameWorld>& afterChanges,
+                    const std::shared_ptr<const core::Attribute>& beforeChanges,
+                    const std::shared_ptr<const core::Attribute>& afterChanges,
                     const utils::KeyManager& partSerializer)>,
             std::function<void(
                     const std::shared_ptr<core::Attribute>& resource,
@@ -93,8 +93,8 @@ class Factory {
             const std::shared_ptr<core::Attribute>)>> attributeSerializers;
 
     static QHash<QString, std::function<QJsonObject(
-            const std::shared_ptr<const core::GameWorld>& beforeChanges,
-            const std::shared_ptr<const core::GameWorld>& afterChanges,
+            const std::shared_ptr<const core::Attribute>& beforeChanges,
+            const std::shared_ptr<const core::Attribute>& afterChanges,
             const utils::KeyManager& keyManager)>> attributePartSerializers;
 
     static QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(

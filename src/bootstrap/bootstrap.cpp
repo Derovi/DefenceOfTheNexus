@@ -59,31 +59,45 @@ void registerAttributes() {
 
     utils::Factory::registerAttribute(core::Moving::attributeName,
                                       utils::Serializer::movingSerializer,
-                                      utils::Serializer::movingDeserializer);
+                                      utils::Serializer::movingDeserializer,
+                                      utils::SmartSerializer::movingPartSerializer,
+                                      utils::SmartSerializer::movingPartDeserializer);
 
     utils::Factory::registerAttribute(core::Damaging::attributeName,
                                       utils::Serializer::damagingSerializer,
-                                      utils::Serializer::damagingDeserializer);
+                                      utils::Serializer::damagingDeserializer,
+                                      utils::SmartSerializer::damagingPartSerializer,
+                                      utils::SmartSerializer::damagingPartDeserializer);
 
     utils::Factory::registerAttribute(core::Resource::attributeName,
                                       utils::Serializer::resourceSerializer,
-                                      utils::Serializer::resourceDeserializer);
+                                      utils::Serializer::resourceDeserializer,
+                                      utils::SmartSerializer::resourcePartSerializer,
+                                      utils::SmartSerializer::resourcePartDeserializer);
 
     utils::Factory::registerAttribute(core::Mining::attributeName,
                                       utils::Serializer::miningSerializer,
-                                      utils::Serializer::miningDeserializer);
+                                      utils::Serializer::miningDeserializer,
+                                      utils::SmartSerializer::miningPartSerializer,
+                                      utils::SmartSerializer::miningPartDeserializer);
 
     utils::Factory::registerAttribute(core::Wall::attributeName,
                                       utils::Serializer::wallSerializer,
-                                      utils::Serializer::wallDeserializer);
+                                      utils::Serializer::wallDeserializer,
+                                      utils::SmartSerializer::wallPartSerializer,
+                                      utils::SmartSerializer::wallPartDeserializer);
 
     utils::Factory::registerAttribute(core::Cost::attributeName,
                                       utils::Serializer::costSerializer,
-                                      utils::Serializer::costDeserializer);
+                                      utils::Serializer::costDeserializer,
+                                      utils::SmartSerializer::costPartSerializer,
+                                      utils::SmartSerializer::costPartDeserializer);
 
     utils::Factory::registerAttribute(core::Builder::attributeName,
                                       utils::Serializer::builderSerializer,
-                                      utils::Serializer::builderDeserializer);
+                                      utils::Serializer::builderDeserializer,
+                                      utils::SmartSerializer::builderPartSerializer,
+                                      utils::SmartSerializer::builderPartDeserializer);
 }
 
 void registerSpriteControllers() {
