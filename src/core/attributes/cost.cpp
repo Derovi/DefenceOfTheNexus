@@ -53,3 +53,15 @@ QString core::Cost::attributeName = "cost";
 std::shared_ptr<core::Attribute> core::Cost::clone() {
     return std::make_shared<core::Cost>(*this);
 }
+
+bool core::Cost::operator==(const core::Cost& object) {
+    if(cost.size()!=object.cost.size()){
+        return false;
+    }
+    for(int j=0;j<cost.size();j++){
+        if(!(cost[j]==object.cost[j])){
+            return false;
+        }
+    }
+    return true;
+}

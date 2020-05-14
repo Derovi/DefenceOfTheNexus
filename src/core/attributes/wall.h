@@ -27,6 +27,8 @@ class Wall : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(core::Wall wall);
+
   private:
     WallType type;
 };

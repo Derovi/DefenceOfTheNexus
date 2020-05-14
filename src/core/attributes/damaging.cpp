@@ -9,8 +9,8 @@ core::Damaging::Damaging(): attacking(false), damage(0), attackDelay(0), attackR
                             currentDelay(0) {}
 
 core::Damaging::Damaging(int damage, double attackRadius, double attackDelay, QString bulletType):
-    damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
-    bulletType(std::move(bulletType)), currentDelay(0), attacking(false) {}
+        damage(damage), attackRadius(attackRadius), attackDelay(attackDelay),
+        bulletType(std::move(bulletType)), currentDelay(0), attacking(false) {}
 
 int core::Damaging::getDamage() const {
     return damage;
@@ -72,4 +72,10 @@ QString core::Damaging::getAttributeName() {
 
 std::shared_ptr<core::Attribute> core::Damaging::clone() {
     return std::make_shared<core::Damaging>(*this);
+}
+
+bool core::Damaging::operator==(core::Damaging damaging) {
+    return attacking == damaging.attacking && damage == damaging.damage &&
+           attackDelay == damaging.attackDelay && currentDelay == damaging.currentDelay &&
+           attackDelay == damaging.attackRadius && bulletType == damaging.bulletType;
 }

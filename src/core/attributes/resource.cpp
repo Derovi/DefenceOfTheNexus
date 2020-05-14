@@ -3,7 +3,8 @@
 #include <cmath>
 #include <random>
 
-core::Resource::Resource(core::ResourceType type, int amount, int maxAmount, double miningSpeedModifier):
+core::Resource::Resource(core::ResourceType type, int amount, int maxAmount,
+                         double miningSpeedModifier):
         type(type), amount(amount), maxAmount(maxAmount), miningSpeedModifier(1) {}
 
 core::ResourceType core::Resource::getType() const {
@@ -42,7 +43,8 @@ int core::Resource::mine(int speed) {
     };
 
     int mined = std::min(speed * guaranteed
-            + random(static_cast<int>((miningSpeedModifier - guaranteed) * 100)), amount);
+                         + random(static_cast<int>((miningSpeedModifier - guaranteed) * 100)),
+                         amount);
     amount -= mined;
     return mined;
 }
@@ -65,4 +67,14 @@ int core::Resource::getMaxAmount() const {
 
 void core::Resource::setMaxAmount(int maxAmount) {
     Resource::maxAmount = maxAmount;
+}
+
+bool core::Resource::operator==(const core::Resource& res) const{
+    return maxAmount == res.maxAmount && amount == res.amount &&
+           miningSpeedModifier == res.miningSpeedModifier && type == res.type;
+}
+
+bool core::Resource::operator==(const core::Resource res) {
+    return maxAmount == res.maxAmount && amount == res.amount &&
+           miningSpeedModifier == res.miningSpeedModifier && type == res.type;
 }

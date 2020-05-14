@@ -21,7 +21,8 @@ class Resource : public Attribute {
 
     Resource() = delete;
 
-    explicit Resource(ResourceType type, int amount = 0, int maxAmount = 0, double miningSpeedModifier = 1);
+    explicit Resource(ResourceType type, int amount = 0, int maxAmount = 0,
+                      double miningSpeedModifier = 1);
 
     int getAmount() const;
 
@@ -44,6 +45,11 @@ class Resource : public Attribute {
     QString getAttributeName() override;
 
     std::shared_ptr<Attribute> clone() override;
+
+    bool operator==(const core::Resource&) const;
+
+    bool operator==(const core::Resource);
+
 
   private:
     ResourceType type;

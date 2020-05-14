@@ -50,6 +50,8 @@ class Damaging : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(core::Damaging damaging);
+
   private:
     bool attacking;
     int damage;

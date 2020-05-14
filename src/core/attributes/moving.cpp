@@ -45,3 +45,7 @@ std::shared_ptr<core::Attribute> core::Moving::clone() {
     return std::make_shared<core::Moving>(*this);
 }
 
+bool core::Moving::operator==(core::Moving moving) {
+    return direction == moving.direction && speed == moving.speed && maxSpeed == moving.maxSpeed;
+}
+

@@ -21,3 +21,7 @@ QString core::Wall::attributeName = "wall";
 std::shared_ptr<core::Attribute> core::Wall::clone() {
     return std::make_shared<core::Wall>(*this);
 }
+
+bool core::Wall::operator==(core::Wall wall) {
+    return getType() == wall.getType();
+}

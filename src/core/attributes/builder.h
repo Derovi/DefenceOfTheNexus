@@ -28,6 +28,8 @@ class Builder : public Attribute {
 
     void setBuildList(const QStringList& buildList);
 
+    bool operator==(core::Builder object);
+
   private:
     QStringList buildList;
 };

@@ -7,7 +7,18 @@
 #include <QtGlobal>
 #include <QJsonDocument>
 
+#include "../core/attributes/resource.h"
+#include "../core/attributes/moving.h"
+#include "../core/attributes/damaging.h"
+#include "../core/attributes/damageable.h"
+#include "../core/attributes/mining.h"
+#include "../core/command.h"
+#include "../core/object.h"
 #include "../core/gameworld.h"
+#include "../core/attributes/cost.h"
+#include "../core/attributes/wall.h"
+#include "../server/objectsignature.h"
+#include "../core/attributes/builder.h"
 #include "keymanager.h"
 
 namespace utils {
@@ -27,48 +38,48 @@ class SmartSerializer {
                             const utils::KeyManager& keyManager);
 
     static QJsonObject
-    objectPartSerializer(const std::shared_ptr<const core::Object>& beforeChanges,
-                         const std::shared_ptr<const core::Object>& afterChanges,
+    objectPartSerializer(const std::shared_ptr<core::Object>& beforeChanges,
+                         const std::shared_ptr<core::Object>& afterChanges,
                          const utils::KeyManager& keyManager);
 
     static QJsonObject
-    resourcePartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                           const std::shared_ptr<const core::Attribute>& afterChanges,
+    resourcePartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                           const std::shared_ptr<core::Attribute>& afterChanges,
                            const utils::KeyManager& keyManager);
 
     static QJsonObject
-    damagingPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                           const std::shared_ptr<const core::Attribute>& afterChanges,
+    damagingPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                           const std::shared_ptr<core::Attribute>& afterChanges,
                            const utils::KeyManager& keyManager);
 
     static QJsonObject
-    damageablePartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                             const std::shared_ptr<const core::Attribute>& afterChanges,
+    damageablePartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                             const std::shared_ptr<core::Attribute>& afterChanges,
                              const utils::KeyManager& keyManager);
 
     static QJsonObject
-    movingPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                         const std::shared_ptr<const core::Attribute>& afterChanges,
+    movingPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                         const std::shared_ptr<core::Attribute>& afterChanges,
                          const utils::KeyManager& keyManager);
 
     static QJsonObject
-    miningPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                         const std::shared_ptr<const core::Attribute>& afterChanges,
+    miningPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                         const std::shared_ptr<core::Attribute>& afterChanges,
                          const utils::KeyManager& keyManager);
 
     static QJsonObject
-    wallPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                       const std::shared_ptr<const core::Attribute>& afterChanges,
+    wallPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                       const std::shared_ptr<core::Attribute>& afterChanges,
                        const utils::KeyManager& keyManager);
 
     static QJsonObject
-    costPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                       const std::shared_ptr<const core::Attribute>& afterChanges,
+    costPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                       const std::shared_ptr<core::Attribute>& afterChanges,
                        const utils::KeyManager& keyManager);
 
     static QJsonObject
-    builderPartSerializer(const std::shared_ptr<const core::Attribute>& beforeChanges,
-                          const std::shared_ptr<const core::Attribute>& afterChanges,
+    builderPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                          const std::shared_ptr<core::Attribute>& afterChanges,
                           const utils::KeyManager& keyManager);
 
     static void partGameWorldDeserializer(const std::shared_ptr<core::GameWorld>& gameWorld,
@@ -111,6 +122,7 @@ class SmartSerializer {
     static void builderPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
                                         const QJsonObject& changes,
                                         const utils::KeyManager& keyManager);
+//    static void jsonToHashed
 
   private:
 
