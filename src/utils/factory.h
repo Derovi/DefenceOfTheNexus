@@ -72,7 +72,15 @@ class Factory {
             std::function<std::optional<QJsonObject>(
                     const std::shared_ptr<core::Attribute>)> serializer,
             std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                    const QJsonObject&)> deserializer);
+                    const QJsonObject&)> deserializer,
+            std::function<QJsonObject(
+                    const std::shared_ptr<const core::GameWorld>& beforeChanges,
+                    const std::shared_ptr<const core::GameWorld>& afterChanges,
+                    const utils::KeyManager& partSerializer)>,
+            std::function<void(
+                    const std::shared_ptr<core::Attribute>& resource,
+                    const QJsonObject& changes,
+                    const utils::KeyManager& keyManager)> partDeserializer);
 
   private:
     static QHash<QString, std::function<std::shared_ptr<server::Strategy>(

@@ -31,13 +31,24 @@ void utils::Factory::registerSpriteController(const QString& spriteControllerNam
 }
 
 
-void utils::Factory::registerAttribute(const QString& attributeName,
-                                       std::function<std::optional<QJsonObject>(
-                                               const std::shared_ptr<core::Attribute>)> serializer,
-                                       std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                                               const QJsonObject&)> deserializer) {
+void utils::Factory::registerAttribute(
+        const QString& attributeName,
+        std::function<std::optional<QJsonObject>(
+                const std::shared_ptr<core::Attribute>)> serializer,
+        std::function<std::optional<std::shared_ptr<core::Attribute>>(
+                const QJsonObject&)> deserializer,
+        std::function<QJsonObject(
+                const std::shared_ptr<const core::GameWorld>& beforeChanges,
+                const std::shared_ptr<const core::GameWorld>& afterChanges,
+                const utils::KeyManager& keyManager)> partSerializer,
+        std::function<void(
+                const std::shared_ptr<core::Attribute>& resource,
+                const QJsonObject& changes,
+                const utils::KeyManager& keyManager)> partDeserializer) {
     attributeSerializers.insert(attributeName, serializer);
     attributeDeserializers.insert(attributeName, deserializer);
+    attributePartSerializers.insert(attributeName, partSerializer);
+    attributePartDeserializers.insert(attributeName, partDeserializer);
 }
 
 std::function<std::optional<QJsonObject>(const std::shared_ptr<core::Attribute>)>

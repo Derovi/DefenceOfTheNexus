@@ -21,6 +21,7 @@
 #include "../client/spritecontrollers/resourcespritecontroller.h"
 #include "../server/strategies/attackstrategy.h"
 #include "../core/attributes/builder.h"
+#include "../utils/smartserializer.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -52,7 +53,9 @@ void registerStrategies() {
 void registerAttributes() {
     utils::Factory::registerAttribute(core::Damageable::attributeName,
                                       utils::Serializer::damageableSerializer,
-                                      utils::Serializer::damageableDeserializer);
+                                      utils::Serializer::damageableDeserializer,
+                                      utils::SmartSerializer::damageablePartSerializer,
+                                      utils::SmartSerializer::damageablePartDeserializer);
 
     utils::Factory::registerAttribute(core::Moving::attributeName,
                                       utils::Serializer::movingSerializer,
