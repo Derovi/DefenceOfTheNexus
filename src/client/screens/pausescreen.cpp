@@ -5,6 +5,7 @@
 
 #include "../../utils/lang.h"
 #include "../../utils/serializer.h"
+#include "../../utils/smartserializer.h"
 #include "../widgets/imagebutton.h"
 #include "../app.h"
 #include "../properties.h"

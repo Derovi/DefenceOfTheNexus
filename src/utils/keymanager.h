@@ -10,16 +10,20 @@ namespace utils {
 class KeyManager {
   public:
     explicit KeyManager(bool hash);
+
     static QString addKey(QString key);
-    QString getHash(QString key);
-    QString getKey(QString hash);
+
+    QString getHash(QString key) const;
+
+    QString getKey(QString hash) const;
+
     static void registerKeys();
 
   private:
     static QString hash;
     bool hashing;
-    static QMap<QString,QString>keyToHash;
-    static QMap<QString,QString>hashToKey;
+    static QMap<QString, QString> keyToHash;
+    static QMap<QString, QString> hashToKey;
 };
 
 }  // namespace utils

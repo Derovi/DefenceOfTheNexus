@@ -66,10 +66,18 @@ QString utils::KeyManager::addKey(QString key) {
     return keyToHash[key];
 }
 
-QString utils::KeyManager::getHash(QString key) {
-    return hashToKey[key];
+QString utils::KeyManager::getHash(QString key) const {
+    if (hashToKey.find(key) != hashToKey.end() && hashing) {
+        return hashToKey[key];
+    } else {
+        return key;
+    }
 }
 
-QString utils::KeyManager::getKey(QString hash) {
-    return keyToHash[hash];
+QString utils::KeyManager::getKey(QString hash) const {
+    if (keyToHash.find(hash) != keyToHash.end() && hashing) {
+        return keyToHash[hash];
+    } else {
+        return hash;
+    }
 }

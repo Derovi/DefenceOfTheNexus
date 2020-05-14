@@ -86,12 +86,12 @@ class SmartSerializer {
                           const utils::KeyManager& keyManager);
 
     static void partGameWorldDeserializer(const std::shared_ptr<core::GameWorld>& gameWorld,
-                                          const QJsonObject& changes,
+                                          QJsonObject changes,
                                           const utils::KeyManager& keyManager);
 
     static void
     partObjectDeserializer(const std::shared_ptr<core::Object>& object,
-                           const QJsonObject& changes,
+                           QJsonObject changes,
                            const utils::KeyManager& keyManager);
 
     static void resourcePartDeserializer(const std::shared_ptr<core::Attribute>& resource,
@@ -125,7 +125,10 @@ class SmartSerializer {
     static void builderPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
                                         const QJsonObject& changes,
                                         const utils::KeyManager& keyManager);
-//    static void jsonToHashed
+
+    static QJsonObject jsonToHashed(QJsonObject json, const utils::KeyManager& keyManager);
+
+    static QJsonObject hashedToJson(QJsonObject json, const utils::KeyManager& keyManager);
 
   private:
 

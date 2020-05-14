@@ -52,7 +52,7 @@ QJsonObject utils::SmartSerializer::objectPartSerializer(
         position.insert("y", yArray);
         result.insert("hitbox", position);
     }
-    return result;
+    return jsonToHashed(result, keyManager);
 }
 
 void
@@ -60,7 +60,7 @@ utils::SmartSerializer::resourcePartDeserializer(const std::shared_ptr<core::Att
                                                  const QJsonObject& changes,
                                                  const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("resource");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Resource*>(resource.get()) = *dynamic_cast<core::Resource*>(ptr.get());
 }
 
@@ -69,7 +69,7 @@ utils::SmartSerializer::damagingPartDeserializer(const std::shared_ptr<core::Att
                                                  const QJsonObject& changes,
                                                  const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("damaging");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Damaging*>(resource.get()) = *dynamic_cast<core::Damaging*>(ptr.get());
 }
 
@@ -78,7 +78,7 @@ utils::SmartSerializer::damageablePartDeserializer(const std::shared_ptr<core::A
                                                    const QJsonObject& changes,
                                                    const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("damageable");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Damageable*>(resource.get()) = *dynamic_cast<core::Damageable*>(ptr.get());
 }
 
@@ -87,7 +87,7 @@ utils::SmartSerializer::movingPartDeserializer(const std::shared_ptr<core::Attri
                                                const QJsonObject& changes,
                                                const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("moving");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Moving*>(resource.get()) = *dynamic_cast<core::Moving*>(ptr.get());
 }
 
@@ -96,7 +96,7 @@ utils::SmartSerializer::miningPartDeserializer(const std::shared_ptr<core::Attri
                                                const QJsonObject& changes,
                                                const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("mining");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Mining*>(resource.get()) = *dynamic_cast<core::Mining*>(ptr.get());
 }
 
@@ -104,7 +104,7 @@ void utils::SmartSerializer::wallPartDeserializer(const std::shared_ptr<core::At
                                                   const QJsonObject& changes,
                                                   const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("wall");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Wall*>(resource.get()) = *dynamic_cast<core::Wall*>(ptr.get());
 }
 
@@ -112,7 +112,7 @@ void utils::SmartSerializer::costPartDeserializer(const std::shared_ptr<core::At
                                                   const QJsonObject& changes,
                                                   const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("cost");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Cost*>(resource.get()) = *dynamic_cast<core::Cost*>(ptr.get());
 
 }
@@ -122,7 +122,7 @@ utils::SmartSerializer::builderPartDeserializer(const std::shared_ptr<core::Attr
                                                 const QJsonObject& changes,
                                                 const utils::KeyManager& keyManager) {
     auto deserializer = utils::Factory::getDeserializer("builder");
-    std::shared_ptr<core::Attribute> ptr = deserializer(changes).value();
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
     *dynamic_cast<core::Builder*>(resource.get()) = *dynamic_cast<core::Builder*>(ptr.get());
 }
 
@@ -135,7 +135,7 @@ QJsonObject utils::SmartSerializer::resourcePartSerializer(
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("resource");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject utils::SmartSerializer::damagingPartSerializer(
@@ -146,7 +146,7 @@ QJsonObject utils::SmartSerializer::damagingPartSerializer(
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("damaging");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject utils::SmartSerializer::damageablePartSerializer(
@@ -157,7 +157,7 @@ QJsonObject utils::SmartSerializer::damageablePartSerializer(
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("damageable");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject
@@ -169,7 +169,7 @@ utils::SmartSerializer::movingPartSerializer(const std::shared_ptr<core::Attribu
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("moving");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject
@@ -181,7 +181,7 @@ utils::SmartSerializer::miningPartSerializer(const std::shared_ptr<core::Attribu
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("mining");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject
@@ -193,7 +193,7 @@ utils::SmartSerializer::wallPartSerializer(const std::shared_ptr<core::Attribute
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("wall");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject
@@ -205,7 +205,7 @@ utils::SmartSerializer::costPartSerializer(const std::shared_ptr<core::Attribute
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("cost");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject
@@ -217,7 +217,7 @@ utils::SmartSerializer::builderPartSerializer(const std::shared_ptr<core::Attrib
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("builder");
-    return seriazlier(afterChanges).value();
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
 QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
@@ -260,7 +260,7 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
         ++iter;
     }
     result.insert("objects", object);
-
+    return jsonToHashed(result, keyManager);
 }
 
 QString utils::SmartSerializer::jsonObjectToString(const QJsonObject& jsonObject) {
@@ -280,8 +280,9 @@ utils::SmartSerializer::getChanges(const std::shared_ptr<const core::GameWorld>&
 }
 
 void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::Object>& object,
-                                                    const QJsonObject& changes,
+                                                    QJsonObject changes,
                                                     const utils::KeyManager& keyManager) {
+    changes = hashedToJson(changes,keyManager);
     if (changes.find("strategies") != changes.end()) {
         QStringList strategies;
         QJsonArray json;
@@ -337,8 +338,9 @@ void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::
 
 void
 utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::GameWorld>& gameWorld,
-                                                  const QJsonObject& changes,
+                                                  QJsonObject changes,
                                                   const utils::KeyManager& keyManager) {
+    changes = hashedToJson(changes,keyManager);
     if (changes.find("width") != changes.end()) {
         gameWorld->setWidth(changes["width"].toDouble());
     }
@@ -378,5 +380,26 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
 void utils::SmartSerializer::applyChanges(const std::shared_ptr<core::GameWorld>& gameWorld,
                                           QString changes) {
     KeyManager keyManager(!prettyPrinting);
-    partGameWorldDeserializer(gameWorld,Serializer::stringToJsonObject(changes).value(),keyManager);
+    partGameWorldDeserializer(gameWorld, Serializer::stringToJsonObject(changes).value(),
+                              keyManager);
+}
+
+QJsonObject
+utils::SmartSerializer::jsonToHashed(QJsonObject json, const utils::KeyManager& keyManager) {
+    QJsonObject result;
+    auto it = json.begin();
+    while (it != json.end()) {
+        result.insert(keyManager.getHash(it.key()), it.value());
+    }
+    return result;
+}
+
+QJsonObject
+utils::SmartSerializer::hashedToJson(QJsonObject json, const utils::KeyManager& keyManager) {
+    QJsonObject result;
+    auto it = json.begin();
+    while (it != json.end()) {
+        result.insert(keyManager.getKey(it.key()), it.value());
+    }
+    return result;
 }
