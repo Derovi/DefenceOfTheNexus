@@ -125,7 +125,7 @@ class Serializer {
 
     QString jsonObjectToString(const QJsonObject& jsonObject);
 
-    std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
+    static std::optional<QJsonObject> stringToJsonObject(const QString& jsonString);
 
   private:
 

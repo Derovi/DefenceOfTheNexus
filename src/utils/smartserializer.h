@@ -9,6 +9,7 @@
 
 #include "../core/attributes/resource.h"
 #include "../core/attributes/moving.h"
+#include "serializer.h"
 #include "../core/attributes/damaging.h"
 #include "../core/attributes/damageable.h"
 #include "../core/attributes/mining.h"
@@ -26,6 +27,8 @@ namespace utils {
 class SmartSerializer {
   public:
     explicit SmartSerializer(bool prettyPrinting = true);
+
+    QString jsonObjectToString(const QJsonObject& jsonObject);
 
     QString getChanges(const std::shared_ptr<const core::GameWorld>& beforeChanges,
                        const std::shared_ptr<const core::GameWorld>& afterChanges);
