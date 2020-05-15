@@ -28,10 +28,12 @@ void core::GameWorld::setWidth(int width) {
 }
 
 QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) {
+    qDebug() << "get res" <<  team;
     return resources[team];
 }
 
 const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) const {
+    qDebug() << "get res c" <<  team;
     return resources[team];
 }
 
@@ -99,7 +101,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
 }
 
 
-core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0), teamCount(5) {}
+core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0), teamCount(0) {}
 
 void
 core::GameWorld::buildWall(QPoint start, QPoint finish,

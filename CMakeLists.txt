@@ -58,6 +58,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/client/widgets/imagebutton.cpp
         src/client/properties.cpp
         src/client/screens/gamescreen.cpp
+        src/client/screens/connectionscreen.cpp
         src/client/widgets/gamemap.cpp
         src/client/graphicsobject.cpp
         src/client/sprite.cpp
@@ -82,7 +83,8 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/utils/smartserializer.cpp
         src/utils/lang.cpp
         src/client/network/multiplayerinterface.cpp
-        src/utils/network.cpp src/server/network/connectedplayer.cpp src/server/network/connectedplayer.h)
+        src/utils/network.cpp
+        src/server/network/connectedplayer.cpp)
 
 
 qt5_add_big_resources(SOURCES resources/sprites.qrc

@@ -56,7 +56,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     if (savedGameWorld != nullptr) {
         engine->setGameWorld(savedGameWorld);
     } else {
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+        /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                              QPoint(1800, 1200));
 
         engine->getGameWorld()->summonObject(
@@ -244,7 +244,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
                 utils::Factory::getObjectSignature("resourcebundle-stone").value(),
                 QPoint(2200, 1000));
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
-                                             QPoint(2200, 1200));
+                                             QPoint(2200, 1200));*/
     }
 
     gameMap->setGameWorld(engine->getGameWorld());
@@ -271,6 +271,7 @@ client::GameScreen::~GameScreen() {
 }
 
 uint8_t client::GameScreen::getTeam() const {
+    qDebug() << "team: " << team << gameMap->getGameWorld()->getTeamCount();
     return team;
 }
 
