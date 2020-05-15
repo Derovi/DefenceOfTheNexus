@@ -77,7 +77,9 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/client/widgets/buildslot.cpp
         src/client/mapinput.cpp
         src/utils/serializer.cpp
+        src/utils/keymanager.cpp
         src/utils/factory.cpp
+        src/utils/smartserializer.cpp
         src/utils/lang.cpp
         src/client/network/multiplayerinterface.cpp
         src/utils/network.cpp)
