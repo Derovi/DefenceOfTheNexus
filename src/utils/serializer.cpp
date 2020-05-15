@@ -451,7 +451,7 @@ utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
     int team = 0;
     for (const auto& resource : resources) {
         QVector<QPair<core::ResourceType, int>> resVector;
-        for (const auto& res : resources) {
+        for (const auto& res : resource.toArray()) {
             if (!res.isObject()) {
                 return std::nullopt;
             }

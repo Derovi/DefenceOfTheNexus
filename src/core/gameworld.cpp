@@ -99,7 +99,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
 }
 
 
-core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0) {}
+core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0), teamCount(5) {}
 
 void
 core::GameWorld::buildWall(QPoint start, QPoint finish,

@@ -234,17 +234,21 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     if (beforeChanges->getLastSummonedId() != afterChanges->getLastSummonedId()) {
         result.insert("lastSummonedId", afterChanges->getLastSummonedId());
     }
-    if (beforeChanges->getResources() != afterChanges->getResources()) {
-        QJsonArray resources;
-        QVector<QPair<core::ResourceType, int>> resVector = afterChanges->getResources();
+    QJsonArray resources;
+    for (int team = 0;
+         team < afterChanges->getTeamCount();
+         team++) {
+        QVector<QPair<core::ResourceType, int>> resVector = afterChanges->getTeamResources(team);
+        QJsonArray resource;
         for (auto res : resVector) {
             QJsonObject resPair;
             resPair.insert("type", static_cast<int>(res.first));
             resPair.insert("amount", res.second);
-            resources.append(resPair);
+            resource.append(resPair);
         }
-        result.insert("resources", resources);
+        resources.append(resource);
     }
+    result.insert("resources", resources);
     QJsonObject object;
     auto iter = afterChanges->getObjects().begin();
     while (iter != afterChanges->getObjects().end()) {
@@ -282,7 +286,7 @@ utils::SmartSerializer::getChanges(const std::shared_ptr<const core::GameWorld>&
 void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::Object>& object,
                                                     QJsonObject changes,
                                                     const utils::KeyManager& keyManager) {
-    changes = hashedToJson(changes,keyManager);
+    changes = hashedToJson(changes, keyManager);
     if (changes.find("strategies") != changes.end()) {
         QStringList strategies;
         QJsonArray json;
@@ -340,16 +344,16 @@ void
 utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::GameWorld>& gameWorld,
                                                   QJsonObject changes,
                                                   const utils::KeyManager& keyManager) {
-    changes = hashedToJson(changes,keyManager);
+    changes = hashedToJson(changes, keyManager);
     if (changes.find("width") != changes.end()) {
         gameWorld->setWidth(changes["width"].toDouble());
     }
     if (changes.find("height") != changes.end()) {
         gameWorld->setHeight(changes["height"].toDouble());
     }
-    if (changes.find("resources") != changes.end()) {
-        QJsonArray resources;
-        resources = changes["resources"].toArray();
+    QJsonArray resources = changes["resources"].toArray();
+    int team = 0;
+    for (const auto& resource : resources) {
         QVector<QPair<core::ResourceType, int>> resVector;
         for (const auto& res : resources) {
             auto resObj = res.toObject();
@@ -357,7 +361,8 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
             int amount = resObj["amount"].toInt();
             resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
         }
-        gameWorld->setResources(resVector);
+        gameWorld->setTeamResources(resVector, team);
+        ++team;
     }
     if (changes.find("objects") != changes.end()) {
         QJsonObject objects = changes["objects"].toObject();
