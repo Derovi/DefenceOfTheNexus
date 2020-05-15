@@ -37,14 +37,16 @@ const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources
     return resources[team];
 }
 
-void core::GameWorld::setTeamResources(const QVector<QPair<core::ResourceType, int>>& resources, uint8_t team) {
+void core::GameWorld::setTeamResources(const QVector<QPair<core::ResourceType, int>>& resources,
+                                       uint8_t team) {
     this->resources[team] = resources;
 }
 
 void core::GameWorld::addTeamResources(core::ResourceType type, int amount, uint8_t team) {
-    auto it = std::find_if(resources[team].begin(), resources[team].end(), [type](const auto& resource) {
-        return resource.first == type;
-    });
+    auto it = std::find_if(resources[team].begin(), resources[team].end(),
+                           [type](const auto& resource) {
+                               return resource.first == type;
+                           });
     if (it == resources[team].end()) {
         resources[team].append(QPair(type, amount));
     } else {
@@ -130,7 +132,9 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     vec.push_back(QPoint(50, WALL_WIDTH / 2));
     vec.push_back(QPoint(50, -WALL_WIDTH / 2));
     wall.setHitbox(QPolygonF(vec));
-    for (int j = 0; j < all; j++) {
+    for (int j = 0;
+         j < all;
+         j++) {
         if (kol == MAX_WALL_LENGTH || j == all - 1) {
             kol = 0;
         }
@@ -322,4 +326,20 @@ int core::GameWorld::getTeamCount() const {
 void core::GameWorld::setTeamCount(uint8_t teamCount) {
     resources.resize(teamCount);
     this->teamCount = teamCount;
+}
+
+core::GameWorld::GameWorld(const core::GameWorld& base) {
+    height = base.height;
+    width = base.width;
+    teamCount = base.teamCount;
+    lastSummonedId = base.lastSummonedId;
+    resources = base.resources;
+    for (auto it = base.objects.begin();
+         it != base.objects.end();
+         it++) {
+        objects[it.key()] = std::make_shared<core::Object>(
+                *new core::Object((*it)->getId(), (*it)->getTypeName(), (*it)->getPosition(),
+                                  (*it)->getHitbox(), (*it)->getRotationAngle(), (*it)->getTeam()));
+
+    }
 }
