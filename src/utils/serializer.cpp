@@ -441,6 +441,8 @@ utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
         return std::nullopt;
     }
     ans.setHeight(serialized["height"].toDouble());
+    ans.setTeamCount(serialized["teamCount"].toDouble());
+    ans.setLastSummonedId(serialized["lastSummonedId"].toDouble());
     QJsonArray resources;
     if (!serialized["resources"].isArray()) {
         return std::nullopt;
