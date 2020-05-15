@@ -43,7 +43,10 @@ void server::Server::readMessage() {
     in >> message;
 
     if (message.startsWith(utils::network::prefixInitRequest)) {
-        initPlayer(senderAddress.toString(), senderPort);
+        initPlayer(QHostAddress(senderAddress.toIPv4Address()).toString(), senderPort);
+    } else if (message.startsWith(utils::network::prefixSendCommand)) {
+        commandReceived(QHostAddress(senderAddress.toIPv4Address()).toString(), senderPort,
+                        message);
     }
 }
 
@@ -91,6 +94,17 @@ void server::Server::initPlayer(const QString& address, int port) {
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.serializeGameWorld(*engine->getGameWorld()).value());
+}
+
+void server::Server::commandReceived(const QString& address, int port, const QString& message) {
+    QString commandJson = message.right(message.size() - utils::network::prefixSendCommand.size() -
+                                      utils::network::separator.size());
+    utils::Serializer serializer;
+    if (serializer.deserializeCommand(commandJson) == std::nullopt) {
+        qDebug() << "Can't deserialize command!";
+        return;
+    }
+    commandQueue->push(serializer.deserializeCommand(commandJson).value());
 }
 
 

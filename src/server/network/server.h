@@ -32,6 +32,8 @@ class Server : public QObject {
 
     void initPlayer(const QString& address, int port);
 
+    void commandReceived(const QString& address, int port, const QString& message);
+
     int getPort() const;
 
     Engine* getEngine() const;
