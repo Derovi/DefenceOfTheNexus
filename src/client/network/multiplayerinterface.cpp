@@ -1,7 +1,13 @@
 #include <QtCore/QDataStream>
+#include <utility>
+
 #include "multiplayerinterface.h"
 
-MultiplayerInterface::MultiplayerInterface() : socket(new QUdpSocket()) {
+#include "../../utils/network.h"
+#include "../../utils/serializer.h"
+
+MultiplayerInterface::MultiplayerInterface(QString address, QString port):
+        address(std::move(address)), port(std::move(port)), socket(new QUdpSocket()) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -27,5 +33,20 @@ void MultiplayerInterface::readMessage() {
 }
 
 void MultiplayerInterface::sendCommand(const core::Command& command) {
-    sendMessage("send_command", command);
+    utils::Serializer serializer;
+    sendMessage(utils::network::prefixSendCommand +
+                utils::network::separator +
+                serializer.serializeCommand(command).value());
+}
+
+const QString& MultiplayerInterface::getAddress() const {
+    return address;
+}
+
+const QString& MultiplayerInterface::getPort() const {
+    return port;
+}
+
+const std::shared_ptr<QUdpSocket>& MultiplayerInterface::getSocket() const {
+    return socket;
 }

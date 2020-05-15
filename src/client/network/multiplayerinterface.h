@@ -11,7 +11,7 @@
 class MultiplayerInterface : public QObject {
   Q_OBJECT
   public:
-    MultiplayerInterface();
+    MultiplayerInterface(QString address, QString port);
 
     void sendCommand(const core::Command& command);
 
@@ -19,7 +19,16 @@ class MultiplayerInterface : public QObject {
 
     void readMessage();
 
+    const QString& getAddress() const;
+
+    const QString& getPort() const;
+
+    const std::shared_ptr<QUdpSocket>& getSocket() const;
+
   private:
+    QString address;
+    QString port;
+
     std::shared_ptr<QUdpSocket> socket = nullptr;
 };
 
