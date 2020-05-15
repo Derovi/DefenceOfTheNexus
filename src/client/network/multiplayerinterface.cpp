@@ -9,7 +9,7 @@
 
 client::MultiplayerInterface::MultiplayerInterface(GameScreen* gameScreen, QString address,
                                                    int port):
-        address(std::move(address)), port(port), socket(new QUdpSocket()),
+        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()),
         gameScreen(gameScreen) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }

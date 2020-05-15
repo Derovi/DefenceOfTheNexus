@@ -4,6 +4,8 @@
 
 #include <QtCore/QString>
 
+namespace server {
+
 class ConnectedPlayer {
   public:
     ConnectedPlayer(const QString& address, int port, int team);
@@ -27,5 +29,6 @@ class ConnectedPlayer {
     int team;
 };
 
+}
 
 #endif //CONNECTEDPLAYER_H

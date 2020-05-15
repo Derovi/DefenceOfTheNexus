@@ -9,9 +9,10 @@
 
 namespace server {
 
-class Server {
+class Server : public QObject {
+  Q_OBJECT
   public:
-    Server(const QString& port);
+    Server(int port);
 
     std::shared_ptr<Queue<core::Command>> getCommandQueue();
 
@@ -21,10 +22,18 @@ class Server {
 
     void finish();
 
+    void readMessage();
+
+    void sendMessage(const QString& message);
+
+    int getPort() const;
+
   private:
     std::shared_ptr<Queue<core::Command>> commandQueue;
 
     std::shared_ptr<QUdpSocket> socket = nullptr;
+
+    int port;
 };
 
 }  // namespace server
