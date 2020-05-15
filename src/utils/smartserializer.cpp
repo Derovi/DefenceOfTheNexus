@@ -352,17 +352,23 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("height") != changes.end()) {
         gameWorld->setHeight(changes["height"].toDouble());
     }
+    if(changes.find("lastSummonedId")!=changes.end())){
+        gameWorld->setLastSummonedId(changes["lastSummonedId"].toDouble());
+    }
     if (changes.find("resources") != changes.end()) {
-        QJsonArray resources;
-        resources = changes["resources"].toArray();
-        QVector<QPair<core::ResourceType, int>> resVector;
-        for (const auto& res : resources) {
-            auto resObj = res.toObject();
-            int type = resObj["type"].toInt();
-            int amount = resObj["amount"].toInt();
-            resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
+        int team = 0;
+        QJsonArray resources = changes["resources"].toArray();
+        for (const auto& resource : resources) {
+            QVector<QPair<core::ResourceType, int>> resVector;
+            for (const auto& res : resource.toArray()) {
+                auto resObj = res.toObject();
+                int type = resObj["type"].toInt();
+                int amount = resObj["amount"].toInt();
+                resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
+            }
+            gameWorld->setTeamResources(resVector, team);
+            ++team;
         }
-        gameWorld->setResources(resVector);
     }
     if (changes.find("objects") != changes.end()) {
         QJsonObject objects = changes["objects"].toObject();
