@@ -39,7 +39,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/server/worldgenerator.cpp
         src/server/engine.cpp
         src/server/gameconfiguration.cpp
-        src/server/server.cpp
+        src/server/network/server.cpp
         src/server/objectsignature.cpp
         src/server/strategies/strategy.cpp
         src/server/strategies/movestrategy.cpp
@@ -82,7 +82,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/utils/smartserializer.cpp
         src/utils/lang.cpp
         src/client/network/multiplayerinterface.cpp
-        src/utils/network.cpp)
+        src/utils/network.cpp src/server/network/connectedplayer.cpp src/server/network/connectedplayer.h)
 
 
 qt5_add_big_resources(SOURCES resources/sprites.qrc

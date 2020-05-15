@@ -8,8 +8,8 @@
 #include "../../utils/smartserializer.h"
 
 client::MultiplayerInterface::MultiplayerInterface(GameScreen* gameScreen, QString address,
-                                                   QString port):
-        address(std::move(address)), port(std::move(port)), socket(new QUdpSocket()),
+                                                   int port):
+        address(std::move(address)), port(port), socket(new QUdpSocket()),
         gameScreen(gameScreen) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
@@ -19,7 +19,7 @@ void client::MultiplayerInterface::sendMessage(const QString& message) {
     QDataStream out(&Datagram, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_13);
     out << message;
-    socket->writeDatagram(Datagram, QHostAddress::LocalHost, 2424);
+    socket->writeDatagram(Datagram, QHostAddress(address), port);
 }
 
 void client::MultiplayerInterface::readMessage() {
@@ -49,10 +49,6 @@ void client::MultiplayerInterface::sendCommand(const core::Command& command) {
 
 const QString& client::MultiplayerInterface::getAddress() const {
     return address;
-}
-
-const QString& client::MultiplayerInterface::getPort() const {
-    return port;
 }
 
 const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() const {
@@ -93,4 +89,8 @@ client::GameScreen* client::MultiplayerInterface::getGameScreen() const {
 
 void client::MultiplayerInterface::setGameScreen(client::GameScreen* gameScreen) {
     MultiplayerInterface::gameScreen = gameScreen;
+}
+
+int client::MultiplayerInterface::getPort() const {
+    return port;
 }

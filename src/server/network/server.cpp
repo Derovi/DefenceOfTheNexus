@@ -17,3 +17,7 @@ void server::Server::finish() {
 std::shared_ptr<Queue<core::Command>> server::Server::getCommandQueue() {
     return commandQueue;
 }
+
+server::Server::Server(const QString& port) {
+
+}

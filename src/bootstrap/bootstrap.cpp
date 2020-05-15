@@ -13,7 +13,7 @@
 #include "../server/strategies/movestrategy.h"
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
-#include "../server/server.h"
+#include "../server/network/server.h"
 #include "../client/app.h"
 #include "../client/properties.h"
 #include "../core/attributes/mining.h"
