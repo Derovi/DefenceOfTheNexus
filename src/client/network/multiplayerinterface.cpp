@@ -6,12 +6,12 @@
 #include "../../utils/network.h"
 #include "../../utils/serializer.h"
 
-MultiplayerInterface::MultiplayerInterface(QString address, QString port):
+client::MultiplayerInterface::MultiplayerInterface(QString address, QString port):
         address(std::move(address)), port(std::move(port)), socket(new QUdpSocket()) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
-void MultiplayerInterface::sendMessage(const QString& message) {
+void client::MultiplayerInterface::sendMessage(const QString& message) {
     QByteArray Datagram;
     QDataStream out(&Datagram, QIODevice::WriteOnly);
     out.setVersion(QDataStream::Qt_5_13);
@@ -19,9 +19,8 @@ void MultiplayerInterface::sendMessage(const QString& message) {
     socket->writeDatagram(Datagram, QHostAddress::LocalHost, 2424);
 }
 
-void MultiplayerInterface::readMessage() {
+void client::MultiplayerInterface::readMessage() {
     QByteArray Datagram;
-
     do {
         Datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(Datagram.data(), Datagram.size());
@@ -30,23 +29,49 @@ void MultiplayerInterface::readMessage() {
     QDataStream in(&Datagram, QIODevice::ReadOnly);
     QString message;
     in >> message;
+
+    if (message.startsWith(utils::network::prefixInitResponse)) {
+        initResponse(message);
+    } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
+        worldUpdate(message);
+    }
 }
 
-void MultiplayerInterface::sendCommand(const core::Command& command) {
+void client::MultiplayerInterface::sendCommand(const core::Command& command) {
     utils::Serializer serializer;
     sendMessage(utils::network::prefixSendCommand +
                 utils::network::separator +
                 serializer.serializeCommand(command).value());
 }
 
-const QString& MultiplayerInterface::getAddress() const {
+const QString& client::MultiplayerInterface::getAddress() const {
     return address;
 }
 
-const QString& MultiplayerInterface::getPort() const {
+const QString& client::MultiplayerInterface::getPort() const {
     return port;
 }
 
-const std::shared_ptr<QUdpSocket>& MultiplayerInterface::getSocket() const {
+const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() const {
     return socket;
+}
+
+void client::MultiplayerInterface::sendInitRequest() {
+    sendMessage(utils::network::prefixInitRequest);
+}
+
+void client::MultiplayerInterface::initResponse(const QString& message) {
+    int teamEntryStart =
+            utils::network::prefixInitRequest.size() + utils::network::separator.size();
+    QString team = message.mid(teamEntryStart,
+                               message.indexOf(utils::network::separator, teamEntryStart) -
+                               teamEntryStart);
+    int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
+    QString worldJson = message.right(message.size() - worldJsonEntryStart);
+
+}
+
+void client::MultiplayerInterface::worldUpdate(const QString& message) {
+    QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
+                                      utils::network::separator.size());
 }
