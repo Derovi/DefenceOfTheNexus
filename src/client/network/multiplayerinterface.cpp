@@ -5,9 +5,12 @@
 
 #include "../../utils/network.h"
 #include "../../utils/serializer.h"
+#include "../../utils/smartserializer.h"
 
-client::MultiplayerInterface::MultiplayerInterface(QString address, QString port):
-        address(std::move(address)), port(std::move(port)), socket(new QUdpSocket()) {
+client::MultiplayerInterface::MultiplayerInterface(GameScreen* gameScreen, QString address,
+                                                   QString port):
+        address(std::move(address)), port(std::move(port)), socket(new QUdpSocket()),
+        gameScreen(gameScreen) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -69,9 +72,25 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
     int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
     QString worldJson = message.right(message.size() - worldJsonEntryStart);
 
+    gameScreen->setTeam(team.toUInt());
+
+    utils::SmartSerializer serializer;
+    serializer.applyChanges(
+            std::shared_ptr<core::GameWorld>(gameScreen->getGameMap()->getGameWorld()), worldJson);
 }
 
 void client::MultiplayerInterface::worldUpdate(const QString& message) {
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
+    utils::SmartSerializer serializer;
+    serializer.applyChanges(
+            std::shared_ptr<core::GameWorld>(gameScreen->getGameMap()->getGameWorld()), worldJson);
+}
+
+client::GameScreen* client::MultiplayerInterface::getGameScreen() const {
+    return gameScreen;
+}
+
+void client::MultiplayerInterface::setGameScreen(client::GameScreen* gameScreen) {
+    MultiplayerInterface::gameScreen = gameScreen;
 }

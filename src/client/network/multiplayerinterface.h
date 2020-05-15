@@ -14,7 +14,7 @@ namespace client {
 class MultiplayerInterface : public QObject {
   Q_OBJECT
   public:
-    MultiplayerInterface(QString address, QString port);
+    MultiplayerInterface(GameScreen* gameScreen, QString address, QString port);
 
     void sendInitRequest();
 
@@ -30,21 +30,17 @@ class MultiplayerInterface : public QObject {
 
     const std::shared_ptr<QUdpSocket>& getSocket() const;
 
-    const std::shared_ptr<GameScreen>& getGameScreen() const {
-        return gameScreen;
-    }
+    GameScreen* getGameScreen() const;
 
-    void setGameScreen(const std::shared_ptr<GameScreen>& gameScreen) {
-        MultiplayerInterface::gameScreen = gameScreen;
-    }
+    void setGameScreen(GameScreen* gameScreen);
 
   private:
     QString address;
     QString port;
 
-    std::shared_ptr<GameScreen> gameScreen;
-
     std::shared_ptr<QUdpSocket> socket = nullptr;
+
+    GameScreen* gameScreen;
 
     void initResponse(const QString& message);
 
