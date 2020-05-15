@@ -103,7 +103,8 @@ void client::GameInterface::setSelectedUnitId(int selectedUnitId) {
 }
 
 void client::GameInterface::paint(QPainter& painter) {
-    GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
+    GameScreen* gameScreen = dynamic_cast<GameScreen*>(getParent());
+    GameMap* gameMap = gameScreen->getGameMap();
 
     // Resources
     painter.drawImage(QRect(0, 0, 114, 114), stoneIcon);
@@ -114,7 +115,7 @@ void client::GameInterface::paint(QPainter& painter) {
     int wood = 0;
     int iron = 0;
 
-    for (auto resource : gameWorld->getResources()) {
+    for (auto resource : gameWorld->getTeamResources(gameScreen->getTeam())) {
         if (resource.first == core::ResourceType::kStone) {
             stone = resource.second;
         }

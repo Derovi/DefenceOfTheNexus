@@ -22,18 +22,24 @@ class GameScreen : public Screen {
 
     GameInterface* getInterface() const;
 
+    uint8_t getTeam() const;
+
+    void setTeam(uint8_t team);
+
   private:
     void onPaused() override;
 
     void onResumed() override;
-
-    bool paused;
 
     std::shared_ptr<server::Engine> engine;
 
     GameInterface* interface;
 
     GameMap* gameMap;
+
+    uint8_t team;
+
+    bool paused;
 };
 
 }
