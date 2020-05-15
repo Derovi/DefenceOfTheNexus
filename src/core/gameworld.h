@@ -78,6 +78,9 @@ class GameWorld {
                     const server::ObjectSignature& columnSignature,
                     uint8_t team) const;
 
+    GameWorld(const core::GameWorld &base);
+
+
   private:
     QVector<QVector<QPair<core::ResourceType, int>>> resources;
     QHash<int64_t, std::shared_ptr<core::Object>> objects;
