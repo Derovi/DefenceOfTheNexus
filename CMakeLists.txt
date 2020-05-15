@@ -78,7 +78,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
             src/client/mapinput.cpp
             src/utils/serializer.cpp
             src/utils/factory.cpp
-            src/utils/lang.cpp src/client/multiplayerinterface.cpp src/client/multiplayerinterface.h)
+            src/utils/lang.cpp src/client/network/multiplayerinterface.cpp src/client/network/multiplayerinterface.h src/utils/network.cpp src/utils/network.h)
 
 qt5_add_big_resources(SOURCES   resources/sprites.qrc
                                 resources/lang.qrc
