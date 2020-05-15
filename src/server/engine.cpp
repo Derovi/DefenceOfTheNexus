@@ -1,5 +1,7 @@
 #include "engine.h"
 
+#include <chrono>
+
 #include <QDateTime>
 #include <QThread>
 
@@ -27,19 +29,25 @@ server::Engine::~Engine() {
 
 void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
-        QDateTime lastTickStartTime = QDateTime::currentDateTime();
+        auto lastTickStartTime = std::chrono::steady_clock::now();
         while (!finished && gameWorld != nullptr) {
-            QDateTime currentTickStartTime = QDateTime::currentDateTime();
-
+            auto currentTickStartTime = std::chrono::steady_clock::now();
             executeCommands();
             // make changes on game world
-            gameWorldController->tick(lastTickStartTime.msecsTo(currentTickStartTime));
+            gameWorldController->tick(std::chrono::duration_cast<std::chrono::milliseconds>(
+                currentTickStartTime - lastTickStartTime).count());
 
             lastTickStartTime = currentTickStartTime;
+
             // sleep until next tick
-            QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
-                currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+            int sleepTime = 1000 / gameConfiguration.getTickPerSec() -
+                std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::steady_clock::now() - currentTickStartTime).count();
+            if (sleepTime > 0) {
+                QThread::msleep(sleepTime);
+            }
         }
+        qDebug() << "Server finished" << endl;
     }));
     mainThread->start();
 }

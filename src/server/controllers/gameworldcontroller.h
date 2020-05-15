@@ -14,7 +14,7 @@ class GameWorldController {
   public:
     explicit GameWorldController(std::shared_ptr<core::GameWorld> gameWorld);
 
-    void tick(double deltaTime);
+    void tick(int deltaTime);
 
     std::shared_ptr<core::GameWorld> getGameWorld();
 
