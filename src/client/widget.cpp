@@ -96,10 +96,8 @@ void client::Widget::mouse(QPoint point) {
 }
 
 bool client::Widget::isPointInBounds(const QPoint& point) {
-    return point.x() >= position.x() + boundsWidth / 2 &&
-           point.y() >= position.y() + boundsWidth / 2 &&
-           point.x() <= position.x() + width - boundsWidth / 2 &&
-           point.y() <= position.y() + height - boundsWidth / 2;
+    return QRect(position.x(), position.y(), width - boundsWidth, height - boundsWidth).contains(
+            point);
 }
 
 bool client::Widget::isPointOnBounds(const QPoint& point) {
@@ -126,7 +124,7 @@ void client::Widget::click(QPoint point, bool leftButton) {
             is_clicked = true;
             children[index]->click(QPoint(point.x() - children[index]->getPosition().x(),
                                           point.y() - children[index]->getPosition().y()),
-                                                  leftButton);
+                                   leftButton);
             break;
         }
     }
@@ -170,7 +168,7 @@ const std::chrono::steady_clock::time_point& client::Widget::getLastPaintTime() 
 
 int64_t client::Widget::getDeltaTime() const {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
-        std::chrono::steady_clock::now() - lastPaintTime).count();
+            std::chrono::steady_clock::now() - lastPaintTime).count();
 }
 
 void client::Widget::setLastPaintTime(const std::chrono::steady_clock::time_point& lastPaintTime) {

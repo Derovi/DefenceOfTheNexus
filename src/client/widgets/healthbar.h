@@ -6,6 +6,7 @@
 #include "textview.h"
 
 namespace client {
+
 class HealthBar : public Widget {
   public:
     HealthBar(QPoint position = QPoint(0, 0), int width = 1250, int height = 70,
@@ -39,5 +40,7 @@ class HealthBar : public Widget {
     int currentHP;
     int maxHP;
 };
+
 } // namespace client
+
 #endif //HEALTHBAR_H

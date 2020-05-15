@@ -112,7 +112,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     long double dy = finish.y() - start.y();
     long double ang;
     if (dx == 0) {
-        dx+=1/100;
+        dx += 0.1;
     }
     ang = atan2(dy, dx);
     long double dz = sqrt(dx * dx + dy * dy);
@@ -127,9 +127,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     vec.push_back(QPoint(50, WALL_WIDTH / 2));
     vec.push_back(QPoint(50, -WALL_WIDTH / 2));
     wall.setHitbox(QPolygonF(vec));
-    for (int j = 0;
-         j < all;
-         j++) {
+    for (int j = 0; j < all; j++) {
         if (kol == MAX_WALL_LENGTH || j == all - 1) {
             kol = 0;
         }
