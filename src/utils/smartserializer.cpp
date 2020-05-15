@@ -327,6 +327,7 @@ void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::
         while (iter != attributes.end()) {
             QJsonObject attribute = iter.value().toObject();
             if (attribute.size() == 0) {
+                ++iter;
                 continue;
             }
             utils::Factory::getPartDeserializer(iter.key())(object->getAttribute(iter.key()),
