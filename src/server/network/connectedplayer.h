@@ -8,6 +8,8 @@ namespace server {
 
 class ConnectedPlayer {
   public:
+    ConnectedPlayer() {}
+
     ConnectedPlayer(const QString& address, int port, int team);
 
     const QString& getAddress() const;

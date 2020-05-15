@@ -6,13 +6,15 @@
 
 #include "../../utils/queue.h"
 #include "../../core/command.h"
+#include "connectedplayer.h"
+#include "../engine.h"
 
 namespace server {
 
 class Server : public QObject {
   Q_OBJECT
   public:
-    Server(int port);
+    Server(Engine* engine, int port);
 
     std::shared_ptr<Queue<core::Command>> getCommandQueue();
 
@@ -24,14 +26,24 @@ class Server : public QObject {
 
     void readMessage();
 
-    void sendMessage(const QString& message);
+    void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
+
+    void updateGameWorld();
+
+    void initPlayer(const QString& address, int port);
 
     int getPort() const;
 
+    Engine* getEngine() const;
+
   private:
+    QVector<ConnectedPlayer> connectedPlayers;
+
     std::shared_ptr<Queue<core::Command>> commandQueue;
 
     std::shared_ptr<QUdpSocket> socket = nullptr;
+
+    Engine* engine;
 
     int port;
 };

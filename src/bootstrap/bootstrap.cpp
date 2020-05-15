@@ -206,7 +206,7 @@ int main(int argc, char** argv) {
 
     GameConfiguration gameConfiguration;
     auto* engine = new server::Engine(gameConfiguration);
-    auto* server = new server::Server();
+    auto* server = new server::Server(25565);
     // register command queue
     server->registerCommandQueue(engine->getCommandQueue());
     engine->start();

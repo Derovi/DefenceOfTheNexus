@@ -352,7 +352,7 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("height") != changes.end()) {
         gameWorld->setHeight(changes["height"].toDouble());
     }
-    if(changes.find("lastSummonedId")!=changes.end())){
+    if (changes.find("lastSummonedId") != changes.end()) {
         gameWorld->setLastSummonedId(changes["lastSummonedId"].toDouble());
     }
     if (changes.find("resources") != changes.end()) {
