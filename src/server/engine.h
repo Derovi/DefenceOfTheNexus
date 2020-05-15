@@ -35,6 +35,8 @@ class Engine : public QObject {
 
     void setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld);
 
+    const std::shared_ptr<core::GameWorld>& getWorldBeforeUpdate() const;
+
     void finish();
 
     bool isFinished() const;

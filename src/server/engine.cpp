@@ -91,3 +91,7 @@ void server::Engine::setGameWorld(const std::shared_ptr<core::GameWorld>& gameWo
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
 }
+
+const std::shared_ptr<core::GameWorld>& server::Engine::getWorldBeforeUpdate() const {
+    return worldBeforeUpdate;
+}

@@ -83,8 +83,8 @@ void client::MultiplayerInterface::worldUpdate(const QString& message) {
                                       utils::network::separator.size());
     utils::SmartSerializer serializer;
     serializer.applyChanges(gameWorld, worldJson);
-    //qDebug() << "changed applied!";
-    //std::cout << worldJson.toStdString();
+    qDebug() << "changed applied!";
+    std::cout << worldJson.toStdString();
 }
 
 int client::MultiplayerInterface::getPort() const {

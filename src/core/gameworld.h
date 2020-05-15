@@ -46,7 +46,7 @@ class GameWorld {
                  float rotationAngle = 0);
 
     void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
-                   const server::ObjectSignature& columnSignature, uint8_t team);
+                   const server::ObjectSignature& columnSignature, uint8_t team = 255);
 
     bool isIntersectsWithObjects(const QPolygonF& polygon) const;
 

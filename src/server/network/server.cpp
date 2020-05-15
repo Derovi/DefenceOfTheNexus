@@ -26,6 +26,7 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
     out << message;
     socket->writeDatagram(Datagram, QHostAddress(connectedPlayer.getAddress()),
                           connectedPlayer.getPort());
+    qDebug() << "message sended from server";
 }
 
 
@@ -70,8 +71,9 @@ int server::Server::getPort() const {
 void server::Server::updateGameWorld() {
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::SmartSerializer serializer(true);
+        qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size() << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
-                                     serializer.getChanges(std::make_shared<core::GameWorld>(),
+                                     serializer.getChanges(engine->getWorldBeforeUpdate(),
                                                            engine->getGameWorld()));
     }
 }
@@ -99,6 +101,7 @@ void server::Server::initPlayer(const QString& address, int port) {
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.serializeGameWorld(*engine->getGameWorld()).value());
+    std::cout << "hereis" << serializer.serializeGameWorld(*engine->getGameWorld()).value().toStdString() << std::endl;
     qDebug() << "init message";
 }
 

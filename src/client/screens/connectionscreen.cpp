@@ -75,7 +75,7 @@ void client::ConnectionScreen::startServer() {
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                              QPoint(1800, 1200));
 
-        /*engine->getGameWorld()->summonObject(
+        engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("iron").value(),
                 QPoint(842, 1422));
 
@@ -229,31 +229,31 @@ void client::ConnectionScreen::startServer() {
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
                                              QPoint(200, 200));
         engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
+                                          utils::Factory::getObjectSignature("column1").value());
+        /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
                                              QPoint(700, 200));
         engine->getGameWorld()->buildWall(QPoint(1000,0),QPoint(1000,300), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("ogre").value(),
                                              QPoint(1200, 200));
         engine->getGameWorld()->buildWall(QPoint(1500,0),QPoint(1500,300), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scout").value(),
                                              QPoint(1700, 200));
         engine->getGameWorld()->buildWall(QPoint(2000,0),QPoint(2000,300), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
 
         engine->getGameWorld()->buildWall(QPoint(0,0),QPoint(0,3000), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
 
         engine->getGameWorld()->buildWall(QPoint(0,3000),QPoint(3000,3000), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
 
         engine->getGameWorld()->buildWall(QPoint(3000,3000),QPoint(3000,0), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
 
         engine->getGameWorld()->buildWall(QPoint(3000,0),QPoint(0,0), utils::Factory::getObjectSignature("wall1").value(),
-                                          utils::Factory::getObjectSignature("column1").value(), 0);
+                                          utils::Factory::getObjectSignature("column1").value());
 
 
         engine->getGameWorld()->summonObject(
