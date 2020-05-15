@@ -33,6 +33,8 @@ class Damageable : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(core::Damageable object);
+
   private:
     int health;
     int maxHealth;

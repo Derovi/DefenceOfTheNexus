@@ -15,6 +15,7 @@
 #include "../server/controllers/gameworldcontroller.h"
 #include "../server/controllers/controller.h"
 #include "../server/objectsignature.h"
+#include "keymanager.h"
 
 namespace utils {
 
@@ -30,8 +31,19 @@ class Factory {
     static std::function<std::optional<QJsonObject>(const std::shared_ptr<core::Attribute>)>
     getSerializer(const QString& attributeName);
 
+    static std::function<QJsonObject(
+            const std::shared_ptr<core::Attribute>& beforeChanges,
+            const std::shared_ptr<core::Attribute>& afterChanges,
+            const utils::KeyManager& keyManager)> getPartSerializer(const QString& attributeName);
+
     static std::function<std::optional<std::shared_ptr<core::Attribute>>(const QJsonObject&)>
     getDeserializer(const QString& attributeName);
+
+    static std::function<void(
+            const std::shared_ptr<core::Attribute>& resource,
+            const QJsonObject& changes,
+            const utils::KeyManager& keyManager)>
+    getPartDeserializer(const QString& attributeName);
 
     static std::optional<client::ObjectGraphicsDescription>
     getObjectGraphicsDescription(const QString& objectName);
@@ -60,7 +72,15 @@ class Factory {
             std::function<std::optional<QJsonObject>(
                     const std::shared_ptr<core::Attribute>)> serializer,
             std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                    const QJsonObject&)> deserializer);
+                    const QJsonObject&)> deserializer,
+            std::function<QJsonObject(
+                    const std::shared_ptr<core::Attribute>& beforeChanges,
+                    const std::shared_ptr<core::Attribute>& afterChanges,
+                    const utils::KeyManager& partSerializer)>,
+            std::function<void(
+                    const std::shared_ptr<core::Attribute>& resource,
+                    const QJsonObject& changes,
+                    const utils::KeyManager& keyManager)> partDeserializer);
 
   private:
     static QHash<QString, std::function<std::shared_ptr<server::Strategy>(
@@ -72,8 +92,18 @@ class Factory {
     static QHash<QString, std::function<std::optional<QJsonObject>(
             const std::shared_ptr<core::Attribute>)>> attributeSerializers;
 
+    static QHash<QString, std::function<QJsonObject(
+            const std::shared_ptr<core::Attribute>& beforeChanges,
+            const std::shared_ptr<core::Attribute>& afterChanges,
+            const utils::KeyManager& keyManager)>> attributePartSerializers;
+
     static QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(
             const QJsonObject&)>> attributeDeserializers;
+
+    static QHash<QString, std::function<void(
+            const std::shared_ptr<core::Attribute>& resource,
+            const QJsonObject& changes,
+            const utils::KeyManager& keyManager)>> attributePartDeserializers;
 
     static QHash<QString, client::ObjectGraphicsDescription> graphicsDescriptions;
 

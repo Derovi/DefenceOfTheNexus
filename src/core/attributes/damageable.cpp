@@ -32,3 +32,7 @@ QString core::Damageable::getAttributeName() {
 std::shared_ptr<core::Attribute> core::Damageable::clone() {
     return std::make_shared<core::Damageable>(*this);
 }
+
+bool core::Damageable::operator==(core::Damageable object) {
+    return health == object.health && maxHealth == object.maxHealth;
+}

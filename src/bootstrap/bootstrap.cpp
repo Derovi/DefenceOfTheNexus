@@ -9,6 +9,7 @@
 #include "../utils/serializer.h"
 #include "../utils/factory.h"
 #include "../utils/lang.h"
+#include "../utils/keymanager.h"
 #include "../server/strategies/movestrategy.h"
 #include "../server/strategies/pathstrategy.h"
 #include "../server/engine.h"
@@ -20,6 +21,7 @@
 #include "../client/spritecontrollers/resourcespritecontroller.h"
 #include "../server/strategies/attackstrategy.h"
 #include "../core/attributes/builder.h"
+#include "../utils/smartserializer.h"
 
 void registerStrategies() {
     utils::Factory::registerStrategy(server::MoveStrategy::name,
@@ -51,35 +53,51 @@ void registerStrategies() {
 void registerAttributes() {
     utils::Factory::registerAttribute(core::Damageable::attributeName,
                                       utils::Serializer::damageableSerializer,
-                                      utils::Serializer::damageableDeserializer);
+                                      utils::Serializer::damageableDeserializer,
+                                      utils::SmartSerializer::damageablePartSerializer,
+                                      utils::SmartSerializer::damageablePartDeserializer);
 
     utils::Factory::registerAttribute(core::Moving::attributeName,
                                       utils::Serializer::movingSerializer,
-                                      utils::Serializer::movingDeserializer);
+                                      utils::Serializer::movingDeserializer,
+                                      utils::SmartSerializer::movingPartSerializer,
+                                      utils::SmartSerializer::movingPartDeserializer);
 
     utils::Factory::registerAttribute(core::Damaging::attributeName,
                                       utils::Serializer::damagingSerializer,
-                                      utils::Serializer::damagingDeserializer);
+                                      utils::Serializer::damagingDeserializer,
+                                      utils::SmartSerializer::damagingPartSerializer,
+                                      utils::SmartSerializer::damagingPartDeserializer);
 
     utils::Factory::registerAttribute(core::Resource::attributeName,
                                       utils::Serializer::resourceSerializer,
-                                      utils::Serializer::resourceDeserializer);
+                                      utils::Serializer::resourceDeserializer,
+                                      utils::SmartSerializer::resourcePartSerializer,
+                                      utils::SmartSerializer::resourcePartDeserializer);
 
     utils::Factory::registerAttribute(core::Mining::attributeName,
                                       utils::Serializer::miningSerializer,
-                                      utils::Serializer::miningDeserializer);
+                                      utils::Serializer::miningDeserializer,
+                                      utils::SmartSerializer::miningPartSerializer,
+                                      utils::SmartSerializer::miningPartDeserializer);
 
     utils::Factory::registerAttribute(core::Wall::attributeName,
                                       utils::Serializer::wallSerializer,
-                                      utils::Serializer::wallDeserializer);
+                                      utils::Serializer::wallDeserializer,
+                                      utils::SmartSerializer::wallPartSerializer,
+                                      utils::SmartSerializer::wallPartDeserializer);
 
     utils::Factory::registerAttribute(core::Cost::attributeName,
                                       utils::Serializer::costSerializer,
-                                      utils::Serializer::costDeserializer);
+                                      utils::Serializer::costDeserializer,
+                                      utils::SmartSerializer::costPartSerializer,
+                                      utils::SmartSerializer::costPartDeserializer);
 
     utils::Factory::registerAttribute(core::Builder::attributeName,
                                       utils::Serializer::builderSerializer,
-                                      utils::Serializer::builderDeserializer);
+                                      utils::Serializer::builderDeserializer,
+                                      utils::SmartSerializer::builderPartSerializer,
+                                      utils::SmartSerializer::builderPartDeserializer);
 }
 
 void registerSpriteControllers() {
@@ -169,13 +187,17 @@ void registerGraphicsDescriptions() {
     }
 }
 
+void registerKeys(){
+    utils::KeyManager::registerKeys();
+}
+
 int main(int argc, char** argv) {
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();
     registerObjectSignatures();
     registerGraphicsDescriptions();
-
+    registerKeys();
     QApplication a(argc, argv);
     client::App w;
     w.show();

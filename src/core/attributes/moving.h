@@ -37,6 +37,8 @@ class Moving : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(core::Moving moving);
+
   private:
     QVector2D direction;
     double speed;

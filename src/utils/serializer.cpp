@@ -1,7 +1,7 @@
 #include "serializer.h"
 #include "../core/attributes/builder.h"
 
-utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
+utils::Serializer::Serializer(bool prettyPrinting): prettyPrinting(prettyPrinting) {}
 
 std::optional<QString> utils::Serializer::serializeGameWorld(const core::GameWorld& gameWorld) {
     auto result = gameWorldSerializer(gameWorld);
@@ -73,6 +73,7 @@ std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Objec
     position.insert("x", object.getPosition().x());
     position.insert("y", object.getPosition().y());
     json.insert("position", position);
+    json.insert("team", object.getTeam());
     json.insert("rotationAngle", object.getRotationAngle());
     QJsonArray strategies;
     for (const auto& strategy : object.getStrategies()) {
@@ -194,7 +195,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
     if (!ok) {
         return std::nullopt;
     }
-
+    uint8_t team = serialized["team"].toInt();
     QStringList strategies;
     QJsonArray json;
     if (!serialized["strategies"].isArray()) {
@@ -253,8 +254,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
         return std::nullopt;
     }
     core::Object ans = core::Object(id, serialized["typeName"].toString(), point, QPolygonF(vec),
-                                    serialized["rotationAngle"].toDouble());
-
+                                    serialized["rotationAngle"].toDouble(), team);
     ans.setStrategies(strategies);
 
     QJsonObject attributes;
@@ -398,14 +398,22 @@ std::optional<QJsonObject> utils::Serializer::gameWorldSerializer(const core::Ga
     QJsonObject json;
     json.insert("width", world.getWidth());
     json.insert("height", world.getHeight());
+    json.insert("lastSummonedId", world.getLastSummonedId());
+    json.insert("teamCount", world.getTeamCount());
     QJsonArray resources;
     QJsonObject object;
-    QVector<QPair<core::ResourceType, int>> resVector = world.getResources();
-    for (auto res : resVector) {
-        QJsonObject resPair;
-        resPair.insert("type", static_cast<int>(res.first));
-        resPair.insert("amount", res.second);
-        resources.append(resPair);
+    for (int team = 0;
+         team < world.getTeamCount();
+         team++) {
+        QVector<QPair<core::ResourceType, int>> resVector = world.getTeamResources(team);
+        QJsonArray resource;
+        for (auto res : resVector) {
+            QJsonObject resPair;
+            resPair.insert("type", static_cast<int>(res.first));
+            resPair.insert("amount", res.second);
+            resource.append(resPair);
+        }
+        resources.append(resource);
     }
     json.insert("resources", resources);
     auto iter = world.getObjects().begin();
@@ -433,22 +441,28 @@ utils::Serializer::gameWorldDeserialize(const QJsonObject& serialized) {
         return std::nullopt;
     }
     ans.setHeight(serialized["height"].toDouble());
+    ans.setTeamCount(serialized["teamCount"].toDouble());
+    ans.setLastSummonedId(serialized["lastSummonedId"].toDouble());
     QJsonArray resources;
     if (!serialized["resources"].isArray()) {
         return std::nullopt;
     }
     resources = serialized["resources"].toArray();
-    QVector<QPair<core::ResourceType, int>> resVector;
-    for (const auto& res : resources) {
-        if (!res.isObject()) {
-            return std::nullopt;
+    int team = 0;
+    for (const auto& resource : resources) {
+        QVector<QPair<core::ResourceType, int>> resVector;
+        for (const auto& res : resources) {
+            if (!res.isObject()) {
+                return std::nullopt;
+            }
+            auto resObj = res.toObject();
+            int type = resObj["type"].toInt();
+            int amount = resObj["amount"].toInt();
+            resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
         }
-        auto resObj = res.toObject();
-        int type = resObj["type"].toInt();
-        int amount = resObj["amount"].toInt();
-        resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
+        ans.setTeamResources(resVector, team);
+        ++team;
     }
-    ans.setResources(resVector);
     if (!serialized["objects"].isObject()) {
         return std::nullopt;
     }

@@ -41,6 +41,8 @@ class Mining : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(core::Mining);
+
   private:
     bool mining;
     int miningSpeed;

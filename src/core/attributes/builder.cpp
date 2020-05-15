@@ -23,3 +23,7 @@ void core::Builder::setBuildList(const QStringList& buildList) {
 core::Builder::Builder() {}
 
 core::Builder::Builder(const QStringList& buildList): buildList(buildList) {}
+
+bool core::Builder::operator==(core::Builder object) {
+    return object.buildList == buildList;
+}

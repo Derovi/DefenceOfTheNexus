@@ -3,11 +3,12 @@
 namespace core {
 
 Mining::Mining():
-    mining(false), miningSpeed(0), miningRadius(0), miningDelay(0), currentDelay(0) {}
+        mining(false), miningSpeed(0), miningRadius(0), miningDelay(0), currentDelay(0) {}
 
 Mining::Mining(int miningSpeed, int miningDelay, double miningRadius):
-    mining(false), miningSpeed(miningSpeed), miningRadius(miningRadius), miningDelay(miningDelay),
-    currentDelay(0) {}
+        mining(false), miningSpeed(miningSpeed), miningRadius(miningRadius),
+        miningDelay(miningDelay),
+        currentDelay(0) {}
 
 int Mining::getMiningSpeed() const {
     return miningSpeed;
@@ -55,6 +56,12 @@ QString Mining::getAttributeName() {
 
 std::shared_ptr<Attribute> Mining::clone() {
     return std::make_shared<Mining>(*this);
+}
+
+bool Mining::operator==(core::Mining mine) {
+    return mining == mine.mining && miningDelay == mine.miningDelay &&
+           miningRadius == mine.miningRadius && miningSpeed == mine.miningSpeed &&
+           currentDelay == mine.currentDelay;
 }
 
 }  // namespace core

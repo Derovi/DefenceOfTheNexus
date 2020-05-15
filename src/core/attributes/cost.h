@@ -31,6 +31,8 @@ class Cost : public Attribute {
 
     std::shared_ptr<Attribute> clone() override;
 
+    bool operator==(const core::Cost& object);
+
   private:
     QVector<Resource> cost;
 };
