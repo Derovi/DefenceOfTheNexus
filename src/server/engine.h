@@ -13,7 +13,9 @@
 
 namespace server {
 
-class Engine {
+class Engine : public QObject {
+    Q_OBJECT
+
   public:
     explicit Engine(const GameConfiguration& gameConfiguration);
 

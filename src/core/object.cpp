@@ -126,3 +126,7 @@ uint8_t core::Object::getTeam() const {
 void core::Object::setTeam(uint8_t team) {
     Object::team = team;
 }
+
+bool core::Object::addAttribute(const std::shared_ptr<Attribute>& attribute) {
+    attributes.push_back(attribute);
+}

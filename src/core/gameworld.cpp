@@ -28,12 +28,13 @@ void core::GameWorld::setWidth(int width) {
 }
 
 QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) {
-    qDebug() << "get res" <<  team;
+    qDebug() << "get res" << team;
     return resources[team];
 }
 
-const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) const {
-    qDebug() << "get res c" <<  team;
+const QVector<QPair<core::ResourceType, int>>&
+core::GameWorld::getTeamResources(uint8_t team) const {
+    qDebug() << "get res c" << team;
     return resources[team];
 }
 
@@ -337,9 +338,13 @@ core::GameWorld::GameWorld(const core::GameWorld& base) {
     for (auto it = base.objects.begin();
          it != base.objects.end();
          it++) {
-        objects[it.key()] = std::make_shared<core::Object>(
-                *new core::Object((*it)->getId(), (*it)->getTypeName(), (*it)->getPosition(),
-                                  (*it)->getHitbox(), (*it)->getRotationAngle(), (*it)->getTeam()));
-
+        objects[it.key()] = std::make_shared<core::Object>((*it)->getId(), (*it)->getTypeName(),
+                                                           (*it)->getPosition(),
+                                                           (*it)->getHitbox(),
+                                                           (*it)->getRotationAngle(),
+                                                           (*it)->getTeam());
+        for (auto attribute : it.value()->getAttributes()) {
+            objects[it.key()]->addAttribute(attribute->clone());
+        }
     }
 }

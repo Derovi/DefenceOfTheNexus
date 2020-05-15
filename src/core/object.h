@@ -70,6 +70,8 @@ class Object {
 
     bool hasAttribute(const QString& name) const;
 
+    bool addAttribute(const std::shared_ptr<Attribute>& attribute);
+
     uint8_t getTeam() const;
 
     void setTeam(uint8_t team);
