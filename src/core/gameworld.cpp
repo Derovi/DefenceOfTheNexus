@@ -8,7 +8,7 @@
 #include "gameworld.h"
 #include "attributes/cost.h"
 #include "attributes/resource.h"
-#include "object.h"
+
 #include "../server/performers/movingperformer.h"
 
 int core::GameWorld::getHeight() const {
@@ -27,24 +27,24 @@ void core::GameWorld::setWidth(int width) {
     this->width = width;
 }
 
-QVector<QPair<core::ResourceType, int>>& core::GameWorld::getResources() {
-    return resources;
+QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) {
+    return resources[team];
 }
 
-const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getResources() const {
-    return resources;
+const QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) const {
+    return resources[team];
 }
 
-void core::GameWorld::setResources(const QVector<QPair<core::ResourceType, int>>& resources) {
-    GameWorld::resources = resources;
+void core::GameWorld::setTeamResources(const QVector<QPair<core::ResourceType, int>>& resources, uint8_t team) {
+    this->resources[team] = resources;
 }
 
-void core::GameWorld::addResources(core::ResourceType type, int amount) {
-    auto it = std::find_if(resources.begin(), resources.end(), [type](const auto& resource) {
+void core::GameWorld::addTeamResources(core::ResourceType type, int amount, uint8_t team) {
+    auto it = std::find_if(resources[team].begin(), resources[team].end(), [type](const auto& resource) {
         return resource.first == type;
     });
-    if (it == resources.end()) {
-        resources.append(QPair(type, amount));
+    if (it == resources[team].end()) {
+        resources[team].append(QPair(type, amount));
     } else {
         it->second += amount;
     }
@@ -104,7 +104,8 @@ core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0) {}
 void
 core::GameWorld::buildWall(QPoint start, QPoint finish,
                            const server::ObjectSignature& wallSignature,
-                           const server::ObjectSignature& columnSignature) {
+                           const server::ObjectSignature& columnSignature,
+                           uint8_t team) {
     const int WALL_WIDTH = 50;
     const int MAX_WALL_LENGTH = 3;
     server::ObjectSignature wall(wallSignature);
@@ -112,7 +113,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     long double dy = finish.y() - start.y();
     long double ang;
     if (dx == 0) {
-        dx+=1/100;
+        dx += 0.1;
     }
     ang = atan2(dy, dx);
     long double dz = sqrt(dx * dx + dy * dy);
@@ -127,9 +128,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
     vec.push_back(QPoint(50, WALL_WIDTH / 2));
     vec.push_back(QPoint(50, -WALL_WIDTH / 2));
     wall.setHitbox(QPolygonF(vec));
-    for (int j = 0;
-         j < all;
-         j++) {
+    for (int j = 0; j < all; j++) {
         if (kol == MAX_WALL_LENGTH || j == all - 1) {
             kol = 0;
         }
@@ -146,7 +145,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
             }
             if ((columnSignature.getAttribute("cost") != nullptr) &&
                 !((dynamic_cast<Cost*>(columnSignature.getAttribute("cost").get()))->pay(
-                        resources))) {
+                        resources[team]))) {
                 break;
             }
             summonObject(columnSignature,
@@ -163,7 +162,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 continue;
             }
             if ((wall.getAttribute("cost") != nullptr) &&
-                !((dynamic_cast<Cost*>(wall.getAttribute("cost").get()))->pay(resources))) {
+                !((dynamic_cast<Cost*>(wall.getAttribute("cost").get()))->pay(resources[team]))) {
                 break;
             }
             summonObject(wall, QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), ang);
@@ -183,6 +182,7 @@ bool core::GameWorld::isIntersectsWithObjects(const QPolygonF& polygon) const {
 
 std::shared_ptr<core::Object>
 core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& position,
+                       uint8_t team,
                        float rotationAngle) {
     QPolygonF hitbox = signature.getHitbox();
     QMatrix matrix;
@@ -193,7 +193,7 @@ core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& p
         return nullptr;
     }
     if ((signature.getAttribute("cost") != nullptr) &&
-        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources))) {
+        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources[team]))) {
         return nullptr;
     }
     return summonObject(signature, position, rotationAngle);
@@ -201,13 +201,14 @@ core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& p
 
 std::pair<core::Object, bool>
 core::GameWorld::checkBuildStatus(const server::ObjectSignature& signature, const QPoint& position,
+                                  uint8_t team,
                                   float rotationAngle) const {
     bool ok = true;
     QPolygonF hitbox = signature.getHitbox();
     QMatrix matrix;
     matrix.rotate(rotationAngle);
     matrix.map(hitbox);
-    QVector<QPair<core::ResourceType, int>> copyResources = resources;
+    QVector<QPair<core::ResourceType, int>> copyResources = resources[team];
     hitbox.translate(position.x(), position.y());
     if (isIntersectsWithObjects(hitbox)) {
         ok = false;
@@ -260,14 +261,15 @@ core::GameWorld::checkBuildStatus(const server::ObjectSignature& signature, cons
 QVector<std::pair<core::Object, bool> >
 core::GameWorld::checkWallStatus(QPoint start, QPoint finish,
                                  const server::ObjectSignature& wallSignature,
-                                 const server::ObjectSignature& columnSignature) const {
+                                 const server::ObjectSignature& columnSignature,
+                                 uint8_t team) const {
     QVector<std::pair<core::Object, bool>> ans;
     const int WALL_WIDTH = 50;
     const int MAX_WALL_LENGTH = 3;
     server::ObjectSignature wall(wallSignature);
     long double dx = finish.x() - start.x();
     long double dy = finish.y() - start.y();
-    QVector<QPair<core::ResourceType, int>> copyResources = resources;
+    QVector<QPair<core::ResourceType, int>> copyResources = resources[team];
     long double ang;
     if (dx == 0) {
         ang = 0;
@@ -309,4 +311,13 @@ core::GameWorld::checkWallStatus(QPoint start, QPoint finish,
         kol++;
     }
     return ans;
+}
+
+int core::GameWorld::getTeamCount() const {
+    return teamCount;
+}
+
+void core::GameWorld::setTeamCount(uint8_t teamCount) {
+    resources.resize(teamCount);
+    this->teamCount = teamCount;
 }

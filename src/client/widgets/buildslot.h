@@ -45,13 +45,11 @@ class BuildSlot : public Widget {
     QString spriteResource;
 
     QImage image;
-
     QImage hoverImage;
 
     QString objectType;
 
     int hoverWidth;
-
     int hoverHeight;
 };
 

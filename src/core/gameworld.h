@@ -25,13 +25,13 @@ class GameWorld {
 
     void setWidth(int width);
 
-    QVector<QPair<core::ResourceType, int>>& getResources();
+    QVector<QPair<core::ResourceType, int>>& getTeamResources(uint8_t team);
 
-    const QVector<QPair<core::ResourceType, int>>& getResources() const;
+    const QVector<QPair<core::ResourceType, int>>& getTeamResources(uint8_t team) const;
 
-    void setResources(const QVector<QPair<core::ResourceType, int>>& resources);
+    void setTeamResources(const QVector<QPair<core::ResourceType, int>>& resources, uint8_t team);
 
-    void addResources(core::ResourceType type, int amount);
+    void addTeamResources(core::ResourceType type, int amount, uint8_t team);
 
     QHash<int64_t, std::shared_ptr<core::Object>>& getObjects();
 
@@ -46,7 +46,7 @@ class GameWorld {
                  float rotationAngle = 0);
 
     void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
-                   const server::ObjectSignature& columnSignature);
+                   const server::ObjectSignature& columnSignature, uint8_t team);
 
     bool isIntersectsWithObjects(const QPolygonF& polygon) const;
 
@@ -54,12 +54,17 @@ class GameWorld {
 
     void setLastSummonedId(int lastSummonedId);
 
+    int getTeamCount() const;
+
+    void setTeamCount(uint8_t teamCount);
+
     std::shared_ptr<core::Object>
-    build(const server::ObjectSignature& signature, const QPoint& position,
+    build(const server::ObjectSignature& signature, const QPoint& position, uint8_t team,
           float rotationAngle = 0);
 
     std::pair<core::Object, bool>
     checkBuildStatus(const server::ObjectSignature& signature, const QPoint& position,
+                     uint8_t team,
                      float rotationAngle = 0) const;
 
     std::pair<core::Object, bool>
@@ -68,19 +73,21 @@ class GameWorld {
                      float rotationAngle,
                      QVector<QPair<core::ResourceType, int>>& copyResources) const;
 
-    QVector<std::pair<core::Object, bool> >
+    QVector<std::pair<core::Object, bool>>
     checkWallStatus(QPoint start, QPoint finish, const server::ObjectSignature& wall,
-                    const server::ObjectSignature& columnSignature) const;
+                    const server::ObjectSignature& columnSignature,
+                    uint8_t team) const;
 
   private:
+    QVector<QVector<QPair<core::ResourceType, int>>> resources;
+    QHash<int64_t, std::shared_ptr<core::Object>> objects;
 
     int height;
     int width;
+    //!TODO add to serialization
+    uint8_t teamCount;
 
     int lastSummonedId;
-
-    QVector<QPair<core::ResourceType, int>> resources;
-    QHash<int64_t, std::shared_ptr<core::Object>> objects;
 };
 
 }

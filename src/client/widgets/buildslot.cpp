@@ -12,7 +12,7 @@ client::BuildSlot::BuildSlot(QPoint position, int height, int width):
 }
 
 void client::BuildSlot::paint(QPainter& painter) {
-    if (objectType.length() == 0) {
+    if (objectType.isEmpty()) {
         return;
     }
     if (is_hovered && !hoverImage.isNull()) {

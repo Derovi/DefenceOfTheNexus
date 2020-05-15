@@ -77,7 +77,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
             src/client/mapinput.cpp
             src/utils/serializer.cpp
             src/utils/factory.cpp
-            src/utils/lang.cpp src/utils/smartserializer.cpp src/utils/smartserializer.h src/utils/keymanager.cpp src/utils/keymanager.h)
+            src/utils/lang.cpp src/client/multipleerinterface.cpp src/client/multipleerinterface.h)
 
 qt5_add_big_resources(SOURCES   resources/sprites.qrc
                                 resources/lang.qrc
