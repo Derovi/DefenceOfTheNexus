@@ -234,17 +234,21 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     if (beforeChanges->getLastSummonedId() != afterChanges->getLastSummonedId()) {
         result.insert("lastSummonedId", afterChanges->getLastSummonedId());
     }
-    if (beforeChanges->getResources() != afterChanges->getResources()) {
-        QJsonArray resources;
-        QVector<QPair<core::ResourceType, int>> resVector = afterChanges->getResources();
+    QJsonArray resources;
+    for (int team = 0;
+         team < afterChanges->getTeamCount();
+         team++) {
+        QVector<QPair<core::ResourceType, int>> resVector = afterChanges->getTeamResources(team);
+        QJsonArray resource;
         for (auto res : resVector) {
             QJsonObject resPair;
             resPair.insert("type", static_cast<int>(res.first));
             resPair.insert("amount", res.second);
-            resources.append(resPair);
+            resource.append(resPair);
         }
-        result.insert("resources", resources);
+        resources.append(resource);
     }
+    result.insert("resources", resources);
     QJsonObject object;
     auto iter = afterChanges->getObjects().begin();
     while (iter != afterChanges->getObjects().end()) {
