@@ -84,11 +84,14 @@ client::PauseScreen::PauseScreen(): Screen() {
 
         utils::Serializer serializer;
         serializer.setPrettyPrinting(true);
+        utils::SmartSerializer smartSerializer(false);
 
         QTextStream stream(&file);
-
-        stream << serializer.serializeGameWorld(*gameWorld).value();
-
+        core::GameWorld copy = *gameWorld;
+        for(auto& it:copy.getObjects()){
+            it->setHitbox(QPolygonF());
+        }
+        stream << smartSerializer.getChanges(std::make_shared<core::GameWorld>(copy),std::make_shared<core::GameWorld>(*gameWorld));
         file.close();
     });
 

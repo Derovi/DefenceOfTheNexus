@@ -390,6 +390,7 @@ utils::SmartSerializer::jsonToHashed(QJsonObject json, const utils::KeyManager& 
     auto it = json.begin();
     while (it != json.end()) {
         result.insert(keyManager.getHash(it.key()), it.value());
+        ++it;
     }
     return result;
 }
@@ -400,6 +401,7 @@ utils::SmartSerializer::hashedToJson(QJsonObject json, const utils::KeyManager& 
     auto it = json.begin();
     while (it != json.end()) {
         result.insert(keyManager.getKey(it.key()), it.value());
+        ++it;
     }
     return result;
 }

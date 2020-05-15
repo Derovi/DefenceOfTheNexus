@@ -1,6 +1,8 @@
 #ifndef SMARTSERIALIZER_H
 #define SMARTSERIALIZER_H
 
+#include <fstream>
+
 #include <QString>
 #include <QJsonObject>
 #include <QtCore>

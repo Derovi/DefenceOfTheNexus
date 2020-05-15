@@ -36,6 +36,12 @@ void utils::KeyManager::registerKeys() {
     addKey("arguments");
     addKey("wallType");
     addKey("all");
+    addKey("resource");
+    addKey("moving");
+    addKey("damageable");
+    addKey("damaging");
+    addKey("wall");
+    addKey("building");
 }
 
 utils::KeyManager::KeyManager(bool hash) {
@@ -61,22 +67,22 @@ QString utils::KeyManager::addKey(QString key) {
         hash.back() = 'a';
         hash[0].unicode()++;
     } else {
-        hash[1].unicode()++;
+        hash.back().unicode()++;
     }
     return keyToHash[key];
 }
 
 QString utils::KeyManager::getHash(QString key) const {
-    if (hashToKey.find(key) != hashToKey.end() && hashing) {
-        return hashToKey[key];
+    if (keyToHash.find(key) != keyToHash.end() && hashing) {
+        return keyToHash[key];
     } else {
         return key;
     }
 }
 
 QString utils::KeyManager::getKey(QString hash) const {
-    if (keyToHash.find(hash) != keyToHash.end() && hashing) {
-        return keyToHash[hash];
+    if (hashToKey.find(hash) != hashToKey.end() && hashing) {
+        return hashToKey[hash];
     } else {
         return hash;
     }
