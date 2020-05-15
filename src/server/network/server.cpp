@@ -7,7 +7,7 @@
 #include "../engine.h"
 #include "../../utils/smartserializer.h"
 
-server::Server::Server(Engine* engine, int port): engine(engine), port(port) {}
+server::Server::Server(Engine* engine, int port): engine(engine), port(port), commandQueue(engine->getCommandQueue()) {}
 
 void server::Server::registerCommandQueue(std::shared_ptr<Queue<core::Command>> commandQueue) {
     this->commandQueue = commandQueue;
@@ -103,6 +103,7 @@ void server::Server::initPlayer(const QString& address, int port) {
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
+    qDebug() << "command received";
     QString commandJson = message.right(message.size() - utils::network::prefixSendCommand.size() -
                                       utils::network::separator.size());
     utils::Serializer serializer;

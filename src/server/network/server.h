@@ -13,6 +13,7 @@ namespace server {
 
 class Server : public QObject {
   Q_OBJECT
+
   public:
     Server(Engine* engine, int port);
 
@@ -24,9 +25,9 @@ class Server : public QObject {
 
     void finish();
 
-    void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
-
     void updateGameWorld();
+
+    void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
 
     void initPlayer(const QString& address, int port);
 

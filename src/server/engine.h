@@ -44,9 +44,13 @@ class Engine {
     GameConfiguration gameConfiguration;
     std::atomic_bool finished;
     std::shared_ptr<core::GameWorld> gameWorld;
+    std::shared_ptr<core::GameWorld> worldBeforeUpdate;
     std::shared_ptr<GameWorldController> gameWorldController;
     std::shared_ptr<QThread> mainThread;
     std::shared_ptr<Queue<core::Command>> commandQueue;
+
+  signals:
+    void updated();
 };
 
 }  // namespace server

@@ -14,6 +14,7 @@
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
     gameConfiguration(gameConfiguration), finished(false), mainThread(nullptr) {
     gameWorld = world_generator::generate(gameConfiguration);
+    worldBeforeUpdate = std::make_shared<core::GameWorld>();
     gameWorldController = std::make_shared<GameWorldController>(gameWorld);
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
@@ -39,6 +40,8 @@ void server::Engine::start() {
             // sleep until next tick
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
                 currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+
+            emit updated();
         }
     }));
     mainThread->start();
