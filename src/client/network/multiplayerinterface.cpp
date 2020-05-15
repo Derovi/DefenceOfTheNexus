@@ -92,3 +92,7 @@ const std::shared_ptr<core::GameWorld>& client::MultiplayerInterface::getGameWor
 bool client::MultiplayerInterface::isReady() {
     return team < 255;
 }
+
+uint8_t client::MultiplayerInterface::getTeam() const {
+    return team;
+}

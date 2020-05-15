@@ -18,6 +18,7 @@ void client::ConnectionScreen::onResumed() {}
 client::ConnectionScreen::ConnectionScreen(): Screen() {
     constructInterface();
     startServer();
+    connectServer();
 }
 
 void client::ConnectionScreen::constructInterface() {
@@ -263,4 +264,15 @@ void client::ConnectionScreen::startServer() {
 
     server = std::make_shared<server::Server>(engine.get(), 25565);
     server->start();
+
+    address = "127.0.0.1";
+    port = 25565;
+}
+
+void client::ConnectionScreen::connectServer() {
+    multiplayerInterface = std::make_shared<MultiplayerInterface>(address, port);
+}
+
+void client::ConnectionScreen::joinGame() {
+    App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
 }

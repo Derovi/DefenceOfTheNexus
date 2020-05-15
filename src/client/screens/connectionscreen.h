@@ -6,6 +6,7 @@
 #include "../screen.h"
 #include "../../server/engine.h"
 #include "../../server/network/server.h"
+#include "../network/multiplayerinterface.h"
 
 namespace client {
 
@@ -30,12 +31,14 @@ class ConnectionScreen : public Screen {
 
     void startServer();
 
-    void connect();
+    void connectServer();
 
     void joinGame();
 
     QString address;
     int port;
+
+    std::shared_ptr<MultiplayerInterface> multiplayerInterface = nullptr;
 
     std::shared_ptr<core::GameWorld> gameWorld = nullptr;
 

@@ -34,6 +34,8 @@ class MultiplayerInterface : public QObject {
 
     const std::shared_ptr<core::GameWorld>& getGameWorld() const;
 
+    uint8_t getTeam() const;
+
     bool isReady();
 
   private:
