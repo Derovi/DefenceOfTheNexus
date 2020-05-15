@@ -343,8 +343,10 @@ core::GameWorld::GameWorld(const core::GameWorld& base) {
                                                            (*it)->getHitbox(),
                                                            (*it)->getRotationAngle(),
                                                            (*it)->getTeam());
+        QLinkedList<std::shared_ptr<Attribute>> attributes;
         for (auto attribute : it.value()->getAttributes()) {
-            objects[it.key()]->addAttribute(attribute->clone());
+            attributes.push_back(attribute->clone());
         }
+        objects[it.key()]->setAttributes(attributes);
     }
 }

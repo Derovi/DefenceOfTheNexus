@@ -30,6 +30,9 @@ void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
         QDateTime lastTickStartTime = QDateTime::currentDateTime();
         while (!finished && gameWorld != nullptr) {
+            qDebug() << "saving";
+            worldBeforeUpdate = std::make_shared<core::GameWorld>(*gameWorld);
+            qDebug() << "saved";
             QDateTime currentTickStartTime = QDateTime::currentDateTime();
 
             executeCommands();
@@ -40,7 +43,7 @@ void server::Engine::start() {
             // sleep until next tick
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
                 currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
-
+            qDebug() << "server" << gameWorld->getObjects()[0]->getPosition();
             emit updated();
         }
     }));

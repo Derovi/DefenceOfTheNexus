@@ -32,6 +32,7 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
+    qDebug() << "client" << gameWorld->getObjects()[0]->getPosition();
     if (fixed) {
         if (gameWorld->getObjects().contains(0)) {
             int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
