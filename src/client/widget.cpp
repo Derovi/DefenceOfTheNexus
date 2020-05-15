@@ -96,7 +96,7 @@ void client::Widget::mouse(QPoint point) {
 }
 
 bool client::Widget::isPointInBounds(const QPoint& point) {
-    return QRect(position.x(), position.y(), width - boundsWidth, height - boundsWidth).contains(
+    return QRect(position.x() + boundsWidth / 2.0, position.y() + boundsWidth / 2.0, width - boundsWidth, height - boundsWidth).contains(
             point);
 }
 

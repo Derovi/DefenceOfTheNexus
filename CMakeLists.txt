@@ -18,6 +18,7 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Network REQUIRED)
 find_package(Threads REQUIRED)
 
 set(SOURCES src/bootstrap/bootstrap.cpp
@@ -77,7 +78,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
             src/client/mapinput.cpp
             src/utils/serializer.cpp
             src/utils/factory.cpp
-            src/utils/lang.cpp src/client/multipleerinterface.cpp src/client/multipleerinterface.h)
+            src/utils/lang.cpp src/client/multiplayerinterface.cpp src/client/multiplayerinterface.h)
 
 qt5_add_big_resources(SOURCES   resources/sprites.qrc
                                 resources/lang.qrc
@@ -92,4 +93,6 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} Qt5::Network)
+
 target_link_libraries(${PROJECT_NAME} ${CMAKE_THREAD_LIBS_INIT})
