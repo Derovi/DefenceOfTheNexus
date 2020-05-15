@@ -18,7 +18,7 @@ class Object {
     Object() = delete;
 
     explicit Object(uint64_t id, QString typeName, QPointF position = QPointF(),
-                    QPolygonF hitbox = QPolygonF(), float rotationAngle = 0);
+                    QPolygonF hitbox = QPolygonF(), float rotationAngle = 0, int team = 0);
 
     virtual ~Object() = default;
 
@@ -70,15 +70,21 @@ class Object {
 
     bool hasAttribute(const QString& name) const;
 
-  private:
-    uint64_t id;
-    float rotationAngle;
-    QString typeName;
-    QPointF position;
-    QPolygonF hitbox;
+    uint8_t getTeam() const;
 
+    void setTeam(uint8_t team);
+
+  private:
     QLinkedList<std::shared_ptr<Attribute>> attributes;
     QStringList strategies;
+
+    QString typeName;
+    QPolygonF hitbox;
+    QPointF position;
+    uint64_t id;
+    //!TODO add to serialization
+    uint8_t team;
+    float rotationAngle;
 };
 
 }  // namespace core

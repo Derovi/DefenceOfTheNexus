@@ -5,9 +5,9 @@
 #include "object.h"
 
 core::Object::Object(uint64_t id, QString typeName, QPointF position, QPolygonF hitbox,
-                     float rotationAngle):
-    id(id), typeName(std::move(typeName)), position(position), hitbox(std::move(hitbox)),
-    rotationAngle(rotationAngle) {}
+                     float rotationAngle, int team):
+    typeName(std::move(typeName)), hitbox(std::move(hitbox)), position(position), id(id),
+    team(team), rotationAngle(rotationAngle) {}
 
 uint64_t core::Object::getId() const {
     return id;
@@ -117,4 +117,12 @@ QPolygonF core::Object::getHitboxOnMap() const {
     auto hitboxOnMap = getRotatedHitbox();
     hitboxOnMap.translate(getPosition());
     return hitboxOnMap;
+}
+
+uint8_t core::Object::getTeam() const {
+    return team;
+}
+
+void core::Object::setTeam(uint8_t team) {
+    Object::team = team;
 }
