@@ -11,6 +11,7 @@
 namespace client {
 
 class ConnectionScreen : public Screen {
+    Q_OBJECT
   public:
     ConnectionScreen();
 
@@ -32,6 +33,8 @@ class ConnectionScreen : public Screen {
     void startServer();
 
     void connectServer();
+
+    void onInited();
 
     void joinGame();
 

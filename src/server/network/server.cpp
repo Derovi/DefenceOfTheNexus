@@ -71,7 +71,7 @@ void server::Server::updateGameWorld() {
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::SmartSerializer serializer(false);
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
-                                     serializer.getChanges(engine->getGameWorld(),
+                                     serializer.getChanges(std::make_shared<core::GameWorld>(),
                                                            engine->getGameWorld()));
     }
 }

@@ -8,7 +8,7 @@
 #include "../../utils/smartserializer.h"
 
 client::MultiplayerInterface::MultiplayerInterface(QString address, int port):
-        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255) {
+        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255), gameWorld(new core::GameWorld()) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -60,6 +60,7 @@ void client::MultiplayerInterface::sendInitRequest() {
 }
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
+    qDebug() << "init response!";
     int teamEntryStart =
             utils::network::prefixInitRequest.size() + utils::network::separator.size();
     QString team = message.mid(teamEntryStart,
@@ -71,7 +72,10 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
     this->team = team.toUInt();
 
     utils::SmartSerializer serializer;
+    qDebug() << "applying changes!!";
     serializer.applyChanges(gameWorld, worldJson);
+    qDebug() << "emit inited!";
+    emit inited();
 }
 
 void client::MultiplayerInterface::worldUpdate(const QString& message) {

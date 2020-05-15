@@ -24,8 +24,6 @@ class Server : public QObject {
 
     void finish();
 
-    void readMessage();
-
     void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
 
     void updateGameWorld();
@@ -50,6 +48,9 @@ class Server : public QObject {
     Engine* engine;
 
     int port;
+
+  private slots:
+    void readMessage();
 };
 
 }  // namespace server

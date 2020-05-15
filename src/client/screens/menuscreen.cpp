@@ -79,7 +79,8 @@ client::MenuScreen::MenuScreen(): Screen() {
 
         gameWorld = std::make_shared<core::GameWorld>(deserialized.value());
 
-        App::getInstance()->openScreen(std::make_shared<GameScreen>(gameWorld));
+        //!TODO fix saving
+        //App::getInstance()->openScreen(std::make_shared<GameScreen>(gameWorld));
     });
 
     addChild(loadGameButton);

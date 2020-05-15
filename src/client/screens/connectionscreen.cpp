@@ -19,6 +19,8 @@ client::ConnectionScreen::ConnectionScreen(): Screen() {
     constructInterface();
     startServer();
     connectServer();
+    connect(multiplayerInterface.get(), &MultiplayerInterface::inited,
+            this, &ConnectionScreen::onInited);
 }
 
 void client::ConnectionScreen::constructInterface() {
@@ -271,8 +273,17 @@ void client::ConnectionScreen::startServer() {
 
 void client::ConnectionScreen::connectServer() {
     multiplayerInterface = std::make_shared<MultiplayerInterface>(address, port);
+    multiplayerInterface->sendInitRequest();
 }
 
 void client::ConnectionScreen::joinGame() {
+    qDebug() << "join game!";
     App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
+}
+
+void client::ConnectionScreen::onInited() {
+    if (multiplayerInterface == nullptr) {
+        return;
+    }
+    joinGame();
 }

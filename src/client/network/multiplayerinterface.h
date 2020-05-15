@@ -52,6 +52,9 @@ class MultiplayerInterface : public QObject {
 
   private slots:
     void readMessage();
+
+  signals:
+    void inited();
 };
 
 }
