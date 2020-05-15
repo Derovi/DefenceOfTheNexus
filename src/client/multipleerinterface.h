@@ -5,5 +5,4 @@ class MultipleerInterface {
 
 };
 
-
-#endif //MULTIPLEERINTERFACE_H
+#endif  // MULTIPLEERINTERFACE_H
