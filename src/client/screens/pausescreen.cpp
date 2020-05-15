@@ -88,10 +88,11 @@ client::PauseScreen::PauseScreen(): Screen() {
 
         QTextStream stream(&file);
         core::GameWorld copy = *gameWorld;
+        std::ofstream cout("output.txt");
         for(auto& it:copy.getObjects()){
-            it->setHitbox(QPolygonF());
+            it->setPosition(QPointF(42,42));
+            cout<<it->getPosition().x();
         }
-//        stream << smartSerializer.getChanges(std::make_shared<core::GameWorld>(copy),std::make_shared<core::GameWorld>(*gameWorld));
         file.close();
     });
 

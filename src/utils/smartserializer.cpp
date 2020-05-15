@@ -331,6 +331,7 @@ void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::
         while (iter != attributes.end()) {
             QJsonObject attribute = iter.value().toObject();
             if (attribute.size() == 0) {
+                ++iter;
                 continue;
             }
             utils::Factory::getPartDeserializer(iter.key())(object->getAttribute(iter.key()),
@@ -351,18 +352,23 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("height") != changes.end()) {
         gameWorld->setHeight(changes["height"].toDouble());
     }
-    QJsonArray resources = changes["resources"].toArray();
-    int team = 0;
-    for (const auto& resource : resources) {
-        QVector<QPair<core::ResourceType, int>> resVector;
-        for (const auto& res : resources) {
-            auto resObj = res.toObject();
-            int type = resObj["type"].toInt();
-            int amount = resObj["amount"].toInt();
-            resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
+    if(changes.find("lastSummonedId")!=changes.end())){
+        gameWorld->setLastSummonedId(changes["lastSummonedId"].toDouble());
+    }
+    if (changes.find("resources") != changes.end()) {
+        int team = 0;
+        QJsonArray resources = changes["resources"].toArray();
+        for (const auto& resource : resources) {
+            QVector<QPair<core::ResourceType, int>> resVector;
+            for (const auto& res : resource.toArray()) {
+                auto resObj = res.toObject();
+                int type = resObj["type"].toInt();
+                int amount = resObj["amount"].toInt();
+                resVector.push_back(QPair(static_cast<core::ResourceType>(type), amount));
+            }
+            gameWorld->setTeamResources(resVector, team);
+            ++team;
         }
-        gameWorld->setTeamResources(resVector, team);
-        ++team;
     }
     if (changes.find("objects") != changes.end()) {
         QJsonObject objects = changes["objects"].toObject();
