@@ -358,6 +358,7 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("resources") != changes.end()) {
         int team = 0;
         QJsonArray resources = changes["resources"].toArray();
+        gameWorld->setTeamCount(resources.size());
         for (const auto& resource : resources) {
             QVector<QPair<core::ResourceType, int>> resVector;
             for (const auto& res : resource.toArray()) {

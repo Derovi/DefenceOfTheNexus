@@ -74,10 +74,6 @@ class GameMap : public Widget {
     void clicked(QPoint point, bool leftButton) override;
 
   public:
-    const std::shared_ptr<Queue<core::Command>>& getCommandQueue() const;
-
-    void setCommandQueue(const std::shared_ptr<Queue<core::Command>>& commandQueue);
-
     bool isFixed() const;
 
     void setFixed(bool fixed);
@@ -88,8 +84,6 @@ class GameMap : public Widget {
     std::shared_ptr<core::GameWorld> gameWorld;
 
     QHash<int64_t, std::shared_ptr<GraphicsObject>> graphicsObjects;
-
-    std::shared_ptr<Queue<core::Command>> commandQueue;
 
     Sprite background;
 

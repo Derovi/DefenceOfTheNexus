@@ -7,7 +7,7 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), commandQueue(nullptr),
+        Widget(position),
         showHitBoxes(false), showSprites(true), fixed(false), cameraSpeed(60) {
     setHeight(height);
     setWidth(width);
@@ -41,8 +41,9 @@ void client::GameMap::paint(QPainter& painter) {
     } else {
         QPoint cursor = QPoint(window_manager::get_x4k(
                 App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).x()),
-        window_manager::get_y4k(
-                App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).y()));
+                               window_manager::get_y4k(
+                                       App::getInstance()->mapFromGlobal(
+                                               App::getInstance()->cursor().pos()).y()));
         if (isPointOnBounds(cursor)) {
             QVector2D vector(cursor.x() - 1920, cursor.y() - 1080);
             vector.normalize();
@@ -132,35 +133,37 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point, bool leftButton) {
     point = getTransformToMap().map(point);
+    auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (leftButton) {
         auto object = gameWorld->objectAt(point);
         if (object) {
-            dynamic_cast<GameScreen*>(getParent())->getInterface()->setSelectedUnitId(
-                    object->getId());
+            gameScreen->getInterface()->setSelectedUnitId(object->getId());
         }
         return;
     }
-    int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+    qDebug() << "command";
+    int objectId = gameScreen->getInterface()->getSelectedUnitId();
     auto target = gameWorld->objectAt(point);
+    qDebug() << "comman";
     if (target != nullptr && target->hasAttribute("resource")) {
-        commandQueue->push(core::Command("mine_resource", {
-            QString::number(objectId), QString::number(target->getId())}));
+        qDebug() << "res";
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("mine_resource", {
+                QString::number(objectId), QString::number(target->getId())}));
     } else if (target != nullptr && target->hasAttribute("damageable")) {
-        commandQueue->push(core::Command("attack", {QString::number(objectId), QString::number(target->getId())}));
+        qDebug() << "dam";
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command(core::Command("attack",
+                                                                                       {QString::number(
+                                                                                               objectId),
+                                                                                        QString::number(
+                                                                                                target->getId())})));
     } else {
-        commandQueue->push(
+        qDebug() << "els";
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command(
                 core::Command("change_move_target",
                               {QString::number(objectId), QString::number(point.x()),
-                               QString::number(point.y())}));
+                               QString::number(point.y())})));
     }
-}
-
-const std::shared_ptr<Queue<core::Command>>& client::GameMap::getCommandQueue() const {
-    return commandQueue;
-}
-
-void client::GameMap::setCommandQueue(const std::shared_ptr<Queue<core::Command>>& commandQueue) {
-    GameMap::commandQueue = commandQueue;
+    qDebug() << "comma";
 }
 
 int client::GameMap::getWindowHeight() const {

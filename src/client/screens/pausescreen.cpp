@@ -126,6 +126,7 @@ client::PauseScreen::PauseScreen(): Screen() {
             App::runOnUiThread([&] {
                 App::getInstance()->closeScreen();
                 App::getInstance()->closeScreen();
+                App::getInstance()->closeScreen();
             });
         });
         thread->start();

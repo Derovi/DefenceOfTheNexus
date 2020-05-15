@@ -145,11 +145,11 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 kol++;
                 continue;
             }
-            if ((columnSignature.getAttribute("cost") != nullptr) &&
+            /*if ((columnSignature.getAttribute("cost") != nullptr) &&
                 !((dynamic_cast<Cost*>(columnSignature.getAttribute("cost").get()))->pay(
                         resources[team]))) {
                 break;
-            }
+            }*/
             summonObject(columnSignature,
                          QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), ang);
         } else {

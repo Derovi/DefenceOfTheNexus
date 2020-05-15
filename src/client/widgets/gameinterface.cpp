@@ -17,6 +17,8 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     setHeight(height);
     setWidth(width);
 
+    auto gameScreen = dynamic_cast<GameScreen*>(getParent());
+
     unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
     unitIcon->setBackground(QImage(":/interface/icon-background"));
     addChild(unitIcon);
@@ -65,17 +67,17 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
 
     aiButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
-        gameMap->getCommandQueue()->push(core::Command("ai",
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("ai",
                                                        {QString::number(selectedUnitId)}));
     });
     stopButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
-        gameMap->getCommandQueue()->push(core::Command("stop",
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("stop",
                                                        {QString::number(selectedUnitId)}));
     });
     killButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
-        gameMap->getCommandQueue()->push(core::Command("kill",
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("kill",
                                                        {QString::number(selectedUnitId)}));
     });
 

@@ -10,6 +10,8 @@
 #include "../widgets/chooser.h"
 
 #include "connectionscreen.h"
+#include "../../utils/factory.h"
+#include "gamescreen.h"
 
 void client::ConnectionScreen::onPaused() {}
 
@@ -70,10 +72,10 @@ void client::ConnectionScreen::startServer() {
     if (gameWorld != nullptr) {
         engine->setGameWorld(gameWorld);
     } else {
-        /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                              QPoint(1800, 1200));
 
-        engine->getGameWorld()->summonObject(
+        /*engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("iron").value(),
                 QPoint(842, 1422));
 

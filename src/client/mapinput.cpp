@@ -2,6 +2,7 @@
 
 #include "mapinput.h"
 #include "../core/attributes/wall.h"
+#include "screens/gamescreen.h"
 
 client::MapInput::MapInput(client::GameMap* gameMap): gameMap(gameMap) {}
 
@@ -37,11 +38,12 @@ void client::MapInput::append(const QPoint& point) {
         abort();
         return;
     }
+    auto gameScreen = dynamic_cast<GameScreen*>(gameMap->getParent());
     if (objectSignature->hasAttribute(core::Wall::attributeName)) {
         if (points.size() == 0) {
             return;
         }
-        gameMap->getCommandQueue()->push(core::Command("build_wall",
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("build_wall",
                                                        {
                                                                objectType,
                                                                QString::number(points.first().x()),
@@ -50,7 +52,7 @@ void client::MapInput::append(const QPoint& point) {
                                                                QString::number(points[1].y())}));
         abort();
     } else {
-        gameMap->getCommandQueue()->push(core::Command("build",
+        gameScreen->getMultiplayerInterface()->sendCommand(core::Command("build",
                                                        {
                                                                objectType,
                                                                QString::number(points.first().x()),

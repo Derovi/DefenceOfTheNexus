@@ -99,6 +99,7 @@ void server::Server::initPlayer(const QString& address, int port) {
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.serializeGameWorld(*engine->getGameWorld()).value());
+    qDebug() << "init message";
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {

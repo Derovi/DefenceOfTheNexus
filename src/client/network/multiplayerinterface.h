@@ -7,7 +7,7 @@
 #include <QtNetwork/QUdpSocket>
 
 #include "../../core/command.h"
-#include "../screens/gamescreen.h"
+#include "../../core/gameworld.h"
 
 namespace client {
 
@@ -27,10 +27,6 @@ class MultiplayerInterface : public QObject {
     int getPort() const;
 
     const std::shared_ptr<QUdpSocket>& getSocket() const;
-
-    GameScreen* getGameScreen() const;
-
-    void setGameScreen(GameScreen* gameScreen);
 
     const std::shared_ptr<core::GameWorld>& getGameWorld() const;
 

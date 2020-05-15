@@ -11,7 +11,6 @@
 #include "../network/multiplayerinterface.h"
 
 #include "pausescreen.h"
-#include "../../server/network/server.h"
 
 void client::GameScreen::onPaused() {
     paused = true;
@@ -36,6 +35,8 @@ client::GameInterface* client::GameScreen::getInterface() const {
 
 client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& multiplayerInterface):
         Screen(), paused(false) {
+    this->multiplayerInterface = multiplayerInterface;
+    qDebug() << "game screen start";
     gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
     Sprite background(QPixmap(":/sprites/background"), 1, 1, 0);
@@ -52,6 +53,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& mult
     gameMap->setGameWorld(multiplayerInterface->getGameWorld());
     interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());
     addChild(interface);
+    qDebug() << "game screen started";
 }
 
 const std::shared_ptr<server::Engine>& client::GameScreen::getEngine() const {

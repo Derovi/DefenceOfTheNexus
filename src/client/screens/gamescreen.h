@@ -5,10 +5,9 @@
 #include "../../server/engine.h"
 #include "../widgets/gamemap.h"
 #include "../widgets/gameinterface.h"
+#include "../network/multiplayerinterface.h"
 
 namespace client {
-
-class MultiplayerInterface;
 
 class GameScreen : public Screen {
   public:
