@@ -34,7 +34,7 @@ client::GameInterface* client::GameScreen::getInterface() const {
     return interface;
 }
 
-client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld):
+client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& multiplayerInterface):
         Screen(), paused(false) {
     gameMap = new GameMap();
     gameMap->setDisplayBounds(QRect(1920, 1080, 1920, 1080));
@@ -271,12 +271,8 @@ client::GameScreen::~GameScreen() {
 }
 
 uint8_t client::GameScreen::getTeam() const {
-    qDebug() << "team: " << team << gameMap->getGameWorld()->getTeamCount();
+    qDebug() << "team: " << multiplayerInterface->gett << gameMap->getGameWorld()->getTeamCount();
     return team;
-}
-
-void client::GameScreen::setTeam(uint8_t team) {
-    GameScreen::team = team;
 }
 
 const std::shared_ptr<client::MultiplayerInterface>& client::GameScreen::getMultiplayerInterface() const {

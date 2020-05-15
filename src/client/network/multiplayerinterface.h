@@ -14,7 +14,7 @@ namespace client {
 class MultiplayerInterface : public QObject {
   Q_OBJECT
   public:
-    MultiplayerInterface(GameScreen* gameScreen, QString address, int port);
+    MultiplayerInterface(QString address, int port);
 
     void sendInitRequest();
 
@@ -32,16 +32,20 @@ class MultiplayerInterface : public QObject {
 
     void setGameScreen(GameScreen* gameScreen);
 
+    const std::shared_ptr<core::GameWorld>& getGameWorld() const;
+
+    bool isReady();
+
   private:
     QString address;
     int port;
 
     std::shared_ptr<QUdpSocket> socket = nullptr;
 
-    GameScreen* gameScreen;
+    std::shared_ptr<core::GameWorld> gameWorld = nullptr;
+    uint8_t team;
 
     void initResponse(const QString& message);
-
     void worldUpdate(const QString& message);
 
   private slots:

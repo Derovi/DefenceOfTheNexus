@@ -7,10 +7,8 @@
 #include "../../utils/serializer.h"
 #include "../../utils/smartserializer.h"
 
-client::MultiplayerInterface::MultiplayerInterface(GameScreen* gameScreen, QString address,
-                                                   int port):
-        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()),
-        gameScreen(gameScreen) {
+client::MultiplayerInterface::MultiplayerInterface(QString address, int port):
+        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -70,29 +68,27 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
     int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
     QString worldJson = message.right(message.size() - worldJsonEntryStart);
 
-    gameScreen->setTeam(team.toUInt());
+    this->team = team.toUInt();
 
     utils::SmartSerializer serializer;
-    serializer.applyChanges(
-            std::shared_ptr<core::GameWorld>(gameScreen->getGameMap()->getGameWorld()), worldJson);
+    serializer.applyChanges(gameWorld, worldJson);
 }
 
 void client::MultiplayerInterface::worldUpdate(const QString& message) {
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
     utils::SmartSerializer serializer;
-    serializer.applyChanges(
-            std::shared_ptr<core::GameWorld>(gameScreen->getGameMap()->getGameWorld()), worldJson);
-}
-
-client::GameScreen* client::MultiplayerInterface::getGameScreen() const {
-    return gameScreen;
-}
-
-void client::MultiplayerInterface::setGameScreen(client::GameScreen* gameScreen) {
-    MultiplayerInterface::gameScreen = gameScreen;
+    serializer.applyChanges(gameWorld, worldJson);
 }
 
 int client::MultiplayerInterface::getPort() const {
     return port;
+}
+
+const std::shared_ptr<core::GameWorld>& client::MultiplayerInterface::getGameWorld() const {
+    return gameWorld;
+}
+
+bool client::MultiplayerInterface::isReady() {
+    return team < 255;
 }

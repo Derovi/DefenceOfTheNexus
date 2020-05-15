@@ -12,7 +12,7 @@ class MultiplayerInterface;
 
 class GameScreen : public Screen {
   public:
-    GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld = nullptr);
+    explicit GameScreen(const std::shared_ptr<MultiplayerInterface>& multiplayerInterface);
 
     ~GameScreen() override;
 
@@ -42,8 +42,6 @@ class GameScreen : public Screen {
     GameInterface* interface;
 
     GameMap* gameMap;
-
-    uint8_t team;
 
     bool paused;
 };
