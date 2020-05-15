@@ -38,6 +38,8 @@ class Server : public QObject {
 
     Engine* getEngine() const;
 
+    const std::shared_ptr<QUdpSocket>& getSocket() const;
+
   private:
     QVector<ConnectedPlayer> connectedPlayers;
 

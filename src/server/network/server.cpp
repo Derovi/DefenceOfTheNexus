@@ -7,7 +7,7 @@
 #include "../engine.h"
 #include "../../utils/smartserializer.h"
 
-server::Server::Server(Engine* engine, int port): engine(eingine), port(port) {}
+server::Server::Server(Engine* engine, int port): engine(engine), port(port) {}
 
 void server::Server::registerCommandQueue(std::shared_ptr<Queue<core::Command>> commandQueue) {
     this->commandQueue = commandQueue;
@@ -31,21 +31,26 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
 
 void server::Server::readMessage() {
     QByteArray datagram;
-    QHostAddress senderAddress;
+    QHostAddress hostAddress;
     quint16 senderPort;
     do {
         datagram.resize(socket->pendingDatagramSize());
-        socket->readDatagram(datagram.data(), datagram.size(), &senderAddress, &senderPort);
+        socket->readDatagram(datagram.data(), datagram.size(), &hostAddress, &senderPort);
     } while (socket->hasPendingDatagrams());
 
     QDataStream in(&datagram, QIODevice::ReadOnly);
     QString message;
     in >> message;
 
+    QString senderAddress = QHostAddress(hostAddress.toIPv4Address()).toString();
+
+    qDebug() << "server read message, length: " << message.length();
+    qDebug() << "sender:" << senderAddress << senderPort;
+
     if (message.startsWith(utils::network::prefixInitRequest)) {
-        initPlayer(QHostAddress(senderAddress.toIPv4Address()).toString(), senderPort);
+        initPlayer(senderAddress, senderPort);
     } else if (message.startsWith(utils::network::prefixSendCommand)) {
-        commandReceived(QHostAddress(senderAddress.toIPv4Address()).toString(), senderPort,
+        commandReceived(senderAddress, senderPort,
                         message);
     }
 }
@@ -105,6 +110,10 @@ void server::Server::commandReceived(const QString& address, int port, const QSt
         return;
     }
     commandQueue->push(serializer.deserializeCommand(commandJson).value());
+}
+
+const std::shared_ptr<QUdpSocket>& server::Server::getSocket() const {
+    return socket;
 }
 
 

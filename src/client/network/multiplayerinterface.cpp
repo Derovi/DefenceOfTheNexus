@@ -33,6 +33,8 @@ void client::MultiplayerInterface::readMessage() {
     QString message;
     in >> message;
 
+    qDebug() << "client read message, length: " << message.length();
+
     if (message.startsWith(utils::network::prefixInitResponse)) {
         initResponse(message);
     } else if (message.startsWith(utils::network::prefixWorldUpdate)) {

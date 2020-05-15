@@ -8,7 +8,10 @@
 #include "../../server/engine.h"
 #include "../../core/attributes/moving.h"
 #include "../../utils/factory.h"
+#include "../network/multiplayerinterface.h"
+
 #include "pausescreen.h"
+#include "../../server/network/server.h"
 
 void client::GameScreen::onPaused() {
     paused = true;
@@ -250,6 +253,9 @@ client::GameScreen::GameScreen(const std::shared_ptr<core::GameWorld>& savedGame
     //gameMap->setShowHitBoxes(true);
     engine->start();
 
+    server::Server* server = new server::Server(engine.get(), 25565);
+    multiplayerInterface = std::make_shared<MultiplayerInterface>(this, "127.0.0.1", 25565);
+    multiplayerInterface->sendInitRequest();
     interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());
     addChild(interface);
 }
@@ -270,4 +276,8 @@ uint8_t client::GameScreen::getTeam() const {
 
 void client::GameScreen::setTeam(uint8_t team) {
     GameScreen::team = team;
+}
+
+const std::shared_ptr<client::MultiplayerInterface>& client::GameScreen::getMultiplayerInterface() const {
+    return multiplayerInterface;
 }

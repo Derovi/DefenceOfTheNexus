@@ -8,6 +8,8 @@
 
 namespace client {
 
+class MultiplayerInterface;
+
 class GameScreen : public Screen {
   public:
     GameScreen(const std::shared_ptr<core::GameWorld>& savedGameWorld = nullptr);
@@ -24,12 +26,16 @@ class GameScreen : public Screen {
 
     uint8_t getTeam() const;
 
+    const std::shared_ptr<MultiplayerInterface>& getMultiplayerInterface() const;
+
     void setTeam(uint8_t team);
 
   private:
     void onPaused() override;
 
     void onResumed() override;
+
+    std::shared_ptr<MultiplayerInterface> multiplayerInterface;
 
     std::shared_ptr<server::Engine> engine;
 

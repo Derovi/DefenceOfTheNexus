@@ -22,8 +22,6 @@ class MultiplayerInterface : public QObject {
 
     void sendMessage(const QString& message);
 
-    void readMessage();
-
     const QString& getAddress() const;
 
     int getPort() const;
@@ -45,6 +43,9 @@ class MultiplayerInterface : public QObject {
     void initResponse(const QString& message);
 
     void worldUpdate(const QString& message);
+
+  private slots:
+    void readMessage();
 };
 
 }
