@@ -33,8 +33,10 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
 
     if (isDamageable(object, damaging, target)) {
         std::shared_ptr<core::Damageable> damageable = std::dynamic_pointer_cast<core::Damageable>(
-            target->getAttribute("damageable"));
+                target->getAttribute("damageable"));
         if (damageable != nullptr && damageable->getHealth() > 0) {
+            world->generateEvent(
+                    core::Event(core::Event::Type::HIT_EVENT, {QString::number(object->getId())}));
             damageable_performer::inflictDamage(world, target, damageable, damaging->getDamage());
         } else {
             damaging->setAttacking(false);

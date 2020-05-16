@@ -10,7 +10,8 @@ namespace core {
 class Event {
   public:
     enum Type {
-        HIT_EVENT, DIE_EVENT
+        HIT_EVENT, // arguments: <UNIT_ID>
+        DIE_EVENT, // arguments: <UNIT_ID>
     };
 
     Event() = default;

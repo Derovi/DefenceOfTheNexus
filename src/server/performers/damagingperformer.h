@@ -16,7 +16,6 @@ bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Da
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
             std::shared_ptr<core::Damaging> damaging, std::shared_ptr<core::Object> target,
             int timeDelta);
-
 }  // namespace server::damaging_performer
 
 #endif  // DAMAGINGPERFORMER_H
