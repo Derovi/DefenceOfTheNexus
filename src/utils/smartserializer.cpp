@@ -262,6 +262,7 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     while (iter != afterChanges->getObjects().end()) {
         if (beforeChanges->getObjects().find(iter.key()) == beforeChanges->getObjects().end()) {
             std::optional<QJsonObject> result = Serializer::objectSerializer(*iter.value());
+            object.insert(QString::number(iter.key()),result.value());
         } else {
             QJsonObject result = objectPartSerializer(beforeChanges->getObjects()[iter.key()],
                                                       iter.value(),
