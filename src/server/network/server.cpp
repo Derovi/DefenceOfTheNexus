@@ -8,7 +8,7 @@
 #include "../../utils/smartserializer.h"
 
 server::Server::Server(Engine* engine, int port):
-        engine(engine), port(port), commandQueue(engine->getCommandQueue()) {}
+        engine(engine), port(port), commandQueue(engine->getCommandQueue()), currentDatagramId(0) {}
 
 void server::Server::registerCommandQueue(std::shared_ptr<Queue<core::Command>> commandQueue) {
     this->commandQueue = commandQueue;
@@ -21,19 +21,22 @@ void server::Server::start() {
 }
 
 void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message) {
-    const int offsetConst = 32085;
+    const int offsetConst = 800;
     int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
+    qDebug() << "cur id" << currentDatagramId;
     for (int offset = 0;
          offset < message.size();
          offset += offsetConst) {
         QByteArray datagram;
         QDataStream out(&datagram, QIODevice::WriteOnly);
         out.setVersion(QDataStream::Qt_5_13);
-        out << '<' + QString(offset / offsetConst) + ':' + QString(datagramsCount) + '>' +
+        out << '<' + QString::number(offset / offsetConst) + ':' + QString::number(datagramsCount) +
+               '*' + QString::number(currentDatagramId) + '>' +
                message.mid(offset, std::min(offsetConst, message.size() - offset));
         socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
                               connectedPlayer.getPort());
     }
+    ++currentDatagramId;
     qDebug() << "message sended from server";
 }
 
@@ -87,8 +90,8 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
         qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
                  << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
-                smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
-                                                           engine->getGameWorld()));
+                                     smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
+                                                                engine->getGameWorld()));
     }
 }
 
@@ -132,6 +135,10 @@ void server::Server::commandReceived(const QString& address, int port, const QSt
 
 const std::shared_ptr<QUdpSocket>& server::Server::getSocket() const {
     return socket;
+}
+
+int server::Server::getCurrentDatagramId() const {
+    return currentDatagramId;
 }
 
 

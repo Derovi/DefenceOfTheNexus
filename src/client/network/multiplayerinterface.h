@@ -1,6 +1,8 @@
 #ifndef MULTIPLAYERINTERFACE_H
 #define MULTIPLAYERINTERFACE_H
 
+typedef mbstate_t state;
+
 #include <memory>
 
 #include <QtCore/QObject>
@@ -16,7 +18,11 @@ namespace client {
 class MultiplayerInterface : public QObject {
   Q_OBJECT
   public:
-    MultiplayerInterface(QString address, int port);
+    enum State {
+        STARTING_SERVER, CONNECTING_SERVER, CHOOSING_TEAM, IN_GAME,
+    };
+
+    MultiplayerInterface(QString address, int port, State state = STARTING_SERVER);
 
     void sendInitRequest();
 
@@ -40,6 +46,8 @@ class MultiplayerInterface : public QObject {
 
     bool isReady();
 
+    State getState() const;
+
   private:
     QString address;
     int port;
@@ -51,12 +59,24 @@ class MultiplayerInterface : public QObject {
     uint8_t team;
 
     void initResponse(const QString& message);
+
     void worldUpdate(const QString& message);
 
+    void buildDatagrams();
+
+    // datagram id, <datagram parts, start time>
+    QMap<int, std::pair<QVector<QString>, QDateTime>> datagrams;
+
+    const int timeout = 300;
+
+    State state;
+
   private slots:
+
     void readMessage();
 
   signals:
+
     void inited();
 };
 

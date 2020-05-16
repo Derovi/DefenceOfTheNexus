@@ -39,6 +39,8 @@ class Server : public QObject {
 
     const std::shared_ptr<QUdpSocket>& getSocket() const;
 
+    int getCurrentDatagramId() const;
+
   private:
     QVector<ConnectedPlayer> connectedPlayers;
 
@@ -49,6 +51,8 @@ class Server : public QObject {
     Engine* engine;
 
     int port;
+
+    int currentDatagramId;
 
   private slots:
     void readMessage();

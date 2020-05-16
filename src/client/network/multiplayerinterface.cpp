@@ -7,8 +7,9 @@
 #include "../../utils/serializer.h"
 #include "../../utils/smartserializer.h"
 
-client::MultiplayerInterface::MultiplayerInterface(QString address, int port):
-        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255), gameWorld(new core::GameWorld()) {
+client::MultiplayerInterface::MultiplayerInterface(QString address, int port, State state):
+        address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255),
+        gameWorld(new core::GameWorld()), state(state) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -31,24 +32,26 @@ void client::MultiplayerInterface::readMessage() {
         in >> message;
 
         int datagramCountStart = message.indexOf(':') + 1;
+        int datagramIdStart = message.indexOf('*') + 1;
         int messageStart = message.indexOf('>') + 1;
 
         //qDebug() << "mes st" << messageStart << message.length();
         int dataGramIndex = message.mid(1, datagramCountStart - 2).toInt();
-        int dataGramCount = message.mid(datagramCountStart, messageStart - datagramCountStart - 1).toInt();
-        //qDebug() << "index:" << dataGramIndex << dataGramCount << message.size();
+        int dataGramCount = message.mid(datagramCountStart,
+                                        datagramIdStart - datagramCountStart - 1).toInt();
+        int dataGramId = message.mid(datagramIdStart, messageStart - datagramIdStart - 1).toInt();
+        qDebug() << "index:" << dataGramIndex << dataGramCount << dataGramId << message.size();
         message = message.right(message.size() - messageStart);
         qDebug() << "client read message, length: " << message.length();
         std::cout << message.toStdString() << std::endl;
 
-        if (message.startsWith(utils::network::prefixInitResponse)) {
-            initResponse(message);
-        } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
-            worldUpdate(message);
-        } else if (message.startsWith(utils::network::prefixEvent)) {
-            eventReceived(message);
+        if (!datagrams.contains(dataGramId)) {
+            datagrams[dataGramId] = std::make_pair(QVector<QString>(dataGramCount),
+                                                   QDateTime::currentDateTime());
         }
+        datagrams[dataGramId].first[dataGramIndex] = message;
     } while (socket->hasPendingDatagrams());
+    buildDatagrams();
 }
 
 void client::MultiplayerInterface::sendCommand(const core::Command& command) {
@@ -123,4 +126,40 @@ void client::MultiplayerInterface::eventReceived(const QString& message) {
     QString eventJson = message.right(message.size() - eventJsonStart);
     utils::Serializer serializer;
     eventQueue.push_back(serializer.deserializeEvent(eventJson).value());
+}
+
+void client::MultiplayerInterface::buildDatagrams() {
+    while (!datagrams.empty()) {
+        QString message;
+        bool completed = true;
+        for (const QString& datagram : datagrams.first().first) {
+            if (datagram.isEmpty()) {
+                completed = false;
+                break;
+            }
+            message += datagram;
+        }
+        if (!completed) {
+            if (datagrams.first().second.msecsTo(QDateTime::currentDateTime()) > timeout) {
+                qDebug() << "timeout, datagram parts lost!";
+                datagrams.clear();
+                if (state == State::IN_GAME) {
+                    sendInitRequest();
+                }
+            }
+            return;
+        }
+        datagrams.remove(datagrams.firstKey());
+        if (message.startsWith(utils::network::prefixInitResponse)) {
+            initResponse(message);
+        } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
+            worldUpdate(message);
+        } else if (message.startsWith(utils::network::prefixEvent)) {
+            eventReceived(message);
+        }
+    }
+}
+
+client::MultiplayerInterface::State client::MultiplayerInterface::getState() const {
+    return state;
 }
