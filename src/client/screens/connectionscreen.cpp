@@ -206,7 +206,7 @@ void client::ConnectionScreen::startServer() {
                 utils::Factory::getObjectSignature("big-tower").value(),
                 QPoint(2010, 614));
 
-        engine->getGameWorld()->summonObject(
+        /*engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("medium-tower").value(),
                 QPoint(2077, 1666), 180);
 
@@ -225,9 +225,9 @@ void client::ConnectionScreen::startServer() {
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("high-tower").value(),
                 QPoint(1610, 592));
-
+*/
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
-                                             QPoint(1850, 1270));
+                                             QPoint(1850, 1600));
         engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
         /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),

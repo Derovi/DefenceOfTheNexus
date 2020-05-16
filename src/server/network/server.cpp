@@ -83,7 +83,7 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
             sendMessage(connectedPlayer, utils::network::prefixEvent + utils::network::separator +
                                          serializer.serializeEvent(event).value());
         }
-        utils::SmartSerializer smartSerializer(true);
+        utils::SmartSerializer smartSerializer(false);
         qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
                  << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +

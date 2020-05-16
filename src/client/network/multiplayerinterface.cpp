@@ -82,7 +82,7 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
 
     this->team = team.toUInt();
 
-    utils::SmartSerializer serializer(false);
+    utils::SmartSerializer serializer(true);
     qDebug() << "applying changes!!";
     serializer.applyChanges(gameWorld, worldJson);
     qDebug() << "emit inited!";
@@ -92,7 +92,7 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
 void client::MultiplayerInterface::worldUpdate(const QString& message) {
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
-    utils::SmartSerializer serializer;
+    utils::SmartSerializer serializer(false);
     serializer.applyChanges(gameWorld, worldJson);
     qDebug() << "changed applied!";
     //std::cout << worldJson.toStdString();
