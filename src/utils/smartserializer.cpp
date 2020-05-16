@@ -366,16 +366,16 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
                                                   const utils::KeyManager& keyManager) {
     changes = hashedToJson(changes, keyManager);
     if (changes.find("width") != changes.end()) {
-        gameWorld->setWidth(changes["width"].toDouble());
+        gameWorld->setWidth(changes["width"].toInt());
     }
     if (changes.find("height") != changes.end()) {
-        gameWorld->setHeight(changes["height"].toDouble());
+        gameWorld->setHeight(changes["height"].toInt());
     }
     if (changes.find("lastSummonedId") != changes.end()) {
-        gameWorld->setLastSummonedId(changes["lastSummonedId"].toDouble());
+        gameWorld->setLastSummonedId(changes["lastSummonedId"].toInt());
     }
     if(changes.find("teamCount")!=changes.end()){
-        gameWorld->setTeamCount(changes["teamCount"].toDouble());
+        gameWorld->setTeamCount(changes["teamCount"].toInt());
     }
     if (changes.find("resources") != changes.end()) {
         int team = 0;
