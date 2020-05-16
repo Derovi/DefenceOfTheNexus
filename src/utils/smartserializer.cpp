@@ -33,13 +33,18 @@ QJsonObject utils::SmartSerializer::objectPartSerializer(
     for (const auto& j:afterChanges->getAttributes()) {
         for (const auto& k: beforeChanges->getAttributes()) {
             if (j->getAttributeName() == k->getAttributeName()) {
-                attributes.insert(j->getAttributeName(),
-                                  utils::Factory::getPartSerializer(j->getAttributeName())(j, k,
-                                                                                           keyManager));
+                QJsonObject serialized = utils::Factory::getPartSerializer(j->getAttributeName())(j,
+                                                                                                  k,
+                                                                                                  keyManager);
+                if (serialized.size() != 0) {
+                    attributes.insert(j->getAttributeName(), serialized);
+                }
             }
         }
     }
-    result.insert("attributes", attributes);
+    if (attributes.size() != 0) {
+        result.insert("attributes", attributes);
+    }
     if (beforeChanges->getHitbox() != afterChanges->getHitbox()) {
         QPolygonF hitbox = afterChanges->getHitbox();
         QJsonArray xArray, yArray;
@@ -254,16 +259,27 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     while (iter != afterChanges->getObjects().end()) {
         if (beforeChanges->getObjects().find(iter.key()) == beforeChanges->getObjects().end()) {
             std::optional<QJsonObject> result = Serializer::objectSerializer(*iter.value());
-            object.insert(QString::number(iter.key()), result.value());
         } else {
-            object.insert(QString::number(iter.key()),
-                          objectPartSerializer(beforeChanges->getObjects()[iter.key()],
-                                               iter.value(),
-                                               keyManager));
+            QJsonObject result = objectPartSerializer(beforeChanges->getObjects()[iter.key()],
+                                                      iter.value(),
+                                                      keyManager);
+            if (result.size() != 0) {
+                object.insert(QString::number(iter.key()),
+                              result);
+            }
         }
         ++iter;
     }
     result.insert("objects", object);
+    iter = beforeChanges->getObjects().begin();
+    QJsonArray del;
+    while (iter != beforeChanges->getObjects().end()) {
+        if (afterChanges->getObjects().find(iter.key()) == afterChanges->getObjects().end()) {
+            del.push_back(QString::number(iter.key()));
+        }
+        ++iter;
+    }
+    result.insert("delete", del);
     return jsonToHashed(result, keyManager);
 }
 
@@ -387,11 +403,17 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
             ++iter;
         }
     }
+    if (changes.find("delete") != changes.end()) {
+        QJsonArray del = changes["delete"].toArray();
+        for (const auto& object : del) {
+            gameWorld->getObjects().erase(gameWorld->getObjects().find(object.toString().toLongLong()));
+        }
+    }
 }
 
 void utils::SmartSerializer::applyChanges(const std::shared_ptr<core::GameWorld>& gameWorld,
                                           QString changes) {
-    KeyManager keyManager(!prettyPrinting);
+    KeyManager keyManager(true);
     partGameWorldDeserializer(gameWorld, Serializer::stringToJsonObject(changes).value(),
                               keyManager);
 }

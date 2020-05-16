@@ -80,10 +80,10 @@ QString utils::KeyManager::getHash(QString key) const {
     }
 }
 
-QString utils::KeyManager::getKey(QString hash) const {
-    if (hashToKey.find(hash) != hashToKey.end() && hashing) {
-        return hashToKey[hash];
+QString utils::KeyManager::getKey(QString hashKey) const {
+    if (hashToKey.find(hashKey) != hashToKey.end() && hashing) {
+        return hashToKey[hashKey];
     } else {
-        return hash;
+        return hashKey;
     }
 }
