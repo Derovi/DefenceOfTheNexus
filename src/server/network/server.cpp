@@ -7,7 +7,8 @@
 #include "../engine.h"
 #include "../../utils/smartserializer.h"
 
-server::Server::Server(Engine* engine, int port): engine(engine), port(port), commandQueue(engine->getCommandQueue()) {}
+server::Server::Server(Engine* engine, int port):
+        engine(engine), port(port), commandQueue(engine->getCommandQueue()) {}
 
 void server::Server::registerCommandQueue(std::shared_ptr<Queue<core::Command>> commandQueue) {
     this->commandQueue = commandQueue;
@@ -20,12 +21,19 @@ void server::Server::start() {
 }
 
 void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message) {
-    QByteArray Datagram;
-    QDataStream out(&Datagram, QIODevice::WriteOnly);
-    out.setVersion(QDataStream::Qt_5_13);
-    out << message;
-    socket->writeDatagram(Datagram, QHostAddress(connectedPlayer.getAddress()),
-                          connectedPlayer.getPort());
+    const int offsetConst = 32085;
+    int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
+    for (int offset = 0;
+         offset < message.size();
+         offset += offsetConst) {
+        QByteArray datagram;
+        QDataStream out(&datagram, QIODevice::WriteOnly);
+        out.setVersion(QDataStream::Qt_5_13);
+        out << '<' + QString(offset / offsetConst) + ':' + QString(datagramsCount) + '>' +
+               message.mid(offset, std::min(offsetConst, message.size() - offset));
+        socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
+                              connectedPlayer.getPort());
+    }
     qDebug() << "message sended from server";
 }
 
@@ -71,7 +79,8 @@ int server::Server::getPort() const {
 void server::Server::updateGameWorld() {
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::SmartSerializer serializer(true);
-        qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size() << engine->getGameWorld()->getObjects().size();
+        qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
+                 << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
                                      serializer.getChanges(engine->getWorldBeforeUpdate(),
                                                            engine->getGameWorld()));
@@ -101,14 +110,13 @@ void server::Server::initPlayer(const QString& address, int port) {
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.serializeGameWorld(*engine->getGameWorld()).value());
-    std::cout << "hereis" << serializer.serializeGameWorld(*engine->getGameWorld()).value().toStdString() << std::endl;
     qDebug() << "init message";
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
     qDebug() << "command received";
     QString commandJson = message.right(message.size() - utils::network::prefixSendCommand.size() -
-                                      utils::network::separator.size());
+                                        utils::network::separator.size());
     utils::Serializer serializer;
     if (serializer.deserializeCommand(commandJson) == std::nullopt) {
         qDebug() << "Can't deserialize command!";

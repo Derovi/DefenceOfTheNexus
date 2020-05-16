@@ -31,7 +31,16 @@ void client::MultiplayerInterface::readMessage() {
     QString message;
     in >> message;
 
+    int datagramCountStart = message.indexOf(':') + 1;
+    int messageStart = message.indexOf('>') + 1;
+
+    //qDebug() << "mes st" << messageStart << message.length();
+    int dataGramIndex = message.mid(1, datagramCountStart - 2).toInt();
+    int dataGramCount = message.mid(datagramCountStart, messageStart - datagramCountStart - 1).toInt();
+    //qDebug() << "index:" << dataGramIndex << dataGramCount << message.size();
+    message = message.right(message.size() - messageStart);
     qDebug() << "client read message, length: " << message.length();
+    //std::cout << message.toStdString() << std::endl;
 
     if (message.startsWith(utils::network::prefixInitResponse)) {
         initResponse(message);
