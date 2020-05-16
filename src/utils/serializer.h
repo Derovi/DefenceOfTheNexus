@@ -93,6 +93,9 @@ class Serializer {
     costSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<QJsonObject>
+    eventSerializer(const core::Event& event);
+
+    static std::optional<QJsonObject>
     builderSerializer(const std::shared_ptr<core::Attribute>& attribute);
 
     static std::optional<core::GameWorld> gameWorldDeserialize(const QJsonObject& serialized);
@@ -127,6 +130,9 @@ class Serializer {
 
     static std::optional<std::shared_ptr<core::Attribute>>
     builderDeserializer(const QJsonObject& serialized);
+
+    static std::optional<core::Event>
+    eventDeserializer(const QJsonObject& serialized);
 
     QString jsonObjectToString(const QJsonObject& jsonObject);
 
