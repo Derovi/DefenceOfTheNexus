@@ -350,3 +350,7 @@ core::GameWorld::GameWorld(const core::GameWorld& base) {
         objects[it.key()]->setAttributes(attributes);
     }
 }
+
+bool core::GameWorld::areEnemies(int firstTeam, int secondTeam) {
+    return firstTeam != secondTeam;
+}

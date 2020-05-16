@@ -50,6 +50,8 @@ class GameWorld {
 
     bool isIntersectsWithObjects(const QPolygonF& polygon) const;
 
+    bool areEnemies(int firstTeam, int secondTeam);
+
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);
