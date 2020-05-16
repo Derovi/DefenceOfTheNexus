@@ -116,7 +116,7 @@ void server::Server::initPlayer(const QString& address, int port, int team) {
         connectedPlayers.push_back(foundPlayer);
     }
     qDebug() << "init message";
-   utils::SmartSerializer serializer(false);
+    utils::SmartSerializer serializer(false);
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString::number(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.getChanges(std::make_shared<core::GameWorld>(),

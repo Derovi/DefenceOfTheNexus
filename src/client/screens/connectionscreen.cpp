@@ -232,7 +232,7 @@ void client::ConnectionScreen::startServer() {
                                              QPoint(1850, 1600));
         engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
-        /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
                                              QPoint(700, 200));
         engine->getGameWorld()->buildWall(QPoint(1000,0),QPoint(1000,300), utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
@@ -262,7 +262,7 @@ void client::ConnectionScreen::startServer() {
                 utils::Factory::getObjectSignature("resourcebundle-stone").value(),
                 QPoint(2200, 1000));
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
-                                             QPoint(2200, 1200));*/
+                                             QPoint(2200, 1200));
     }
 
     //gameMap->setShowHitBoxes(true);
