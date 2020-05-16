@@ -115,11 +115,12 @@ void server::Server::initPlayer(const QString& address, int port, int team) {
         foundPlayer = ConnectedPlayer(address, port, team);
         connectedPlayers.push_back(foundPlayer);
     }
-    utils::Serializer serializer;
+    qDebug() << "init message";
+   utils::SmartSerializer serializer(false);
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString::number(foundPlayer.getTeam()) + utils::network::separator +
-                             serializer.serializeGameWorld(*engine->getGameWorld()).value());
-    qDebug() << "init message";
+                             serializer.getChanges(std::make_shared<core::GameWorld>(),
+                                                   engine->getGameWorld()));
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
