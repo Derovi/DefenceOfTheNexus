@@ -147,7 +147,6 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         }
         return;
     }
-    qDebug() << "command";
     int objectId = gameScreen->getInterface()->getSelectedUnitId();
     if (!gameWorld->getObjects().contains(objectId)) {
         qDebug() << "No such object!";
@@ -158,26 +157,21 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         qDebug() << "No permission!";
         return;
     }
-    qDebug() << "comman";
     if (target != nullptr && target->hasAttribute("resource")) {
-        qDebug() << "res";
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("mine_resource", {
                 QString::number(objectId), QString::number(target->getId())}));
     } else if (target != nullptr && target->hasAttribute("damageable")) {
-        qDebug() << "dam";
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command(core::Command("attack",
                                                                                        {QString::number(
                                                                                                objectId),
                                                                                         QString::number(
                                                                                                 target->getId())})));
     } else {
-        qDebug() << "els";
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command(
                 core::Command("change_move_target",
                               {QString::number(objectId), QString::number(point.x()),
                                QString::number(point.y())})));
     }
-    qDebug() << "comma";
 }
 
 int client::GameMap::getWindowHeight() const {
