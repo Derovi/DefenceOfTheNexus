@@ -776,3 +776,11 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
     auto object = new core::Cost(cost);
     return std::make_shared<core::Cost>(*object);
 }
+
+std::optional<QString> utils::Serializer::serializeEvent(const core::Event& event) {
+    return std::optional<QString>();
+}
+
+std::optional<core::Event> utils::Serializer::deserializeEvent(const QString& serialized) {
+    return std::optional<core::Event>();
+}

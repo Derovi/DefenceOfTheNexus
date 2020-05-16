@@ -15,6 +15,7 @@
 #include "../core/attributes/damageable.h"
 #include "../core/attributes/mining.h"
 #include "../core/command.h"
+#include "../core/event.h"
 #include "../core/object.h"
 #include "../core/gameworld.h"
 #include "../core/attributes/cost.h"
@@ -37,6 +38,8 @@ class Serializer {
 
     std::optional<QString> serializeCommand(const core::Command& command);
 
+    std::optional<QString> serializeEvent(const core::Event& event);
+
     std::optional<QString> serializeAttribute(const std::shared_ptr<core::Attribute>& attribute,
                                               std::function<std::optional<QJsonObject>(
                                                       const std::shared_ptr<core::Attribute>)> serializer);
@@ -48,6 +51,8 @@ class Serializer {
     std::optional<server::ObjectSignature> deserializeObjectSignature(const QString& serialized);
 
     std::optional<core::Command> deserializeCommand(const QString& serialized);
+
+    std::optional<core::Event> deserializeEvent(const QString& serialized);
 
     std::optional<std::shared_ptr<core::Attribute>> deserializeAttribute(const QString& serialized,
                                                                          std::function<std::optional<std::shared_ptr<core::Attribute>>(
