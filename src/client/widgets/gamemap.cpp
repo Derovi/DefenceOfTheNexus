@@ -275,4 +275,7 @@ void client::GameMap::buildCommand(const QString& objectType) {
 
 void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
+    if (event.getType() == core::Event::Type::HIT_EVENT) {
+        qDebug() << "handled hit event! Damager id: " << event.getArguments();
+    }
 }

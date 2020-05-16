@@ -227,7 +227,7 @@ void client::ConnectionScreen::startServer() {
                 QPoint(1610, 592));
 
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
-                                             QPoint(200, 200));
+                                             QPoint(1850, 1270));
         engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
         /*engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),

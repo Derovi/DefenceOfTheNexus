@@ -21,34 +21,34 @@ void client::MultiplayerInterface::sendMessage(const QString& message) {
 }
 
 void client::MultiplayerInterface::readMessage() {
-    QByteArray Datagram;
+
     do {
+        QByteArray Datagram;
         Datagram.resize(socket->pendingDatagramSize());
         socket->readDatagram(Datagram.data(), Datagram.size());
+        QDataStream in(&Datagram, QIODevice::ReadOnly);
+        QString message;
+        in >> message;
+
+        int datagramCountStart = message.indexOf(':') + 1;
+        int messageStart = message.indexOf('>') + 1;
+
+        //qDebug() << "mes st" << messageStart << message.length();
+        int dataGramIndex = message.mid(1, datagramCountStart - 2).toInt();
+        int dataGramCount = message.mid(datagramCountStart, messageStart - datagramCountStart - 1).toInt();
+        //qDebug() << "index:" << dataGramIndex << dataGramCount << message.size();
+        message = message.right(message.size() - messageStart);
+        qDebug() << "client read message, length: " << message.length();
+        std::cout << message.toStdString() << std::endl;
+
+        if (message.startsWith(utils::network::prefixInitResponse)) {
+            initResponse(message);
+        } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
+            worldUpdate(message);
+        } else if (message.startsWith(utils::network::prefixEvent)) {
+            eventReceived(message);
+        }
     } while (socket->hasPendingDatagrams());
-
-    QDataStream in(&Datagram, QIODevice::ReadOnly);
-    QString message;
-    in >> message;
-
-    int datagramCountStart = message.indexOf(':') + 1;
-    int messageStart = message.indexOf('>') + 1;
-
-    //qDebug() << "mes st" << messageStart << message.length();
-    int dataGramIndex = message.mid(1, datagramCountStart - 2).toInt();
-    int dataGramCount = message.mid(datagramCountStart, messageStart - datagramCountStart - 1).toInt();
-    //qDebug() << "index:" << dataGramIndex << dataGramCount << message.size();
-    message = message.right(message.size() - messageStart);
-    qDebug() << "client read message, length: " << message.length();
-    //std::cout << message.toStdString() << std::endl;
-
-    if (message.startsWith(utils::network::prefixInitResponse)) {
-        initResponse(message);
-    } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
-        worldUpdate(message);
-    } else if (message.startsWith(utils::network::prefixEvent)) {
-        eventReceived(message);
-    }
 }
 
 void client::MultiplayerInterface::sendCommand(const core::Command& command) {
@@ -114,7 +114,7 @@ uint8_t client::MultiplayerInterface::getTeam() const {
     return team;
 }
 
-QQueue<core::Event> client::MultiplayerInterface::getEventQueue() {
+QQueue<core::Event>& client::MultiplayerInterface::getEventQueue() {
     return eventQueue;
 }
 

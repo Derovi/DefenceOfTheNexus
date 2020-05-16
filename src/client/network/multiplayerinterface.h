@@ -36,7 +36,7 @@ class MultiplayerInterface : public QObject {
 
     uint8_t getTeam() const;
 
-    QQueue<core::Event> getEventQueue();
+    QQueue<core::Event>& getEventQueue();
 
     bool isReady();
 
