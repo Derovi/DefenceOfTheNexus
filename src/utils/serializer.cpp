@@ -778,9 +778,43 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
 }
 
 std::optional<QString> utils::Serializer::serializeEvent(const core::Event& event) {
-    return std::optional<QString>();
+    return jsonObjectToString(eventSerializer(event).value());
 }
 
 std::optional<core::Event> utils::Serializer::deserializeEvent(const QString& serialized) {
-    return std::optional<core::Event>();
+    if (stringToJsonObject(serialized) == std::nullopt) {
+        return std::nullopt;
+    }
+    return eventDeserializer(stringToJsonObject(serialized).value());
+}
+
+std::optional<QJsonObject> utils::Serializer::eventSerializer(const core::Event& event) {
+    QJsonObject result;
+    result.insert("type", static_cast<int>(event.getType()));
+    QJsonArray arguments;
+    for (const auto& argument : event.getArguments()) {
+        arguments.push_back(argument);
+    }
+    result.insert("arguments", arguments);
+    return result;
+}
+
+std::optional<core::Event>
+utils::Serializer::eventDeserializer(const QJsonObject& serialized) {
+    if (!serialized["type"].isDouble()) {
+        return std::nullopt;
+    }
+    int type = serialized["type"].toInt();
+    if (!serialized["arguments"].isArray()) {
+        return std::nullopt;
+    }
+    QJsonArray argJson = serialized["arguments"].toArray();
+    QStringList arguments;
+    for (const auto& argument : argJson) {
+        if (!argument.isString()) {
+            return std::nullopt;
+        }
+        arguments.push_back(argument.toString());
+    }
+    return core::Event(static_cast<core::Event::Type>(type), arguments);
 }
