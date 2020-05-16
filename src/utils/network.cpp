@@ -5,3 +5,4 @@ const QString utils::network::prefixInitRequest = "initRequest";
 const QString utils::network::prefixInitResponse = "initResponse";
 const QString utils::network::prefixSendCommand = "sendCommand";
 const QString utils::network::prefixWorldUpdate = "worldUpdate";
+const QString utils::network::prefixEvent = "event";

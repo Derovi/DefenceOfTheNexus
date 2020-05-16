@@ -76,13 +76,18 @@ int server::Server::getPort() const {
     return port;
 }
 
-void server::Server::updateGameWorld() {
+void server::Server::updateGameWorld(QVector<core::Event> events) {
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
-        utils::SmartSerializer serializer(true);
+        utils::Serializer serializer;
+        for (const core::Event& event : events) {
+            sendMessage(connectedPlayer, utils::network::prefixEvent + utils::network::separator +
+                                         serializer.serializeEvent(event).value());
+        }
+        utils::SmartSerializer smartSerializer(true);
         qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
                  << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
-                                     serializer.getChanges(engine->getWorldBeforeUpdate(),
+                smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
                                                            engine->getGameWorld()));
     }
 }

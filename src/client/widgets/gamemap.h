@@ -63,6 +63,8 @@ class GameMap : public Widget {
 
     void buildCommand(const QString& objectType);
 
+    void handleEvent(const core::Event& event);
+
     const QHash<int64_t, std::shared_ptr<GraphicsObject>>& getGraphicsObjects() const;
 
   protected:

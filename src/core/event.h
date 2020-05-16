@@ -13,6 +13,8 @@ class Event {
         HIT_EVENT, DIE_EVENT
     };
 
+    Event() = default;
+
     Event(Type type, QStringList arguments);
 
     Type getType() const;

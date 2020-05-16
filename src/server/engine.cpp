@@ -6,6 +6,7 @@
 #include "../utils/queue.h"
 #include "../core/gameworld.h"
 #include "../core/command.h"
+#include "../core/event.h"
 #include "../client/app.h"
 
 #include "commandexecutor.h"
@@ -44,7 +45,9 @@ void server::Engine::start() {
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
                 currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
             qDebug() << "server" << gameWorld->getObjects()[0]->getPosition();
-            emit updated();
+            generateEvent(core::Event(core::Event::Type::HIT_EVENT, {}));
+            emit updated(events);
+            events.clear();
         }
     }));
     mainThread->start();
@@ -94,4 +97,8 @@ void server::Engine::setGameWorld(const std::shared_ptr<core::GameWorld>& gameWo
 
 const std::shared_ptr<core::GameWorld>& server::Engine::getWorldBeforeUpdate() const {
     return worldBeforeUpdate;
+}
+
+void server::Engine::generateEvent(const core::Event& event) {
+    events.push_back(event);
 }

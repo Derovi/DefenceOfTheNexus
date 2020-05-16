@@ -25,7 +25,7 @@ class Server : public QObject {
 
     void finish();
 
-    void updateGameWorld();
+    void updateGameWorld(QVector<core::Event> events);
 
     void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
 

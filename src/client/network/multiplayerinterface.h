@@ -5,9 +5,11 @@
 
 #include <QtCore/QObject>
 #include <QtNetwork/QUdpSocket>
+#include <QtCore/QQueue>
 
 #include "../../core/command.h"
 #include "../../core/gameworld.h"
+#include "../../core/event.h"
 
 namespace client {
 
@@ -22,6 +24,8 @@ class MultiplayerInterface : public QObject {
 
     void sendMessage(const QString& message);
 
+    void eventReceived(const QString& message);
+
     const QString& getAddress() const;
 
     int getPort() const;
@@ -32,11 +36,14 @@ class MultiplayerInterface : public QObject {
 
     uint8_t getTeam() const;
 
+    QQueue<core::Event> getEventQueue();
+
     bool isReady();
 
   private:
     QString address;
     int port;
+    QQueue<core::Event> eventQueue;
 
     std::shared_ptr<QUdpSocket> socket = nullptr;
 

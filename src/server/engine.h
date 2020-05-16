@@ -10,6 +10,7 @@
 
 #include "gameconfiguration.h"
 #include "commandexecutor.h"
+#include "../core/event.h"
 
 namespace server {
 
@@ -37,7 +38,7 @@ class Engine : public QObject {
 
     const std::shared_ptr<core::GameWorld>& getWorldBeforeUpdate() const;
 
-
+    void generateEvent(const core::Event& event);
 
     void finish();
 
@@ -48,6 +49,7 @@ class Engine : public QObject {
 
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
+    QVector<core::Event> events;
     std::atomic_bool finished;
     std::shared_ptr<core::GameWorld> gameWorld;
     std::shared_ptr<core::GameWorld> worldBeforeUpdate;
@@ -56,7 +58,7 @@ class Engine : public QObject {
     std::shared_ptr<Queue<core::Command>> commandQueue;
 
   signals:
-    void updated();
+    void updated(QVector<core::Event> events);
 };
 
 }  // namespace server

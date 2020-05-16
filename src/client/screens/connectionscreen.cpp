@@ -269,6 +269,7 @@ void client::ConnectionScreen::startServer() {
     server = std::make_shared<server::Server>(engine.get(), 25565);
     server->start();
 
+    qRegisterMetaType<QVector<core::Event>>("QVector<core::Event>");
     connect(engine.get(), &server::Engine::updated, server.get(), &server::Server::updateGameWorld);
 
     address = "127.0.0.1";

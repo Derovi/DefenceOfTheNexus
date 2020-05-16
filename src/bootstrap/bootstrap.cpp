@@ -192,6 +192,8 @@ void registerKeys(){
 }
 
 int main(int argc, char** argv) {
+    qRegisterMetaType<core::Event>("gamEvent");
+    qRegisterMetaType<QVector<core::Event>>("gameEventList");
     registerAttributes();
     registerStrategies();
     registerSpriteControllers();

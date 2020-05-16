@@ -46,6 +46,8 @@ void client::MultiplayerInterface::readMessage() {
         initResponse(message);
     } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
         worldUpdate(message);
+    } else if (message.startsWith(utils::network::prefixEvent)) {
+        eventReceived(message);
     }
 }
 
@@ -110,4 +112,15 @@ bool client::MultiplayerInterface::isReady() {
 
 uint8_t client::MultiplayerInterface::getTeam() const {
     return team;
+}
+
+QQueue<core::Event> client::MultiplayerInterface::getEventQueue() {
+    return eventQueue;
+}
+
+void client::MultiplayerInterface::eventReceived(const QString& message) {
+    int eventJsonStart = utils::network::prefixEvent.size() + utils::network::separator.size();
+    QString eventJson = message.right(message.size() - eventJsonStart);
+    utils::Serializer serializer;
+    eventQueue.push_back(serializer.deserializeEvent(eventJson).value());
 }

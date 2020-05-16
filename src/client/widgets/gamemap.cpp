@@ -33,9 +33,10 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 
 void client::GameMap::paint(QPainter& painter) {
     qDebug() << "client" << gameWorld->getObjects()[0]->getPosition();
+    auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (fixed) {
         if (gameWorld->getObjects().contains(0)) {
-            int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+            int objectId = gameScreen->getInterface()->getSelectedUnitId();
             centerWindow(QPoint(gameWorld->getObjects()[objectId]->getPosition().x() + 1,
                                 gameWorld->getObjects()[objectId]->getPosition().y() + 1));
         }
@@ -111,6 +112,10 @@ void client::GameMap::paint(QPainter& painter) {
                                       8, Qt::SolidLine,
                                       Qt::SquareCap, Qt::MiterJoin));
         }
+    }
+
+    while (!gameScreen->getMultiplayerInterface()->getEventQueue().empty()) {
+        handleEvent(gameScreen->getMultiplayerInterface()->getEventQueue().takeFirst());
     }
 }
 
@@ -266,4 +271,8 @@ client::GameMap::getGraphicsObjects() const {
 
 void client::GameMap::buildCommand(const QString& objectType) {
 
+}
+
+void client::GameMap::handleEvent(const core::Event& event) {
+    //!TODO handle event
 }
