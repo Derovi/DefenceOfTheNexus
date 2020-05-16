@@ -17,7 +17,7 @@ class WindowManager;
 
 class Widget : public QObject {
   public:
-    explicit Widget(const QPoint& position = QPoint(0,0));
+    explicit Widget(const QPoint& position = QPoint(0, 0));
 
     virtual ~Widget();
 
@@ -65,6 +65,8 @@ class Widget : public QObject {
 
     virtual void paint(QPainter& painter) {};
 
+    const std::chrono::steady_clock::time_point& getLastPaintTime() const;
+
   public slots:
 
     // called my main window
@@ -83,8 +85,6 @@ class Widget : public QObject {
     virtual void setWidth(int width);
 
   protected:
-    QPoint position;
-
     virtual void clicked(QPoint point, bool leftButton) {};
 
     virtual void mouseMoved(QPoint point) {};
@@ -93,12 +93,9 @@ class Widget : public QObject {
 
     virtual void keyPressed(QKeyEvent* event) {};
 
-  public:
-    const std::chrono::steady_clock::time_point& getLastPaintTime() const;
-
-  protected:
-
     std::function<void(QPoint, bool)> onClick;
+
+    QPoint position;
 
     int height;
     int width;
