@@ -239,6 +239,9 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     if (beforeChanges->getLastSummonedId() != afterChanges->getLastSummonedId()) {
         result.insert("lastSummonedId", afterChanges->getLastSummonedId());
     }
+    if (beforeChanges->getTeamCount() != afterChanges->getTeamCount()){
+        result.insert("teamCount",afterChanges->getTeamCount());
+    }
     QJsonArray resources;
     for (int team = 0;
          team < afterChanges->getTeamCount();
@@ -370,6 +373,9 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     }
     if (changes.find("lastSummonedId") != changes.end()) {
         gameWorld->setLastSummonedId(changes["lastSummonedId"].toDouble());
+    }
+    if(changes.find("teamCount")!=changes.end()){
+        gameWorld->setTeamCount(changes["teamCount"].toDouble());
     }
     if (changes.find("resources") != changes.end()) {
         int team = 0;
