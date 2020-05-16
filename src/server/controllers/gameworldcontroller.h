@@ -9,10 +9,12 @@
 
 namespace server {
 
+class Engine;
+
 class GameWorldController {
 
   public:
-    explicit GameWorldController(std::shared_ptr<core::GameWorld> gameWorld);
+    GameWorldController(std::shared_ptr<core::GameWorld> gameWorld, Engine* engine);
 
     void tick(double deltaTime);
 
@@ -34,6 +36,8 @@ class GameWorldController {
 
     // id, controller
     QHash<int64_t, std::shared_ptr<Controller>> controllers;
+
+    Engine* engine;
 };
 
 }

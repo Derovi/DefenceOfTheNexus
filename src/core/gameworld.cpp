@@ -351,6 +351,18 @@ core::GameWorld::GameWorld(const core::GameWorld& base) {
     }
 }
 
+const QVector<core::Event>& core::GameWorld::getGeneratedEvent() const {
+    return generatedEvent;
+}
+
 bool core::GameWorld::areEnemies(int firstTeam, int secondTeam) {
     return firstTeam != secondTeam;
+}
+
+void core::GameWorld::generateEvent(const core::Event& event) {
+    generatedEvent.push_back(event);
+}
+
+void core::GameWorld::clearEvents() {
+    generatedEvent.clear();
 }

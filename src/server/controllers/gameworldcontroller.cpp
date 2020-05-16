@@ -6,11 +6,13 @@
 
 #include "controller.h"
 #include "gameworldcontroller.h"
+#include "../engine.h"
 
 // todo one controller for one object type
 
-server::GameWorldController::GameWorldController(std::shared_ptr<core::GameWorld> gameWorld):
-        gameWorld(gameWorld) {
+server::GameWorldController::GameWorldController(std::shared_ptr<core::GameWorld> gameWorld,
+                                                 Engine* engine):
+        gameWorld(gameWorld), engine(engine) {
     for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
         controllers[object->getId()] = std::shared_ptr<Controller>(new Controller(object));
     }
@@ -19,7 +21,8 @@ server::GameWorldController::GameWorldController(std::shared_ptr<core::GameWorld
 void server::GameWorldController::tick(double deltaTime) {
     for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
         if (!controllers.contains(object->getId())) {
-            controllers.insert(object->getId(), std::shared_ptr<Controller>(new Controller(object)));
+            controllers.insert(object->getId(),
+                               std::shared_ptr<Controller>(new Controller(object)));
         }
     }
 
@@ -38,6 +41,11 @@ void server::GameWorldController::tick(double deltaTime) {
     for (int id : eraseList) {
         controllers.remove(id);
     }
+
+    for (const core::Event& event : gameWorld->getGeneratedEvent()) {
+        engine->generateEvent(event);
+    }
+    gameWorld->clearEvents();
 }
 
 std::shared_ptr<core::GameWorld> server::GameWorldController::getGameWorld() {
@@ -61,6 +69,7 @@ void server::GameWorldController::removeObject(int64_t id) {
     controllers.remove(id);
 }
 
-const QHash<int64_t, std::shared_ptr<server::Controller>>& server::GameWorldController::getControllers() {
+const QHash<int64_t, std::shared_ptr<server::Controller>>&
+server::GameWorldController::getControllers() {
     return controllers;
 }

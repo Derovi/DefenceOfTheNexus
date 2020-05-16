@@ -8,6 +8,7 @@
 #include "object.h"
 #include "attributes/resource.h"
 #include "../server/objectsignature.h"
+#include "event.h"
 
 namespace core {
 
@@ -82,10 +83,17 @@ class GameWorld {
 
     GameWorld(const core::GameWorld &base);
 
+    void generateEvent(const core::Event& event);
+
+    void clearEvents();
+
+    const QVector<core::Event>& getGeneratedEvent() const;
 
   private:
     QVector<QVector<QPair<core::ResourceType, int>>> resources;
     QHash<int64_t, std::shared_ptr<core::Object>> objects;
+
+    QVector<core::Event> generatedEvent;  // DON'T SERIALIZE!
 
     int height;
     int width;

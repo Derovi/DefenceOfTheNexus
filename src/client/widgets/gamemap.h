@@ -7,6 +7,7 @@
 #include "../../utils/queue.h"
 #include "../../core/command.h"
 #include "../../core/gameworld.h"
+#include "../../core/event.h"
 #include "../screen.h"
 #include "../graphicsobject.h"
 #include "../widget.h"

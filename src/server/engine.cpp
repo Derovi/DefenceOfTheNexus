@@ -16,7 +16,7 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
     gameConfiguration(gameConfiguration), finished(false), mainThread(nullptr) {
     gameWorld = world_generator::generate(gameConfiguration);
     worldBeforeUpdate = std::make_shared<core::GameWorld>();
-    gameWorldController = std::make_shared<GameWorldController>(gameWorld);
+    gameWorldController = std::make_shared<GameWorldController>(gameWorld, this);
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
 }
@@ -45,7 +45,7 @@ void server::Engine::start() {
             QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
                 currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
             qDebug() << "server" << gameWorld->getObjects()[0]->getPosition();
-            generateEvent(core::Event(core::Event::Type::HIT_EVENT, {}));
+            //generateEvent(core::Event(core::Event::Type::HIT_EVENT, {}));
             emit updated(events);
             events.clear();
         }
@@ -90,7 +90,7 @@ void server::Engine::executeCommands() {
 
 void server::Engine::setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld) {
     this->gameWorld = gameWorld;
-    gameWorldController = std::make_shared<GameWorldController>(gameWorld);
+    gameWorldController = std::make_shared<GameWorldController>(gameWorld, this);
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
 }
