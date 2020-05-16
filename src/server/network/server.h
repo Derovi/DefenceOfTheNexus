@@ -29,7 +29,7 @@ class Server : public QObject {
 
     void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
 
-    void initPlayer(const QString& address, int port);
+    void initPlayer(const QString& address, int port, int team);
 
     void commandReceived(const QString& address, int port, const QString& message);
 

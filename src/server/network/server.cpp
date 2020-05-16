@@ -60,7 +60,9 @@ void server::Server::readMessage() {
     qDebug() << "sender:" << senderAddress << senderPort;
 
     if (message.startsWith(utils::network::prefixInitRequest)) {
-        initPlayer(senderAddress, senderPort);
+        initPlayer(senderAddress, senderPort,
+                   message.right(message.size() - utils::network::prefixInitRequest.size() -
+                                 utils::network::separator.size()).toInt());
     } else if (message.startsWith(utils::network::prefixSendCommand)) {
         commandReceived(senderAddress, senderPort,
                         message);
@@ -99,7 +101,7 @@ server::Engine* server::Server::getEngine() const {
     return engine;
 }
 
-void server::Server::initPlayer(const QString& address, int port) {
+void server::Server::initPlayer(const QString& address, int port, int team) {
     ConnectedPlayer foundPlayer;
     bool isPlayerFound = false;
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
@@ -110,13 +112,12 @@ void server::Server::initPlayer(const QString& address, int port) {
         }
     }
     if (!isPlayerFound) {
-        foundPlayer = ConnectedPlayer(address, port, engine->getGameWorld()->getTeamCount());
-        engine->getGameWorld()->setTeamCount(engine->getGameWorld()->getTeamCount() + 1);
+        foundPlayer = ConnectedPlayer(address, port, team);
         connectedPlayers.push_back(foundPlayer);
     }
     utils::Serializer serializer;
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
-                             QString(foundPlayer.getTeam()) + utils::network::separator +
+                             QString::number(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.serializeGameWorld(*engine->getGameWorld()).value());
     qDebug() << "init message";
 }

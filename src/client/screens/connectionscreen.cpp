@@ -72,8 +72,10 @@ void client::ConnectionScreen::startServer() {
     if (gameWorld != nullptr) {
         engine->setGameWorld(gameWorld);
     } else {
+        engine->getGameWorld()->setTeamCount(2);
+
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                             QPoint(1800, 1200));
+                                             QPoint(1800, 1200), 1);
 
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("iron").value(),
@@ -206,7 +208,7 @@ void client::ConnectionScreen::startServer() {
                 utils::Factory::getObjectSignature("big-tower").value(),
                 QPoint(2010, 614));
 
-        /*engine->getGameWorld()->summonObject(
+        engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("medium-tower").value(),
                 QPoint(2077, 1666), 180);
 
@@ -225,7 +227,7 @@ void client::ConnectionScreen::startServer() {
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("high-tower").value(),
                 QPoint(1610, 592));
-*/
+
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
                                              QPoint(1850, 1600));
         engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
@@ -278,6 +280,7 @@ void client::ConnectionScreen::startServer() {
 
 void client::ConnectionScreen::connectServer() {
     multiplayerInterface = std::make_shared<MultiplayerInterface>(address, port);
+    multiplayerInterface->setTeam(1);
     multiplayerInterface->sendInitRequest();
 }
 

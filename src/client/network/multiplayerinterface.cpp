@@ -21,6 +21,10 @@ void client::MultiplayerInterface::sendMessage(const QString& message) {
     socket->writeDatagram(Datagram, QHostAddress(address), port);
 }
 
+void client::MultiplayerInterface::setTeam(uint8_t team) {
+    MultiplayerInterface::team = team;
+}
+
 void client::MultiplayerInterface::readMessage() {
 
     do {
@@ -70,16 +74,18 @@ const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() con
 }
 
 void client::MultiplayerInterface::sendInitRequest() {
-    sendMessage(utils::network::prefixInitRequest);
+    sendMessage(
+            utils::network::prefixInitRequest + utils::network::separator + QString::number(team));
 }
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
     qDebug() << "init response!";
     int teamEntryStart =
-            utils::network::prefixInitRequest.size() + utils::network::separator.size();
+            utils::network::prefixInitResponse.size() + utils::network::separator.size();
     QString team = message.mid(teamEntryStart,
                                message.indexOf(utils::network::separator, teamEntryStart) -
                                teamEntryStart);
+    qDebug() << "init response team: " << team;
     int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
     QString worldJson = message.right(message.size() - worldJsonEntryStart);
 

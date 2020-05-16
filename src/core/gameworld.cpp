@@ -88,13 +88,15 @@ void core::GameWorld::setLastSummonedId(int lastSummonedId) {
 
 std::shared_ptr<core::Object>
 core::GameWorld::summonObject(const server::ObjectSignature& signature, const QPoint& position,
+                              int team,
                               float rotationAngle) {
     ++lastSummonedId;
     std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
                                                               signature.getTypeName(),
                                                               position,
                                                               signature.getHitbox(),
-                                                              rotationAngle);
+                                                              rotationAngle,
+                                                              team);
     object->setStrategies(signature.getStrategies());
     for (const auto& attribute : signature.getAttributes()) {
         object->getAttributes().push_back(attribute->clone());
@@ -150,7 +152,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 kol++;
                 continue;
             }
-            if (team != 255 && (columnSignature.getAttribute("cost") != nullptr) &&
+            if (team != 0 && (columnSignature.getAttribute("cost") != nullptr) &&
                 !((dynamic_cast<Cost*>(columnSignature.getAttribute("cost").get()))->pay(
                         resources[team]))) {
                 break;
@@ -168,7 +170,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 kol++;
                 continue;
             }
-            if (team != 255 && (wall.getAttribute("cost") != nullptr) &&
+            if (team != 0 && (wall.getAttribute("cost") != nullptr) &&
                 !((dynamic_cast<Cost*>(wall.getAttribute("cost").get()))->pay(resources[team]))) {
                 break;
             }

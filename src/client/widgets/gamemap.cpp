@@ -149,7 +149,15 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
     }
     qDebug() << "command";
     int objectId = gameScreen->getInterface()->getSelectedUnitId();
+    if (!gameWorld->getObjects().contains(objectId)) {
+        qDebug() << "No such object!";
+        return;
+    }
     auto target = gameWorld->objectAt(point);
+    if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
+        qDebug() << "No permission!";
+        return;
+    }
     qDebug() << "comman";
     if (target != nullptr && target->hasAttribute("resource")) {
         qDebug() << "res";

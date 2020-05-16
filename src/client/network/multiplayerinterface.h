@@ -48,6 +48,8 @@ class MultiplayerInterface : public QObject {
 
     State getState() const;
 
+    void setTeam(uint8_t team);
+
   private:
     QString address;
     int port;
