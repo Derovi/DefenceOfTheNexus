@@ -74,6 +74,8 @@ class Widget : public QObject {
 
     virtual void mouse(QPoint point);
 
+    virtual void keyPress(QKeyEvent* event);
+
     virtual void wheel(QWheelEvent* event);
 
     virtual void setHeight(int height);
@@ -88,6 +90,8 @@ class Widget : public QObject {
     virtual void mouseMoved(QPoint point) {};
 
     virtual void wheelEvent(QWheelEvent* event) {};
+
+    virtual void keyPressed(QKeyEvent* event) {};
 
   public:
     const std::chrono::steady_clock::time_point& getLastPaintTime() const;

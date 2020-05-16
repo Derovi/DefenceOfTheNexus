@@ -182,3 +182,10 @@ int client::Widget::getBoundsWidth() const {
 void client::Widget::setBoundsWidth(int boundsWidth) {
     Widget::boundsWidth = boundsWidth;
 }
+
+void client::Widget::keyPress(QKeyEvent* event) {
+    for (const auto& child : children) {
+        child->keyPress(event);
+    }
+    keyPressed(event);
+}
