@@ -29,6 +29,8 @@ class App : public QWidget {
   protected:
     void wheelEvent(QWheelEvent* event) override;
 
+    void inputMethodEvent(QInputMethodEvent* event) override;
+
   public:
     QThread* getUiThread() const;
 

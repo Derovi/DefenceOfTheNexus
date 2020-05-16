@@ -66,6 +66,11 @@ client::App::App() {
             lastTickStartTime = currentTickStartTime;
         }
     });
+    setAttribute(Qt::WA_InputMethodEnabled);
+    setAttribute(Qt::WA_KeyCompression);
+    setFocus();
+    QEvent event(QEvent::RequestSoftwareInputPanel);
+    QApplication::sendEvent(this, &event);
     openScreen(std::make_shared<MenuScreen>());
     uiThread->start();
 }
@@ -76,6 +81,11 @@ void client::App::mousePressEvent(QMouseEvent* event) {
                                     window_manager::get_y4k(event->pos().y())),
                                             event->button() == Qt::LeftButton);
     }
+}
+
+void client::App::inputMethodEvent(QInputMethodEvent* event) {
+    qDebug() << "input";
+    qDebug() << event->commitString();
 }
 
 void client::App::draw() {
