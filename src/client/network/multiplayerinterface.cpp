@@ -80,7 +80,7 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
 
     this->team = team.toUInt();
 
-    utils::SmartSerializer serializer;
+    utils::SmartSerializer serializer(false);
     qDebug() << "applying changes!!";
     serializer.applyChanges(gameWorld, worldJson);
     qDebug() << "emit inited!";
