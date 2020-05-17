@@ -88,7 +88,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/client/network/multiplayerinterface.cpp
         src/utils/network.cpp
         src/server/network/connectedplayer.cpp
-        src/core/event.cpp)
+        src/core/event.cpp src/server/aiplayer.cpp src/server/aiplayer.h)
 
 
 qt5_add_big_resources(SOURCES resources/sprites.qrc

@@ -11,6 +11,7 @@
 #include "gameconfiguration.h"
 #include "commandexecutor.h"
 #include "../core/event.h"
+#include "aiplayer.h"
 
 namespace server {
 
@@ -42,6 +43,8 @@ class Engine : public QObject {
 
     void finish();
 
+    void addAIPlayer(const std::shared_ptr<AIPlayer>& aiPlayer);
+
     bool isFinished() const;
 
   private:
@@ -50,6 +53,7 @@ class Engine : public QObject {
     CommandExecutor commandExecutor;
     GameConfiguration gameConfiguration;
     QVector<core::Event> events;
+    QVector<std::shared_ptr<AIPlayer>> aiPlayers;
     std::atomic_bool finished;
     std::shared_ptr<core::GameWorld> gameWorld;
     std::shared_ptr<core::GameWorld> worldBeforeUpdate;
