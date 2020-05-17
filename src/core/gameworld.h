@@ -50,6 +50,8 @@ class GameWorld {
 
     bool isIntersectsWithObjects(const QPolygonF& polygon) const;
 
+    bool areAllies(std::shared_ptr<core::Object> first, std::shared_ptr<core::Object> second) const;
+
     int getLastSummonedId() const;
 
     void setLastSummonedId(int lastSummonedId);

@@ -8,7 +8,7 @@ void inflictDamage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core:
                    std::shared_ptr<core::Damageable> damageable, int damage) {
     qDebug() << "Inflicting damage " << object->getId() << ": " << damageable->getHealth()
         << " -> " << damageable->getHealth() - damage << endl;
-    damageable->setHealth(damageable->getHealth() - damage);
+    damageable->setHealth(std::max(0, damageable->getHealth() - damage));
     if (damageable->getHealth() <= 0) {
         kill(world, object);
     }

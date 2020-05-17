@@ -7,8 +7,8 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), commandQueue(nullptr),
-        showHitBoxes(false), showSprites(true), fixed(false), cameraSpeed(60) {
+    Widget(position), commandQueue(nullptr),
+    showHitBoxes(false), showSprites(true), fixed(false), cameraSpeed(60) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
@@ -34,15 +34,16 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 void client::GameMap::paint(QPainter& painter) {
     if (fixed) {
         if (gameWorld->getObjects().contains(0)) {
-            int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+            int objectId =
+                dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
             centerWindow(QPoint(gameWorld->getObjects()[objectId]->getPosition().x() + 1,
                                 gameWorld->getObjects()[objectId]->getPosition().y() + 1));
         }
     } else {
         QPoint cursor = QPoint(window_manager::get_x4k(
-                App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).x()),
-        window_manager::get_y4k(
-                App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).y()));
+            App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).x()),
+                               window_manager::get_y4k(
+                                   App::getInstance()->mapFromGlobal(App::getInstance()->cursor().pos()).y()));
         if (isPointOnBounds(cursor)) {
             QVector2D vector(cursor.x() - 1920, cursor.y() - 1080);
             vector.normalize();
@@ -122,8 +123,8 @@ void client::GameMap::setGameWorld(const std::shared_ptr<core::GameWorld>& gameW
 
 QTransform client::GameMap::getTransformToWidget() const {
     return QTransform(1, 0, 0, 1, -displayBounds.x(), -displayBounds.y()) *
-           QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
-                      static_cast<double>(height) / displayBounds.height(), 0, 0);
+        QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
+                   static_cast<double>(height) / displayBounds.height(), 0, 0);
 }
 
 QTransform client::GameMap::getTransformToMap() const {
@@ -136,22 +137,28 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         auto object = gameWorld->objectAt(point);
         if (object) {
             dynamic_cast<GameScreen*>(getParent())->getInterface()->setSelectedUnitId(
-                    object->getId());
+                object->getId());
         }
         return;
     }
-    int objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
+    uint64_t objectId = dynamic_cast<GameScreen*>(getParent())->getInterface()->getSelectedUnitId();
     auto target = gameWorld->objectAt(point);
+    if (target != nullptr && target->getId() == objectId) {
+        return;
+    }
     if (target != nullptr && target->hasAttribute("resource")) {
         commandQueue->push(core::Command("mine_resource", {
             QString::number(objectId), QString::number(target->getId())}));
     } else if (target != nullptr && target->hasAttribute("damageable")) {
-        commandQueue->push(core::Command("attack", {QString::number(objectId), QString::number(target->getId())}));
+        commandQueue->push(core::Command("attack",
+                                         {QString::number(objectId),
+                                          QString::number(target->getId())}));
     } else {
+        qDebug() << "I wanna go at " << point << endl;
         commandQueue->push(
-                core::Command("change_move_target",
-                              {QString::number(objectId), QString::number(point.x()),
-                               QString::number(point.y())}));
+            core::Command("change_move_target",
+                          {QString::number(objectId), QString::number(point.x()),
+                           QString::number(point.y())}));
     }
 }
 
@@ -246,7 +253,7 @@ void client::GameMap::drawBackground(QPainter& painter) {
          x < displayBounds.x() + displayBounds.width();
          x += background.getFrameWidth()) {
         for (int y =
-                (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
+            (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
              y < displayBounds.y() + displayBounds.height();
              y += background.getFrameHeight()) {
             background.draw(painter,

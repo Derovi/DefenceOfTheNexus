@@ -1,5 +1,7 @@
 #include "serializer.h"
+
 #include "../core/attributes/builder.h"
+#include "../core/attributes/bullet.h"
 
 utils::Serializer::Serializer(bool prettyPrinting) : prettyPrinting(prettyPrinting) {}
 
@@ -143,6 +145,20 @@ utils::Serializer::builderSerializer(const std::shared_ptr<core::Attribute>& att
     }
     QJsonObject json;
     json.insert("list", QVariant(object->getBuildList()).toJsonValue());
+    return json;
+}
+
+std::optional<QJsonObject> utils::Serializer::bulletSerializer(const std::shared_ptr<core::Attribute>& attribute) {
+    auto object = dynamic_cast<core::Bullet*>(attribute.get());
+    if (object == nullptr) {
+        return std::nullopt;
+    }
+    QJsonObject json;
+    json.insert("damage", object->getDamage());
+    json.insert("range", object->getRange());
+    json.insert("ownerId", static_cast<qint64>(object->getOwnerId()));
+    json.insert("shooterPosX", object->getShooterPos().x());
+    json.insert("shooterPosY", object->getShooterPos().y());
     return json;
 }
 
@@ -761,4 +777,20 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
     }
     auto object = new core::Cost(cost);
     return std::make_shared<core::Cost>(*object);
+}
+
+std::optional<std::shared_ptr<core::Attribute>>
+utils::Serializer::bulletDeserializer(const QJsonObject& serialized) {
+    if (!serialized["damage"].isDouble() || !serialized["range"].isDouble()
+        || !serialized["ownerId"].isDouble() || !serialized["shooterPosX"].isDouble()
+        || !serialized["shooterPosY"].isDouble()) {
+        return std::nullopt;
+    }
+    auto bullet = std::make_shared<core::Bullet>();
+    bullet->setDamage(serialized["damage"].toInt());
+    bullet->setRange(serialized["range"].toDouble());
+    bullet->setOwnerId(serialized["ownerId"].toInt());
+    QPointF pos(serialized["shooterPosX"].toDouble(), serialized["shooterPosY"].toDouble());
+    bullet->setShooterPos(pos);
+    return bullet;
 }

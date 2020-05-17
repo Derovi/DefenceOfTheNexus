@@ -181,6 +181,12 @@ bool core::GameWorld::isIntersectsWithObjects(const QPolygonF& polygon) const {
     return false;
 }
 
+bool core::GameWorld::areAllies(std::shared_ptr<core::Object> first,
+                                std::shared_ptr<core::Object> second) const {
+    assert(first != nullptr && second != nullptr);
+    return first->getId() == second->getId();
+}
+
 std::shared_ptr<core::Object>
 core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& position,
                        float rotationAngle) {

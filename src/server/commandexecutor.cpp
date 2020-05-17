@@ -135,7 +135,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
     qDebug() << "click command!";
     DataBundle bundle;
-    auto point = std::make_shared<QPointF>(x,y);
+    auto point = std::make_shared<QPointF>(x, y);
     bundle.registerVariable("destinationPoint", point);
     gameWorldController->getControllers()[objectId]->linkStrategies(bundle);
     return true;
@@ -237,6 +237,10 @@ bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
     auto target = getGameWorld()->getObjects().find(targetId);
     if (target == getGameWorld()->getObjects().end()
         || !target.value()->hasAttribute("damageable")) {
+        return false;
+    }
+
+    if (getGameWorld()->areAllies(*attacker, *target)) {
         return false;
     }
 

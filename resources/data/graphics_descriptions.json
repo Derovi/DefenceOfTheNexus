@@ -586,5 +586,19 @@
         "columns": 1
       }
     }
+  },
+  "small-bullet": {
+    "width": 30,
+    "height": 30,
+    "spriteControllers": [
+      "default"
+    ],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/bullet",
+        "rows": 1,
+        "columns": 1
+      }
+    }
   }
 }
