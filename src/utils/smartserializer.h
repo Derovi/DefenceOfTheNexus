@@ -73,6 +73,11 @@ class SmartSerializer {
                          const utils::KeyManager& keyManager);
 
     static QJsonObject
+    bulletPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                         const std::shared_ptr<core::Attribute>& afterChanges,
+                         const utils::KeyManager& keyManager);
+
+    static QJsonObject
     wallPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
                        const std::shared_ptr<core::Attribute>& afterChanges,
                        const utils::KeyManager& keyManager);
@@ -113,6 +118,10 @@ class SmartSerializer {
                                        const utils::KeyManager& keyManager);
 
     static void miningPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
+                                       const QJsonObject& changes,
+                                       const utils::KeyManager& keyManager);
+
+    static void bulletPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
                                        const QJsonObject& changes,
                                        const utils::KeyManager& keyManager);
 

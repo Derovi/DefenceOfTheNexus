@@ -7,8 +7,8 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position),
-        showHitBoxes(false), showSprites(true), fixed(false), cameraSpeed(60) {
+        Widget(position),  cameraSpeed(60),
+        showHitBoxes(false), showSprites(true), fixed(false) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
@@ -129,8 +129,8 @@ void client::GameMap::setGameWorld(const std::shared_ptr<core::GameWorld>& gameW
 
 QTransform client::GameMap::getTransformToWidget() const {
     return QTransform(1, 0, 0, 1, -displayBounds.x(), -displayBounds.y()) *
-           QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
-                      static_cast<double>(height) / displayBounds.height(), 0, 0);
+        QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
+                   static_cast<double>(height) / displayBounds.height(), 0, 0);
 }
 
 QTransform client::GameMap::getTransformToMap() const {
@@ -257,7 +257,7 @@ void client::GameMap::drawBackground(QPainter& painter) {
          x < displayBounds.x() + displayBounds.width();
          x += background.getFrameWidth()) {
         for (int y =
-                (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
+            (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
              y < displayBounds.y() + displayBounds.height();
              y += background.getFrameHeight()) {
             background.draw(painter,

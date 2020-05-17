@@ -16,7 +16,7 @@ class GameWorldController {
   public:
     GameWorldController(std::shared_ptr<core::GameWorld> gameWorld, Engine* engine);
 
-    void tick(double deltaTime);
+    void tick(int deltaTime);
 
     std::shared_ptr<core::GameWorld> getGameWorld();
 

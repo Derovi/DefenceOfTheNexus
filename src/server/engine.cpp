@@ -1,5 +1,7 @@
 #include "engine.h"
 
+#include <chrono>
+
 #include <QDateTime>
 #include <QThread>
 
@@ -13,7 +15,7 @@
 #include "worldgenerator.h"
 
 server::Engine::Engine(const GameConfiguration& gameConfiguration):
-    gameConfiguration(gameConfiguration), finished(false), mainThread(nullptr) {
+        gameConfiguration(gameConfiguration), finished(false), mainThread(nullptr) {
     gameWorld = world_generator::generate(gameConfiguration);
     worldBeforeUpdate = std::make_shared<core::GameWorld>();
     gameWorldController = std::make_shared<GameWorldController>(gameWorld, this);
@@ -29,21 +31,29 @@ server::Engine::~Engine() {
 
 void server::Engine::start() {
     mainThread = std::shared_ptr<QThread>(QThread::create([&] {
-        QDateTime lastTickStartTime = QDateTime::currentDateTime();
+        auto lastTickStartTime = std::chrono::steady_clock::now();
         while (!finished && gameWorld != nullptr) {
-            qDebug() << "saving";
             worldBeforeUpdate = std::make_shared<core::GameWorld>(*gameWorld);
-            qDebug() << "saved";
-            QDateTime currentTickStartTime = QDateTime::currentDateTime();
-
+            auto currentTickStartTime = std::chrono::steady_clock::now();
             executeCommands();
+            int deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+                    currentTickStartTime - lastTickStartTime).count();
+            for (auto& aiPlayer : aiPlayers) {
+                aiPlayer->tick(deltaTime);
+            }
             // make changes on game world
-            gameWorldController->tick(lastTickStartTime.msecsTo(currentTickStartTime));
+            gameWorldController->tick(deltaTime);
 
             lastTickStartTime = currentTickStartTime;
+
             // sleep until next tick
-            QThread::msleep(1000 / gameConfiguration.getTickPerSec() -
-                currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
+            int sleepTime = 1000 / gameConfiguration.getTickPerSec() -
+                            std::chrono::duration_cast<std::chrono::milliseconds>(
+                                    std::chrono::steady_clock::now() -
+                                    currentTickStartTime).count();
+            if (sleepTime > 0) {
+                QThread::msleep(sleepTime);
+            }
             qDebug() << "server" << gameWorld->getObjects()[0]->getPosition();
             //generateEvent(core::Event(core::Event::Type::HIT_EVENT, {}));
             emit updated(events);
@@ -101,4 +111,8 @@ const std::shared_ptr<core::GameWorld>& server::Engine::getWorldBeforeUpdate() c
 
 void server::Engine::generateEvent(const core::Event& event) {
     events.push_back(event);
+}
+
+void server::Engine::addAIPlayer(const std::shared_ptr<AIPlayer>& aiPlayer) {
+    aiPlayers.push_back(aiPlayer);
 }

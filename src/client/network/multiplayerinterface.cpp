@@ -47,7 +47,7 @@ void client::MultiplayerInterface::readMessage() {
         qDebug() << "index:" << dataGramIndex << dataGramCount << dataGramId << message.size();
         message = message.right(message.size() - messageStart);
         qDebug() << "client read message, length: " << message.length();
-        std::cout << message.toStdString() << std::endl;
+        //std::cout << message.toStdString() << std::endl;
 
         if (!datagrams.contains(dataGramId)) {
             datagrams[dataGramId] = std::make_pair(QVector<QString>(dataGramCount),

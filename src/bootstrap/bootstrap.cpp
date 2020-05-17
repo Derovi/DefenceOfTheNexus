@@ -21,6 +21,9 @@
 #include "../client/spritecontrollers/resourcespritecontroller.h"
 #include "../server/strategies/attackstrategy.h"
 #include "../core/attributes/builder.h"
+#include "../server/strategies/bulletstrategy.h"
+#include "../server/strategies/towerstrategy.h"
+#include "../core/attributes/bullet.h"
 #include "../utils/smartserializer.h"
 
 void registerStrategies() {
@@ -47,6 +50,18 @@ void registerStrategies() {
                                          return std::shared_ptr<server::Strategy>(
                                              static_cast<server::Strategy*>(
                                                  new server::AttackStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::BulletStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                             static_cast<server::Strategy*>(
+                                                 new server::BulletStrategy(object)));
+                                     });
+    utils::Factory::registerStrategy(server::TowerStrategy::name,
+                                     [](std::shared_ptr<core::Object> object) {
+                                         return std::shared_ptr<server::Strategy>(
+                                             static_cast<server::Strategy*>(
+                                                 new server::TowerStrategy(object)));
                                      });
 }
 
@@ -98,6 +113,12 @@ void registerAttributes() {
                                       utils::Serializer::builderDeserializer,
                                       utils::SmartSerializer::builderPartSerializer,
                                       utils::SmartSerializer::builderPartDeserializer);
+
+    utils::Factory::registerAttribute(core::Bullet::attributeName,
+                                      utils::Serializer::bulletSerializer,
+                                      utils::Serializer::bulletDeserializer,
+                                      utils::SmartSerializer::bulletPartSerializer,
+                                      utils::SmartSerializer::bulletPartDeserializer);
 }
 
 void registerSpriteControllers() {
@@ -114,7 +135,7 @@ void registerSpriteControllers() {
     utils::Factory::registerSpriteController(client::DefaultSpriteController::name,
                                              [](std::shared_ptr<core::Object> object) {
                                                  return std::shared_ptr<client::SpriteController>(
-                                                         new client::DefaultSpriteController(object));
+                                                     new client::DefaultSpriteController(object));
                                              });
 }
 
