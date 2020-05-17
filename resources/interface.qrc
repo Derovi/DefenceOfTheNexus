@@ -2,6 +2,7 @@
     <qresource prefix="/interface">
         <file alias="button">interface/button.png</file>
         <file alias="chooser">interface/chooser.png</file>
+        <file alias="empty">interface/empty.png</file>
         <file alias="button-hover">interface/button-hover.png</file>
         <file alias="left-button">interface/left-button.png</file>
         <file alias="left-button-hover">interface/left-button-hover.png</file>

@@ -7,8 +7,6 @@
 #include "../../utils/serializer.h"
 #include "../widgets/imagebutton.h"
 #include "../app.h"
-#include "../properties.h"
-#include "../widgets/textview.h"
 #include "../widgets/textedit.h"
 
 #include "menuscreen.h"
@@ -52,54 +50,63 @@ client::MenuScreen::MenuScreen(): Screen() {
                              App::getInstance()->getFont(),
                              QColor(186, 46, 128), 232, 921);
     test->setTextSize(130);
+    // ToDo: :/interface/empty
     test->setBackground(QImage(":/interface/button"));
+    test->setHover(QImage(":/interface/chooser"));
+    // ToDo: postfix check
     test->setTextChecker([](QString text) {
-        QRegExp letters("[^\\d.:]");
-        if (letters.indexIn(text) != -1){
-            return false;
-        }
+                             QRegExp letters("[^\\d.:]");
+                             if (letters.indexIn(text) != -1) {
+                                 return false;
+                             }
 
-//        if (text.back() == ".") {
-//            text += ".0";
-//            QRegExp points("[.]");
-//            int cnt = 0;
-//            int pos = 0;
-//            while ((pos = points.indexIn(text, pos)) != 1) {
-//                ++cnt;
-//                pos += points.matchedLength();
-//            }
-//
-//            for (int i = 0;
-//                 i < 3 - cnt;
-//                 ++i) {
-//                text += ".0";
-//            }
-//
-//            QRegExp ip_regex("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-//            return ip_regex.exactMatch(text);
-//        }
-        return true;
-    });
+                             int index = 0;
+                             int position = 0;
+                             int count = 0;
+                             QRegExp prefix("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+                             while ((position = text.indexOf('.', position)) != -1) {
+                                 QString substring = text.mid(index, position - index);
+                                 if (count == 4 || !prefix.exactMatch(substring)) {
+                                     return false;
+                                 }
+                                 ++position;
+                                 ++count;
+                                 index = position;
+                             }
+
+                             return true;
+                         }
+    );
     addChild(test);
 
 
     auto loadGameButton = new ImageButton(QPoint(1510, 942), 232, 921);
-    loadGameButton->setImage(QImage(":/interface/button"));
-    loadGameButton->setHoverImage(QImage(":/interface/button-hover"));
+    loadGameButton->
+            setImage(QImage(":/interface/button")
+    );
+    loadGameButton->
+            setHoverImage(QImage(":/interface/button-hover")
+    );
     loadGameButton->setHoverWidth(1329);
-    loadGameButton->setTextChildren(
+    loadGameButton->
+            setTextChildren(
             std::make_shared<TextView>(QPoint(0, 0), "::load_game",
-                                       App::getInstance()->getFont()));
-    loadGameButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    loadGameButton->setOnClick([=](QPoint point, bool leftButton) {
+                                       App::getInstance()->getFont())
+    );
+    loadGameButton->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
+    loadGameButton->setOnClick([=](
+            QPoint point,
+            bool leftButton
+    ) {
         QString fileName = QFileDialog::getOpenFileName(App::getInstance(),
                                                         utils::Lang::get("save_game"), ".gsv",
                                                         "(*.gsv)");
         QFile file(fileName);
-        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        if (!file.
+                open(QIODevice::ReadOnly
+                     | QIODevice::Text)) {
             return;
         }
 
@@ -111,7 +118,9 @@ client::MenuScreen::MenuScreen(): Screen() {
 
         auto deserialized = serializer.deserializeGameWorld(stream.readAll());
 
-        file.close();
+        file.
+
+                close();
 
         if (deserialized == std::nullopt) {
             return;
@@ -119,37 +128,66 @@ client::MenuScreen::MenuScreen(): Screen() {
 
         gameWorld = std::make_shared<core::GameWorld>(deserialized.value());
 
-        //!TODO fix saving
-        //App::getInstance()->openScreen(std::make_shared<GameScreen>(gameWorld));
+//!TODO fix saving
+//App::getInstance()->openScreen(std::make_shared<GameScreen>(gameWorld));
     });
 
     addChild(loadGameButton);
 
     auto optionsButton = new ImageButton(QPoint(1510, 1210), 232, 921);
-    optionsButton->setImage(QImage(":/interface/button"));
-    optionsButton->setHoverImage(QImage(":/interface/button-hover"));
+    optionsButton->
+            setImage(QImage(":/interface/button")
+    );
+    optionsButton->
+            setHoverImage(QImage(":/interface/button-hover")
+    );
     optionsButton->setHoverWidth(1329);
-    optionsButton->setTextChildren(
+    optionsButton->
+            setTextChildren(
             std::make_shared<TextView>(QPoint(0, 0), "::options",
-                                       App::getInstance()->getFont()));
-    optionsButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    optionsButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::getInstance()->openScreen(std::make_shared<OptionsScreen>());
+                                       App::getInstance()->getFont())
+    );
+    optionsButton->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
+    optionsButton->setOnClick([=](
+            QPoint point,
+            bool leftButton
+    ) {
+        App::getInstance()->
+
+                openScreen(std::make_shared<OptionsScreen>());
+
     });
 
     addChild(optionsButton);
 
     auto exitButton = new ImageButton(QPoint(1510, 1472), 232, 921);
-    exitButton->setImage(QImage(":/interface/button"));
-    exitButton->setHoverImage(QImage(":/interface/button-hover"));
+    exitButton->
+            setImage(QImage(":/interface/button")
+    );
+    exitButton->
+            setHoverImage(QImage(":/interface/button-hover")
+    );
     exitButton->setHoverWidth(1329);
-    exitButton->setTextChildren(
+    exitButton->
+            setTextChildren(
             std::make_shared<TextView>(QPoint(0, 0), "::exit",
-                                       App::getInstance()->getFont()));
-    exitButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    exitButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::getInstance()->getUiThread()->terminate();
+                                       App::getInstance()->getFont())
+    );
+    exitButton->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
+    exitButton->setOnClick([=](
+            QPoint point,
+            bool leftButton
+    ) {
+        App::getInstance()->getUiThread()->
+
+                terminate();
+
         QCoreApplication::quit();
+
     });
 
     addChild(exitButton);

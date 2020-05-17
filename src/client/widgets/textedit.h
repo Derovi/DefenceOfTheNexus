@@ -13,7 +13,7 @@ class TextEdit : public Widget {
              const QFont& font = QApplication::font(),
              const QColor& color = Qt::black,
              int backgroundHeight = -1,
-             int backgroundWidth = -1);
+             int backgroundWidth = -1, bool selected = false);
 
     void paint(QPainter& painter) override;
 
@@ -51,9 +51,20 @@ class TextEdit : public Widget {
 
     int getTextWidth() const;
 
+    bool isSelected() const;
+
+    void setSelected(bool selected);
+
     void setTextChecker(std::function<bool(QString)> textChecker);
 
     std::function<bool(QString)> getTextChecker() const;
+
+    const QImage& getHover() const;
+
+    void setHover(const QImage& hover);
+
+  protected:
+    void clicked(QPoint point, bool leftButton) override;
 
   private:
     QString text;
@@ -64,9 +75,13 @@ class TextEdit : public Widget {
 
     QImage background;
 
+    QImage hover;
+
     int backgroundWidth;
 
     int backgroundHeight;
+
+    bool selected;
 
     std::function<bool(QString text)> textChecker;
 };

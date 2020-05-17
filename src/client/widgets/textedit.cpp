@@ -5,20 +5,25 @@
 
 client::TextEdit::TextEdit(const QPoint& position, const QString& text, const QFont& font,
                            const QColor& color, int backgroundHeight,
-                           int backgroundWidth):
-        Widget(position), text(text), font(font), color(color) {
+                           int backgroundWidth, bool selected):
+        Widget(position), text(text), font(font), color(color), selected(selected) {
     setHeight(backgroundHeight);
     setWidth(backgroundWidth);
 }
 
 void client::TextEdit::paint(QPainter& painter) {
-    if (!background.isNull()) {
+    if (!hover.isNull() && selected) {
+        painter.drawImage(boundsRect(), hover);
+
+    } else if (!background.isNull()) {
         painter.drawImage(boundsRect(), background);
     }
+
     painter.setFont(font);
     QPen pen = painter.pen();
     pen.setColor(color);
     painter.setPen(pen);
+
     if (backgroundWidth > 0 && backgroundHeight > 0) {
         painter.drawText(boundsRect(),Qt::AlignCenter, text);
     } else {
@@ -92,13 +97,18 @@ int client::TextEdit::getTextWidth() const {
 }
 
 void client::TextEdit::keyPress(QKeyEvent* event) {
-    if (event->key() == Qt::Key_Backspace){
-        text.chop( 1);
-    } else if (textChecker(text + event->text())) {
-        text.append(event->text());
+    if (selected) {
+        if (event->key() == Qt::Key_Backspace) {
+            text.chop(1);
+        } else if (textChecker(text + event->text())) {
+            text.append(event->text());
+        }
     }
 
+}
 
+void client::TextEdit::clicked(QPoint point, bool leftButton) {
+    selected = true;
 }
 
 void client::TextEdit::setTextChecker(std::function<bool(QString)> textChecker) {
@@ -107,4 +117,20 @@ void client::TextEdit::setTextChecker(std::function<bool(QString)> textChecker) 
 
 std::function<bool(QString)> client::TextEdit::getTextChecker() const {
     return textChecker;
+}
+
+bool client::TextEdit::isSelected() const {
+    return selected;
+}
+
+void client::TextEdit::setSelected(bool selected) {
+    TextEdit::selected = selected;
+}
+
+const QImage& client::TextEdit::getHover() const {
+    return hover;
+}
+
+void client::TextEdit::setHover(const QImage& hover) {
+    TextEdit::hover = hover;
 }
