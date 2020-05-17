@@ -17,8 +17,10 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));
 
     for (int i = 0; i < config.getPlayerCount(); ++i) {
-        int x = static_cast<int>(20000 * std::cos(i * 2 * M_PI / config.getPlayerCount()));
-        int y = static_cast<int>(20000 * std::sin(i * 2 * M_PI / config.getPlayerCount()));
+        int x = static_cast<int>(config.getWidth() / 2
+            * std::cos(i * 2 * M_PI / config.getPlayerCount()));
+        int y = static_cast<int>(config.getHeight() / 2
+            * std::sin(i * 2 * M_PI / config.getPlayerCount()));
         gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(),
                                 QPoint(x, y),
                                 i + 1);
@@ -54,8 +56,6 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     int resourcesAmount = 1ll * config.getWidth() * config.getHeight()
         * config.getResourceDensity() * config.getResourceDensity();
 
-    qDebug() << "Going to generate " << resourcesAmount << endl;
-
     float woodProb = 0.5;
     float stoneProb = 0.3;
     // ironProb = 0.2;
@@ -71,7 +71,6 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     };
 
     for (int i = 0; i < resourcesAmount; ++i) {
-        qDebug() << "RES: " << i << endl;
         forever {
             int x = ux(rnd);
             int y = uy(rnd);
