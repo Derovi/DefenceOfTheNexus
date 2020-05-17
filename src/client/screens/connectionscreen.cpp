@@ -210,11 +210,11 @@ void client::ConnectionScreen::startServer() {
 
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("medium-tower").value(),
-                QPoint(2077, 1666), 180);
+                QPoint(2077, 1666), 0, 180);
 
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("small-tower").value(),
-                QPoint(198, 504), 45);
+                QPoint(198, 504), 0, 45);
 
         engine->getGameWorld()->summonObject(
                 utils::Factory::getObjectSignature("long-tower").value(),

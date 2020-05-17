@@ -74,7 +74,7 @@ std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Objec
     position.insert("y", object.getPosition().y());
     json.insert("position", position);
     json.insert("team", object.getTeam());
-    json.insert("rotationAngle", object.getRotationAngle());
+    json.insert("rotationAngle", static_cast<int>(object.getRotationAngle() * 100) / 100.0);
     QJsonArray strategies;
     for (const auto& strategy : object.getStrategies()) {
         strategies.push_back(strategy);
