@@ -54,15 +54,34 @@ client::MenuScreen::MenuScreen(): Screen() {
     test->setTextSize(130);
     test->setBackground(QImage(":/interface/button"));
     test->setTextChecker([](QString text) {
-        QRegExp letters("[a-zA-Z]");
-        if (letters.matchedLength() != -1){
+        QRegExp letters("[^\\d.:]");
+        if (letters.indexIn(text) != -1){
             return false;
         }
-        QRegExp ip_regex("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
-                "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-        return ip_regex.exactMatch(text);
+
+//        if (text.back() == ".") {
+//            text += ".0";
+//            QRegExp points("[.]");
+//            int cnt = 0;
+//            int pos = 0;
+//            while ((pos = points.indexIn(text, pos)) != 1) {
+//                ++cnt;
+//                pos += points.matchedLength();
+//            }
+//
+//            for (int i = 0;
+//                 i < 3 - cnt;
+//                 ++i) {
+//                text += ".0";
+//            }
+//
+//            QRegExp ip_regex("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\."
+//                             "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+//            return ip_regex.exactMatch(text);
+//        }
+        return true;
     });
     addChild(test);
 

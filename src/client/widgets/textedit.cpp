@@ -94,7 +94,7 @@ int client::TextEdit::getTextWidth() const {
 void client::TextEdit::keyPress(QKeyEvent* event) {
     if (event->key() == Qt::Key_Backspace){
         text.chop( 1);
-    } else if (textChecker(text)) {
+    } else if (textChecker(text + event->text())) {
         text.append(event->text());
     }
 
