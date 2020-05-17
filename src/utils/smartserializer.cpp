@@ -14,7 +14,7 @@ QJsonObject utils::SmartSerializer::objectPartSerializer(
     const double EPS = 1e-4;
     if (std::abs(beforeChanges->getRotationAngle() - afterChanges->getRotationAngle()) > EPS) {
         result.insert("rotationAngle",
-                      static_cast<int>(afterChanges.getRotationAngle() * 100) / 100.0);
+                      static_cast<int>(afterChanges->getRotationAngle() * 100) / 100.0);
     }
     if (beforeChanges->getTypeName() != afterChanges->getTypeName()) {
         result.insert("typeName", afterChanges->getTypeName());
