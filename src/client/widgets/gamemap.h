@@ -3,7 +3,7 @@
 
 #include <QDateTime>
 #include <QQueue>
-#include <QMusi>
+#include <QMediaPlayer>
 
 #include "../../utils/queue.h"
 #include "../../core/command.h"
@@ -99,7 +99,11 @@ class GameMap : public Widget {
 
     bool fixed;
 
+    int timerMainMusic = 0;
 
+    QMediaPlayer mainPlayer;
+
+    QVector<QMediaPlayer*> musicPlayers;
 
     void drawBackground(QPainter& painter);
 };

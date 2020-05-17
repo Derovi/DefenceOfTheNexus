@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QtMath>
 
 #include "../app.h"
 #include "../screens/gamescreen.h"
@@ -7,7 +8,7 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position),  cameraSpeed(60),
+        Widget(position), cameraSpeed(60),
         showHitBoxes(false), showSprites(true), fixed(false) {
     setHeight(height);
     setWidth(width);
@@ -51,6 +52,15 @@ void client::GameMap::paint(QPainter& painter) {
             vector.normalize();
             centerWindow(getWindowCenter() + vector.toPoint() * cameraSpeed);
         }
+    }
+
+    if (timerMainMusic == 0) {
+        mainPlayer.setMedia(QUrl::fromLocalFile("sounds/main_song.wav"));
+        mainPlayer.setVolume(50);
+        mainPlayer.play();
+        timerMainMusic = 50 * 120;
+    } else {
+        --timerMainMusic;
     }
 
     // paint transform
@@ -129,8 +139,8 @@ void client::GameMap::setGameWorld(const std::shared_ptr<core::GameWorld>& gameW
 
 QTransform client::GameMap::getTransformToWidget() const {
     return QTransform(1, 0, 0, 1, -displayBounds.x(), -displayBounds.y()) *
-        QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
-                   static_cast<double>(height) / displayBounds.height(), 0, 0);
+           QTransform(static_cast<double>(width) / displayBounds.width(), 0, 0,
+                      static_cast<double>(height) / displayBounds.height(), 0, 0);
 }
 
 QTransform client::GameMap::getTransformToMap() const {
@@ -257,7 +267,7 @@ void client::GameMap::drawBackground(QPainter& painter) {
          x < displayBounds.x() + displayBounds.width();
          x += background.getFrameWidth()) {
         for (int y =
-            (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
+                (displayBounds.y() / background.getFrameHeight() - 1) * background.getFrameHeight();
              y < displayBounds.y() + displayBounds.height();
              y += background.getFrameHeight()) {
             background.draw(painter,
@@ -280,7 +290,29 @@ void client::GameMap::handleEvent(const core::Event& event) {
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
     }
-    if(event.getType()==core::Event::Type::MAIN_MUSIC_EVENT){
-
+    if (event.getType() == core::Event::Type::MUSIC_EVENT) {
+        double distance = qSqrt((getPosition().x() - (event.getArguments()[1].toInt())) *
+                                (getPosition().x() - (event.getArguments()[1].toInt())) +
+                                (getPosition().y() - (event.getArguments()[2].toInt())) *
+                                (getPosition().y() - (event.getArguments()[2].toInt())));
+        int volume = 100 - distance / 20;
+        volume = std::max(volume, 0);
+        bool ok = false;
+        for (auto& player: musicPlayers) {
+            if (player->isAvailable()) {
+                ok = true;
+                player->setMedia(QUrl::fromLocalFile(event.getArguments()[0]));
+                player->setVolume(volume);
+                player->play();
+                break;
+            }
+        }
+        if(!ok){
+            QMediaPlayer* player = new QMediaPlayer;
+            musicPlayers.push_back(player);
+            musicPlayers.back()->setMedia(QUrl::fromLocalFile(event.getArguments()[0]));
+            musicPlayers.back()->setVolume(volume);
+            musicPlayers.back()->play();
+        }
     }
 }
