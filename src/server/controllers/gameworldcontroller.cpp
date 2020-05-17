@@ -18,7 +18,7 @@ server::GameWorldController::GameWorldController(std::shared_ptr<core::GameWorld
     }
 }
 
-void server::GameWorldController::tick(double deltaTime) {
+void server::GameWorldController::tick(int deltaTime) {
     for (std::shared_ptr<core::Object> object : gameWorld->getObjects()) {
         if (!controllers.contains(object->getId())) {
             controllers.insert(object->getId(),

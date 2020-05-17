@@ -11,8 +11,8 @@
 namespace server {
 
 PathStrategy::PathStrategy(std::shared_ptr<core::Object> object):
-    Strategy(object), isRounding(false), roundingStyle(false), moving(nullptr),
-    destPoint(nullptr) {}
+    Strategy(object), isRounding(false), roundingStyle(kClockwise), moving(nullptr),
+    destPoint(nullptr), destIntersectionUpdate(0) {}
 
 QString PathStrategy::getName() {
     return name;
@@ -25,7 +25,8 @@ void PathStrategy::assign(DataBundle& dataBundle) {
 
 void PathStrategy::cancelTargets() {
     destPoint = nullptr;
-    roundingStyle = !roundingStyle;
+    isRounding = false;
+    roundingStyle = static_cast<RoundingStyle>(roundingStyle ^ 1);
 }
 
 void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
@@ -67,24 +68,22 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         }
     }
 
-    static const auto rotateCounterClockwise = [](const QVector2D& v) {
-        return QVector2D(v.x() * M_SQRT1_2 - v.y() * M_SQRT1_2,
-                         v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
+    static const auto rotateCounterClockwise = [](const QVector2D& v, double angle = M_PI_4 / 2) {
+        return QVector2D(v.x() * std::cos(angle) - v.y() * std::sin(angle),
+                         v.x() * std::sin(angle) + v.y() * std::cos(angle)).normalized();
     };
 
-    static const auto rotateClockwise = [](const QVector2D& v) {
-        return QVector2D(v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2,
-                         -v.x() * M_SQRT1_2 + v.y() * M_SQRT1_2).normalized();
+    static const auto rotateClockwise = [](const QVector2D& v, double angle = M_PI_4 / 2) {
+        return rotateCounterClockwise(v, M_2_PI - angle);
     };
 
-    static const auto rotate = [](const QVector2D& v, bool style) {
-        return (style ? rotateCounterClockwise(v) : rotateClockwise(v));
+    static const auto rotate = [](const QVector2D& v, RoundingStyle style) {
+        return (style == kCounterClockwise ? rotateCounterClockwise(v) : rotateClockwise(v));
     };
-
     if (isRounding) {
         auto currentDirection = moving->getDirection();
-        for (int it = 0; it < 8; ++it) {
-            currentDirection = rotate(currentDirection, !roundingStyle);
+        for (int it = 0; it < 16; ++it) {
+            currentDirection = rotate(currentDirection, static_cast<RoundingStyle>(!roundingStyle));
             moving->setDirection(currentDirection);
             if (moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
                 break;
@@ -100,7 +99,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         }
         direction = currentDirection;
     }
-    for (int it = 0; it < 8; ++it) {
+    for (int it = 0; it < 16; ++it) {
         moving->setDirection(direction);
         if (!moving_performer::isObstacles(getObject(), timeDelta, world, moving)) {
             return;

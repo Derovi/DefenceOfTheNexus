@@ -26,14 +26,16 @@
     },
     "hitbox": {
       "x": [
-        -100,
+        -50,
         0,
-        100
+        50,
+        0
       ],
       "y": [
         0,
-        100,
-        0
+        50,
+        0,
+        -50
       ]
     },
     "strategies": [
@@ -761,12 +763,23 @@
     "strategies": []
   },
   "special-tower": {
-    "attributes": {},
+    "attributes": {
+      "damaging": {
+        "damage": 75,
+        "radius": 500,
+        "delay": 500,
+        "bulletType": "small-bullet"
+      },
+      "damageable": {
+        "health": 200,
+        "maxHealth": 200
+      }
+    },
     "hitbox": {
       "x": [50, -50, -50, 50],
       "y": [50, 50, -50, -50]
     },
-    "strategies": []
+    "strategies": ["towerStrategy"]
   },
   "high-tower": {
     "attributes": {},
@@ -785,6 +798,30 @@
       ]
     },
     "strategies": []
+  },
+  "small-bullet": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 1,
+          "y": 1
+        },
+        "maxSpeed": 400,
+        "speed": 400
+      },
+      "bullet": {
+        "ownerId": 0,
+        "range": 0,
+        "damage": 0,
+        "shooterPosX": 0,
+        "shooterPosY": 0
+      }
+    },
+    "hitbox": {
+      "x": [-5, 0, 5, 0],
+      "y": [0, -5, 0, 5]
+    },
+    "strategies": ["bulletStrategy"]
   }
 }
 

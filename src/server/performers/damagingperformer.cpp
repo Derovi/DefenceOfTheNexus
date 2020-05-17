@@ -6,6 +6,9 @@
 #include <QDebug>
 
 #include "../../core/attributes/damageable.h"
+#include "../../core/attributes/moving.h"
+#include "../../core/attributes/bullet.h"
+#include "../../utils/factory.h"
 #include "damageableperformer.h"
 
 namespace server::damaging_performer {
@@ -35,9 +38,29 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
         std::shared_ptr<core::Damageable> damageable = std::dynamic_pointer_cast<core::Damageable>(
                 target->getAttribute("damageable"));
         if (damageable != nullptr && damageable->getHealth() > 0) {
-            world->generateEvent(
+            auto bulletType = damaging->getBulletType();
+            if (bulletType.isEmpty()) {
+                world->generateEvent(
                     core::Event(core::Event::Type::HIT_EVENT, {QString::number(object->getId())}));
-            damageable_performer::inflictDamage(world, target, damageable, damaging->getDamage());
+                damageable_performer::inflictDamage(world, target, damageable,
+                                                    damaging->getDamage());
+            } else {
+                auto bullet = world->summonObject(
+                    utils::Factory::getObjectSignature(bulletType).value(),
+                    object->getPosition().toPoint());
+
+                auto moving = std::dynamic_pointer_cast<core::Moving>(
+                    bullet->getAttribute("moving"));
+                moving->setDirection(QVector2D(target->getPosition() - object->getPosition()));
+
+                auto bulletAttr = std::dynamic_pointer_cast<core::Bullet>(
+                    bullet->getAttribute("bullet"));
+                bulletAttr->setOwner(object);
+                bulletAttr->setDamage(damaging->getDamage());
+                bulletAttr->setRange(damaging->getAttackRadius());
+
+                qDebug() << "Created bullet successfully" << endl;
+            }
         } else {
             damaging->setAttacking(false);
         }

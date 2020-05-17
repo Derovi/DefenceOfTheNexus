@@ -1,14 +1,15 @@
 #include "smartserializer.h"
 #include "factory.h"
+#include "../core/attributes/bullet.h"
 
 utils::SmartSerializer::SmartSerializer(bool prettyPrinting) {
     utils::SmartSerializer::prettyPrinting = prettyPrinting;
 }
 
 QJsonObject utils::SmartSerializer::objectPartSerializer(
-        const std::shared_ptr<core::Object>& beforeChanges,
-        const std::shared_ptr<core::Object>& afterChanges,
-        const utils::KeyManager& keyManager) {
+    const std::shared_ptr<core::Object>& beforeChanges,
+    const std::shared_ptr<core::Object>& afterChanges,
+    const utils::KeyManager& keyManager) {
     QJsonObject result;
     if (beforeChanges->getRotationAngle() != afterChanges->getRotationAngle()) {
         result.insert("rotationAngle", afterChanges->getRotationAngle());
@@ -105,6 +106,14 @@ utils::SmartSerializer::miningPartDeserializer(const std::shared_ptr<core::Attri
     *dynamic_cast<core::Mining*>(resource.get()) = *dynamic_cast<core::Mining*>(ptr.get());
 }
 
+void utils::SmartSerializer::bulletPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
+                                                    const QJsonObject& changes,
+                                                    const utils::KeyManager& keyManager) {
+    auto deserializer = utils::Factory::getDeserializer("bullet");
+    std::shared_ptr<core::Attribute> ptr = deserializer(hashedToJson(changes, keyManager)).value();
+    *dynamic_cast<core::Bullet*>(resource.get()) = *dynamic_cast<core::Bullet*>(ptr.get());
+}
+
 void utils::SmartSerializer::wallPartDeserializer(const std::shared_ptr<core::Attribute>& resource,
                                                   const QJsonObject& changes,
                                                   const utils::KeyManager& keyManager) {
@@ -132,9 +141,9 @@ utils::SmartSerializer::builderPartDeserializer(const std::shared_ptr<core::Attr
 }
 
 QJsonObject utils::SmartSerializer::resourcePartSerializer(
-        const std::shared_ptr<core::Attribute>& beforeChanges,
-        const std::shared_ptr<core::Attribute>& afterChanges,
-        const utils::KeyManager& keyManager) {
+    const std::shared_ptr<core::Attribute>& beforeChanges,
+    const std::shared_ptr<core::Attribute>& afterChanges,
+    const utils::KeyManager& keyManager) {
     if ((*dynamic_cast<core::Resource*>(beforeChanges.get())) ==
         (*dynamic_cast<core::Resource*>(afterChanges.get()))) {
         return QJsonObject();
@@ -144,8 +153,8 @@ QJsonObject utils::SmartSerializer::resourcePartSerializer(
 }
 
 QJsonObject utils::SmartSerializer::damagingPartSerializer(
-        const std::shared_ptr<core::Attribute>& beforeChanges,
-        const std::shared_ptr<core::Attribute>& afterChanges, const utils::KeyManager& keyManager) {
+    const std::shared_ptr<core::Attribute>& beforeChanges,
+    const std::shared_ptr<core::Attribute>& afterChanges, const utils::KeyManager& keyManager) {
     if ((*dynamic_cast<core::Damaging*>(beforeChanges.get())) ==
         (*dynamic_cast<core::Damaging*>(afterChanges.get()))) {
         return QJsonObject();
@@ -155,8 +164,8 @@ QJsonObject utils::SmartSerializer::damagingPartSerializer(
 }
 
 QJsonObject utils::SmartSerializer::damageablePartSerializer(
-        const std::shared_ptr<core::Attribute>& beforeChanges,
-        const std::shared_ptr<core::Attribute>& afterChanges, const utils::KeyManager& keyManager) {
+    const std::shared_ptr<core::Attribute>& beforeChanges,
+    const std::shared_ptr<core::Attribute>& afterChanges, const utils::KeyManager& keyManager) {
     if ((*dynamic_cast<core::Damageable*>(beforeChanges.get())) ==
         (*dynamic_cast<core::Damageable*>(afterChanges.get()))) {
         return QJsonObject();
@@ -186,6 +195,17 @@ utils::SmartSerializer::miningPartSerializer(const std::shared_ptr<core::Attribu
         return QJsonObject();
     }
     auto seriazlier = utils::Factory::getSerializer("mining");
+    return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
+}
+
+QJsonObject utils::SmartSerializer::bulletPartSerializer(const std::shared_ptr<core::Attribute>& beforeChanges,
+                                                         const std::shared_ptr<core::Attribute>& afterChanges,
+                                                         const utils::KeyManager& keyManager) {
+    if ((*dynamic_cast<core::Bullet*>(beforeChanges.get()))
+        == (*dynamic_cast<core::Bullet*>(afterChanges.get()))) {
+        return QJsonObject();
+    }
+    auto seriazlier = utils::Factory::getSerializer("bullet");
     return jsonToHashed(seriazlier(afterChanges).value(), keyManager);
 }
 
@@ -226,9 +246,9 @@ utils::SmartSerializer::builderPartSerializer(const std::shared_ptr<core::Attrib
 }
 
 QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
-        const std::shared_ptr<const core::GameWorld>& beforeChanges,
-        const std::shared_ptr<const core::GameWorld>& afterChanges,
-        const utils::KeyManager& keyManager) {
+    const std::shared_ptr<const core::GameWorld>& beforeChanges,
+    const std::shared_ptr<const core::GameWorld>& afterChanges,
+    const utils::KeyManager& keyManager) {
     QJsonObject result;
     if (beforeChanges->getWidth() != afterChanges->getWidth()) {
         result.insert("width", afterChanges->getWidth());
@@ -239,13 +259,11 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     if (beforeChanges->getLastSummonedId() != afterChanges->getLastSummonedId()) {
         result.insert("lastSummonedId", afterChanges->getLastSummonedId());
     }
-    if (beforeChanges->getTeamCount() != afterChanges->getTeamCount()){
-        result.insert("teamCount",afterChanges->getTeamCount());
+    if (beforeChanges->getTeamCount() != afterChanges->getTeamCount()) {
+        result.insert("teamCount", afterChanges->getTeamCount());
     }
     QJsonArray resources;
-    for (int team = 0;
-         team < afterChanges->getTeamCount();
-         team++) {
+    for (int team = 0; team < afterChanges->getTeamCount(); team++) {
         QVector<QPair<core::ResourceType, int>> resVector = afterChanges->getTeamResources(team);
         QJsonArray resource;
         for (auto res : resVector) {
@@ -262,7 +280,7 @@ QJsonObject utils::SmartSerializer::gamePartWorldSerializer(
     while (iter != afterChanges->getObjects().end()) {
         if (beforeChanges->getObjects().find(iter.key()) == beforeChanges->getObjects().end()) {
             std::optional<QJsonObject> result = Serializer::objectSerializer(*iter.value());
-            object.insert(QString::number(iter.key()),result.value());
+            object.insert(QString::number(iter.key()), result.value());
         } else {
             QJsonObject result = objectPartSerializer(beforeChanges->getObjects()[iter.key()],
                                                       iter.value(),
@@ -300,7 +318,7 @@ utils::SmartSerializer::getChanges(const std::shared_ptr<const core::GameWorld>&
                                    const std::shared_ptr<const core::GameWorld>& afterChanges) {
     KeyManager keyManager(!prettyPrinting);
     return jsonObjectToString(
-            gamePartWorldSerializer(beforeChanges, afterChanges, keyManager));
+        gamePartWorldSerializer(beforeChanges, afterChanges, keyManager));
 }
 
 void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::Object>& object,
@@ -375,7 +393,7 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("lastSummonedId") != changes.end()) {
         gameWorld->setLastSummonedId(changes["lastSummonedId"].toInt());
     }
-    if(changes.find("teamCount")!=changes.end()){
+    if (changes.find("teamCount") != changes.end()) {
         gameWorld->setTeamCount(changes["teamCount"].toInt());
     }
     if (changes.find("resources") != changes.end()) {
@@ -405,7 +423,7 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
             } else {
                 auto result = Serializer::objectDeserializer(iter.value().toObject());
                 gameWorld->getObjects()[iter.key().toLongLong()] = std::make_shared<core::Object>(
-                        result.value());
+                    result.value());
             }
             ++iter;
         }
