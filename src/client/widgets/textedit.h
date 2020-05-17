@@ -1,89 +1,71 @@
 #ifndef TEXTEDIT_H
 #define TEXTEDIT_H
 
-#include <QApplication>
-#include <QRect>
+#include <functional>
+#include <QImage>
+
 #include "../widget.h"
+#include "textview.h"
 
 namespace client {
+
 class TextEdit : public Widget {
   public:
-    TextEdit(const QPoint& position = QPoint(0, 0),
-             const QString& text = "",
-             const QFont& font = QApplication::font(),
-             const QColor& color = Qt::black,
-             int backgroundHeight = -1,
-             int backgroundWidth = -1, bool selected = false);
+    TextEdit(QPoint position = QPoint(0, 0), int height = 60,
+                int width = 60);
 
     void paint(QPainter& painter) override;
 
     void keyPress(QKeyEvent* event) override;
 
-    const QString& getText() const;
+  protected:
+    void clicked(QPoint point, bool leftButton) override;
 
-    void setText(const QString& text);
+  public:
 
-    const QFont& getFont() const;
+    const QImage& getBackgroundImage() const;
 
-    void setFont(const QFont& font);
+    void setBackgroundImage(const QImage& backgroundImage);
 
-    const QColor& getColor() const;
+    const QImage& getSelectedImage() const;
 
-    void setColor(const QColor& color);
+    void setSelectedImage(const QImage& selectedImage);
 
-    const QImage& getBackground() const;
+    const std::shared_ptr<TextView>& getTextChildren() const;
 
-    void setBackground(const QImage& background);
+    void setTextChildren(const std::shared_ptr<TextView>& text);
 
-    void setTextSize(int textSize);
+    const std::function<bool(QString)>& getValidate() const;
 
-    int getTextSize() const;
+    void setValidate(const std::function<bool(QString)>& validate);
 
-    int getBackgroundHeight() const;
+    int getSelectedWidth() const;
 
-    void setBackgroundHeight(int backgroundHeight);
+    void setSelectedWidth(int selectedWidth);
 
-    int getBackgroundWidth() const;
+    int getSelectedHeight() const;
 
-    void setBackgroundWidth(int backgroundWidth);
-
-    int getTextHeight() const;
-
-    int getTextWidth() const;
+    void setSelectedHeight(int selectedHeight);
 
     bool isSelected() const;
 
     void setSelected(bool selected);
 
-    void setTextChecker(std::function<bool(QString)> textChecker);
-
-    std::function<bool(QString)> getTextChecker() const;
-
-    const QImage& getHover() const;
-
-    void setHover(const QImage& hover);
-
-  protected:
-    void clicked(QPoint point, bool leftButton) override;
-
   private:
-    QString text;
+    QImage backgroundImage;
 
-    QFont font;
+    QImage selectedImage;
 
-    QColor color;
+    std::shared_ptr<TextView> textChildren;
 
-    QImage background;
+    std::function<bool(QString text)> validate;
 
-    QImage hover;
+    int selectedWidth;
 
-    int backgroundWidth;
-
-    int backgroundHeight;
+    int selectedHeight;
 
     bool selected;
-
-    std::function<bool(QString text)> textChecker;
 };
+
 }  // namespace client
 #endif //TEXTEDIT_H

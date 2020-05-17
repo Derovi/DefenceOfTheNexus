@@ -46,16 +46,15 @@ client::MenuScreen::MenuScreen(): Screen() {
 
     addChild(startButton);
 
-    auto test = new TextEdit(QPoint(800, 600), "",
-                             App::getInstance()->getFont(),
-                             QColor(186, 46, 128), 232, 921);
-    test->setTextSize(130);
-    // ToDo: :/interface/empty
-    test->setBackground(QImage(":/interface/button"));
-    test->setHover(QImage(":/interface/chooser"));
+    auto test = new TextEdit(QPoint(300, 600), 232, 921);
+    test->setBackgroundImage(QImage(":/interface/empty"));
+    test->setSelectedImage(QImage(":/interface/chooser"));
+    test->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
+                                                     App::getInstance()->getFont()));
+    test->getTextChildren()->setColor(QColor(249, 192, 6));
     // ToDo: postfix check
-    test->setTextChecker([](QString text) {
-                             QRegExp letters("[^\\d.:]");
+    test->setValidate([](QString text) {
+                             QRegExp letters("[^\\d.]");
                              if (letters.indexIn(text) != -1) {
                                  return false;
                              }
@@ -66,7 +65,7 @@ client::MenuScreen::MenuScreen(): Screen() {
                              QRegExp prefix("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
                              while ((position = text.indexOf('.', position)) != -1) {
                                  QString substring = text.mid(index, position - index);
-                                 if (count > 3 || !prefix.exactMatch(substring)) {
+                                 if (!prefix.exactMatch(substring) || count == 3) {
                                      return false;
                                  }
                                  ++position;
