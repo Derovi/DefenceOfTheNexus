@@ -11,8 +11,10 @@ QJsonObject utils::SmartSerializer::objectPartSerializer(
     const std::shared_ptr<core::Object>& afterChanges,
     const utils::KeyManager& keyManager) {
     QJsonObject result;
-    if (beforeChanges->getRotationAngle() != afterChanges->getRotationAngle()) {
-        result.insert("rotationAngle", afterChanges->getRotationAngle());
+    const double EPS = 1e-4;
+    if (std::abs(beforeChanges->getRotationAngle() - afterChanges->getRotationAngle()) > EPS) {
+        result.insert("rotationAngle",
+                      static_cast<int>(afterChanges.getRotationAngle() * 100) / 100.0);
     }
     if (beforeChanges->getTypeName() != afterChanges->getTypeName()) {
         result.insert("typeName", afterChanges->getTypeName());
@@ -431,7 +433,8 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
     if (changes.find("delete") != changes.end()) {
         QJsonArray del = changes["delete"].toArray();
         for (const auto& object : del) {
-            gameWorld->getObjects().erase(gameWorld->getObjects().find(object.toString().toLongLong()));
+            gameWorld->getObjects().erase(
+                    gameWorld->getObjects().find(object.toString().toLongLong()));
         }
     }
 }

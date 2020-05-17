@@ -91,6 +91,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
                               int team,
                               float rotationAngle) {
     ++lastSummonedId;
+    qDebug() << "id:" << lastSummonedId << rotationAngle << team << signature.getTypeName();
     std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
                                                               signature.getTypeName(),
                                                               position,
@@ -158,7 +159,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 break;
             }
             summonObject(columnSignature,
-                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), ang);
+                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), team, ang);
         } else {
             QPolygonF hitbox = wall.getHitbox();
             QMatrix matrix;
