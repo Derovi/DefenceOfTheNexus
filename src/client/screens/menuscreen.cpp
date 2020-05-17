@@ -66,7 +66,7 @@ client::MenuScreen::MenuScreen(): Screen() {
                              QRegExp prefix("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
                              while ((position = text.indexOf('.', position)) != -1) {
                                  QString substring = text.mid(index, position - index);
-                                 if (count == 4 || !prefix.exactMatch(substring)) {
+                                 if (count > 3 || !prefix.exactMatch(substring)) {
                                      return false;
                                  }
                                  ++position;
