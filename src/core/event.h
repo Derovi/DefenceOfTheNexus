@@ -12,6 +12,7 @@ class Event {
     enum Type {
         HIT_EVENT, // arguments: <UNIT_ID>
         DIE_EVENT, // arguments: <UNIT_ID>
+        MAIN_MUSIC_EVENT // arguments <URL_MUSIC>
     };
 
     Event() = default;

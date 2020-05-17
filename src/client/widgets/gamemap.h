@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QQueue>
+#include <QMusi>
 
 #include "../../utils/queue.h"
 #include "../../core/command.h"
@@ -97,6 +98,8 @@ class GameMap : public Widget {
     bool showSprites;
 
     bool fixed;
+
+
 
     void drawBackground(QPainter& painter);
 };

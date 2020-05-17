@@ -280,4 +280,7 @@ void client::GameMap::handleEvent(const core::Event& event) {
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
     }
+    if(event.getType()==core::Event::Type::MAIN_MUSIC_EVENT){
+
+    }
 }
