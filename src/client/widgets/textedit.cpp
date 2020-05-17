@@ -11,7 +11,7 @@ client::TextEdit::TextEdit(QPoint position, int height, int width):
 }
 
 void client::TextEdit::paint(QPainter& painter) {
-    if (selected && !selectedImage.isNull()) {
+    if (is_hovered && !selectedImage.isNull()) {
         painter.drawImage(QRect(boundsRect().center().x() - selectedWidth / 2,
                                 boundsRect().center().y() - selectedHeight / 2,
                                 selectedWidth,
@@ -30,11 +30,11 @@ void client::TextEdit::paint(QPainter& painter) {
 
 
 void client::TextEdit::keyPress(QKeyEvent* event) {
-    if (selected) {
+    if (is_hovered) {
         QString text = textChildren->getText();
         if (event->key() == Qt::Key_Backspace) {
             text.chop(1);
-        } else if (validate(text + event->text())) {
+        } else if (validate != nullptr && validate(text + event->text())) {
             text.append(event->text());
         }
         textChildren->setText(text);
