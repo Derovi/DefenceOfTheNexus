@@ -78,6 +78,12 @@ void client::App::mousePressEvent(QMouseEvent* event) {
     }
 }
 
+void client::App::keyPressEvent(QKeyEvent* event) {
+    if (!screens.empty()) {
+        screens.top()->keyPress(event);
+    }
+}
+
 void client::App::draw() {
     if (!screens.empty()) {
         QPainter painter(this);

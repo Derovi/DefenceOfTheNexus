@@ -28,25 +28,13 @@ client::ConnectionScreen::ConnectionScreen(): Screen() {
 void client::ConnectionScreen::constructInterface() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto backButton = new ImageButton(QPoint(1510, 1210), 232, 921);
-    backButton->setImage(QImage(":/interface/button"));
-    backButton->setHoverImage(QImage(":/interface/button-hover"));
-    backButton->setHoverWidth(1329);
-    backButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "::back",
-                                       App::getInstance()->getFont()));
-    backButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    backButton->setOnClick([=](QPoint point, bool leftButton) {
-        QThread* thread = QThread::create([&] {
-            QThread::msleep(1);
-            App::runOnUiThread([&] {
-                App::getInstance()->closeScreen();
-            });
-        });
-        thread->start();
-    });
+    auto connectionView = new TextView(QPoint(1510, 1210),
+                                       "Подключение к " + address + "," + QString::number(port),
+                                       App::getInstance()->getFont());
 
-    addChild(backButton);
+    connectionView->setColor(QColor(249, 192, 6));
+    connectionView->setTextSize(180);
+    addChild(connectionView);
 }
 
 const std::shared_ptr<server::Engine>& client::ConnectionScreen::getEngine() const {
@@ -229,8 +217,9 @@ void client::ConnectionScreen::startServer() {
                 QPoint(1610, 592));
 
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scorpion").value(),
-                                             QPoint(1850, 1600));
-        engine->getGameWorld()->buildWall(QPoint(500,0),QPoint(500,300), utils::Factory::getObjectSignature("wall1").value(),
+                                             QPoint(200, 200));
+        engine->getGameWorld()->buildWall(QPoint(500, 0), QPoint(500, 300),
+                                          utils::Factory::getObjectSignature("wall1").value(),
                                           utils::Factory::getObjectSignature("column1").value());
         engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("mage").value(),
                                              QPoint(700, 200));
