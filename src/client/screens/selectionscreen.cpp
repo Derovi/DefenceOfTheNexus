@@ -49,6 +49,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
             return false;
         }
         requestNicknameChange(text);
+        return true;
     });
     addChild(nickEdit);
 
@@ -67,8 +68,8 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                            App::getInstance()->getFont()));
         playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
         playerSlot->getTextChildren()->setTextSize(80);
-        playerSlot->setOnClick([&](QPoint, bool) {
-            requestSlot(playersSlots.size());
+        playerSlot->setOnClick([=](QPoint, bool) {
+            requestSlot(i);
         });
 
         addChild(playerSlot.get());
@@ -84,8 +85,8 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                            App::getInstance()->getFont()));
         playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
         playerSlot->getTextChildren()->setTextSize(80);
-        playerSlot->setOnClick([&](QPoint, bool) {
-            requestSlot(playersSlots.size());
+        playerSlot->setOnClick([=](QPoint, bool) {
+            requestSlot(i + 3);
         });
 
 

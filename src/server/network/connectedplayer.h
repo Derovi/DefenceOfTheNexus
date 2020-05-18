@@ -8,7 +8,7 @@ namespace server {
 
 class ConnectedPlayer {
   public:
-    ConnectedPlayer() {}
+    ConnectedPlayer();
 
     ConnectedPlayer(QString  address, int port, int team, uint8_t id);
 
@@ -33,10 +33,10 @@ class ConnectedPlayer {
   private:
     QString nickname;
     QString address;
-    int port;
-    uint8_t id;
+    int port{};
+    uint8_t id{};
 
-    int team;
+    int team{};
 };
 
 }

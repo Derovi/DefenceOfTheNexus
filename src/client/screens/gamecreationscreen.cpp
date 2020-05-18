@@ -117,7 +117,7 @@ void client::GameCreationScreen::startServer() {
     GameConfiguration gameConfiguration;
     engine = std::make_shared<server::Engine>(gameConfiguration);
 
-    engine->getGameWorld()->setTeamCount(2);
+    engine->getGameWorld()->setTeamCount(getPlayerCount());
     engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                          QPoint(1800, 1200), 1);
 

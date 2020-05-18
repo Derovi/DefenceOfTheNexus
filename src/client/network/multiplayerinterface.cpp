@@ -80,21 +80,10 @@ void client::MultiplayerInterface::sendInitRequest() {
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
     qDebug() << "init response!";
-    int teamEntryStart =
-            utils::network::prefixInitResponse.size() + utils::network::separator.size();
-    QString team = message.mid(teamEntryStart,
-                               message.indexOf(utils::network::separator, teamEntryStart) -
-                               teamEntryStart);
-//    qDebug() << "init response team: " << team;
-    int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
-    QString worldJson = message.right(message.size() - worldJsonEntryStart);
-
-    this->team = team.toUInt();
+    auto arguments = message.split(utils::network::separator);  // {prefix, worldJson}
 
     utils::SmartSerializer serializer(false);
-//    qDebug() << "applying changes!!";
-    serializer.applyChanges(gameWorld, worldJson);
-//    qDebug() << "emit inited!";
+    serializer.applyChanges(gameWorld, arguments[1]);
     emit inited();
 }
 

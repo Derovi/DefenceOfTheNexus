@@ -41,3 +41,5 @@ const QString& server::ConnectedPlayer::getNickname() const {
 void server::ConnectedPlayer::setNickname(const QString& nickname) {
     ConnectedPlayer::nickname = nickname;
 }
+
+server::ConnectedPlayer::ConnectedPlayer() : id(255), team(255) {}

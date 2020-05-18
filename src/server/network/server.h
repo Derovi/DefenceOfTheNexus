@@ -30,7 +30,7 @@ class Server : public QObject {
 
     void sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message);
 
-    void initPlayer(const QString& address, int port, int team);
+    void initPlayer(uint8_t playerId);
 
     void nickNameRequest(uint8_t playerId, const QString& message);
 

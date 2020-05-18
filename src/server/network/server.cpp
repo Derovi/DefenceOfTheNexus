@@ -109,26 +109,24 @@ server::Engine* server::Server::getEngine() const {
     return engine;
 }
 
-void server::Server::initPlayer(const QString& address, int port, int team) {
-    //TODO INIT PLAYER
-    /*ConnectedPlayer foundPlayer;
-    bool isPlayerFound = false;
-    for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
-        if (connectedPlayer.getAddress() == address && connectedPlayer.getPort() == port) {
-            foundPlayer = connectedPlayer;
-            isPlayerFound = true;
+void server::Server::initPlayer(uint8_t playerId) {
+    if (playerId == 255) {
+        return;
+    }
+    ConnectedPlayer* connectedPlayer = nullptr;
+    for (auto& player : connectedPlayers) {
+        if (player.getId() == playerId) {
+            connectedPlayer = &player;
             break;
         }
     }
-    if (!isPlayerFound) {
-        foundPlayer = ConnectedPlayer(address, port, team);
-        connectedPlayers.push_back(foundPlayer);
+    if (connectedPlayer == nullptr || connectedPlayer->getTeam() == 255) {
+        return;
     }
     utils::SmartSerializer serializer(false);
-    sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
-                             QString::number(foundPlayer.getTeam()) + utils::network::separator +
-                             serializer.getChanges(std::make_shared<core::GameWorld>(),
-                                                   engine->getGameWorld()));*/
+    sendMessage(*connectedPlayer, utils::network::prefixInitResponse + utils::network::separator +
+                                  serializer.getChanges(std::make_shared<core::GameWorld>(),
+                                                        engine->getGameWorld()));
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
@@ -212,6 +210,7 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     }
     QStringList arguments = message.split(utils::network::separator);  // {prefix, nickname}
     int team = arguments[1].toInt();
+    qDebug() << "team:" << team;
     bool slotFree = true;
     for (const auto& player : connectedPlayers) {
         if (player.getTeam() == team) {
@@ -246,7 +245,7 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     QJsonObject responseJson;
     responseJson.insert("slots", responseArray);
     QString response = utils::Serializer().jsonObjectToString(responseJson);
-    qDebug() << "response:" << response;
+    std::cout << "response:" << response.toStdString();
     for (const auto& player : connectedPlayers) {
         sendMessage(player, response);
     }
