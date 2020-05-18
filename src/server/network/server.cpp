@@ -71,9 +71,9 @@ void server::Server::readMessage() {
                                                   QString::number(
                                                           engine->getGameWorld()->getTeamCount()));
     } else if (message.startsWith(utils::network::prefixRequestNickname)) {
-        nickNameRequest(message);
+        nickNameRequest(getPlayerId(senderAddress, senderPort), message);
     } else if (message.startsWith(utils::network::prefixRequestSlot)) {
-        slotRequest(message);
+        slotRequest(getPlayerId(senderAddress, senderPort), message);
     }
 }
 
@@ -178,11 +178,76 @@ server::ConnectedPlayer server::Server::getConnectedPlayer(uint8_t id) {
     return ConnectedPlayer();
 }
 
-void server::Server::nickNameRequest(ConnectedPlayer& connectedPlayer, const QString& message) {
+void server::Server::nickNameRequest(uint8_t playerId, const QString& message) {
+    if (playerId == 255) {
+        return;
+    }
+    ConnectedPlayer* connectedPlayer;
+    for (auto& player : connectedPlayers) {
+        if (player.getId() == playerId) {
+            connectedPlayer = &player;
+            break;
+        }
+    }
     QStringList arguments = message.split(utils::network::separator);  // {prefix, nickname}
-    connectedPlayer.setNickname(arguments[1]);
+    connectedPlayer->setNickname(arguments[1]);
+    QString response = utils::network::prefixResponseNickname + utils::network::separator +
+                       QString::number(connectedPlayer->getId()) + '#' + arguments[1];
     for (const auto& player : connectedPlayers) {
-        sendMessage(player, utils::network::prefixResponseNickname + utils::network::separator +
-                            QString::number(connectedPlayer.getId()) + '#' + arguments[1]);
+        sendMessage(player, response);
+    }
+    qDebug() << "nickname response:" << response;
+}
+
+void server::Server::slotRequest(uint8_t playerId, const QString& message) {
+    if (playerId == 255) {
+        return;
+    }
+    ConnectedPlayer* connectedPlayer;
+    for (auto& player : connectedPlayers) {
+        if (player.getId() == playerId) {
+            connectedPlayer = &player;
+            break;
+        }
+    }
+    QStringList arguments = message.split(utils::network::separator);  // {prefix, nickname}
+    int team = arguments[1].toInt();
+    bool slotFree = true;
+    for (const auto& player : connectedPlayers) {
+        if (player.getTeam() == team) {
+            slotFree = false;
+            break;
+        }
+    }
+    if (!slotFree) {
+        return;
+    }
+    connectedPlayer->setTeam(team);
+    QJsonArray responseArray;
+    for (int index = 0;
+         index < engine->getGameWorld()->getTeamCount();
+         ++index) {
+        ConnectedPlayer foundPlayer;
+        bool found = false;
+        for (const auto& player : connectedPlayers) {
+            if (player.getTeam() == index) {
+                foundPlayer = player;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            responseArray.push_back(
+                    QString::number(foundPlayer.getId()) + '#' + foundPlayer.getNickname());
+        } else {
+            responseArray.push_back("");
+        }
+    }
+    QJsonObject responseJson;
+    responseJson.insert("slots", responseArray);
+    QString response = utils::Serializer().jsonObjectToString(responseJson);
+    qDebug() << "response:" << response;
+    for (const auto& player : connectedPlayers) {
+        sendMessage(player, response);
     }
 }
