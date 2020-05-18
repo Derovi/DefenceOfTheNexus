@@ -17,11 +17,14 @@ void server::Server::registerCommandQueue(std::shared_ptr<Queue<core::Command>> 
 void server::Server::start() {
     socket = std::make_shared<QUdpSocket>();
     socket->bind(port);
+    socket->setSocketOption(QAbstractSocket::SendBufferSizeSocketOption, 100000);
+    socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, 100000);
+    socket->setReadBufferSize(100000);
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
 void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message) {
-    const int offsetConst = 800;
+    const int offsetConst = 8000;
     int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
     for (int offset = 0;
          offset < message.size();
@@ -34,6 +37,7 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
                message.mid(offset, std::min(offsetConst, message.size() - offset));
         socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
                               connectedPlayer.getPort());
+        qDebug() << "send!" << offset / offsetConst;
     }
     ++currentDatagramId;
 }
@@ -108,6 +112,7 @@ server::Engine* server::Server::getEngine() const {
 }
 
 void server::Server::initPlayer(uint8_t playerId) {
+    qDebug() << "init" << playerId;
     if (playerId == 255) {
         return;
     }
@@ -118,6 +123,7 @@ void server::Server::initPlayer(uint8_t playerId) {
             break;
         }
     }
+    qDebug() << "int" << connectedPlayer->getTeam();
     if (connectedPlayer == nullptr || connectedPlayer->getTeam() == 255) {
         return;
     }
@@ -125,6 +131,7 @@ void server::Server::initPlayer(uint8_t playerId) {
     sendMessage(*connectedPlayer, utils::network::prefixInitResponse + utils::network::separator +
                                   serializer.getChanges(std::make_shared<core::GameWorld>(),
                                                         engine->getGameWorld()));
+    qDebug() << "suc";
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {

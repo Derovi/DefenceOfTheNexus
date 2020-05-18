@@ -11,6 +11,11 @@ client::MultiplayerInterface::MultiplayerInterface(QString address, int port, St
         address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255),
         gameWorld(new core::GameWorld()), state(state), playerId(255) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
+    socket->setSocketOption(QAbstractSocket::SendBufferSizeSocketOption, 100000);
+    socket->setSocketOption(QAbstractSocket::ReceiveBufferSizeSocketOption, 100000);
+    socket->setReadBufferSize(100000);
+
+    int bufferSize = 32*1024;
 }
 
 void client::MultiplayerInterface::sendMessage(const QString& message) {
@@ -26,7 +31,7 @@ void client::MultiplayerInterface::setTeam(uint8_t team) {
 }
 
 void client::MultiplayerInterface::readMessage() {
-
+    qDebug() << "pend" << socket->pendingDatagramSize();
     do {
         QByteArray Datagram;
         Datagram.resize(socket->pendingDatagramSize());
@@ -44,9 +49,9 @@ void client::MultiplayerInterface::readMessage() {
         int dataGramCount = message.mid(datagramCountStart,
                                         datagramIdStart - datagramCountStart - 1).toInt();
         int dataGramId = message.mid(datagramIdStart, messageStart - datagramIdStart - 1).toInt();
-//        qDebug() << "index:" << dataGramIndex << ' ' <<  dataGramCount <<  ' ' << dataGramId << ' ' << message.size() << endl;
+        qDebug() << "index:" << dataGramIndex << ' ' <<  dataGramCount <<  ' ' << dataGramId << ' ' << message.size() << endl;
         message = message.right(message.size() - messageStart);
-//        qDebug() << "client read message, length: " << message.length();
+        qDebug() << "client read message, length: " << message.length();
         //std::cout << message.toStdString() << std::endl;
 
         if (!datagrams.contains(dataGramId)) {
@@ -74,6 +79,7 @@ const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() con
 }
 
 void client::MultiplayerInterface::sendInitRequest() {
+    qDebug() << "init request!";
     sendMessage(utils::network::prefixInitRequest);
 }
 
@@ -135,7 +141,7 @@ void client::MultiplayerInterface::buildDatagrams() {
         }
         if (!completed) {
             if (datagrams.first().second.msecsTo(QDateTime::currentDateTime()) > timeout) {
-//                qDebug() << "timeout, datagram parts lost!";
+                qDebug() << "timeout, datagram parts lost!";
                 datagrams.clear();
                 if (state == State::IN_GAME) {
                     sendInitRequest();
@@ -144,6 +150,7 @@ void client::MultiplayerInterface::buildDatagrams() {
             return;
         }
         datagrams.remove(datagrams.firstKey());
+        qDebug() << "completed!" << message.size();
         if (message.startsWith(utils::network::prefixInitResponse)) {
             initResponse(message);
         } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
