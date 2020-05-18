@@ -103,7 +103,7 @@ class GameMap : public Widget {
 
     QMediaPlayer mainPlayer;
 
-    QVector<QMediaPlayer*> musicPlayers;
+    QVector<std::shared_ptr<QMediaPlayer> > musicPlayers;
 
     void drawBackground(QPainter& painter);
 

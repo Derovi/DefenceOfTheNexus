@@ -322,7 +322,7 @@ void client::GameMap::playSound(QStringList arguments) {
     }
     if (!ok) {
         auto* player = new QMediaPlayer;
-        musicPlayers.push_back(player);
+        musicPlayers.push_back(std::make_shared<QMediaPlayer>(player));
         musicPlayers.back()->setMedia(QUrl::fromLocalFile(arguments[0]));
         musicPlayers.back()->setVolume(volume);
         musicPlayers.back()->play();
