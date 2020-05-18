@@ -9,6 +9,7 @@
 #include "textview.h"
 #include "imagebutton.h"
 #include "buildslot.h"
+#include "minimap.h"
 
 namespace client {
 
@@ -39,6 +40,7 @@ class GameInterface : public Widget {
 
     UnitIcon* unitIcon;
     HealthBar* healthBar;
+    MiniMap* miniMap;
 
     TextView* stoneView;
     TextView* woodView;
