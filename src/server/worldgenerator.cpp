@@ -17,19 +17,22 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));
 
     for (int i = 0; i < config.getPlayerCount(); ++i) {
-        int x = static_cast<int>(config.getWidth() / 2
+        int x = static_cast<int>(config.getWidth() / 3
             * std::cos(i * 2 * M_PI / config.getPlayerCount()));
-        int y = static_cast<int>(config.getHeight() / 2
+        int y = static_cast<int>(config.getHeight() / 3
             * std::sin(i * 2 * M_PI / config.getPlayerCount()));
         gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(),
                                 QPoint(x, y),
                                 i + 1);
         gameWorld->summonObject(
             utils::Factory::getObjectSignature(config.getExplorerType()).value(),
-            QPoint(x + 200, y),
+            QPoint(x + 400, y),
             i + 1);
 
     }
+
+    gameWorld->summonObject(utils::Factory::getObjectSignature("medium-barrack").value(),
+        QPoint(0, -500), 0);
 
     QHash<int, QVector<ObjectSignature>> resources;
 

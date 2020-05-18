@@ -46,7 +46,6 @@ void server::SimpleAI::chooseTarget(server::SimpleAI::Bot& bot) {
         setTarget(bot, -1);
         return;
     }
-    static std::mt19937_64 rnd(1337);
     std::uniform_int_distribution<> uprob(0, probSum);
     int64_t p = uprob(rnd);
     for (const auto& target : possibleTargets) {
@@ -87,6 +86,13 @@ server::SimpleAI::Bot server::SimpleAI::makeBot(std::shared_ptr<core::Object> ob
     return bot;
 }
 
+server::SimpleAI::BotSpawner server::SimpleAI::makeSpawner(std::shared_ptr<core::Object> object) const {
+    BotSpawner spawner;
+    spawner.position = object->getPosition() + QPointF(200, 0);
+    spawner.relatedObjectId = object->getId();
+    return spawner;
+}
+
 void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
     probSum = 0;
     possibleTargets.clear();
@@ -104,6 +110,9 @@ void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
                 bots.insert(object->getId(), makeBot(object));
             }
         }
+        if (object->getTypeName() == "medium-barrack") {
+            spawners.insert(object->getId(), makeSpawner(object));
+        }
     }
 
     QVector<int> deadBots;
@@ -116,11 +125,35 @@ void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
     for (int botId : deadBots) {
         bots.remove(botId);
     }
+
+    deadBots.clear();
+    for (const auto& spawner : spawners) {
+        if (!engine->getGameWorld()->getObjects().contains(spawner.relatedObjectId)) {
+            deadBots.push_back(spawner.relatedObjectId);
+        }
+    }
+
+    for (int spawnerId : deadBots) {
+        spawners.remove(spawnerId);
+    }
+}
+
+void server::SimpleAI::spawnBot(const server::SimpleAI::BotSpawner& spawner) {
+    auto botType = BotSpawner::botTypes[rnd() % BotSpawner::botTypes.size()];
+    engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature(botType).value(),
+        spawner.position.toPoint(), getTeam());
 }
 
 void server::SimpleAI::spawnBots(std::shared_ptr<core::GameWorld> world) {
-    if (bots.empty()) {
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("scout").value(),
-                                             QPoint(-200, 0), 0);
+    static auto startTime = std::chrono::steady_clock::now();
+    int64_t availableBots = std::chrono::duration_cast<std::chrono::minutes>(
+        std::chrono::steady_clock::now() - startTime).count() + 1;
+    if (bots.size() < availableBots && !spawners.empty()) {
+       QVector<uint64_t> spawnerIds = spawners.keys().toVector();
+       while (bots.size() < availableBots) {
+           uint64_t spawnerId = spawnerIds[rnd() % spawnerIds.size()];
+           spawnBot(spawners[spawnerId]);
+           --availableBots;
+       }
     }
 }
