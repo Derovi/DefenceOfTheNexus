@@ -28,7 +28,13 @@ class GameCreationScreen : public Screen {
 
     std::shared_ptr<MultiplayerInterface> multiplayerInterface;
 
-    uint8_t getPlayerCount() { return 3; }
+    uint8_t getPlayersCount() const;
+
+    void setPlayersCount(uint8_t playersCount);
+
+
+  private:
+    uint8_t playersCount;
 
     uint8_t getMyPlayerId();
 };

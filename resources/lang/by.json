@@ -11,5 +11,14 @@
   "exit_menu": "У меню",
   "resume": "Вярнуцца",
   "save_game": "Захаваць",
-  "load_game": "Загрузіць"
+  "load_game": "Загрузіць",
+  "free": "Вольна",
+  "network": "Сетка",
+  "ip_address": "IP-адрас",
+  "name": "Імя",
+  "port": "Порт",
+  "connect": "Падключыцца",
+  "connection_to_server" : "Падключэнне да сервера",
+  "choose_team": "Выбраць каманду",
+  "player": "Гулец"
 }

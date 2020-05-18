@@ -7,10 +7,6 @@ client::PlayerSlot::PlayerSlot(QPoint position, int height, int width, bool take
     this->slotId = slotId;
 }
 
-void client::PlayerSlot::clicked(QPoint point, bool leftButton) {
-    taken = true;
-}
-
 bool client::PlayerSlot::isTaken() const {
     return taken;
 }
