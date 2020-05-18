@@ -11,6 +11,7 @@
 #include "../widgets/chooser.h"
 #include "networkscreen.h"
 #include "../widgets/textedit.h"
+#include "selectionscreen.h"
 
 
 void client::NetworkScreen::onPaused() {
@@ -22,7 +23,7 @@ void client::NetworkScreen::onResumed() {
 }
 
 
-client::NetworkScreen::NetworkScreen() {
+client::NetworkScreen::NetworkScreen(): multiplayerInterface(nullptr) {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto networkName = new TextView(QPoint(1700, 500), "Сеть",
@@ -43,43 +44,41 @@ client::NetworkScreen::NetworkScreen() {
     portName->setTextSize(120);
     addChild(portName);
 
-    auto ipEdit = new TextEdit(QPoint(1772, 780), 232, 920);
-    ipEdit->setBackgroundImage(QImage(":/interface/chooser"));
-    ipEdit->setSelectedImage(QImage(":/interface/selected"));
-    ipEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
-                                                       App::getInstance()->getFont()));
-    ipEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    ipEdit->setValidate([](QString text) {
-                            QRegExp lettersPattern("[^\\d.]");
-                            if (text.isEmpty() || lettersPattern.indexIn(text) != -1) {
-                                return false;
-                            }
-                            if (text.back() == '.') {
-                                text += '0';
-                            }
-                            int pointCount = text.count('.');
-                            for (int index = 0; index < 3 - pointCount; ++index) {
-                                text += ".0";
-                            }
-                            QRegExp ipPattern("^^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
-                                              "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
-                                              "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
-                                              "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-                            return ipPattern.exactMatch(text);
-                        }
+    ipInput = new TextEdit(QPoint(1772, 780), 232, 920);
+    ipInput->setBackgroundImage(QImage(":/interface/chooser"));
+    ipInput->setSelectedImage(QImage(":/interface/selected"));
+    ipInput->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
+                                                        App::getInstance()->getFont()));
+    ipInput->getTextChildren()->setColor(QColor(249, 192, 6));
+    ipInput->setValidate([](QString text) {
+                             QRegExp lettersPattern("[^\\d.]");
+                             if (text.isEmpty() || lettersPattern.indexIn(text) != -1) {
+                                 return false;
+                             }
+                             if (text.back() == '.') {
+                                 text += '0';
+                             }
+                             int pointCount = text.count('.');
+                             for (int index = 0;
+                                  index < 3 - pointCount;
+                                  ++index) {
+                                 text += ".0";
+                             }
+                             return matchesIpRegex(text);
+                         }
     );
-    addChild(ipEdit);
+    addChild(ipInput);
 
-    auto portEdit = new TextEdit(QPoint(1772, 1080), 232, 920);
-    portEdit->setBackgroundImage(QImage(":/interface/chooser"));
-    portEdit->setSelectedImage(QImage(":/interface/selected"));
-    portEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "25565",
-                                                         App::getInstance()->getFont()));
-    portEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    portEdit->setValidate([](QString text) {
+    portInput = new TextEdit(QPoint(1772, 1080), 232, 920);
+    portInput->setBackgroundImage(QImage(":/interface/chooser"));
+    portInput->setSelectedImage(QImage(":/interface/selected"));
+    portInput->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "25565",
+                                                          App::getInstance()->getFont()));
+    portInput->getTextChildren()->setColor(QColor(249, 192, 6));
+    portInput->setValidate([](QString text) {
         return text.toInt() > 0 && text.toInt() < 100'000;
     });
-    addChild(portEdit);
+    addChild(portInput);
 
     auto connectButton = new ImageButton(QPoint(740, 1744), 232, 921);
     connectButton->setImage(QImage(":/interface/button"));
@@ -94,7 +93,7 @@ client::NetworkScreen::NetworkScreen() {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
-                App::getInstance()->closeScreen();
+                connectClicked();
             });
         });
         thread->start();
@@ -121,5 +120,26 @@ client::NetworkScreen::NetworkScreen() {
     });
 
     addChild(backButton);
+}
+
+void client::NetworkScreen::connectClicked() {
+    QString ip = ipInput->getTextChildren()->getText();
+    if (!matchesIpRegex(ip)) {
+        return;
+    }
+    QString port = portInput->getTextChildren()->getText();
+    multiplayerInterface = std::make_shared<MultiplayerInterface>(ip, port,
+                                                                  MultiplayerInterface::State::CONNECTING_SERVER);
+    connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&] {
+        App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface));
+    });
+}
+
+bool client::NetworkScreen::matchesIpRegex(const QString& text) {
+    QRegExp ipPattern("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                      "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                      "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\."
+                      "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+    return ipPattern.exactMatch(text);
 }
 

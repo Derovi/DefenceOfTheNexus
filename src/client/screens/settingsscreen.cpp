@@ -163,7 +163,8 @@ void client::SettingScreen::startServer() {
     server = std::make_shared<server::Server>(engine.get(), 25565);
     server->start();
 
-    multiplayerInterface = std::make_shared<MultiplayerInterface>("127.0.0.1", server->getPort());
+    multiplayerInterface = std::make_shared<MultiplayerInterface>("127.0.0.1", server->getPort(),
+                                                                  MultiplayerInterface::State::STARTING_SERVER);
     multiplayerInterface->sendConnectRequest();
     connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&] {
         App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface));
