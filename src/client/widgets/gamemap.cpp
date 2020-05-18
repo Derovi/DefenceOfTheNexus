@@ -304,16 +304,11 @@ void client::GameMap::handleEvent(const core::Event& event) {
 }
 
 void client::GameMap::playSound(QStringList arguments) {
-    double distance = qSqrt((getPosition().x() - (arguments[1].toInt())) *
-                            (getPosition().x() - (arguments[1].toInt())) +
-                            (getPosition().y() - (arguments[2].toInt())) *
-                            (getPosition().y() - (arguments[2].toInt())));
+    double distance = qSqrt((getWindowCenter().x() - (arguments[1].toInt())) *
+                            (getWindowCenter().x() - (arguments[1].toInt())) +
+                            (getWindowCenter().y() - (arguments[2].toInt())) *
+                            (getWindowCenter().y() - (arguments[2].toInt())));
     int volume = 50 - distance / 100;
-    for (int j = 0;
-         j < 1000;
-         j++) {
-        qDebug() << volume;
-    }
     volume = std::max(volume, 0);
     bool ok = false;
     for (auto& player: musicPlayers) {
@@ -326,7 +321,7 @@ void client::GameMap::playSound(QStringList arguments) {
         }
     }
     if (!ok) {
-        QMediaPlayer* player = new QMediaPlayer;
+        auto* player = new QMediaPlayer;
         musicPlayers.push_back(player);
         musicPlayers.back()->setMedia(QUrl::fromLocalFile(arguments[0]));
         musicPlayers.back()->setVolume(volume);
