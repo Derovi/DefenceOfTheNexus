@@ -97,7 +97,8 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/client/widgets/playerslot.cpp
         src/client/screens/gamecreationscreen.cpp
         src/client/screens/selectionscreen.cpp
-        src/client/widgets/playerslot.cpp)
+        src/client/widgets/playerslot.cpp
+        src/server/ai/simpleai.cpp)
 
 qt5_add_big_resources(SOURCES resources/sprites.qrc
         resources/lang.qrc

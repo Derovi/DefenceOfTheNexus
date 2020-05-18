@@ -44,9 +44,9 @@ void client::MultiplayerInterface::readMessage() {
         int dataGramCount = message.mid(datagramCountStart,
                                         datagramIdStart - datagramCountStart - 1).toInt();
         int dataGramId = message.mid(datagramIdStart, messageStart - datagramIdStart - 1).toInt();
-        qDebug() << "index:" << dataGramIndex << dataGramCount << dataGramId << message.size();
+//        qDebug() << "index:" << dataGramIndex << ' ' <<  dataGramCount <<  ' ' << dataGramId << ' ' << message.size() << endl;
         message = message.right(message.size() - messageStart);
-        qDebug() << "client read message, length: " << message.length();
+//        qDebug() << "client read message, length: " << message.length();
         //std::cout << message.toStdString() << std::endl;
 
         if (!datagrams.contains(dataGramId)) {
@@ -85,16 +85,16 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
     QString team = message.mid(teamEntryStart,
                                message.indexOf(utils::network::separator, teamEntryStart) -
                                teamEntryStart);
-    qDebug() << "init response team: " << team;
+//    qDebug() << "init response team: " << team;
     int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
     QString worldJson = message.right(message.size() - worldJsonEntryStart);
 
     this->team = team.toUInt();
 
     utils::SmartSerializer serializer(false);
-    qDebug() << "applying changes!!";
+//    qDebug() << "applying changes!!";
     serializer.applyChanges(gameWorld, worldJson);
-    qDebug() << "emit inited!";
+//    qDebug() << "emit inited!";
     emit inited();
 }
 
@@ -103,7 +103,7 @@ void client::MultiplayerInterface::worldUpdate(const QString& message) {
                                       utils::network::separator.size());
     utils::SmartSerializer serializer(false);
     serializer.applyChanges(gameWorld, worldJson);
-    qDebug() << "changed applied!";
+//    qDebug() << "changed applied!";
     //std::cout << worldJson.toStdString();
 }
 
@@ -147,7 +147,7 @@ void client::MultiplayerInterface::buildDatagrams() {
         }
         if (!completed) {
             if (datagrams.first().second.msecsTo(QDateTime::currentDateTime()) > timeout) {
-                qDebug() << "timeout, datagram parts lost!";
+//                qDebug() << "timeout, datagram parts lost!";
                 datagrams.clear();
                 if (state == State::IN_GAME) {
                     sendInitRequest();

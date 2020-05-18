@@ -22,4 +22,4 @@ class AIPlayer {
 
 }
 
-#endif //AIPLAYER_H
+#endif  // AIPLAYER_H

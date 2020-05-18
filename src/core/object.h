@@ -34,6 +34,8 @@ class Object {
 
     float getRotationAngle() const;
 
+    float getSightAngle() const;
+
     const QString& getTypeName() const;
 
     std::shared_ptr<core::Attribute> getAttribute(const QString& name);
@@ -53,6 +55,8 @@ class Object {
     void setHitbox(const QPolygonF& hitbox);
 
     void setRotationAngle(float angle);
+
+    void setSightAngle(float angle);
 
     void setTypeName(const QString& typeName);
 
@@ -87,6 +91,7 @@ class Object {
     //!TODO add to serialization
     uint8_t team;
     float rotationAngle;
+    float sightAngle;
 };
 
 }  // namespace core

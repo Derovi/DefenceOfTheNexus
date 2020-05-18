@@ -16,6 +16,10 @@ QJsonObject utils::SmartSerializer::objectPartSerializer(
         result.insert("rotationAngle",
                       static_cast<int>(afterChanges->getRotationAngle() * 100) / 100.0);
     }
+    if (std::abs(beforeChanges->getSightAngle() - afterChanges->getSightAngle()) > EPS) {
+        result.insert("sightAngle",
+                      static_cast<int>(afterChanges->getSightAngle() * 100) / 100.0);
+    }
     if (beforeChanges->getTypeName() != afterChanges->getTypeName()) {
         result.insert("typeName", afterChanges->getTypeName());
     }
@@ -343,6 +347,9 @@ void utils::SmartSerializer::partObjectDeserializer(const std::shared_ptr<core::
     }
     if (changes.find("rotationAngle") != changes.end()) {
         object->setRotationAngle(changes["rotationAngle"].toDouble());
+    }
+    if (changes.find("sightAngle") != changes.end()) {
+        object->setSightAngle(changes["sightAngle"].toDouble());
     }
     if (changes.find("hitbox") != changes.end()) {
         QVector<QPointF> vec;

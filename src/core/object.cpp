@@ -7,7 +7,7 @@
 core::Object::Object(uint64_t id, QString typeName, QPointF position, QPolygonF hitbox,
                      float rotationAngle, int team):
     typeName(std::move(typeName)), hitbox(std::move(hitbox)), position(position), id(id),
-    team(team), rotationAngle(rotationAngle) {}
+    team(team), rotationAngle(rotationAngle), sightAngle(0) {}
 
 uint64_t core::Object::getId() const {
     return id;
@@ -25,6 +25,10 @@ float core::Object::getRotationAngle() const {
     return rotationAngle;
 }
 
+float core::Object::getSightAngle() const {
+    return sightAngle;
+}
+
 void core::Object::setPosition(const QPointF& newPosition) {
     position = newPosition;
 }
@@ -35,6 +39,10 @@ void core::Object::setHitbox(const QPolygonF& newHitbox) {
 
 void core::Object::setRotationAngle(float angle) {
     rotationAngle = angle;
+}
+
+void core::Object::setSightAngle(float angle) {
+    sightAngle = angle;
 }
 
 void core::Object::setId(uint64_t newId) {

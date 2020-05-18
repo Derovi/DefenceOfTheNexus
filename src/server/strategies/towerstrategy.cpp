@@ -33,6 +33,7 @@ void TowerStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) 
     }
     auto direction = target->getPosition() - getObject()->getPosition();
     getObject()->setRotationAngle(std::atan2(direction.y(), direction.x()));
+    getObject()->setSightAngle(std::atan2(direction.y(), direction.x()));
     damaging_performer::damage(world, getObject(), damaging, target, timeDelta);
 }
 
