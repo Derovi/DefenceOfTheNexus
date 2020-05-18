@@ -106,6 +106,28 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
     return object;
 }
 
+std::shared_ptr<core::Object>
+core::GameWorld::summonObjectIfNoObstacles(const server::ObjectSignature& signature,
+                                           const QPoint& position, int team, float rotationAngle) {
+    ++lastSummonedId;
+    std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
+                                                              signature.getTypeName(),
+                                                              position,
+                                                              signature.getHitbox(),
+                                                              rotationAngle,
+                                                              team);
+    object->setStrategies(signature.getStrategies());
+    for (const auto& attribute : signature.getAttributes()) {
+        object->getAttributes().push_back(attribute->clone());
+    }
+    for (const auto& another : objects) {
+        if (object->isIntersect(*another)) {
+            return nullptr;
+        }
+    }
+    objects.insert(lastSummonedId, object);
+    return object;
+}
 
 core::GameWorld::GameWorld(): lastSummonedId(-1), width(0), height(0), teamCount(0) {}
 
@@ -155,7 +177,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
             }
             if (team != 0 && (columnSignature.getAttribute("cost") != nullptr) &&
                 !((dynamic_cast<Cost*>(columnSignature.getAttribute("cost").get()))->pay(
-                        resources[team]))) {
+                    resources[team]))) {
                 break;
             }
             summonObject(columnSignature,

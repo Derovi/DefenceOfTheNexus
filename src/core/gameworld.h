@@ -47,6 +47,11 @@ class GameWorld {
                  int team = 0,
                  float rotationAngle = 0);
 
+    std::shared_ptr<core::Object>
+    summonObjectIfNoObstacles(const server::ObjectSignature& signature, const QPoint& position,
+                 int team = 0,
+                 float rotationAngle = 0);
+
     void buildWall(QPoint start, QPoint finish, const server::ObjectSignature& wall,
                    const server::ObjectSignature& columnSignature, uint8_t team = 0);
 
