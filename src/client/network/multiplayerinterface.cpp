@@ -159,6 +159,10 @@ void client::MultiplayerInterface::buildDatagrams() {
             eventReceived(message);
         } else if (message.startsWith(utils::network::prefixConnectResponse)) {
             connectResponse(message);
+        } else if (message.startsWith(utils::network::prefixResponseNickname)) {
+            nickNameResponse(message);
+        } else if (message.startsWith(utils::network::prefixTeamUpdate)) {
+            teamUpdate(message);
         }
     }
 }
@@ -188,4 +192,19 @@ void client::MultiplayerInterface::requestNickname(const QString& nickname) {
 void client::MultiplayerInterface::requestSlot(uint8_t slot) {
     sendMessage(
             utils::network::prefixRequestSlot + utils::network::separator + QString::number(slot));
+}
+
+void client::MultiplayerInterface::nickNameResponse(const QString& message) {
+    auto arguments = message.split(utils::network::separator);  // {prefix, nickname}
+    emit nicknameUpdated(arguments[1]);
+}
+
+void client::MultiplayerInterface::teamUpdate(const QString& message) {
+    auto arguments = message.split(utils::network::separator);  // {prefix, array json}
+    QJsonArray jsonArray = utils::Serializer().stringToJsonObject(message[1]).value()["slots"].toArray();
+    QVector<QString> result;
+    for (auto variant : jsonArray.toVariantList()) {
+        result.push_back(variant.toString());
+    }
+    emit slotsUpdated(result);
 }

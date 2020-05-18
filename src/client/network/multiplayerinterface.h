@@ -71,6 +71,8 @@ class MultiplayerInterface : public QObject {
     void initResponse(const QString& message);
     void connectResponse(const QString& message);
     void worldUpdate(const QString& message);
+    void nickNameResponse(const QString& message);
+    void teamUpdate(const QString& message);
 
     void buildDatagrams();
 
@@ -89,8 +91,8 @@ class MultiplayerInterface : public QObject {
 
     void inited();
     void connected(int teamCount);
-    void nicknameUpdated();
-    void slotsUpdated();
+    void nicknameUpdated(QString name);
+    void slotsUpdated(QVector<QString> updated);
 };
 
 }

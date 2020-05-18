@@ -28,6 +28,12 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     connect(multiplayerInterface.get(), &MultiplayerInterface::inited, this,
             &SelectionScreen::onInited);
 
+    connect(multiplayerInterface.get(), &MultiplayerInterface::nicknameUpdated,
+            this, &SelectionScreen::updatePlayerName);
+
+    connect(multiplayerInterface.get(), &MultiplayerInterface::slotsUpdated,
+            this, &SelectionScreen::updateSlots);
+
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto serverName = new TextView(QPoint(920, 208), "::connection_to_server",
@@ -53,6 +59,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
         QRegExp lettersPattern("^[A-Za-z0-9]+$");
         if (lettersPattern.exactMatch(text) && text.length() < 11){
             requestNicknameChange(text);
+            updatePlayerName(QString::number(getMyPlayerId()) + '#' + text);
             return true;
         }
         return false;
@@ -143,7 +150,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
 }
 
 int client::SelectionScreen::getMyPlayerId() {
-    return 0;
+    return multiplayerInterface->getPlayerId();
 }
 
 void client::SelectionScreen::updateSlots(QVector<QString> list) {
@@ -151,7 +158,7 @@ void client::SelectionScreen::updateSlots(QVector<QString> list) {
         QString id = list[i].left(list[i].indexOf("#"));
         QString playerName = list[i].mid(list[i].indexOf("#") + 1);
         playersSlots[id.toInt()]->setTaken(true);
-        updatePlayerName(id.toInt(), playerName);
+        updatePlayerName(list[i]);
     }
 }
 
@@ -169,6 +176,8 @@ void client::SelectionScreen::onInited() {
     App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
 }
 
-void client::SelectionScreen::updatePlayerName(int playerId, const QString& playerName) {
+void client::SelectionScreen::updatePlayerName(QString text) {
+    int playerId = text.left(text.indexOf("#")).toInt();
+    QString playerName = text.mid(text.indexOf("#") + 1);
     playersSlots[playerId]->getTextChildren()->setText(playerName);
 }

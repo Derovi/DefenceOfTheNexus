@@ -32,7 +32,6 @@ class GameCreationScreen : public Screen {
 
     void setPlayersCount(uint8_t playersCount);
 
-
   private:
     uint8_t playersCount;
 
