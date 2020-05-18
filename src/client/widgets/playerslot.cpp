@@ -2,13 +2,17 @@
 #include "playerslot.h"
 
 client::PlayerSlot::PlayerSlot(QPoint position, int height, int width, bool taken, int slotId):
-        ImageButton(position, height, width) {
+        ImageButton(position, height, width), playerId(255) {
     this->taken = taken;
     this->slotId = slotId;
 }
 
 bool client::PlayerSlot::isTaken() const {
     return taken;
+}
+
+void client::PlayerSlot::setPlayerId(int playerId) {
+    PlayerSlot::playerId = playerId;
 }
 
 void client::PlayerSlot::setTaken(bool taken) {

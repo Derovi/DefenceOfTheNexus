@@ -27,6 +27,8 @@ class PlayerSlot : public ImageButton {
 
     void paint(QPainter& painter) override;
 
+    void setPlayerId(int playerId);
+
   private:
     bool taken;
     int slotId;
