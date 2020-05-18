@@ -15,7 +15,7 @@ namespace server::damaging_performer {
 
 bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Damaging> damaging,
                   std::shared_ptr<core::Object> target) {
-    float angle = object->getRotationAngle();
+    float angle = object->getSightAngle();
     double length = damaging->getAttackRadius();
     QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
     QPolygonF attackLine;

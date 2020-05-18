@@ -8,7 +8,7 @@
 bool server::mining_performer::isMineable(std::shared_ptr<core::Object> object,
                                           std::shared_ptr<core::Mining> mining,
                                           std::shared_ptr<core::Object> target) {
-    float angle = object->getRotationAngle();
+    float angle = object->getSightAngle();
     double length = mining->getMiningRadius();
     QPointF miningDirection(length * std::cos(angle), length * std::sin(angle));
     QPolygonF miningLine;

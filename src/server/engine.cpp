@@ -11,6 +11,7 @@
 #include "../core/event.h"
 #include "../client/app.h"
 
+#include "ai/simpleai.h"
 #include "commandexecutor.h"
 #include "worldgenerator.h"
 
@@ -21,6 +22,7 @@ server::Engine::Engine(const GameConfiguration& gameConfiguration):
     gameWorldController = std::make_shared<GameWorldController>(gameWorld, this);
     commandExecutor = CommandExecutor(gameWorldController);
     commandQueue = std::make_shared<Queue<core::Command>>();
+    addAIPlayer(std::make_shared<server::SimpleAI>(this, 0));
 }
 
 server::Engine::~Engine() {
@@ -54,8 +56,6 @@ void server::Engine::start() {
             if (sleepTime > 0) {
                 QThread::msleep(sleepTime);
             }
-            qDebug() << "server" << gameWorld->getObjects()[0]->getPosition();
-            //generateEvent(core::Event(core::Event::Type::HIT_EVENT, {}));
             emit updated(events);
             events.clear();
         }

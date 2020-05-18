@@ -23,7 +23,6 @@ void server::Server::start() {
 void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message) {
     const int offsetConst = 800;
     int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
-    qDebug() << "cur id" << currentDatagramId;
     for (int offset = 0;
          offset < message.size();
          offset += offsetConst) {
@@ -37,7 +36,6 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
                               connectedPlayer.getPort());
     }
     ++currentDatagramId;
-    qDebug() << "message sended from server";
 }
 
 
@@ -55,9 +53,6 @@ void server::Server::readMessage() {
     in >> message;
 
     QString senderAddress = QHostAddress(hostAddress.toIPv4Address()).toString();
-
-    qDebug() << "server read message, length: " << message.length();
-    qDebug() << "sender:" << senderAddress << senderPort;
 
     if (message.startsWith(utils::network::prefixInitRequest)) {
         initPlayer(senderAddress, senderPort,
@@ -115,7 +110,6 @@ void server::Server::initPlayer(const QString& address, int port, int team) {
         foundPlayer = ConnectedPlayer(address, port, team);
         connectedPlayers.push_back(foundPlayer);
     }
-    qDebug() << "init message";
     utils::SmartSerializer serializer(false);
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString::number(foundPlayer.getTeam()) + utils::network::separator +
@@ -124,7 +118,6 @@ void server::Server::initPlayer(const QString& address, int port, int team) {
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
-    qDebug() << "command received";
     QString commandJson = message.right(message.size() - utils::network::prefixSendCommand.size() -
                                         utils::network::separator.size());
     utils::Serializer serializer;

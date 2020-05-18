@@ -77,6 +77,7 @@ std::optional<QJsonObject> utils::Serializer::objectSerializer(const core::Objec
     json.insert("position", position);
     json.insert("team", object.getTeam());
     json.insert("rotationAngle", static_cast<int>(object.getRotationAngle() * 100) / 100.0);
+    json.insert("sightAngle", static_cast<int>(object.getSightAngle() * 100) / 100.0);
     QJsonArray strategies;
     for (const auto& strategy : object.getStrategies()) {
         strategies.push_back(strategy);
@@ -231,7 +232,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
     }
     pos = (serialized["position"]).toObject();
     QPointF point(pos.value("x").toVariant().toInt(), pos.value("y").toVariant().toInt());
-    if (!serialized["rotationAngle"].isDouble()) {
+    if (!serialized["rotationAngle"].isDouble() || !serialized["sightAngle"].isDouble()) {
         return std::nullopt;
     }
     QVector<QPointF> vec;
@@ -271,6 +272,7 @@ std::optional<core::Object> utils::Serializer::objectDeserializer(const QJsonObj
     }
     core::Object ans = core::Object(id, serialized["typeName"].toString(), point, QPolygonF(vec),
                                     serialized["rotationAngle"].toDouble(), team);
+    ans.setSightAngle(serialized["sightAngle"].toDouble());
     ans.setStrategies(strategies);
 
     QJsonObject attributes;
