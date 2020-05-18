@@ -43,7 +43,7 @@ client::SelectionScreen::SelectionScreen() {
                                                          App::getInstance()->getFont()));
     nickEdit->getTextChildren()->setColor(QColor(249, 192, 6));
     nickEdit->setValidate([](QString text){
-        return true;
+        return text.length() < 18;
     });
     addChild(nickEdit);
 

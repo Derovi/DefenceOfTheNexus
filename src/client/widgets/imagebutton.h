@@ -44,7 +44,7 @@ class ImageButton : public Widget {
 
     void setHoverHeight(int hoverHeight);
 
-  private:
+  protected:
     QImage image;
 
     QImage hoverImage;

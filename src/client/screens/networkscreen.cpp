@@ -49,7 +49,6 @@ client::NetworkScreen::NetworkScreen() {
     ipEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
                                                        App::getInstance()->getFont()));
     ipEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    // ToDo: postfix check
     ipEdit->setValidate([](QString text) {
                             QRegExp lettersPattern("[^\\d.]");
                             if (text.isEmpty() || lettersPattern.indexIn(text) != -1) {
@@ -74,31 +73,12 @@ client::NetworkScreen::NetworkScreen() {
     auto portEdit = new TextEdit(QPoint(1772, 1080), 232, 920);
     portEdit->setBackgroundImage(QImage(":/interface/chooser"));
     portEdit->setSelectedImage(QImage(":/interface/selected"));
-    portEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
+    portEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "25565",
                                                          App::getInstance()->getFont()));
     portEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    // ToDo: postfix check
     portEdit->setValidate([](QString text) {
-                              QRegExp letters("[^\\d.]");
-                              if (letters.indexIn(text) != -1) {
-                                  return false;
-                              }
-                              int index = 0;
-                              int position = 0;
-                              int count = 0;
-                              QRegExp prefix("^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-                              while ((position = text.indexOf('.', position)) != -1) {
-                                  QString substring = text.mid(index, position - index);
-                                  if (!prefix.exactMatch(substring) || count == 3) {
-                                      return false;
-                                  }
-                                  ++position;
-                                  ++count;
-                                  index = position;
-                              }
-                              return true;
-                          }
-    );
+        return text.toInt() > 0 && text.toInt() < 100'000;
+    });
     addChild(portEdit);
 
     auto connectButton = new ImageButton(QPoint(740, 1744), 232, 921);
