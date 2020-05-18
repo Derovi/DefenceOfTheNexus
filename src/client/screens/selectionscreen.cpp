@@ -85,8 +85,8 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                            App::getInstance()->getFont()));
         playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
         playerSlot->getTextChildren()->setTextSize(80);
-        playerSlot->setOnClick([&](QPoint, bool) {
-            requestSlot(playersSlots.size());
+        playerSlot->setOnClick([=](QPoint, bool) {
+            requestSlot(i + 1);
         });
 
         addChild(playerSlot.get());
@@ -141,6 +141,7 @@ void client::SelectionScreen::updateSlots(QVector<QString> list) {
         playerSlot->setPlayerId(255);
         playerSlot->setTaken(false);
     }
+    qDebug() << "size" << list.size() << playersSlots.size();
     for (int i = 0; i < list.size(); ++i) {
         qDebug() << "upds" << list[i];
         uint8_t id = list[i].left(list[i].indexOf("#") + 1).toInt();

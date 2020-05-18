@@ -233,12 +233,12 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     connectedPlayer->setTeam(team);
     QJsonArray responseArray;
     for (int index = 0;
-         index < engine->getGameWorld()->getTeamCount();
+         index < engine->getGameWorld()->getTeamCount() - 1;
          ++index) {
         ConnectedPlayer foundPlayer;
         bool found = false;
         for (const auto& player : connectedPlayers) {
-            if (player.getTeam() == index) {
+            if (player.getTeam() == index + 1) {
                 foundPlayer = player;
                 found = true;
                 break;
