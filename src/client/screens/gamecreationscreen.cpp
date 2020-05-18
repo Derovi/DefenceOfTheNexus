@@ -132,6 +132,9 @@ void client::GameCreationScreen::startServer() {
     server = std::make_shared<server::Server>(engine.get(), 25565);
     server->start();
 
+    qRegisterMetaType<QVector<core::Event>>("QVector<core::Event>");
+    connect(engine.get(), &server::Engine::updated, server.get(), &server::Server::updateGameWorld);
+
     multiplayerInterface = std::make_shared<MultiplayerInterface>("127.0.0.1", server->getPort(),
                                                                   MultiplayerInterface::State::STARTING_SERVER);
     multiplayerInterface->sendConnectRequest();

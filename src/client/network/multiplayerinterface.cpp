@@ -90,9 +90,13 @@ void client::MultiplayerInterface::initResponse(const QString& message) {
     utils::SmartSerializer serializer(false);
     serializer.applyChanges(gameWorld, arguments[1]);
     emit inited();
+    state = IN_GAME;
 }
 
 void client::MultiplayerInterface::worldUpdate(const QString& message) {
+    if (state != IN_GAME) {
+        return;
+    }
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
     utils::SmartSerializer serializer(false);
