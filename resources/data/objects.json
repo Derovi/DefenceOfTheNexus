@@ -21,7 +21,10 @@
         "bulletType": ""
       },
       "builder": {
-        "list": ["test2", "column1"]
+        "list": [
+          "test2",
+          "column1"
+        ]
       }
     },
     "hitbox": {
@@ -254,6 +257,246 @@
       "attackStrategy"
     ]
   },
+  "spook": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 300,
+        "speed": 300
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 60,
+        "maxHealth": 60
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        -50,
+        50,
+        50
+      ],
+      "y": [
+        -50,
+        50,
+        50,
+        -50
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
+  "gnoll": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 250,
+        "speed": 250
+      },
+      "damaging": {
+        "damage": 15,
+        "radius": 150,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 80,
+        "maxHealth": 80
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 15,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
+      },
+      "hitbox": {
+        "x": [
+          -50,
+          -50,
+          50,
+          50
+        ],
+        "y": [
+          -50,
+          50,
+          50,
+          -50
+        ]
+      },
+      "strategies": [
+        "pathStrategy",
+        "moveStrategy",
+        "attackStrategy"
+      ]
+    }
+  },
+  "gnoll": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 250,
+        "speed": 250
+      },
+      "damaging": {
+        "damage": 15,
+        "radius": 150,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 80,
+        "maxHealth": 80
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 15,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        }
+      },
+      "hitbox": {
+        "x": [
+          -50,
+          -50,
+          50,
+          50
+        ],
+        "y": [
+          -50,
+          50,
+          50,
+          -50
+        ]
+      },
+      "strategies": [
+        "pathStrategy",
+        "moveStrategy",
+        "attackStrategy"
+      ]
+    }
+  },
+  "ghost": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 600,
+        "speed": 600
+      },
+      "damaging": {
+        "damage": 5,
+        "radius": 150,
+        "delay": 1000,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 30,
+        "maxHealth": 30
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 10,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 10,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -50,
+        -50,
+        50,
+        50
+      ],
+      "y": [
+        -50,
+        50,
+        50,
+        -50
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
   "ogre": {
     "attributes": {
       "moving": {
@@ -434,6 +677,66 @@
       "attackStrategy"
     ]
   },
+  "voodoo": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 0.7071067690849304,
+          "y": 0.7071067690849304
+        },
+        "maxSpeed": 500,
+        "speed": 500
+      },
+      "damaging": {
+        "damage": 10,
+        "radius": 150,
+        "delay": 800,
+        "bulletType": ""
+      },
+      "damageable": {
+        "health": 70,
+        "maxHealth": 70
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 30,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 50,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
+    "hitbox": {
+      "x": [
+        -75,
+        -75,
+        75,
+        75
+      ],
+      "y": [
+        -75,
+        75,
+        75,
+        -75
+      ]
+    },
+    "strategies": [
+      "pathStrategy",
+      "moveStrategy",
+      "attackStrategy"
+    ]
+  },
   "scout": {
     "attributes": {
       "moving": {
@@ -504,8 +807,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -519,8 +832,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -534,8 +857,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -549,8 +882,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -564,8 +907,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -579,8 +932,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -594,8 +957,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -609,8 +982,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -624,8 +1007,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -639,8 +1032,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -654,8 +1057,18 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -669,96 +1082,216 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "gover": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "nexus": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "resource-bundle": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "big-barrack": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "medium-barrack": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "grass": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "dirt-rock": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "big-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "medium-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "small-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
   "long-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
     "strategies": []
   },
@@ -776,10 +1309,22 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [
+        50,
+        -50,
+        -50,
+        50
+      ],
+      "y": [
+        50,
+        50,
+        -50,
+        -50
+      ]
     },
-    "strategies": ["towerStrategy"]
+    "strategies": [
+      "towerStrategy"
+    ]
   },
   "high-tower": {
     "attributes": {},
@@ -818,10 +1363,22 @@
       }
     },
     "hitbox": {
-      "x": [-5, 0, 5, 0],
-      "y": [0, -5, 0, 5]
+      "x": [
+        -5,
+        0,
+        5,
+        0
+      ],
+      "y": [
+        0,
+        -5,
+        0,
+        5
+      ]
     },
-    "strategies": ["bulletStrategy"]
+    "strategies": [
+      "bulletStrategy"
+    ]
   }
 }
 

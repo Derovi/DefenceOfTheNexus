@@ -279,6 +279,126 @@
       }
     }
   },
+  "spook": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit7_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit7_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit7_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit7_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit7_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "gnoll": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit8_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit8_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit8_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit8_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit8_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "ghost": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit9_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit9_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit9_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit9_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit9_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
+  "voodoo": {
+    "spriteControllers": ["unit"],
+    "spriteDescriptions": {
+      "idle": {
+        "resource": ":/units/unit10_idle",
+        "rows": 20,
+        "columns": 1
+      },
+      "run": {
+        "resource": ":/units/unit10_run",
+        "rows": 20,
+        "columns": 1
+      },
+      "default": {
+        "resource": ":/units/unit10_walk",
+        "rows": 20,
+        "columns": 1
+      },
+      "attack": {
+        "resource": ":/units/unit10_attack",
+        "rows": 20,
+        "columns": 1
+      },
+      "die": {
+        "resource": ":/units/unit10_die",
+        "rows": 20,
+        "columns": 1
+      }
+    }
+  },
   "medium-stone": {
     "width": 130,
     "height": 110,

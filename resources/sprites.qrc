@@ -50,6 +50,30 @@
         <file alias="unit6_idle">sprites/units/scout/unit6_idle.png</file>
         <file alias="unit6_walk">sprites/units/scout/unit6_walk.png</file>
         <file alias="unit6_run">sprites/units/scout/unit6_run.png</file>
+        <file alias="unit7_attack">sprites/units/spook/unit7_attack.png</file>
+        <file alias="unit7_die">sprites/units/spook/unit7_die.png</file>
+        <file alias="unit7_hurt">sprites/units/spook/unit7_hurt.png</file>
+        <file alias="unit7_idle">sprites/units/spook/unit7_idle.png</file>
+        <file alias="unit7_walk">sprites/units/spook/unit7_walk.png</file>
+        <file alias="unit7_run">sprites/units/spook/unit7_run.png</file>
+        <file alias="unit8_attack">sprites/units/gnoll/unit8_attack.png</file>
+        <file alias="unit8_die">sprites/units/gnoll/unit8_die.png</file>
+        <file alias="unit8_hurt">sprites/units/gnoll/unit8_hurt.png</file>
+        <file alias="unit8_idle">sprites/units/gnoll/unit8_idle.png</file>
+        <file alias="unit8_walk">sprites/units/gnoll/unit8_walk.png</file>
+        <file alias="unit8_run">sprites/units/gnoll/unit8_run.png</file>
+        <file alias="unit9_attack">sprites/units/ghost/unit9_attack.png</file>
+        <file alias="unit9_die">sprites/units/ghost/unit9_die.png</file>
+        <file alias="unit9_hurt">sprites/units/ghost/unit9_hurt.png</file>
+        <file alias="unit9_idle">sprites/units/ghost/unit9_idle.png</file>
+        <file alias="unit9_walk">sprites/units/ghost/unit9_walk.png</file>
+        <file alias="unit9_run">sprites/units/ghost/unit9_run.png</file>
+        <file alias="unit10_attack">sprites/units/voodoo/unit10_attack.png</file>
+        <file alias="unit10_die">sprites/units/voodoo/unit10_die.png</file>
+        <file alias="unit10_hurt">sprites/units/voodoo/unit10_hurt.png</file>
+        <file alias="unit10_idle">sprites/units/voodoo/unit10_idle.png</file>
+        <file alias="unit10_walk">sprites/units/voodoo/unit10_walk.png</file>
+        <file alias="unit10_run">sprites/units/voodoo/unit10_run.png</file>
     </qresource>
 
     <qresource prefix="/sprites/resources/tree">
