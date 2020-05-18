@@ -67,6 +67,7 @@ void server::Server::readMessage() {
         commandReceived(senderAddress, senderPort,
                         message);
     } else if (message.startsWith(utils::network::prefixConnectRequest)) {
+        qDebug() << "connect!";
         uint8_t playerId = connectPlayer(senderAddress, senderPort);
         sendMessage(getConnectedPlayer(playerId), utils::network::prefixConnectResponse +
                                                   utils::network::separator +

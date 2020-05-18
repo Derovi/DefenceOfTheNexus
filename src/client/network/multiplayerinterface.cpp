@@ -162,6 +162,8 @@ void client::MultiplayerInterface::buildDatagrams() {
             worldUpdate(message);
         } else if (message.startsWith(utils::network::prefixEvent)) {
             eventReceived(message);
+        } else if (message.startsWith(utils::network::prefixConnectResponse)) {
+            connectResponse(message);
         }
     }
 }
@@ -176,4 +178,10 @@ int client::MultiplayerInterface::getPlayerId() const {
 
 void client::MultiplayerInterface::sendConnectRequest() {
     sendMessage(utils::network::prefixConnectRequest);
+}
+
+void client::MultiplayerInterface::connectResponse(const QString& message) {
+    playerId = message.right(message.size() - utils::network::prefixConnectResponse.size() -
+                                      utils::network::separator.size()).toInt();
+    emit connected();
 }

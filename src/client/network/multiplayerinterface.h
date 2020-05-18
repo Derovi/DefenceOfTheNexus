@@ -66,6 +66,8 @@ class MultiplayerInterface : public QObject {
 
     void initResponse(const QString& message);
 
+    void connectResponse(const QString& message);
+
     void worldUpdate(const QString& message);
 
     void buildDatagrams();
@@ -86,6 +88,12 @@ class MultiplayerInterface : public QObject {
   signals:
 
     void inited();
+
+    void connected();
+
+    void nicknameUpdated();
+
+    void slotsUpdated();
 };
 
 }
