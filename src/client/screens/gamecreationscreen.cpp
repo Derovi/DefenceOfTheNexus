@@ -8,24 +8,25 @@
 #include "../properties.h"
 #include "../widgets/textview.h"
 #include "../widgets/chooser.h"
-#include "settingsscreen.h"
+#include "gamecreationscreen.h"
 #include "../widgets/textedit.h"
 #include "selectionscreen.h"
 #include "../../utils/factory.h"
 
 
-void client::SettingScreen::onPaused() {
+void client::GameCreationScreen::onPaused() {
 
 }
 
-void client::SettingScreen::onResumed() {
+void client::GameCreationScreen::onResumed() {
     server->finish();
     engine->finish();
     server = nullptr;
     engine = nullptr;
 }
 
-client::SettingScreen::SettingScreen() {
+
+client::GameCreationScreen::GameCreationScreen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto settingName = new TextView(QPoint(1458, 432), "Настройки",
@@ -33,18 +34,6 @@ client::SettingScreen::SettingScreen() {
     settingName->setColor(QColor(249, 192, 6));
     settingName->setTextSize(180);
     addChild(settingName);
-
-    auto playersNumber = new TextView(QPoint(760, 816), "Число игроков",
-                                      App::getInstance()->getFont());
-    playersNumber->setColor(QColor(249, 192, 6));
-    playersNumber->setTextSize(120);
-    addChild(playersNumber);
-
-    auto mapSize = new TextView(QPoint(2258, 816), "Размер карты",
-                                App::getInstance()->getFont());
-    mapSize->setColor(QColor(249, 192, 6));
-    mapSize->setTextSize(120);
-    addChild(mapSize);
 
     auto playersChooser = new Chooser(QPoint(500, 990), 232, 1260);
     playersChooser->getTextView()->setFont(App::getInstance()->getFont());
@@ -60,51 +49,28 @@ client::SettingScreen::SettingScreen() {
     playersChooser->getRightButton()->setHoverHeight(232);
     playersChooser->setTextWidth(921);
     playersChooser->setButtonWidth(138);
-    QStringList options;
-    int index = 0;
-    for (const QString& language : utils::Lang::getLanguages()) {
-        if (language == properties::lang) {
-            playersChooser->setSelected(index);
-        }
-        ++index;
-        options.push_back(utils::Lang::getTitle(language));
-    }
-    playersChooser->setOptions(options);
-    playersChooser->setOnChanged([&](int selected) {
-        properties::lang = utils::Lang::getLanguages()[selected];
-        utils::Lang::load(properties::lang, properties::baseLang);
-    });
+    QStringList playersOptions = {"1 игрок", "2 игрока", "3 игрока", "4 игрока", "5 игроков",
+                                  "6 игроков"};
+    playersChooser->setOptions(playersOptions);
     addChild(playersChooser);
 
-    auto mapChooser = new Chooser(QPoint(2000, 990), 232, 1260);
-    mapChooser->getTextView()->setFont(App::getInstance()->getFont());
-    mapChooser->getTextView()->setColor(QColor(249, 192, 6));
-    mapChooser->setBackground(QImage(":/interface/chooser"));
-    mapChooser->getLeftButton()->setImage(QImage(":/interface/left-button"));
-    mapChooser->getLeftButton()->setHoverImage(QImage(":/interface/left-button-hover"));
-    mapChooser->getLeftButton()->setHoverWidth(150);
-    mapChooser->getLeftButton()->setHoverHeight(232);
-    mapChooser->getRightButton()->setImage(QImage(":/interface/right-button"));
-    mapChooser->getRightButton()->setHoverImage(QImage(":/interface/right-button-hover"));
-    mapChooser->getRightButton()->setHoverWidth(150);
-    mapChooser->getRightButton()->setHoverHeight(232);
-    mapChooser->setTextWidth(921);
-    mapChooser->setButtonWidth(138);
-    QStringList optionss;
-    int indexx = 0;
-    for (const QString& language : utils::Lang::getLanguages()) {
-        if (language == properties::lang) {
-            mapChooser->setSelected(index);
-        }
-        ++index;
-        options.push_back(utils::Lang::getTitle(language));
-    }
-    mapChooser->setOptions(options);
-    mapChooser->setOnChanged([&](int selected) {
-        properties::lang = utils::Lang::getLanguages()[selected];
-        utils::Lang::load(properties::lang, properties::baseLang);
-    });
-    addChild(mapChooser);
+    auto mapSizeChooser = new Chooser(QPoint(2000, 990), 232, 1260);
+    mapSizeChooser->getTextView()->setFont(App::getInstance()->getFont());
+    mapSizeChooser->getTextView()->setColor(QColor(249, 192, 6));
+    mapSizeChooser->setBackground(QImage(":/interface/chooser"));
+    mapSizeChooser->getLeftButton()->setImage(QImage(":/interface/left-button"));
+    mapSizeChooser->getLeftButton()->setHoverImage(QImage(":/interface/left-button-hover"));
+    mapSizeChooser->getLeftButton()->setHoverWidth(150);
+    mapSizeChooser->getLeftButton()->setHoverHeight(232);
+    mapSizeChooser->getRightButton()->setImage(QImage(":/interface/right-button"));
+    mapSizeChooser->getRightButton()->setHoverImage(QImage(":/interface/right-button-hover"));
+    mapSizeChooser->getRightButton()->setHoverWidth(150);
+    mapSizeChooser->getRightButton()->setHoverHeight(232);
+    mapSizeChooser->setTextWidth(921);
+    mapSizeChooser->setButtonWidth(138);
+    QStringList mapSizeOptions = {"Маленькая карта", "Средняя карта", "Большая карта"};
+    mapSizeChooser->setOptions(mapSizeOptions);
+    addChild(mapSizeChooser);
 
     auto connectButton = new ImageButton(QPoint(700, 1744), 232, 921);
     connectButton->setImage(QImage(":/interface/button"));
@@ -142,11 +108,12 @@ client::SettingScreen::SettingScreen() {
 }
 
 const std::shared_ptr<client::MultiplayerInterface>&
-client::SettingScreen::getMultiplayerInterface() const {
+
+client::GameCreationScreen::getMultiplayerInterface() const {
     return multiplayerInterface;
 }
 
-void client::SettingScreen::startServer() {
+void client::GameCreationScreen::startServer() {
     GameConfiguration gameConfiguration;
     engine = std::make_shared<server::Engine>(gameConfiguration);
 
@@ -166,11 +133,12 @@ void client::SettingScreen::startServer() {
     multiplayerInterface = std::make_shared<MultiplayerInterface>("127.0.0.1", server->getPort(),
                                                                   MultiplayerInterface::State::STARTING_SERVER);
     multiplayerInterface->sendConnectRequest();
-    connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&] {
-        App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface));
+    connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&](int teamCount) {
+        App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface,
+                                       teamCount));
     });
 }
 
-uint8_t client::SettingScreen::getMyPlayerId() {
+uint8_t client::GameCreationScreen::getMyPlayerId() {
     return multiplayerInterface->getPlayerId();
 }

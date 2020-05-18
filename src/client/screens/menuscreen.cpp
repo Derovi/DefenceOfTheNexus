@@ -14,7 +14,7 @@
 #include "optionsscreen.h"
 #include "connectionscreen.h"
 #include "networkscreen.h"
-#include "settingsscreen.h"
+#include "gamecreationscreen.h"
 
 
 void client::MenuScreen::onPaused() {
@@ -43,7 +43,7 @@ client::MenuScreen::MenuScreen(): Screen() {
                                        App::getInstance()->getFont()));
     startButton->getTextChildren()->setColor(QColor(249, 192, 6));
     startButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::getInstance()->openScreen(std::make_shared<SettingScreen>());
+        App::getInstance()->openScreen(std::make_shared<GameCreationScreen>());
     });
 
     addChild(startButton);

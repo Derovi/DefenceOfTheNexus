@@ -89,7 +89,7 @@ class MultiplayerInterface : public QObject {
 
     void inited();
 
-    void connected();
+    void connected(int teamCount);
 
     void nicknameUpdated();
 

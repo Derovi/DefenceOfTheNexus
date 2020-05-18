@@ -1,16 +1,18 @@
-#ifndef SETTINGSSCREEN_H
-#define SETTINGSSCREEN_H
+#ifndef GAMECREATIONSCREEN_H
+#define GAMECREATIONSCREEN_H
+
 #include <QPushButton>
 
 #include "../screen.h"
 #include "../network/multiplayerinterface.h"
+#include "../../server/engine.h"
 #include "../../server/network/server.h"
 
 namespace client {
 
-class SettingScreen : public Screen {
+class GameCreationScreen : public Screen {
   public:
-    SettingScreen();
+    GameCreationScreen();
 
     const std::shared_ptr<MultiplayerInterface>& getMultiplayerInterface() const;
 
@@ -26,11 +28,11 @@ class SettingScreen : public Screen {
 
     std::shared_ptr<MultiplayerInterface> multiplayerInterface;
 
-    uint8_t getPlayerCount() {return 3;}
+    uint8_t getPlayerCount() { return 3; }
 
     uint8_t getMyPlayerId();
 };
 
 }
 
-#endif //SETTINGSSCREEN_H
+#endif //GAMECREATIONSCREEN_H

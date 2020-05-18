@@ -93,7 +93,9 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/server/network/connectedplayer.cpp
         src/client/widgets/textedit.cpp
         src/client/screens/networkscreen.cpp
-        src/client/screens/settingsscreen.cpp
+        src/client/screens/selectionscreen.cpp
+        src/client/widgets/playerslot.cpp
+        src/client/screens/gamecreationscreen.cpp
         src/client/screens/selectionscreen.cpp
         src/client/widgets/playerslot.cpp)
 

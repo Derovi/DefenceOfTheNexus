@@ -71,7 +71,9 @@ void server::Server::readMessage() {
         uint8_t playerId = connectPlayer(senderAddress, senderPort);
         sendMessage(getConnectedPlayer(playerId), utils::network::prefixConnectResponse +
                                                   utils::network::separator +
-                                                  QString::number(playerId));
+                                                  QString::number(playerId) +
+                                                  utils::network::separator +
+                                                  QString::number(engine->getGameWorld()->getTeamCount()));
     }
 }
 

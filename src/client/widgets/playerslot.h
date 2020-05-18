@@ -13,14 +13,32 @@ namespace client {
 class PlayerSlot : public ImageButton {
   public:
     PlayerSlot(QPoint position = QPoint(0, 0), int height = 60,
-                int width = 60);
+                int width = 60, bool taken = false, int slotId = 0);
+
+    bool isTaken() const;
+
+    void setTaken(bool taken);
+
+    int getSlotId() const;
+
+    void setSlotId(int slotId);
+
+    void paint(QPainter& painter) override;
+
+    // ToDo
+    void requestSlot(int slot_id);
+    // ToDo
+    void requestNicknameChange(QString nickname);
+
+
+
+  protected:
+    void clicked(QPoint point, bool leftButton) override;
 
   private:
     bool taken;
-
-
+    int  slotId;
 };
-
 }
 
 #endif //PLAYERSLOT_H

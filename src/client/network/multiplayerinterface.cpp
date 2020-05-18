@@ -181,7 +181,7 @@ void client::MultiplayerInterface::sendConnectRequest() {
 }
 
 void client::MultiplayerInterface::connectResponse(const QString& message) {
-    playerId = message.right(message.size() - utils::network::prefixConnectResponse.size() -
-                                      utils::network::separator.size()).toInt();
-    emit connected();
+    auto list = message.split(utils::network::separator);  // {prefix, playerId, teamCount}
+    playerId = list[1].toInt();
+    emit connected(list[2].toInt());
 }
