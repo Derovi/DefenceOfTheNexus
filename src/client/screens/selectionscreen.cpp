@@ -71,30 +71,13 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     teamName->setColor(QColor(249, 192, 6));
     teamName->setTextSize(120);
     addChild(teamName);
-
-    for (int i = 0, p = 962;
-         i < 3;
-         ++i, p += 304) {
-        auto playerSlot = std::make_shared<PlayerSlot>(QPoint(514, p), 232, 921);
-        playerSlot->setImage(QImage(":/interface/free-slot"));
-        playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
-        playerSlot->setTextChildren(
-                std::make_shared<TextView>(QPoint(0, 0), "Player",
-                                           App::getInstance()->getFont()));
-        playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
-        playerSlot->getTextChildren()->setTextSize(80);
-        playerSlot->setOnClick([=](QPoint, bool) {
-            requestSlot(i);
-        });
-
-        addChild(playerSlot.get());
-        playersSlots.push_back(playerSlot);
-    }
-
-    for (int i = 0, p = 962;
-         i < 3;
-         ++i, p += 304) {
-        auto playerSlot = std::make_shared<PlayerSlot>(QPoint(2254, p), 232, 921);
+    int x = 514;
+    for (int i = 0, y = 962; i < playersCount; ++i, y += 304) {
+        if (i == 3) {
+            x = 2254;
+            y = 962;
+        }
+        auto playerSlot = std::make_shared<PlayerSlot>(QPoint(x, y), 232, 921);
         playerSlot->setImage(QImage(":/interface/free-slot"));
         playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
         playerSlot->setTextChildren(
@@ -102,8 +85,8 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                            App::getInstance()->getFont()));
         playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
         playerSlot->getTextChildren()->setTextSize(80);
-        playerSlot->setOnClick([=](QPoint, bool) {
-            requestSlot(i + 3);
+        playerSlot->setOnClick([&](QPoint, bool) {
+            requestSlot(playersSlots.size());
         });
 
         addChild(playerSlot.get());
