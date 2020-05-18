@@ -37,12 +37,10 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
         int mined = resource->mine(mining->getMiningSpeed());
         mining->setMining(true);
         world->addTeamResources(resource->getType(), mined, object->getTeam());
-        qDebug() << "Mined " << mined << " of " << (int)resource->getType() << endl;
+        qDebug() << "Mined " << mined << " of " << (int) resource->getType() << endl;
         world->generateEvent(
-                core::Event(core::Event::MUSIC_EVENT,
-                            QStringList(
-                                    {"sounds/mine.wav", QString::number(object->getPosition().x()),
-                                     QString::number(object->getPosition().y())})));
+                core::Event(core::Event::MINE_EVENT,
+                            QStringList(QString::number(object->getId()))));
         if (resource->getAmount() == 0) {
             world->getObjects().remove(target->getId());
         }
