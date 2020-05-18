@@ -68,7 +68,12 @@ void server::Server::readMessage() {
                                                   utils::network::separator +
                                                   QString::number(playerId) +
                                                   utils::network::separator +
-                                                  QString::number(engine->getGameWorld()->getTeamCount()));
+                                                  QString::number(
+                                                          engine->getGameWorld()->getTeamCount()));
+    } else if (message.startsWith(utils::network::prefixRequestNickname)) {
+        nickNameRequest(message);
+    } else if (message.startsWith(utils::network::prefixRequestSlot)) {
+        slotRequest(message);
     }
 }
 
@@ -173,4 +178,11 @@ server::ConnectedPlayer server::Server::getConnectedPlayer(uint8_t id) {
     return ConnectedPlayer();
 }
 
-
+void server::Server::nickNameRequest(ConnectedPlayer& connectedPlayer, const QString& message) {
+    QStringList arguments = message.split(utils::network::separator);  // {prefix, nickname}
+    connectedPlayer.setNickname(arguments[1]);
+    for (const auto& player : connectedPlayers) {
+        sendMessage(player, utils::network::prefixResponseNickname + utils::network::separator +
+                            QString::number(connectedPlayer.getId()) + '#' + arguments[1]);
+    }
+}

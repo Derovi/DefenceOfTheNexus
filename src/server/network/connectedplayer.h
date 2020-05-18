@@ -26,7 +26,12 @@ class ConnectedPlayer {
 
     uint8_t getId() const;
 
+    const QString& getNickname() const;
+
+    void setNickname(const QString& nickname);
+
   private:
+    QString nickname;
     QString address;
     int port;
     uint8_t id;

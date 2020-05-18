@@ -32,6 +32,10 @@ class Server : public QObject {
 
     void initPlayer(const QString& address, int port, int team);
 
+    void nickNameRequest(ConnectedPlayer& connectedPlayer, const QString& message);
+
+    void slotRequest(ConnectedPlayer& connectedPlayer, const QString& message);
+
     uint8_t connectPlayer(const QString& address, int port);
 
     uint8_t getPlayerId(const QString& address, int port);
