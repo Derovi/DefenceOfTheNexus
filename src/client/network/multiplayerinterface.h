@@ -34,6 +34,10 @@ class MultiplayerInterface : public QObject {
 
     void eventReceived(const QString& message);
 
+    void requestNickname(const QString& nickname);
+
+    void requestSlot(uint8_t slot);
+
     const QString& getAddress() const;
 
     int getPort() const;
@@ -65,9 +69,7 @@ class MultiplayerInterface : public QObject {
     uint8_t team;
 
     void initResponse(const QString& message);
-
     void connectResponse(const QString& message);
-
     void worldUpdate(const QString& message);
 
     void buildDatagrams();
@@ -76,9 +78,7 @@ class MultiplayerInterface : public QObject {
     QMap<int, std::pair<QVector<QString>, QDateTime>> datagrams;
 
     const int timeout = 300;
-
     State state;
-
     int playerId;
 
   private slots:
@@ -88,11 +88,8 @@ class MultiplayerInterface : public QObject {
   signals:
 
     void inited();
-
     void connected(int teamCount);
-
     void nicknameUpdated();
-
     void slotsUpdated();
 };
 

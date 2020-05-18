@@ -121,8 +121,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     backButton->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "::back",
                                        App::getInstance()->getFont()));
     backButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    backButton->setOnClick([=](QPoint point,
-            bool leftButton) {
+    backButton->setOnClick([](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
@@ -145,10 +144,10 @@ void client::SelectionScreen::updateSlots(QVector<QString> list) {
     }
 }
 
-void client::SelectionScreen::requestSlot(int slot_id) {
-
+void client::SelectionScreen::requestSlot(uint8_t slotId) {
+    multiplayerInterface->requestSlot(slotId);
 }
 
-void client::SelectionScreen::requestNicknameChange(QString nickname) {
-
+void client::SelectionScreen::requestNicknameChange(const QString& nickname) {
+    multiplayerInterface->requestNickname(nickname);
 }

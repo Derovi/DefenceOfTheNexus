@@ -185,3 +185,12 @@ void client::MultiplayerInterface::connectResponse(const QString& message) {
     playerId = list[1].toInt();
     emit connected(list[2].toInt());
 }
+
+void client::MultiplayerInterface::requestNickname(const QString& nickname) {
+    sendMessage(utils::network::prefixRequestNickname + utils::network::separator + nickname);
+}
+
+void client::MultiplayerInterface::requestSlot(uint8_t slot) {
+    sendMessage(
+            utils::network::prefixRequestSlot + utils::network::separator + QString::number(slot));
+}

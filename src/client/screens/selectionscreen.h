@@ -18,10 +18,9 @@ class SelectionScreen : public Screen {
 
     void onResumed() override;
 
-    // ToDo
-    void requestSlot(int slot_id);
-    // ToDo
-    void requestNicknameChange(QString nickname);
+    void requestSlot(uint8_t slotId);
+
+    void requestNicknameChange(const QString& nickname);
 
     void updateSlots(QVector<QString> list);
 

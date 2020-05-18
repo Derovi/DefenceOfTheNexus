@@ -6,8 +6,9 @@
 
 #include "../../utils/queue.h"
 #include "../../core/command.h"
-#include "connectedplayer.h"
 #include "../engine.h"
+
+#include "connectedplayer.h"
 
 namespace server {
 
