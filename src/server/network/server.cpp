@@ -108,11 +108,9 @@ server::Engine* server::Server::getEngine() const {
 }
 
 void server::Server::initPlayer(uint8_t playerId) {
-    qDebug() << "got init request!";
     if (playerId == 255) {
         return;
     }
-    qDebug() << "id ok";
     ConnectedPlayer* connectedPlayer = nullptr;
     for (auto& player : connectedPlayers) {
         if (player.getId() == playerId) {
@@ -122,7 +120,7 @@ void server::Server::initPlayer(uint8_t playerId) {
     }
     if (connectedPlayer == nullptr || connectedPlayer->getTeam() == 255) {
         return;
-    }qDebug() << "team ok!";
+    }
     utils::SmartSerializer serializer(false);
     sendMessage(*connectedPlayer, utils::network::prefixInitResponse + utils::network::separator +
                                   serializer.getChanges(std::make_shared<core::GameWorld>(),
