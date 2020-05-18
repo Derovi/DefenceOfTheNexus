@@ -106,6 +106,8 @@ class GameMap : public Widget {
     QVector<QMediaPlayer*> musicPlayers;
 
     void drawBackground(QPainter& painter);
+
+    void playSound(QStringList arguments);
 };
 
 }

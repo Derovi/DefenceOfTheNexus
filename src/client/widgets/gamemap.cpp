@@ -289,30 +289,48 @@ void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
+        int id = event.getArguments()[0].toLongLong();
+        playSound(QStringList({QString("sounds/sword_attack.wav"),
+                               QString::number(gameWorld->getObjects()[id]->getPosition().x()),
+                               QString::number(gameWorld->getObjects()[id]->getPosition().y())}));
     }
-    if (event.getType() == core::Event::Type::MUSIC_EVENT) {
-        double distance = qSqrt((getPosition().x() - (event.getArguments()[1].toInt())) *
-                                (getPosition().x() - (event.getArguments()[1].toInt())) +
-                                (getPosition().y() - (event.getArguments()[2].toInt())) *
-                                (getPosition().y() - (event.getArguments()[2].toInt())));
-        int volume = 100 - distance / 20;
-        volume = std::max(volume, 0);
-        bool ok = false;
-        for (auto& player: musicPlayers) {
-            if (player->isAvailable()) {
-                ok = true;
-                player->setMedia(QUrl::fromLocalFile(event.getArguments()[0]));
-                player->setVolume(volume);
-                player->play();
-                break;
-            }
+    if (event.getType() == core::Event::Type::MINE_EVENT) {
+        int id = event.getArguments()[0].toLongLong();
+        playSound(QStringList({QString("sounds/mine.wav"),
+                               QString::number(gameWorld->getObjects()[id]->getPosition().x()),
+                               QString::number(gameWorld->getObjects()[id]->getPosition().y())}));
+    }
+
+}
+
+void client::GameMap::playSound(QStringList arguments) {
+    double distance = qSqrt((getPosition().x() - (arguments[1].toInt())) *
+                            (getPosition().x() - (arguments[1].toInt())) +
+                            (getPosition().y() - (arguments[2].toInt())) *
+                            (getPosition().y() - (arguments[2].toInt())));
+    int volume = 50 - distance / 100;
+    for (int j = 0;
+         j < 1000;
+         j++) {
+        qDebug() << volume;
+    }
+    volume = std::max(volume, 0);
+    bool ok = false;
+    for (auto& player: musicPlayers) {
+        if (player->isAvailable()) {
+            ok = true;
+            player->setMedia(QUrl::fromLocalFile(arguments[0]));
+            player->setVolume(volume);
+            player->play();
+            break;
         }
-        if(!ok){
-            QMediaPlayer* player = new QMediaPlayer;
-            musicPlayers.push_back(player);
-            musicPlayers.back()->setMedia(QUrl::fromLocalFile(event.getArguments()[0]));
-            musicPlayers.back()->setVolume(volume);
-            musicPlayers.back()->play();
-        }
+    }
+    if (!ok) {
+        QMediaPlayer* player = new QMediaPlayer;
+        musicPlayers.push_back(player);
+        musicPlayers.back()->setMedia(QUrl::fromLocalFile(arguments[0]));
+        musicPlayers.back()->setVolume(volume);
+        musicPlayers.back()->play();
     }
 }
+
