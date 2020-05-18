@@ -2,11 +2,11 @@ cmake_minimum_required(VERSION 3.7)
 project(defenceofnexus)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fsanitize=address -g")
 
 if (APPLE)
-    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5*/5*/clang_64")
+    set(CMAKE_PREFIX_PATH "/Users/Shared/Qt5.13/5.13.0/clang_64")
 else (APPLE)
     # type here
 endif (APPLE)
@@ -31,6 +31,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
             src/core/attributes/wall.cpp
             src/core/attributes/cost.cpp
             src/core/attributes/builder.cpp
+            src/core/attributes/bullet.cpp
             src/core/attributes/mining.cpp
             src/server/controllers/gameworldcontroller.cpp
             src/server/controllers/controller.cpp
@@ -45,6 +46,8 @@ set(SOURCES src/bootstrap/bootstrap.cpp
             src/server/strategies/pathstrategy.cpp
             src/server/strategies/attackstrategy.cpp
             src/server/strategies/minestrategy.cpp
+            src/server/strategies/towerstrategy.cpp
+            src/server/strategies/bulletstrategy.cpp
             src/server/performers/movingperformer.cpp
             src/server/performers/damagingperformer.cpp
             src/server/performers/damageableperformer.cpp
