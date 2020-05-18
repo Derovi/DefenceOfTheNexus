@@ -78,7 +78,7 @@ client::GameCreationScreen::GameCreationScreen() {
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);
     connectButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::getInstance()->openScreen(std::make_shared<SelectionScreen>());
+        App::getInstance()->openScreen(std::make_shared<SelectionScreen>(6));
     });
 
     addChild(connectButton);

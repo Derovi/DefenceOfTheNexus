@@ -1,5 +1,6 @@
 #ifndef GAMECREATIONSCREEN_H
 #define GAMECREATIONSCREEN_H
+
 #include <QPushButton>
 
 #include "../screen.h"
@@ -14,8 +15,12 @@ class GameCreationScreen : public Screen {
     void onPaused() override;
 
     void onResumed() override;
-};
 
+    uint8_t getPlayerCount();
+
+    uint8_t getScreenSize();
+
+};
 }
 
 #endif //GAMECREATIONSCREEN_H

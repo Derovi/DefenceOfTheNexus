@@ -10,6 +10,7 @@
 #include "../widgets/chooser.h"
 #include "selectionscreen.h"
 #include "../widgets/textedit.h"
+#include "../widgets/playerslot.h"
 
 
 void client::SelectionScreen::onPaused() {
@@ -21,7 +22,7 @@ void client::SelectionScreen::onResumed() {
 }
 
 
-client::SelectionScreen::SelectionScreen() {
+client::SelectionScreen::SelectionScreen(int playersCount) : playersCount(playersCount) {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto serverName = new TextView(QPoint(920, 208), "Подключение к серверу",
@@ -53,6 +54,33 @@ client::SelectionScreen::SelectionScreen() {
     teamName->setTextSize(120);
     addChild(teamName);
 
+    for (int i = 0, p = 962; i < 3; ++i, p += 304) {
+        auto playerSlot = std::make_shared<PlayerSlot> (QPoint(514, p), 232, 921);
+        playerSlot->setImage(QImage(":/interface/free-slot"));
+        playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
+        playerSlot->setTextChildren(
+                std::make_shared<TextView>(QPoint(0, 0), "Player",
+                                           App::getInstance()->getFont()));
+        playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
+        playerSlot->getTextChildren()->setTextSize(80);
+
+        addChild(playerSlot.get());
+        playersSlots.push_back(playerSlot);
+    }
+
+    for (int i = 0, p = 962; i < 3; ++i, p += 304) {
+        auto playerSlot = std::make_shared<PlayerSlot> (QPoint(2254, p), 232, 921);
+        playerSlot->setImage(QImage(":/interface/free-slot"));
+        playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
+        playerSlot->setTextChildren(
+                std::make_shared<TextView>(QPoint(0, 0), "Player",
+                                           App::getInstance()->getFont()));
+        playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
+        playerSlot->getTextChildren()->setTextSize(80);
+
+        addChild(playerSlot.get());
+        playersSlots.push_back(playerSlot);
+    }
 
     auto connectButton = new ImageButton(QPoint(514, 1876), 232, 921);
     connectButton->setImage(QImage(":/interface/button"));
@@ -96,3 +124,13 @@ client::SelectionScreen::SelectionScreen() {
     addChild(backButton);
 }
 
+int client::SelectionScreen::getMyPlayerId() {
+    return 0;
+}
+
+void client::SelectionScreen::updateSlots(QVector<QString> list) {
+    for (int i = 0; i < list.size(); ++i){
+        QString playerName = list[i].mid(list[i].indexOf("#") + 1);
+        playersSlots[i]->getTextChildren()->setText(playerName);
+    }
+}
