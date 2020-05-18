@@ -21,6 +21,8 @@ class MiniMap : public Widget {
 
     void setGameWorld(const std::shared_ptr<core::GameWorld>& gameWorld);
 
+    QVector<QBrush> brushes;
+
   private:
 
     std::shared_ptr<core::GameWorld> gameWorld;

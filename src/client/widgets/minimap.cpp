@@ -4,6 +4,14 @@
 client::MiniMap::MiniMap(QPoint position, int height, int width): Widget(position) {
     setHeight(height);
     setWidth(width);
+    brushes.push_back(Qt::blue);
+    brushes.push_back(Qt::red);
+    brushes.push_back(Qt::blue);
+    brushes.push_back(Qt::black);
+    brushes.push_back(Qt::yellow);
+    brushes.push_back(Qt::green);
+    brushes.push_back(Qt::magenta);
+    brushes.push_back(Qt::cyan);
 }
 
 void client::MiniMap::paint(QPainter& painter) {
@@ -16,7 +24,7 @@ void client::MiniMap::paint(QPainter& painter) {
     for (const auto& object: gameWorld->getObjects()) {
         double dx = object->getPosition().x() - cord.x();
         double dy = object->getPosition().y() - cord.y();
-        if (abs(dx) > 800 || abs(dy) > 800) {
+        if (abs(dx) > 750 || abs(dy) > 750) {
             continue;
         }
         QPolygonF drawPolygon = object->getRotatedHitbox();
@@ -25,11 +33,7 @@ void client::MiniMap::paint(QPainter& painter) {
         trans=trans.scale(0.2,0.2);
         drawPolygon=trans.map(drawPolygon);
         drawPolygon.translate(position.x()+height/2,position.y()+width/2);
-        if(object->getTeam()==0) {
-            painter.setBrush(Qt::blue);
-        }else{
-            painter.setBrush(Qt::red);
-        }
+        painter.setBrush(brushes[object->getTeam()]);
         painter.drawConvexPolygon(drawPolygon);
 
     }
