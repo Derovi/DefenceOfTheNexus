@@ -9,8 +9,6 @@ client::PlayerSlot::PlayerSlot(QPoint position, int height, int width, bool take
 
 void client::PlayerSlot::clicked(QPoint point, bool leftButton) {
     taken = true;
-    requestSlot(slotId);
-    requestNicknameChange(textChildren->getText());
 }
 
 bool client::PlayerSlot::isTaken() const {
@@ -42,12 +40,4 @@ void client::PlayerSlot::paint(QPainter& painter) {
         ));
         textChildren->draw();
     }
-}
-
-void client::PlayerSlot::requestSlot(int slot_id) {
-
-}
-
-void client::PlayerSlot::requestNicknameChange(QString nickname) {
-
 }

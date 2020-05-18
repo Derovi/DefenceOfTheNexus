@@ -25,19 +25,12 @@ class PlayerSlot : public ImageButton {
 
     void paint(QPainter& painter) override;
 
-    // ToDo
-    void requestSlot(int slot_id);
-    // ToDo
-    void requestNicknameChange(QString nickname);
-
-
-
   protected:
     void clicked(QPoint point, bool leftButton) override;
 
   private:
     bool taken;
-    int  slotId;
+    int slotId;
 };
 }
 

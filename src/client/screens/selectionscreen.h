@@ -13,14 +13,19 @@ class SelectionScreen : public Screen {
   public:
     explicit SelectionScreen(std::shared_ptr<MultiplayerInterface> multiplayerInterface, int playersCount);
 
-    void updateSlots(QVector <QString> list);
-
-    int getMyPlayerId();
-
   private:
     void onPaused() override;
 
     void onResumed() override;
+
+    // ToDo
+    void requestSlot(int slot_id);
+    // ToDo
+    void requestNicknameChange(QString nickname);
+
+    void updateSlots(QVector<QString> list);
+
+    int getMyPlayerId();
 
     std::shared_ptr<MultiplayerInterface> multiplayerInterface;
 
