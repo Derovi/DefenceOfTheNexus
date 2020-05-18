@@ -11,6 +11,7 @@
 #include "settingsscreen.h"
 #include "../widgets/textedit.h"
 #include "selectionscreen.h"
+#include "../../utils/factory.h"
 
 
 void client::SettingScreen::onPaused() {
@@ -18,9 +19,11 @@ void client::SettingScreen::onPaused() {
 }
 
 void client::SettingScreen::onResumed() {
-
+    server->finish();
+    engine->finish();
+    server = nullptr;
+    engine = nullptr;
 }
-
 
 client::SettingScreen::SettingScreen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
@@ -113,7 +116,7 @@ client::SettingScreen::SettingScreen() {
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);
     connectButton->setOnClick([=](QPoint point, bool leftButton) {
-        App::getInstance()->openScreen(std::make_shared<SelectionScreen>());
+        startServer();
     });
 
     addChild(connectButton);
@@ -135,7 +138,36 @@ client::SettingScreen::SettingScreen() {
         });
         thread->start();
     });
-
     addChild(backButton);
 }
 
+const std::shared_ptr<client::MultiplayerInterface>&
+client::SettingScreen::getMultiplayerInterface() const {
+    return multiplayerInterface;
+}
+
+void client::SettingScreen::startServer() {
+    GameConfiguration gameConfiguration;
+    engine = std::make_shared<server::Engine>(gameConfiguration);
+
+    engine->getGameWorld()->setTeamCount(2);
+    engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+                                         QPoint(1800, 1200), 1);
+
+    engine->getGameWorld()->summonObject(
+            utils::Factory::getObjectSignature("iron").value(),
+            QPoint(842, 1422));
+
+    engine->start();
+
+    server = std::make_shared<server::Server>(engine.get(), 25565);
+    server->start();
+
+    multiplayerInterface = std::make_shared<MultiplayerInterface>("127.0.0.1", server->getPort());
+    multiplayerInterface->sendInitRequest();
+    App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface));
+}
+
+uint8_t client::SettingScreen::getMyPlayerId() {
+    return multiplayerInterface->getPlayerId();
+}

@@ -31,6 +31,12 @@ class Server : public QObject {
 
     void initPlayer(const QString& address, int port, int team);
 
+    uint8_t connectPlayer(const QString& address, int port);
+
+    uint8_t getPlayerId(const QString& address, int port);
+
+    ConnectedPlayer getConnectedPlayer(uint8_t id);
+
     void commandReceived(const QString& address, int port, const QString& message);
 
     int getPort() const;

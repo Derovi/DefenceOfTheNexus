@@ -10,7 +10,7 @@ class ConnectedPlayer {
   public:
     ConnectedPlayer() {}
 
-    ConnectedPlayer(const QString& address, int port, int team);
+    ConnectedPlayer(QString  address, int port, int team, uint8_t id);
 
     const QString& getAddress() const;
 
@@ -24,9 +24,12 @@ class ConnectedPlayer {
 
     void setTeam(int team);
 
+    uint8_t getId() const;
+
   private:
     QString address;
     int port;
+    uint8_t id;
 
     int team;
 };

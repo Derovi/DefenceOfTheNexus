@@ -24,6 +24,8 @@ class MultiplayerInterface : public QObject {
 
     MultiplayerInterface(QString address, int port, State state = STARTING_SERVER);
 
+    void sendConnectRequest();
+
     void sendInitRequest();
 
     void sendCommand(const core::Command& command);
@@ -50,6 +52,8 @@ class MultiplayerInterface : public QObject {
 
     void setTeam(uint8_t team);
 
+    int getPlayerId() const;
+
   private:
     QString address;
     int port;
@@ -72,6 +76,8 @@ class MultiplayerInterface : public QObject {
     const int timeout = 300;
 
     State state;
+
+    int playerId;
 
   private slots:
 

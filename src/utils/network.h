@@ -6,6 +6,8 @@
 namespace utils::network {
 
 extern const QString separator;
+extern const QString prefixConnectRequest;
+extern const QString prefixConnectResponse;
 extern const QString prefixSendCommand;
 extern const QString prefixInitRequest;
 extern const QString prefixInitResponse;

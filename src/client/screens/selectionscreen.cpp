@@ -20,79 +20,127 @@ void client::SelectionScreen::onResumed() {
 
 }
 
-
-client::SelectionScreen::SelectionScreen() {
-    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
+client::SelectionScreen::SelectionScreen(
+        std::shared_ptr<MultiplayerInterface> multiplayerInterface):
+        multiplayerInterface(std::move(multiplayerInterface)) {
+    setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1)
+    );
 
     auto serverName = new TextView(QPoint(920, 208), "Подключение к серверу",
                                    App::getInstance()->getFont());
-    serverName->setColor(QColor(249, 192, 6));
+    serverName->
+            setColor(QColor(249, 192, 6)
+    );
     serverName->setTextSize(180);
     addChild(serverName);
 
     auto nickName = new TextView(QPoint(1118, 474), "Имя:",
                                  App::getInstance()->getFont());
-    nickName->setColor(QColor(249, 192, 6));
+    nickName->
+            setColor(QColor(249, 192, 6)
+    );
     nickName->setTextSize(120);
     addChild(nickName);
 
     auto nickEdit = new TextEdit(QPoint(1600, 320), 232, 920);
-    nickEdit->setBackgroundImage(QImage(":/interface/chooser"));
-    nickEdit->setSelectedImage(QImage(":/interface/selected"));
-    nickEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
-                                                         App::getInstance()->getFont()));
-    nickEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    nickEdit->setValidate([](QString text){
-        return text.length() < 18;
+    nickEdit->
+            setBackgroundImage(QImage(":/interface/chooser")
+    );
+    nickEdit->
+            setSelectedImage(QImage(":/interface/selected")
+    );
+    nickEdit->
+            setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
+                                                       App::getInstance()->getFont())
+    );
+    nickEdit->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
+    nickEdit->setValidate([](
+            QString text
+    ) {
+        return text.
+
+                length()
+
+               < 18;
     });
     addChild(nickEdit);
 
     auto teamName = new TextView(QPoint(1296, 730), "Выберите команду",
                                  App::getInstance()->getFont());
-    teamName->setColor(QColor(249, 192, 6));
+    teamName->
+            setColor(QColor(249, 192, 6)
+    );
     teamName->setTextSize(120);
     addChild(teamName);
 
 
     auto connectButton = new ImageButton(QPoint(514, 1876), 232, 921);
-    connectButton->setImage(QImage(":/interface/button"));
-    connectButton->setHoverImage(QImage(":/interface/button-hover"));
+    connectButton->
+            setImage(QImage(":/interface/button")
+    );
+    connectButton->
+            setHoverImage(QImage(":/interface/button-hover")
+    );
     connectButton->setHoverWidth(1329);
-    connectButton->setTextChildren(
+    connectButton->
+            setTextChildren(
             std::make_shared<TextView>(QPoint(0, 0), "Подключиться",
-                                       App::getInstance()->getFont()));
-    connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
+                                       App::getInstance()->getFont())
+    );
+    connectButton->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
     connectButton->getTextChildren()->setTextSize(80);
-    connectButton->setOnClick([=](QPoint point, bool leftButton) {
+    connectButton->setOnClick([=](
+            QPoint point,
+            bool leftButton
+    ) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
                 App::getInstance()->closeScreen();
             });
         });
-        thread->start();
+        thread->
+
+                start();
+
     });
 
     addChild(connectButton);
 
     auto backButton = new ImageButton(QPoint(2254, 1876), 232, 921);
-    backButton->setImage(QImage(":/interface/button"));
-    backButton->setHoverImage(QImage(":/interface/button-hover"));
+    backButton->
+            setImage(QImage(":/interface/button")
+    );
+    backButton->
+            setHoverImage(QImage(":/interface/button-hover")
+    );
     backButton->setHoverWidth(1329);
-    backButton->setTextChildren(
+    backButton->
+            setTextChildren(
             std::make_shared<TextView>(QPoint(0, 0), "::back",
-                                       App::getInstance()->getFont()));
-    backButton->getTextChildren()->setColor(QColor(249, 192, 6));
-    backButton->setOnClick([=](QPoint point, bool leftButton) {
+                                       App::getInstance()->getFont())
+    );
+    backButton->getTextChildren()->
+            setColor(QColor(249, 192, 6)
+    );
+    backButton->setOnClick([=](
+            QPoint point,
+            bool leftButton
+    ) {
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
                 App::getInstance()->closeScreen();
             });
         });
-        thread->start();
-    });
+        thread->
 
+                start();
+
+    });
     addChild(backButton);
 }
-

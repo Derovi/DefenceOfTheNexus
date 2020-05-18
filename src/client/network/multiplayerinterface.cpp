@@ -9,7 +9,7 @@
 
 client::MultiplayerInterface::MultiplayerInterface(QString address, int port, State state):
         address(std::move(address)), port(port), socket(std::make_shared<QUdpSocket>()), team(255),
-        gameWorld(new core::GameWorld()), state(state) {
+        gameWorld(new core::GameWorld()), state(state), playerId(255) {
     QObject::connect(socket.get(), SIGNAL(readyRead()), SLOT(readMessage()));
 }
 
@@ -168,4 +168,12 @@ void client::MultiplayerInterface::buildDatagrams() {
 
 client::MultiplayerInterface::State client::MultiplayerInterface::getState() const {
     return state;
+}
+
+int client::MultiplayerInterface::getPlayerId() const {
+    return playerId;
+}
+
+void client::MultiplayerInterface::sendConnectRequest() {
+    sendMessage(utils::network::prefixConnectRequest);
 }

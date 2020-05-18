@@ -66,6 +66,11 @@ void server::Server::readMessage() {
     } else if (message.startsWith(utils::network::prefixSendCommand)) {
         commandReceived(senderAddress, senderPort,
                         message);
+    } else if (message.startsWith(utils::network::prefixConnectRequest)) {
+        uint8_t playerId = connectPlayer(senderAddress, senderPort);
+        sendMessage(getConnectedPlayer(playerId), utils::network::prefixConnectResponse +
+                                                  utils::network::separator +
+                                                  QString::number(playerId));
     }
 }
 
@@ -102,7 +107,8 @@ server::Engine* server::Server::getEngine() const {
 }
 
 void server::Server::initPlayer(const QString& address, int port, int team) {
-    ConnectedPlayer foundPlayer;
+    //TODO INIT PLAYER
+    /*ConnectedPlayer foundPlayer;
     bool isPlayerFound = false;
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         if (connectedPlayer.getAddress() == address && connectedPlayer.getPort() == port) {
@@ -120,7 +126,7 @@ void server::Server::initPlayer(const QString& address, int port, int team) {
     sendMessage(foundPlayer, utils::network::prefixInitResponse + utils::network::separator +
                              QString::number(foundPlayer.getTeam()) + utils::network::separator +
                              serializer.getChanges(std::make_shared<core::GameWorld>(),
-                                                   engine->getGameWorld()));
+                                                   engine->getGameWorld()));*/
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
@@ -141,6 +147,34 @@ const std::shared_ptr<QUdpSocket>& server::Server::getSocket() const {
 
 int server::Server::getCurrentDatagramId() const {
     return currentDatagramId;
+}
+
+uint8_t server::Server::getPlayerId(const QString& address, int port) {
+    for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
+        if (connectedPlayer.getAddress() == address && connectedPlayer.getPort() == port) {
+            return connectedPlayer.getId();
+        }
+    }
+    return 255;
+}
+
+uint8_t server::Server::connectPlayer(const QString& address, int port) {
+    int playerId = getPlayerId(address, port);
+    if (playerId != 255) {
+        return playerId;
+    }
+    playerId = connectedPlayers.size();
+    connectedPlayers.push_back(ConnectedPlayer(address, port, 255, playerId));
+    return playerId;
+}
+
+server::ConnectedPlayer server::Server::getConnectedPlayer(uint8_t id) {
+    for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
+        if (connectedPlayer.getId() == id) {
+            return connectedPlayer;
+        }
+    }
+    return ConnectedPlayer();
 }
 
 

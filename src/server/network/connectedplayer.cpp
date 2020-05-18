@@ -1,7 +1,9 @@
 #include "connectedplayer.h"
 
-server::ConnectedPlayer::ConnectedPlayer(const QString& address, int port, int team):
-        address(address), port(port), team(team) {}
+#include <utility>
+
+server::ConnectedPlayer::ConnectedPlayer(QString  address, int port, int team, uint8_t id):
+        address(std::move(address)), port(port), team(team), id(id) {}
 
 const QString& server::ConnectedPlayer::getAddress() const {
     return address;
@@ -25,4 +27,8 @@ int server::ConnectedPlayer::getTeam() const {
 
 void server::ConnectedPlayer::setTeam(int team) {
     ConnectedPlayer::team = team;
+}
+
+uint8_t server::ConnectedPlayer::getId() const {
+    return id;
 }
