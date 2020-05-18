@@ -55,9 +55,7 @@ void server::Server::readMessage() {
     QString senderAddress = QHostAddress(hostAddress.toIPv4Address()).toString();
 
     if (message.startsWith(utils::network::prefixInitRequest)) {
-        initPlayer(senderAddress, senderPort,
-                   message.right(message.size() - utils::network::prefixInitRequest.size() -
-                                 utils::network::separator.size()).toInt());
+        initPlayer(getPlayerId(senderAddress, senderPort));
     } else if (message.startsWith(utils::network::prefixSendCommand)) {
         commandReceived(senderAddress, senderPort,
                         message);

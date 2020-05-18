@@ -11,6 +11,7 @@
 #include "selectionscreen.h"
 #include "../widgets/textedit.h"
 #include "../widgets/playerslot.h"
+#include "gamescreen.h"
 
 
 void client::SelectionScreen::onPaused() {
@@ -24,6 +25,9 @@ void client::SelectionScreen::onResumed() {
 client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> multiplayerInterface,
                                          int playersCount):
         multiplayerInterface(multiplayerInterface), playersCount(playersCount) {
+    connect(multiplayerInterface.get(), &MultiplayerInterface::inited, this,
+            &SelectionScreen::onInited);
+
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto serverName = new TextView(QPoint(920, 208), "Подключение к серверу",
@@ -59,7 +63,9 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     teamName->setTextSize(120);
     addChild(teamName);
 
-    for (int i = 0, p = 962; i < 3; ++i, p += 304) {
+    for (int i = 0, p = 962;
+         i < 3;
+         ++i, p += 304) {
         auto playerSlot = std::make_shared<PlayerSlot>(QPoint(514, p), 232, 921);
         playerSlot->setImage(QImage(":/interface/free-slot"));
         playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
@@ -76,7 +82,9 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
         playersSlots.push_back(playerSlot);
     }
 
-    for (int i = 0, p = 962; i < 3; ++i, p += 304) {
+    for (int i = 0, p = 962;
+         i < 3;
+         ++i, p += 304) {
         auto playerSlot = std::make_shared<PlayerSlot>(QPoint(2254, p), 232, 921);
         playerSlot->setImage(QImage(":/interface/free-slot"));
         playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
@@ -107,7 +115,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
         QThread* thread = QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
-                App::getInstance()->closeScreen();
+                multiplayerInterface->sendInitRequest();
             });
         });
         thread->start();
@@ -120,7 +128,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     backButton->setHoverImage(QImage(":/interface/button-hover"));
     backButton->setHoverWidth(1329);
     backButton->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "::back",
-                                       App::getInstance()->getFont()));
+                                                           App::getInstance()->getFont()));
     backButton->getTextChildren()->setColor(QColor(249, 192, 6));
     backButton->setOnClick([](QPoint point, bool leftButton) {
         QThread* thread = QThread::create([&] {
@@ -139,7 +147,9 @@ int client::SelectionScreen::getMyPlayerId() {
 }
 
 void client::SelectionScreen::updateSlots(QVector<QString> list) {
-    for (int i = 0; i < list.size(); ++i) {
+    for (int i = 0;
+         i < list.size();
+         ++i) {
         QString playerName = list[i].mid(list[i].indexOf("#") + 1);
         playersSlots[i]->getTextChildren()->setText(playerName);
     }
@@ -151,4 +161,10 @@ void client::SelectionScreen::requestSlot(uint8_t slotId) {
 
 void client::SelectionScreen::requestNicknameChange(const QString& nickname) {
     multiplayerInterface->requestNickname(nickname);
+}
+
+void client::SelectionScreen::onInited() {
+    //TODO FIX
+    multiplayerInterface->setTeam(1);
+    App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
 }

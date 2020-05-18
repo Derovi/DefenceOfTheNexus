@@ -30,6 +30,9 @@ class SelectionScreen : public Screen {
 
     int playersCount;
     QVector<std::shared_ptr<PlayerSlot>> playersSlots;
+
+  private slots:
+    void onInited();
 };
 
 }

@@ -74,8 +74,7 @@ const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() con
 }
 
 void client::MultiplayerInterface::sendInitRequest() {
-    sendMessage(
-            utils::network::prefixInitRequest + utils::network::separator + QString::number(team));
+    sendMessage(utils::network::prefixInitRequest);
 }
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
