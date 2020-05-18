@@ -77,7 +77,7 @@ client::GameCreationScreen::GameCreationScreen() {
     connectButton->setHoverImage(QImage(":/interface/button-hover"));
     connectButton->setHoverWidth(1329);
     connectButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "Начать",
+            std::make_shared<TextView>(QPoint(0, 0), "::start",
                                        App::getInstance()->getFont()));
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);
