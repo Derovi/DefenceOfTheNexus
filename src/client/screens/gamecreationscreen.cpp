@@ -29,7 +29,7 @@ void client::GameCreationScreen::onResumed() {
 client::GameCreationScreen::GameCreationScreen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto settingName = new TextView(QPoint(1458, 432), "Настройки",
+    auto settingName = new TextView(QPoint(1458, 432), "::options",
                                     App::getInstance()->getFont());
     settingName->setColor(QColor(249, 192, 6));
     settingName->setTextSize(180);
@@ -49,8 +49,12 @@ client::GameCreationScreen::GameCreationScreen() {
     playersChooser->getRightButton()->setHoverHeight(232);
     playersChooser->setTextWidth(921);
     playersChooser->setButtonWidth(138);
-    QStringList playersOptions = {"1 игрок", "2 игрока", "3 игрока", "4 игрока", "5 игроков",
-                                  "6 игроков"};
+    QStringList playersOptions = {utils::Lang::get("1 ") + utils::Lang::get("player_low"),
+                                  utils::Lang::get("2 ") + utils::Lang::get("players1"),
+                                  utils::Lang::get("3 ") + utils::Lang::get("players1"),
+                                  utils::Lang::get("4 ") + utils::Lang::get("players1"),
+                                  utils::Lang::get("5 ") + utils::Lang::get("players2"),
+                                  utils::Lang::get("6 ") + utils::Lang::get("players2")};
     playersChooser->setOptions(playersOptions);
     addChild(playersChooser);
 
@@ -68,7 +72,7 @@ client::GameCreationScreen::GameCreationScreen() {
     mapSizeChooser->getRightButton()->setHoverHeight(232);
     mapSizeChooser->setTextWidth(921);
     mapSizeChooser->setButtonWidth(138);
-    QStringList mapSizeOptions = {"Маленькая карта", "Средняя карта", "Большая карта"};
+    QStringList mapSizeOptions = {"::small_map", "::medium_map", "::big_map"};
     mapSizeChooser->setOptions(mapSizeOptions);
     addChild(mapSizeChooser);
 
@@ -134,7 +138,7 @@ void client::GameCreationScreen::startServer() {
     multiplayerInterface->sendConnectRequest();
     connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&](int teamCount) {
         App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface,
-                                       getPlayersCount()));
+                                                                         getPlayersCount()));
     });
 }
 

@@ -21,6 +21,12 @@
   "port": "Порт",
   "connection_to_server": "Подключение к серверу",
   "choose_team": "Выберите команду",
+  "small_map": "Маленькая карта",
+  "medium_map": "Средняя карта",
+  "big_map": "Большая карта",
+  "player_low": "игрок",
+  "players1": "игрока",
+  "players2": "игроков",
   "player": "Игрок",
   "units":{
     "scorpion": "скорпион",

@@ -20,5 +20,11 @@
   "connect": "Падключыцца",
   "connection_to_server" : "Падключэнне да сервера",
   "choose_team": "Выбраць каманду",
-  "player": "Гулец"
+  "player": "Гулец",
+  "small_map": "Маленькая карта",
+  "medium_map": "Сярэдняя карта",
+  "big_map": "Вялікая карта",
+  "player_low": "гулец",
+  "players1": "гульца",
+  "players2": "гульцоў"
 }

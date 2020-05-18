@@ -21,6 +21,12 @@
   "connect": "Connect",
   "connection_to_server": "Connection to server",
   "choose_team": "Choose team",
+  "small_map": "Small map",
+  "medium_map": "Medium map",
+  "big_map": "Large map",
+  "player_low": "player",
+  "players1": "players",
+  "players2": "players",
   "player": "Player",
   "units":{
     "scorpion": "scorpion",
