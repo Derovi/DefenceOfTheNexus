@@ -24,22 +24,25 @@ void server::Server::start() {
 }
 
 void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const QString& message) {
-    const int offsetConst = 8000;
-    int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
-    for (int offset = 0;
-         offset < message.size();
-         offset += offsetConst) {
-        QByteArray datagram;
-        QDataStream out(&datagram, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_5_13);
-        out << '<' + QString::number(offset / offsetConst) + ':' + QString::number(datagramsCount) +
-               '*' + QString::number(currentDatagramId) + '>' +
-               message.mid(offset, std::min(offsetConst, message.size() - offset));
-        socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
-                              connectedPlayer.getPort());
-        qDebug() << "send!" << offset / offsetConst;
-    }
-    ++currentDatagramId;
+    QThread::create([=] {
+        const int offsetConst = 32000;
+        int datagramsCount = message.size() / offsetConst + (message.size() % offsetConst != 0);
+        for (int offset = 0;
+             offset < message.size();
+             offset += offsetConst) {
+            QByteArray datagram;
+            QDataStream out(&datagram, QIODevice::WriteOnly);
+            out.setVersion(QDataStream::Qt_5_13);
+            out << '<' + QString::number(offset / offsetConst) + ':' + QString::number(datagramsCount) +
+                   '*' + QString::number(currentDatagramId) + '>' +
+                   message.mid(offset, std::min(offsetConst, message.size() - offset));
+            socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
+                                  connectedPlayer.getPort());
+            qDebug() << "send!" << offset / offsetConst;
+            QThread::msleep(1);
+        }
+        ++currentDatagramId;
+    })->start();
 }
 
 

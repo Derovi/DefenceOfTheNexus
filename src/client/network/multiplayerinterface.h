@@ -77,7 +77,7 @@ class MultiplayerInterface : public QObject {
     // datagram id, <datagram parts, start time>
     QMap<int, std::pair<QVector<QString>, QDateTime>> datagrams;
 
-    const int timeout = 300;
+    const int timeout = 5000;
     State state;
     int playerId;
 
