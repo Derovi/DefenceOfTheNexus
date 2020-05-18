@@ -22,11 +22,6 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
                                     std::shared_ptr<core::Mining> mining,
                                     std::shared_ptr<core::Object> target,
                                     int timeDelta) {
-    world->generateEvent(
-            core::Event(core::Event::MUSIC_EVENT,
-                        QStringList(
-                                {"sounds/mine.wav", QString::number(object->getPosition().x()),
-                                 QString::number(object->getPosition().y())})));
     int delayLeft = mining->getCurrentDelay() - timeDelta;
     if (delayLeft > 0) {
         mining->setCurrentDelay(delayLeft);
@@ -43,6 +38,11 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
         mining->setMining(true);
         world->addTeamResources(resource->getType(), mined, object->getTeam());
         qDebug() << "Mined " << mined << " of " << (int)resource->getType() << endl;
+        world->generateEvent(
+                core::Event(core::Event::MUSIC_EVENT,
+                            QStringList(
+                                    {"sounds/mine.wav", QString::number(object->getPosition().x()),
+                                     QString::number(object->getPosition().y())})));
         if (resource->getAmount() == 0) {
             world->getObjects().remove(target->getId());
         }
