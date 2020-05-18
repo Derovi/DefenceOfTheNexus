@@ -33,7 +33,8 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
             QByteArray datagram;
             QDataStream out(&datagram, QIODevice::WriteOnly);
             out.setVersion(QDataStream::Qt_5_13);
-            out << '<' + QString::number(offset / offsetConst) + ':' + QString::number(datagramsCount) +
+            out << '<' + QString::number(offset / offsetConst) + ':' +
+                   QString::number(datagramsCount) +
                    '*' + QString::number(currentDatagramId) + '>' +
                    message.mid(offset, std::min(offsetConst, message.size() - offset));
             socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
@@ -255,6 +256,7 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     QString response = utils::Serializer().jsonObjectToString(responseJson);
     std::cout << "response:" << response.toStdString();
     for (const auto& player : connectedPlayers) {
-        sendMessage(player, response);
+        sendMessage(player,
+                    utils::network::prefixTeamUpdate + utils::network::separator + response);
     }
 }

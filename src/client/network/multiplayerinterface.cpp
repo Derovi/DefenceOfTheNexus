@@ -201,10 +201,21 @@ void client::MultiplayerInterface::nickNameResponse(const QString& message) {
 
 void client::MultiplayerInterface::teamUpdate(const QString& message) {
     auto arguments = message.split(utils::network::separator);  // {prefix, array json}
-    QJsonArray jsonArray = utils::Serializer().stringToJsonObject(message[1]).value()["slots"].toArray();
+    qDebug() << "team update!! ";
+    QJsonArray jsonArray = utils::Serializer().stringToJsonObject(arguments[1]).value()["slots"].toArray();
     QVector<QString> result;
+    uint8_t textIndex = 0;
     for (auto variant : jsonArray.toVariantList()) {
-        result.push_back(variant.toString());
+        QString line = variant.toString();
+        std::cout << "line " << line.toStdString() << std::endl;
+        result.push_back(line);
+        if (!line.isEmpty()) {
+            int id = line.right(line.size() - line.indexOf('#' - 1)).toInt();
+            if (id == getPlayerId()) {
+                setTeam(textIndex);
+            }
+        }
+        ++textIndex;
     }
     emit slotsUpdated(result);
 }

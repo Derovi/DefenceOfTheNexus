@@ -155,10 +155,16 @@ int client::SelectionScreen::getMyPlayerId() {
 
 void client::SelectionScreen::updateSlots(QVector<QString> list) {
     for (int i = 0; i < list.size(); ++i) {
-        QString id = list[i].left(list[i].indexOf("#"));
+        qDebug() << "upds" << list[i];
+        QString id = list[i].left(list[i].indexOf("#") + 1);
         QString playerName = list[i].mid(list[i].indexOf("#") + 1);
-        playersSlots[id.toInt()]->setTaken(true);
-        updatePlayerName(list[i]);
+        if (!list[i].isEmpty()) {
+            playersSlots[i]->setTaken(true);
+            updatePlayerName(list[i]);
+        } else {
+            playersSlots[i]->setTaken(false);
+            playersSlots[i]->getTextChildren()->setText("::free");
+        }
     }
 }
 
@@ -177,7 +183,11 @@ void client::SelectionScreen::onInited() {
 }
 
 void client::SelectionScreen::updatePlayerName(QString text) {
-    int playerId = text.left(text.indexOf("#")).toInt();
+    int playerId = text.left(text.indexOf("#") + 1).toInt();
     QString playerName = text.mid(text.indexOf("#") + 1);
-    playersSlots[playerId]->getTextChildren()->setText(playerName);
+    for (auto playerSlot : playersSlots) {
+        if (playerSlot->getPlayerId() == playerId) {
+            playerSlot->getTextChildren()->setText(playerName);
+        }
+    }
 }

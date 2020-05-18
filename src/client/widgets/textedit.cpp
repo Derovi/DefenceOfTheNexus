@@ -34,7 +34,8 @@ void client::TextEdit::keyPress(QKeyEvent* event) {
         QString text = textChildren->getText();
         if (event->key() == Qt::Key_Backspace) {
             text.chop(1);
-        } else if (validate != nullptr && validate(text + event->text())) {
+        }
+        if (validate != nullptr && validate(text + event->text())) {
             text.append(event->text());
         }
         textChildren->setText(text);

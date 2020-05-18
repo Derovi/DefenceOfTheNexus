@@ -37,3 +37,7 @@ void client::PlayerSlot::paint(QPainter& painter) {
         textChildren->draw();
     }
 }
+
+int client::PlayerSlot::getPlayerId() const {
+    return playerId;
+}

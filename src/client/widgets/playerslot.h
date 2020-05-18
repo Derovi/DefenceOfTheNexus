@@ -23,6 +23,8 @@ class PlayerSlot : public ImageButton {
 
     void setSlotId(int slotId);
 
+    int getPlayerId() const;
+
     void paint(QPainter& painter) override;
 
   private:
@@ -30,6 +32,7 @@ class PlayerSlot : public ImageButton {
     int slotId;
     int playerId;
 };
+
 }
 
 #endif //PLAYERSLOT_H
