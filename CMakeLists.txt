@@ -84,7 +84,7 @@ set(SOURCES src/bootstrap/bootstrap.cpp
         src/utils/lang.cpp
         src/client/network/multiplayerinterface.cpp
         src/utils/network.cpp
-        src/server/network/connectedplayer.cpp src/client/widgets/textedit.cpp src/client/widgets/textedit.h src/client/screens/networkscreen.cpp src/client/screens/networkscreen.h src/client/screens/settingsscreen.cpp src/client/screens/settingsscreen.h src/client/screens/selectionscreen.cpp src/client/screens/selectionscreen.h src/client/widgets/playerslot.cpp src/client/widgets/playerslot.h)
+        src/server/network/connectedplayer.cpp src/client/widgets/textedit.cpp src/client/widgets/textedit.h src/client/screens/networkscreen.cpp src/client/screens/networkscreen.h src/client/screens/gamecreationscreen.cpp src/client/screens/gamecreationscreen.h src/client/screens/selectionscreen.cpp src/client/screens/selectionscreen.h src/client/widgets/playerslot.cpp src/client/widgets/playerslot.h)
 
 
 qt5_add_big_resources(SOURCES resources/sprites.qrc

@@ -1,14 +1,14 @@
-#ifndef SETTINGSSCREEN_H
-#define SETTINGSSCREEN_H
+#ifndef GAMECREATIONSCREEN_H
+#define GAMECREATIONSCREEN_H
 #include <QPushButton>
 
 #include "../screen.h"
 
 namespace client {
 
-class SettingScreen : public Screen {
+class GameCreationScreen : public Screen {
   public:
-    SettingScreen();
+    GameCreationScreen();
 
   private:
     void onPaused() override;
@@ -18,4 +18,4 @@ class SettingScreen : public Screen {
 
 }
 
-#endif //SETTINGSSCREEN_H
+#endif //GAMECREATIONSCREEN_H
