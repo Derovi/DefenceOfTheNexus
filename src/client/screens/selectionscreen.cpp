@@ -30,13 +30,14 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
 
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto serverName = new TextView(QPoint(920, 208), "Подключение к серверу",
+    auto serverName = new TextView(QPoint(920, 208), "::connection_to_server",
                                    App::getInstance()->getFont());
     serverName->setColor(QColor(249, 192, 6));
     serverName->setTextSize(180);
     addChild(serverName);
 
-    auto nickName = new TextView(QPoint(1118, 474), "Имя:",
+    auto nickName = new TextView(QPoint(1118, 474),
+                                 utils::Lang::get("name") + QString(":"),
                                  App::getInstance()->getFont());
     nickName->setColor(QColor(249, 192, 6));
     nickName->setTextSize(120);
@@ -45,19 +46,20 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     auto nickEdit = new TextEdit(QPoint(1600, 320), 232, 920);
     nickEdit->setBackgroundImage(QImage(":/interface/chooser"));
     nickEdit->setSelectedImage(QImage(":/interface/selected"));
-    nickEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0), "",
+    nickEdit->setTextChildren(std::make_shared<TextView>(QPoint(0, 0),"",
                                                          App::getInstance()->getFont()));
     nickEdit->getTextChildren()->setColor(QColor(249, 192, 6));
-    nickEdit->setValidate([&](QString text) {
-        if (text.size() > 16) {
-            return false;
+    nickEdit->setValidate([&](const QString& text) {
+        QRegExp lettersPattern("^[A-Za-z0-9]+$");
+        if (lettersPattern.exactMatch(text) && text.length() < 11){
+            requestNicknameChange(text);
+            return true;
         }
-        requestNicknameChange(text);
-        return true;
+        return false;
     });
     addChild(nickEdit);
 
-    auto teamName = new TextView(QPoint(1296, 730), "Выберите команду",
+    auto teamName = new TextView(QPoint(1296, 730), "::choose_team",
                                  App::getInstance()->getFont());
     teamName->setColor(QColor(249, 192, 6));
     teamName->setTextSize(120);
@@ -89,14 +91,13 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
         playerSlot->setImage(QImage(":/interface/free-slot"));
         playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
         playerSlot->setTextChildren(
-                std::make_shared<TextView>(QPoint(0, 0), "Player",
+                std::make_shared<TextView>(QPoint(0, 0), "::free",
                                            App::getInstance()->getFont()));
         playerSlot->getTextChildren()->setColor(QColor(249, 192, 6));
         playerSlot->getTextChildren()->setTextSize(80);
         playerSlot->setOnClick([=](QPoint, bool) {
             requestSlot(i + 3);
         });
-
 
         addChild(playerSlot.get());
         playersSlots.push_back(playerSlot);
@@ -107,7 +108,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     connectButton->setHoverImage(QImage(":/interface/button-hover"));
     connectButton->setHoverWidth(1329);
     connectButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "Подключиться",
+            std::make_shared<TextView>(QPoint(0, 0), "::connect",
                                        App::getInstance()->getFont()));
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);
@@ -120,7 +121,6 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
         });
         thread->start();
     });
-
     addChild(connectButton);
 
     auto backButton = new ImageButton(QPoint(2254, 1876), 232, 921);
@@ -147,11 +147,11 @@ int client::SelectionScreen::getMyPlayerId() {
 }
 
 void client::SelectionScreen::updateSlots(QVector<QString> list) {
-    for (int i = 0;
-         i < list.size();
-         ++i) {
+    for (int i = 0; i < list.size(); ++i) {
+        QString id = list[i].left(list[i].indexOf("#"));
         QString playerName = list[i].mid(list[i].indexOf("#") + 1);
-        playersSlots[i]->getTextChildren()->setText(playerName);
+        playersSlots[id.toInt()]->setTaken(true);
+        updatePlayerName(id.toInt(), playerName);
     }
 }
 
@@ -167,4 +167,8 @@ void client::SelectionScreen::onInited() {
     //TODO FIX
     multiplayerInterface->setTeam(1);
     App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
+}
+
+void client::SelectionScreen::updatePlayerName(int playerId, const QString& playerName) {
+    playersSlots[playerId]->getTextChildren()->setText(playerName);
 }

@@ -24,6 +24,8 @@ class SelectionScreen : public Screen {
 
     void updateSlots(QVector<QString> list);
 
+    void updatePlayerName(int playerId, const QString& name);
+
     int getMyPlayerId();
 
     std::shared_ptr<MultiplayerInterface> multiplayerInterface;

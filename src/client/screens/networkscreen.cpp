@@ -26,19 +26,19 @@ void client::NetworkScreen::onResumed() {
 client::NetworkScreen::NetworkScreen(): multiplayerInterface(nullptr) {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
-    auto networkName = new TextView(QPoint(1700, 500), "Сеть",
+    auto networkName = new TextView(QPoint(1700, 500), "::network",
                                     App::getInstance()->getFont());
     networkName->setColor(QColor(249, 192, 6));
     networkName->setTextSize(180);
     addChild(networkName);
 
-    auto ipName = new TextView(QPoint(1148, 924), "IP-адрес",
+    auto ipName = new TextView(QPoint(1148, 924), "::ip_address",
                                App::getInstance()->getFont());
     ipName->setColor(QColor(249, 192, 6));
     ipName->setTextSize(120);
     addChild(ipName);
 
-    auto portName = new TextView(QPoint(1216, 1232), "Порт",
+    auto portName = new TextView(QPoint(1216, 1232), "::port",
                                  App::getInstance()->getFont());
     portName->setColor(QColor(249, 192, 6));
     portName->setTextSize(120);
@@ -85,7 +85,7 @@ client::NetworkScreen::NetworkScreen(): multiplayerInterface(nullptr) {
     connectButton->setHoverImage(QImage(":/interface/button-hover"));
     connectButton->setHoverWidth(1329);
     connectButton->setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "Подключиться",
+            std::make_shared<TextView>(QPoint(0, 0), "::connect",
                                        App::getInstance()->getFont()));
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);

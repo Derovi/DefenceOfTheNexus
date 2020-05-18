@@ -25,12 +25,10 @@ class PlayerSlot : public ImageButton {
 
     void paint(QPainter& painter) override;
 
-  protected:
-    void clicked(QPoint point, bool leftButton) override;
-
   private:
     bool taken;
     int slotId;
+    int playerId;
 };
 }
 

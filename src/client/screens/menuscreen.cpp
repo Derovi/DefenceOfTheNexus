@@ -89,7 +89,7 @@ client::MenuScreen::MenuScreen(): Screen() {
     connectionButton->setHoverWidth(1329);
     connectionButton->
             setTextChildren(
-            std::make_shared<TextView>(QPoint(0, 0), "Сеть",
+            std::make_shared<TextView>(QPoint(0, 0), "::network",
                                        App::getInstance()->getFont())
     );
     connectionButton->getTextChildren()->setColor(QColor(249, 192, 6));

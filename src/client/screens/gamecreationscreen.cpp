@@ -82,6 +82,7 @@ client::GameCreationScreen::GameCreationScreen() {
     connectButton->getTextChildren()->setColor(QColor(249, 192, 6));
     connectButton->getTextChildren()->setTextSize(80);
     connectButton->setOnClick([=](QPoint point, bool leftButton) {
+        setPlayersCount(playersChooser->getSelected() + 1);
         startServer();
     });
 
@@ -115,9 +116,10 @@ client::GameCreationScreen::getMultiplayerInterface() const {
 
 void client::GameCreationScreen::startServer() {
     GameConfiguration gameConfiguration;
+    gameConfiguration.setPlayerCount(getPlayersCount());
+
     engine = std::make_shared<server::Engine>(gameConfiguration);
 
-    engine->getGameWorld()->setTeamCount(getPlayerCount());
     engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
                                          QPoint(1800, 1200), 1);
 
@@ -135,10 +137,18 @@ void client::GameCreationScreen::startServer() {
     multiplayerInterface->sendConnectRequest();
     connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&](int teamCount) {
         App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface,
-                                       teamCount));
+                                       getPlayersCount()));
     });
 }
 
 uint8_t client::GameCreationScreen::getMyPlayerId() {
     return multiplayerInterface->getPlayerId();
+}
+
+uint8_t client::GameCreationScreen::getPlayersCount() const {
+    return playersCount;
+}
+
+void client::GameCreationScreen::setPlayersCount(uint8_t playersCount) {
+    GameCreationScreen::playersCount = playersCount;
 }
