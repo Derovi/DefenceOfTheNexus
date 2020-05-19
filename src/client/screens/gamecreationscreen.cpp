@@ -122,12 +122,12 @@ void client::GameCreationScreen::startServer() {
 
         engine = std::make_shared<server::Engine>(gameConfiguration);
 
-        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                             QPoint(1800, 1200), 1);
+//        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+//                                             QPoint(1800, 1200), 1);
 
-        engine->getGameWorld()->summonObject(
-                utils::Factory::getObjectSignature("iron").value(),
-                QPoint(842, 1422));
+//        engine->getGameWorld()->summonObject(
+//                utils::Factory::getObjectSignature("iron").value(),
+//                QPoint(842, 1422));
 
         engine->start();
 

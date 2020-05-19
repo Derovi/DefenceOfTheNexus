@@ -32,17 +32,17 @@ class Factory {
     getSerializer(const QString& attributeName);
 
     static std::function<QJsonObject(
-            const std::shared_ptr<core::Attribute>& beforeChanges,
-            const std::shared_ptr<core::Attribute>& afterChanges,
-            const utils::KeyManager& keyManager)> getPartSerializer(const QString& attributeName);
+        const std::shared_ptr<core::Attribute>& beforeChanges,
+        const std::shared_ptr<core::Attribute>& afterChanges,
+        const utils::KeyManager& keyManager)> getPartSerializer(const QString& attributeName);
 
     static std::function<std::optional<std::shared_ptr<core::Attribute>>(const QJsonObject&)>
     getDeserializer(const QString& attributeName);
 
     static std::function<void(
-            const std::shared_ptr<core::Attribute>& resource,
-            const QJsonObject& changes,
-            const utils::KeyManager& keyManager)>
+        const std::shared_ptr<core::Attribute>& resource,
+        const QJsonObject& changes,
+        const utils::KeyManager& keyManager)>
     getPartDeserializer(const QString& attributeName);
 
     static std::optional<client::ObjectGraphicsDescription>
@@ -52,14 +52,14 @@ class Factory {
     getObjectSignature(const QString& objectName);
 
     static void registerStrategy(
-            const QString& strategyName,
-            std::function<std::shared_ptr<server::Strategy>(
-                    std::shared_ptr<core::Object>)> creator);
+        const QString& strategyName,
+        std::function<std::shared_ptr<server::Strategy>(
+            std::shared_ptr<core::Object>)> creator);
 
     static void registerSpriteController(
-            const QString& spriteControllerName,
-            std::function<std::shared_ptr<client::SpriteController>(
-                    std::shared_ptr<core::Object>)> creator);
+        const QString& spriteControllerName,
+        std::function<std::shared_ptr<client::SpriteController>(
+            std::shared_ptr<core::Object>)> creator);
 
     static void registerObjectGraphicsDescription(const QString& objectName,
                                                   const client::ObjectGraphicsDescription& description);
@@ -68,42 +68,44 @@ class Factory {
                                         const server::ObjectSignature& signature);
 
     static void registerAttribute(
-            const QString& attributeName,
-            std::function<std::optional<QJsonObject>(
-                    const std::shared_ptr<core::Attribute>)> serializer,
-            std::function<std::optional<std::shared_ptr<core::Attribute>>(
-                    const QJsonObject&)> deserializer,
-            std::function<QJsonObject(
-                    const std::shared_ptr<core::Attribute>& beforeChanges,
-                    const std::shared_ptr<core::Attribute>& afterChanges,
-                    const utils::KeyManager& partSerializer)>,
-            std::function<void(
-                    const std::shared_ptr<core::Attribute>& resource,
-                    const QJsonObject& changes,
-                    const utils::KeyManager& keyManager)> partDeserializer);
+        const QString& attributeName,
+        std::function<std::optional<QJsonObject>(
+            const std::shared_ptr<core::Attribute>)> serializer,
+        std::function<std::optional<std::shared_ptr<core::Attribute>>(
+            const QJsonObject&)> deserializer,
+        std::function<QJsonObject(
+            const std::shared_ptr<core::Attribute>& beforeChanges,
+            const std::shared_ptr<core::Attribute>& afterChanges,
+            const utils::KeyManager& partSerializer)>,
+        std::function<void(
+            const std::shared_ptr<core::Attribute>& resource,
+            const QJsonObject& changes,
+            const utils::KeyManager& keyManager)> partDeserializer);
+
+    static QHash<QString, server::ObjectSignature> getObjectSignatures();
 
   private:
     static QHash<QString, std::function<std::shared_ptr<server::Strategy>(
-            std::shared_ptr<core::Object>)>> strategyCreators;
+        std::shared_ptr<core::Object>)>> strategyCreators;
 
     static QHash<QString, std::function<std::shared_ptr<client::SpriteController>(
-            std::shared_ptr<core::Object>)>> spriteControllerCreators;
+        std::shared_ptr<core::Object>)>> spriteControllerCreators;
 
     static QHash<QString, std::function<std::optional<QJsonObject>(
-            const std::shared_ptr<core::Attribute>)>> attributeSerializers;
+        const std::shared_ptr<core::Attribute>)>> attributeSerializers;
 
     static QHash<QString, std::function<QJsonObject(
-            const std::shared_ptr<core::Attribute>& beforeChanges,
-            const std::shared_ptr<core::Attribute>& afterChanges,
-            const utils::KeyManager& keyManager)>> attributePartSerializers;
+        const std::shared_ptr<core::Attribute>& beforeChanges,
+        const std::shared_ptr<core::Attribute>& afterChanges,
+        const utils::KeyManager& keyManager)>> attributePartSerializers;
 
     static QHash<QString, std::function<std::optional<std::shared_ptr<core::Attribute>>(
-            const QJsonObject&)>> attributeDeserializers;
+        const QJsonObject&)>> attributeDeserializers;
 
     static QHash<QString, std::function<void(
-            const std::shared_ptr<core::Attribute>& resource,
-            const QJsonObject& changes,
-            const utils::KeyManager& keyManager)>> attributePartDeserializers;
+        const std::shared_ptr<core::Attribute>& resource,
+        const QJsonObject& changes,
+        const utils::KeyManager& keyManager)>> attributePartDeserializers;
 
     static QHash<QString, client::ObjectGraphicsDescription> graphicsDescriptions;
 

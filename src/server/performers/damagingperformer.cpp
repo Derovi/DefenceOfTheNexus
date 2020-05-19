@@ -15,13 +15,14 @@ namespace server::damaging_performer {
 
 bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Damaging> damaging,
                   std::shared_ptr<core::Object> target) {
-    float angle = object->getSightAngle();
-    double length = damaging->getAttackRadius();
-    QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
-    QPolygonF attackLine;
-    attackLine.append(object->getPosition());
-    attackLine.append(object->getPosition() + attackDirection);
-    return attackLine.intersects(target->getHitboxOnMap());
+//    float angle = object->getSightAngle();
+//    double length = damaging->getAttackRadius();
+//    QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
+//    QPolygonF attackLine;
+//    attackLine.append(object->getPosition());
+//    attackLine.append(object->getPosition() + attackDirection);
+//    return attackLine.intersects(target->getHitboxOnMap());
+    return QLineF(target->getPosition(), object->getPosition()).length() < damaging->getAttackRadius();
 }
 
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
@@ -53,7 +54,9 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
 
                 auto moving = std::dynamic_pointer_cast<core::Moving>(
                         bullet->getAttribute("moving"));
-                moving->setDirection(QVector2D(target->getPosition() - object->getPosition()));
+                auto direction = QVector2D(target->getPosition() - object->getPosition());
+                moving->setDirection(direction);
+                bullet->setRotationAngle(std::atan2(direction.y(), direction.x()));
 
                 auto bulletAttr = std::dynamic_pointer_cast<core::Bullet>(
                         bullet->getAttribute("bullet"));

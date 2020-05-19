@@ -37,10 +37,10 @@ class GameConfiguration {
     int width = 5000;
     int height = 5000;
     int tickPerSec = 60;
-    int playerCount = 2;
+    int playerCount = 1;
     double resourceDensity = 0.0007;
     uint64_t seed = 1337;
-    QString explorerType = "test1";
+    QString explorerType = "player";
 };
 
 #endif  // GAMECONFIGURATION_H

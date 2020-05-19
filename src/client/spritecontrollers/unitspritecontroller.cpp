@@ -6,18 +6,34 @@
 #include "unitspritecontroller.h"
 #include "../../core/attributes/moving.h"
 #include "../../core/attributes/damaging.h"
+#include "../../core/attributes/mining.h"
 
 void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     clearSprites();
     if (getObject()->hasAttribute("damaging")) {
         auto damaging = std::dynamic_pointer_cast<core::Damaging>(getObject()->getAttribute("damaging"));
+        qDebug() << getObject()->getId() << "has damaging" << damaging->isAttacking() << "and he is attacking!" << endl;
         if (damaging->isAttacking()) {
-            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getAttackDelay();
-            progress += 0.5;
-            if (progress >= 1) {
-                --progress;
-            }
-            attackSprite->jump(attackSprite->getFrameCount() * progress);
+//            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getAttackDelay();
+//            progress += 0.5;
+//            if (progress >= 1) {
+//                --progress;
+//            }
+//            attackSprite->jump(attackSprite->getFrameCount() * progress);
+            addSprite(attackSprite);
+            return;
+        }
+    }
+    if (getObject()->hasAttribute("mining")) {
+        auto damaging = std::dynamic_pointer_cast<core::Mining>(getObject()->getAttribute("mining"));
+        qDebug() << getObject()->getId() << "has damaging" << damaging->isMining() << "and he is attacking!" << endl;
+        if (damaging->isMining()) {
+//            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getMiningDelay();
+//            progress += 0.5;
+//            if (progress >= 1) {
+//                --progress;
+//            }
+//            attackSprite->jump(attackSprite->getFrameCount() * progress);
             addSprite(attackSprite);
             return;
         }
@@ -28,6 +44,7 @@ void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
             runSprite->setMirroring(moving->getDirection().x() < 0);
             idleSprite->setMirroring(moving->getDirection().x() < 0);
             attackSprite->setMirroring(moving->getDirection().x() < 0);
+            clearSprites();
             addSprite(runSprite);
             return;
         }
@@ -50,7 +67,7 @@ client::UnitSpriteController::UnitSpriteController(const std::shared_ptr<core::O
     }
     if (spriteDescriptions.contains("attack")) {
         attackSprite = std::make_shared<Sprite>(description->getSpriteDescriptions()["attack"]);
-        attackSprite->setFramesPerSec(1);
+        attackSprite->setFramesPerSec(50);
     }
 }
 
