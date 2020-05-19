@@ -14,7 +14,7 @@ class SelectionScreen : public Screen {
     explicit SelectionScreen(std::shared_ptr<MultiplayerInterface> multiplayerInterface, int playersCount);
 
     ~SelectionScreen() {
-        qDebug() << "destroy selection!";
+        //qDebug() << "destroy selection!";
     };
 
   private:

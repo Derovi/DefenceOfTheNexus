@@ -135,7 +135,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
 
     // check for permission, NOT READY YET
     //moving->setDirection(QVector2D(x - object->getPosition().x(), y - object->getPosition().y()));
-    qDebug() << "click command!";
+    //qDebug() << "click command!";
     DataBundle bundle;
     auto point = std::make_shared<QPointF>(x, y);
     bundle.registerVariable("destinationPoint", point);
@@ -147,7 +147,7 @@ bool server::CommandExecutor::changeMoveTargetCommand(const QStringList& argumen
 //test command
 bool server::CommandExecutor::testCommand(const QStringList& arguments) {
     for (QString argument : arguments) {
-        qDebug() << argument;
+        //qDebug() << argument;
     }
     return true;
 }
@@ -181,7 +181,7 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     }
 
     gameWorldController->getControllers()[minerId]->cancelTargets();
-    qDebug() << minerId << " wanna mine " << resourceId << endl;
+    //qDebug() << minerId << " wanna mine " << resourceId << endl;
 
     auto destPoint = std::make_shared<QPointF>(target.value()->getPosition());
 
@@ -247,7 +247,7 @@ bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
     }
 
     gameWorldController->getControllers()[attackerId]->cancelTargets();
-    qDebug() << attackerId << " wanna attack " << targetId << endl;
+    //qDebug() << attackerId << " wanna attack " << targetId << endl;
 
     auto destPoint = std::make_shared<QPointF>(target.value()->getPosition());
 

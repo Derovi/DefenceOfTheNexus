@@ -28,13 +28,13 @@ void core::GameWorld::setWidth(int width) {
 }
 
 QVector<QPair<core::ResourceType, int>>& core::GameWorld::getTeamResources(uint8_t team) {
-    qDebug() << "get res" << team;
+    //qDebug() << "get res" << team;
     return resources[team];
 }
 
 const QVector<QPair<core::ResourceType, int>>&
 core::GameWorld::getTeamResources(uint8_t team) const {
-    qDebug() << "get res c" << team;
+    //qDebug() << "get res c" << team;
     return resources[team];
 }
 
@@ -91,7 +91,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
                               int team,
                               float rotationAngle) {
     ++lastSummonedId;
-    qDebug() << "id:" << lastSummonedId << rotationAngle << team << signature.getTypeName();
+    //qDebug() << "id:" << lastSummonedId << rotationAngle << team << signature.getTypeName();
     std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
                                                               signature.getTypeName(),
                                                               position,
@@ -103,7 +103,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
         object->getAttributes().push_back(attribute->clone());
     }
     objects.insert(lastSummonedId, object);
-    qDebug() << "summoned!";
+    //qDebug() << "summoned!";
     return object;
 }
 

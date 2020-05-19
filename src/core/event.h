@@ -29,7 +29,7 @@ class Event {
     void setArguments(const QStringList& arguments);
 
     ~Event() {
-        qDebug() << "event destroy";
+        //qDebug() << "event destroy";
     }
 
   private:

@@ -39,7 +39,7 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
                    message.mid(offset, std::min(offsetConst, message.size() - offset));
             socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
                                   connectedPlayer.getPort());
-            qDebug() << "send!" << offset / offsetConst;
+            //qDebug() << "send!" << offset / offsetConst;
             QThread::msleep(50);
         }
         ++currentDatagramId;
@@ -68,7 +68,7 @@ void server::Server::readMessage() {
         commandReceived(senderAddress, senderPort,
                         message);
     } else if (message.startsWith(utils::network::prefixConnectRequest)) {
-        qDebug() << "connect!";
+        //qDebug() << "connect!";
         uint8_t playerId = connectPlayer(senderAddress, senderPort);
         sendMessage(getConnectedPlayer(playerId), utils::network::prefixConnectResponse +
                                                   utils::network::separator +
@@ -96,7 +96,7 @@ int server::Server::getPort() const {
 }
 
 void server::Server::updateGameWorld(QVector<core::Event> events) {
-    qDebug() << "start update - server";
+    //qDebug() << "start update - server";
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::Serializer serializer;
         for (const core::Event& event : events) {
@@ -107,14 +107,14 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
           handleEvent(event);
         }
         utils::SmartSerializer smartSerializer(false);
-        qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
-                 << engine->getGameWorld()->getObjects().size();
+        //qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
+//                 << engine->getGameWorld()->getObjects().size();
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
                                      smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
                                                                 engine->getGameWorld()));
 
     }
-    qDebug() << "finish update - server";
+    //qDebug() << "finish update - server";
 }
 
 server::Engine* server::Server::getEngine() const {
@@ -122,7 +122,7 @@ server::Engine* server::Server::getEngine() const {
 }
 
 void server::Server::initPlayer(uint8_t playerId) {
-    qDebug() << "init" << playerId;
+    //qDebug() << "init" << playerId;
     if (playerId == 255) {
         return;
     }
@@ -133,7 +133,7 @@ void server::Server::initPlayer(uint8_t playerId) {
             break;
         }
     }
-    qDebug() << "int" << connectedPlayer->getTeam();
+    //qDebug() << "int" << connectedPlayer->getTeam();
     if (connectedPlayer == nullptr || connectedPlayer->getTeam() == 255) {
         return;
     }
@@ -141,7 +141,7 @@ void server::Server::initPlayer(uint8_t playerId) {
     sendMessage(*connectedPlayer, utils::network::prefixInitResponse + utils::network::separator +
                                   serializer.getChanges(std::make_shared<core::GameWorld>(),
                                                         engine->getGameWorld()));
-    qDebug() << "suc";
+    //qDebug() << "suc";
 }
 
 void server::Server::commandReceived(const QString& address, int port, const QString& message) {
@@ -149,7 +149,7 @@ void server::Server::commandReceived(const QString& address, int port, const QSt
                                         utils::network::separator.size());
     utils::Serializer serializer;
     if (serializer.deserializeCommand(commandJson) == std::nullopt) {
-        qDebug() << "Can't deserialize command!";
+        //qDebug() << "Can't deserialize command!";
         return;
     }
     commandQueue->push(serializer.deserializeCommand(commandJson).value());
@@ -209,7 +209,7 @@ void server::Server::nickNameRequest(uint8_t playerId, const QString& message) {
     for (const auto& player : connectedPlayers) {
         sendMessage(player, response);
     }
-    qDebug() << "nickname response:" << response;
+    //qDebug() << "nickname response:" << response;
 }
 
 void server::Server::slotRequest(uint8_t playerId, const QString& message) {
@@ -225,7 +225,7 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     }
     QStringList arguments = message.split(utils::network::separator);  // {prefix, nickname}
     int team = arguments[1].toInt();
-    qDebug() << "team:" << team;
+    //qDebug() << "team:" << team;
     bool slotFree = true;
     for (const auto& player : connectedPlayers) {
         if (player.getTeam() == team) {

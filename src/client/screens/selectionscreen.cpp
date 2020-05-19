@@ -122,7 +122,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                                            App::getInstance()->getFont()));
     backButton->getTextChildren()->setColor(QColor(249, 192, 6));
     backButton->setOnClick([](QPoint point, bool leftButton) {
-        qDebug() << "closing!";
+        //qDebug() << "closing!";
         QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
@@ -142,9 +142,9 @@ void client::SelectionScreen::updateSlots(QVector<QString> list) {
         playerSlot->setPlayerId(255);
         playerSlot->setTaken(false);
     }
-    qDebug() << "size" << list.size() << playersSlots.size();
+    //qDebug() << "size" << list.size() << playersSlots.size();
     for (int i = 0; i < list.size(); ++i) {
-        qDebug() << "upds" << list[i];
+        //qDebug() << "upds" << list[i];
         uint8_t id = list[i].left(list[i].indexOf("#") + 1).toInt();
         QString playerName = list[i].mid(list[i].indexOf("#") + 1);
         if (!list[i].isEmpty()) {

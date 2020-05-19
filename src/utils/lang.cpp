@@ -51,7 +51,7 @@ QStringList utils::Lang::getLanguages() {
     QStringList result;
     for (const QFileInfo& info : directory.entryInfoList()) {
         result.push_back(info.baseName());
-        qDebug() << "info: " << info.baseName();
+        //qDebug() << "info: " << info.baseName();
     }
     return result;
 }
