@@ -27,7 +27,7 @@ class SelectionScreen : public Screen {
     std::shared_ptr<MultiplayerInterface> multiplayerInterface;
 
     int playersCount;
-    QVector<std::shared_ptr<PlayerSlot>> playersSlots;
+    QVector<PlayerSlot*> playersSlots;
 
   private slots:
     void onInited();
