@@ -145,25 +145,6 @@
       "damageable": {
         "health": 100,
         "maxHealth": 100
-      },
-      "cost": {
-        "all": {
-          "stone": {
-            "resourceType": 1,
-            "amount": 150,
-            "miningSpeedModifier": 2
-          },
-          "iron": {
-            "resourceType": 1,
-            "amount": 50,
-            "miningSpeedModifier": 2
-          },
-          "wood": {
-            "resourceType": 1,
-            "amount": 40,
-            "miningSpeedModifier": 2
-          }
-        }
       }
     },
     "cost": {
@@ -224,25 +205,6 @@
       "damageable": {
         "health": 50,
         "maxHealth": 50
-      },
-      "cost": {
-        "all": {
-          "stone": {
-            "resourceType": 1,
-            "amount": 0,
-            "miningSpeedModifier": 2
-          },
-          "iron": {
-            "resourceType": 1,
-            "amount": 20,
-            "miningSpeedModifier": 2
-          },
-          "wood": {
-            "resourceType": 1,
-            "amount": 0,
-            "miningSpeedModifier": 2
-          }
-        }
       }
     },
     "cost": {
@@ -296,25 +258,6 @@
       "damageable": {
         "health": 125,
         "maxHealth": 125
-      },
-      "cost": {
-        "all": {
-          "stone": {
-            "resourceType": 1,
-            "amount": 150,
-            "miningSpeedModifier": 2
-          },
-          "iron": {
-            "resourceType": 1,
-            "amount": 0,
-            "miningSpeedModifier": 2
-          },
-          "wood": {
-            "resourceType": 1,
-            "amount": 0,
-            "miningSpeedModifier": 2
-          }
-        }
       }
     },
     "cost": {
@@ -375,25 +318,6 @@
       "damageable": {
         "health": 120,
         "maxHealth": 120
-      },
-      "cost": {
-        "all": {
-          "stone": {
-            "resourceType": 1,
-            "amount": 0,
-            "miningSpeedModifier": 2
-          },
-          "iron": {
-            "resourceType": 1,
-            "amount": 50,
-            "miningSpeedModifier": 2
-          },
-          "wood": {
-            "resourceType": 1,
-            "amount": 50,
-            "miningSpeedModifier": 2
-          }
-        }
       }
     },
     "cost": {
@@ -504,25 +428,6 @@
       "damageable": {
         "health": 100,
         "maxHealth": 100
-      },
-      "cost": {
-        "all": {
-          "stone": {
-            "resourceType": 1,
-            "amount": 100,
-            "miningSpeedModifier": 2
-          },
-          "iron": {
-            "resourceType": 1,
-            "amount": 20,
-            "miningSpeedModifier": 2
-          },
-          "wood": {
-            "resourceType": 1,
-            "amount": 50,
-            "miningSpeedModifier": 2
-          }
-        }
       }
     },
     "cost": {
