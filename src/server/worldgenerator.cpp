@@ -16,7 +16,7 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->summonObject(utils::Factory::getObjectSignature("special-tower").value(),
                             QPoint(3000, 0), 0);
     gameWorld->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                            QPoint(3000, 100), 1);
+                            QPoint(3000, 200), 1);
 
     // Enemy nexus
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));

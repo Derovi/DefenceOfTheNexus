@@ -10,8 +10,8 @@
         "speed": 200
       },
       "damageable": {
-        "health": 900,
-        "maxHealth": 1000
+        "health": 9000,
+        "maxHealth": 10000
       },
       "mining": {
         "miningSpeed": 4,
