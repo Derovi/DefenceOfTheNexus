@@ -27,6 +27,7 @@ bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Da
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,
             std::shared_ptr<core::Damaging> damaging, std::shared_ptr<core::Object> target,
             int timeDelta) {
+
     int delayLeft = damaging->getCurrentDelay() - timeDelta;
     if (delayLeft > 0) {
         damaging->setCurrentDelay(delayLeft);
@@ -41,20 +42,21 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
             auto bulletType = damaging->getBulletType();
             if (bulletType.isEmpty()) {
                 world->generateEvent(
-                    core::Event(core::Event::Type::HIT_EVENT, {QString::number(object->getId())}));
+                        core::Event(core::Event::Type::HIT_EVENT,
+                                    {QString::number(object->getId())}));
                 damageable_performer::inflictDamage(world, target, damageable,
                                                     damaging->getDamage());
             } else {
                 auto bullet = world->summonObject(
-                    utils::Factory::getObjectSignature(bulletType).value(),
-                    object->getPosition().toPoint());
+                        utils::Factory::getObjectSignature(bulletType).value(),
+                        object->getPosition().toPoint());
 
                 auto moving = std::dynamic_pointer_cast<core::Moving>(
-                    bullet->getAttribute("moving"));
+                        bullet->getAttribute("moving"));
                 moving->setDirection(QVector2D(target->getPosition() - object->getPosition()));
 
                 auto bulletAttr = std::dynamic_pointer_cast<core::Bullet>(
-                    bullet->getAttribute("bullet"));
+                        bullet->getAttribute("bullet"));
                 bulletAttr->setOwner(object);
                 bulletAttr->setDamage(damaging->getDamage());
                 bulletAttr->setRange(damaging->getAttackRadius());

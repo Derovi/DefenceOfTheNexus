@@ -27,6 +27,7 @@ void client::GameCreationScreen::onResumed() {
 }
 
 client::GameCreationScreen::GameCreationScreen() {
+    engine = nullptr;
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));
 
     auto settingName = new TextView(QPoint(1458, 432), "Настройки",
@@ -115,22 +116,24 @@ client::GameCreationScreen::getMultiplayerInterface() const {
 }
 
 void client::GameCreationScreen::startServer() {
-    GameConfiguration gameConfiguration;
-    gameConfiguration.setPlayerCount(getPlayersCount());
+    if (engine == nullptr) {
+        GameConfiguration gameConfiguration;
+        gameConfiguration.setPlayerCount(getPlayersCount());
 
-    engine = std::make_shared<server::Engine>(gameConfiguration);
+        engine = std::make_shared<server::Engine>(gameConfiguration);
 
-    engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
-                                         QPoint(1800, 1200), 1);
+        engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature("test1").value(),
+                                             QPoint(1800, 1200), 1);
 
-    engine->getGameWorld()->summonObject(
-            utils::Factory::getObjectSignature("iron").value(),
-            QPoint(842, 1422));
+        engine->getGameWorld()->summonObject(
+                utils::Factory::getObjectSignature("iron").value(),
+                QPoint(842, 1422));
 
-    engine->start();
+        engine->start();
 
-    server = std::make_shared<server::Server>(engine.get(), 25565);
-    server->start();
+        server = std::make_shared<server::Server>(engine.get(), 25565);
+        server->start();
+    }
 
     qRegisterMetaType<QVector<core::Event>>("QVector<core::Event>");
     connect(engine.get(), &server::Engine::updated, server.get(), &server::Server::updateGameWorld);

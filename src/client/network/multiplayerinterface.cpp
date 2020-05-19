@@ -216,9 +216,11 @@ void client::MultiplayerInterface::teamUpdate(const QString& message) {
         std::cout << "line " << line.toStdString() << std::endl;
         result.push_back(line);
         if (!line.isEmpty()) {
-            int id = line.right(line.size() - line.indexOf('#' - 1)).toInt();
+            int id = line.right(line.indexOf('#')).toInt();
+            std::cout << id << std::endl;
             if (id == getPlayerId()) {
-                setTeam(textIndex);
+                std::cout << "match" << (int) textIndex;
+                setTeam(textIndex + 1);
             }
         }
         ++textIndex;

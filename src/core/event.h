@@ -13,6 +13,7 @@ class Event {
     enum Type {
         HIT_EVENT, // arguments: <UNIT_ID>
         DIE_EVENT, // arguments: <UNIT_ID>
+        MINE_EVENT // arguments <UNIT_ID>
     };
 
     Event() = default;
