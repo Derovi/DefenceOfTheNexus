@@ -140,7 +140,7 @@ void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
 
 void server::SimpleAI::spawnBot(const server::SimpleAI::BotSpawner& spawner) {
     auto botType = BotSpawner::botTypes[rnd() % BotSpawner::botTypes.size()];
-    engine->getGameWorld()->summonObject(utils::Factory::getObjectSignature(botType).value(),
+    engine->getGameWorld()->summonObjectIfNoObstacles(utils::Factory::getObjectSignature(botType).value(),
         spawner.position.toPoint(), getTeam());
 }
 

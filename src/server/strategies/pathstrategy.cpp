@@ -41,7 +41,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
         return;
     }
     if (QLineF(*destPoint, getObject()->getPosition()).length() <
-        timeDelta / 1000.0 * moving->getSpeed()) {
+        1.2 * timeDelta / 1000.0 * moving->getSpeed()) {
         moving->setDirection(QVector2D(0, 0));
         return;
     }
@@ -62,6 +62,7 @@ void PathStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta) {
 
             if (targetObject->isIntersect(hitboxOnMap)) {
                 *destPoint = getObject()->getPosition();
+                getObject()->setSightAngle(std::atan2(direction.y(), direction.x()));
                 moving->setDirection(direction);
                 return;
             }
