@@ -21,6 +21,8 @@
   "connect": "Connect",
   "connection_to_server": "Connection to server",
   "choose_team": "Choose team",
+  "game_over": "Game over",
+  "victory": "Victory!",
   "player": "Player",
   "units":{
     "scorpion": "scorpion",

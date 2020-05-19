@@ -16,6 +16,8 @@
   "network": "Сетка",
   "ip_address": "IP-адрас",
   "name": "Імя",
+  "game_over": "Вы прайгралі",
+  "victory": "Пабеда!",
   "port": "Порт",
   "connect": "Падключыцца",
   "connection_to_server" : "Падключэнне да сервера",

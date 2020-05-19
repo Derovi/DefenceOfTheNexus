@@ -15,6 +15,9 @@
 #include "connectionscreen.h"
 #include "networkscreen.h"
 #include "gamecreationscreen.h"
+#include "victoryscreen.h"
+#include "lossscreen.h"
+#include "messagescreen.h"
 
 
 void client::MenuScreen::onPaused() {
@@ -44,6 +47,7 @@ client::MenuScreen::MenuScreen(): Screen() {
     startButton->getTextChildren()->setColor(QColor(249, 192, 6));
     startButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<GameCreationScreen>());
+//        App::getInstance()->openScreen(std::make_shared<MessageScreen>("text", ERROR));
     });
 
     addChild(startButton);

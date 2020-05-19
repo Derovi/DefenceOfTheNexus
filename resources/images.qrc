@@ -10,5 +10,8 @@
     <qresource prefix="/backgrounds">
         <file alias="menu">backgrounds/menu.png</file>
         <file alias="pause">backgrounds/pause.png</file>
+        <file alias="lose">backgrounds/lose.png</file>
+        <file alias="victory">backgrounds/victory.png</file>
+        <file alias="error">backgrounds/error.png</file>
     </qresource>
 </RCC>
