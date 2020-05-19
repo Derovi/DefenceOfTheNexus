@@ -36,12 +36,12 @@ client::App::App() {
     instance = this;
     uiThread = QThread::create([&] {
         // time when last tick execution was started
-        QDateTime lastTickStartTime = QDateTime::currentDateTime();
+        auto lastTickStartTime = std::chrono::steady_clock::now();
         while (true) {
             if (uiThread == nullptr) {
                 break;
             }
-            QDateTime currentTickStartTime = QDateTime::currentDateTime();
+            auto currentTickStartTime = std::chrono::steady_clock::now();
             // make changes on game world
             runOnUiThread([&] {
                 if (properties::fullscreen) {
@@ -61,9 +61,12 @@ client::App::App() {
             });
 
             // sleep until next tick
-            QThread::msleep(1000 / properties::frameRate -
-                            currentTickStartTime.msecsTo(QDateTime::currentDateTime()));
-            lastTickStartTime = currentTickStartTime;
+            int sleepTime = 1000 / properties::frameRate -
+                std::chrono::duration_cast<std::chrono::milliseconds>(
+                    std::chrono::steady_clock::now() - currentTickStartTime).count();
+            if (sleepTime > 0) {
+                QThread::msleep(sleepTime);
+            }
         }
     });
     openScreen(std::make_shared<MenuScreen>());
