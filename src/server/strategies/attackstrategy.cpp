@@ -12,6 +12,7 @@ void AttackStrategy::tick(std::shared_ptr<core::GameWorld> world, int timeDelta)
         return;
     }
     if (!damaging_performer::isDamageable(getObject(), damaging, target)) {
+        damaging->setAttacking(false);
         if (destPoint != nullptr) {
             *destPoint = target->getPosition();
         }

@@ -453,7 +453,7 @@
         "rows": 20,
         "columns": 1
       },
-        "attack": {
+      "attack": {
         "resource": ":/units/unit4_attack",
         "rows": 20,
         "columns": 1

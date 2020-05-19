@@ -14,19 +14,20 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->setTeamCount(config.getPlayerCount() + 1);
 
     auto signatures = utils::Factory::getObjectSignatures();
+//     Enemy nexus
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));
 
     for (int i = 0; i < config.getPlayerCount(); ++i) {
-        int x = static_cast<int>(config.getWidth() / 3
+        int x = static_cast<int>(config.getWidth()
             * std::cos(i * 2 * M_PI / config.getPlayerCount()));
-        int y = static_cast<int>(config.getHeight() / 3
+        int y = static_cast<int>(config.getHeight()
             * std::sin(i * 2 * M_PI / config.getPlayerCount()));
         gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(),
                                 QPoint(x, y),
                                 i + 1);
         gameWorld->summonObject(
             utils::Factory::getObjectSignature(config.getExplorerType()).value(),
-            QPoint(3000 + 200, 0),
+            QPoint(x + 200, 0),
             i + 1);
     }
 
@@ -88,8 +89,8 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         }
     }
 
-    int resourcesAmount = 1ll * config.getWidth() * config.getHeight()
-        * config.getResourceDensity() * config.getResourceDensity();
+    int resourcesAmount = 30;//1ll * config.getWidth() * config.getHeight()
+//        * config.getResourceDensity() * config.getResourceDensity();
 
     float woodProb = 0.5;
     float stoneProb = 0.3;
@@ -105,25 +106,24 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         return signatures[rnd() % signatures.size()];
     };
 
-//    for (int i = 0; i < resourcesAmount; ++i) {
-//        forever {
-//            int x = ux(rnd);
-//            int y = uy(rnd);
-//            float r = ur(rnd);
-//            ObjectSignature signature;
-//            if (r < woodProb) {
-//                signature = any(resources[static_cast<int>(core::ResourceType::kWood)]);
-//            } else if (r < woodProb + stoneProb) {
-//                signature = any(resources[static_cast<int>(core::ResourceType::kStone)]);
-//            } else {
-//                signature = any(resources[static_cast<int>(core::ResourceType::kIron)]);
-//            }
-//            if (gameWorld->summonObjectIfNoObstacles(signature, QPoint(x, y)) != nullptr) {
-//                break;
-//            }
-//        }
-//    }
-    qDebug() << "World generated" << endl;
+    for (int i = 0; i < resourcesAmount; ++i) {
+        forever {
+            int x = ux(rnd);
+            int y = uy(rnd);
+            float r = ur(rnd);
+            ObjectSignature signature;
+            if (r < woodProb) {
+                signature = any(resources[static_cast<int>(core::ResourceType::kWood)]);
+            } else if (r < woodProb + stoneProb) {
+                signature = any(resources[static_cast<int>(core::ResourceType::kStone)]);
+            } else {
+                signature = any(resources[static_cast<int>(core::ResourceType::kIron)]);
+            }
+            if (gameWorld->summonObjectIfNoObstacles(signature, QPoint(x, y)) != nullptr) {
+                break;
+            }
+        }
+    }
 
     return gameWorld;
 }

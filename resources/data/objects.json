@@ -9,10 +9,6 @@
         "maxSpeed": 200,
         "speed": 200
       },
-      "damageable": {
-        "health": 9000,
-        "maxHealth": 10000
-      },
       "mining": {
         "miningSpeed": 4,
         "miningDelay": 700,
@@ -29,7 +25,7 @@
         "maxHealth": 500
       },
       "builder": {
-        "list": ["test2", "column1"]
+        "list": ["test2", "column1",  "special-tower", "medium-tower", "scorpion", "scout", "mage"]
       }
     },
     "hitbox": {
@@ -172,16 +168,16 @@
     },
     "hitbox": {
       "x": [
-        -100,
-        -100,
-        100,
+        -120,
+        -120,
+        120,
         0
       ],
       "y": [
-        -80,
-        80,
-        80,
-        -80
+        -100,
+        100,
+        100,
+        -100
       ]
     },
     "strategies": [
@@ -661,13 +657,13 @@
   "nexus": {
     "attributes": {
       "damageable": {
-        "health": 2000,
-        "maxHealth": 2000
+        "health": 1500,
+        "maxHealth": 1500
       }
     },
     "hitbox": {
-      "x": [100, -100, -100, 100],
-      "y": [100, 100, -100, -100]
+      "x": [150, -150, -150, 150],
+      "y": [150, 150, -150, -150]
     },
     "strategies": []
   },
@@ -743,6 +739,25 @@
         "maxHealth": 400
       }
     },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 100,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 40,
+          "miningSpeedModifier": 2
+        }
+      }
+    },
     "hitbox": {
       "x": [50, -50, -50, 50],
       "y": [50, 50, -50, -50]
@@ -781,6 +796,25 @@
     "hitbox": {
       "x": [50, -50, -50, 50],
       "y": [50, 50, -50, -50]
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 10,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 0,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 20,
+          "miningSpeedModifier": 2
+        }
+      }
     },
     "strategies": ["towerStrategy"]
   },
@@ -865,4 +899,3 @@
     "strategies": ["bulletStrategy"]
   }
 }
-

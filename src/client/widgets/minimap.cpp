@@ -1,4 +1,7 @@
 #include "minimap.h"
+
+#include <cmath>
+
 #include "../screens/gamescreen.h"
 
 client::MiniMap::MiniMap(QPoint position, int height, int width): Widget(position) {
