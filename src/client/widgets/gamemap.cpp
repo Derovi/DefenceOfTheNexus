@@ -149,12 +149,6 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point, bool leftButton) {
     point = getTransformToMap().map(point);
-    //qDebug() << "click" << mapInput->isWaiting();
-    /*if (mapInput->isWaiting()) {
-        qDebug() << "true waiting!";
-        mapInput->append(point);
-        return;
-    } else qDebug() << "bot waiting!";*/
     auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (leftButton) {
         auto object = gameWorld->objectAt(point);
@@ -165,15 +159,21 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
     }
     int objectId = gameScreen->getInterface()->getSelectedUnitId();
     if (!gameWorld->getObjects().contains(objectId)) {
-        //qDebug() << "No such object!";
+        qDebug() << "No such object!";
         return;
     }
     auto target = gameWorld->objectAt(point);
     //qDebug() << "check perm" << gameWorld->getObjects()[objectId]->getTeam() << gameScreen->getTeam();
     if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
-        //qDebug() << "No permission!";
+        qDebug() << "No permission!";
         return;
     }
+    qDebug() << "click" << mapInput->isWaiting();
+    if (mapInput->isWaiting()) {
+        qDebug() << "true waiting!";
+        mapInput->append(point);
+        return;
+    } else qDebug() << "bot waiting!";
     if (target != nullptr && target->hasAttribute("resource")) {
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("mine_resource", {
                 QString::number(objectId), QString::number(target->getId())}));
