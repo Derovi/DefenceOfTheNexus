@@ -9,7 +9,7 @@
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position),  cameraSpeed(60),
-        showHitBoxes(true), showSprites(true), fixed(false) {
+        showHitBoxes(false), showSprites(true), fixed(false) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
