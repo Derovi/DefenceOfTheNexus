@@ -25,7 +25,7 @@
         "maxHealth": 500
       },
       "builder": {
-        "list": ["test2", "column1",  "special-tower", "medium-tower", "scorpion", "scout", "mage"]
+        "list": ["test2", "column1",  "special-tower", "medium-tower", "scorpion", "scout", "mage", "player"]
       }
     },
     "hitbox": {
@@ -234,7 +234,10 @@
       "pathStrategy",
       "moveStrategy",
       "attackStrategy"
-    ]
+    ],
+    "builder": {
+      "list": ["special-tower", "medium-tower", "big-tower"]
+    }
   },
   "ogre": {
     "attributes": {
@@ -718,6 +721,25 @@
       "damageable": {
         "health": 500,
         "maxHealth": 500
+      }
+    },
+    "cost": {
+      "all": {
+        "stone": {
+          "resourceType": 1,
+          "amount": 75,
+          "miningSpeedModifier": 2
+        },
+        "iron": {
+          "resourceType": 1,
+          "amount": 75,
+          "miningSpeedModifier": 2
+        },
+        "wood": {
+          "resourceType": 1,
+          "amount": 75,
+          "miningSpeedModifier": 2
+        }
       }
     },
     "hitbox": {
