@@ -28,7 +28,7 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     healthBar->setHealthLine(QImage(":/interface/health-bar-line"));
     addChild(healthBar);
 
-    miniMap = new MiniMap(QPoint(700,50),350,350);
+    miniMap = new MiniMap(QPoint(700, 50), 350, 350);
     miniMap->setGameWorld(gameWorld);
     addChild(miniMap);
 
@@ -73,17 +73,20 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     aiButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("ai",
-                                                       {QString::number(selectedUnitId)}));
+                                                                         {QString::number(
+                                                                                 selectedUnitId)}));
     });
     stopButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("stop",
-                                                       {QString::number(selectedUnitId)}));
+                                                                         {QString::number(
+                                                                                 selectedUnitId)}));
     });
     killButton->setOnClick([&](QPoint point, bool leftButton) {
         GameMap* gameMap = dynamic_cast<GameScreen*>(getParent())->getGameMap();
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("kill",
-                                                       {QString::number(selectedUnitId)}));
+                                                                         {QString::number(
+                                                                                 selectedUnitId)}));
     });
 
     addChild(aiButton);
@@ -92,10 +95,14 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
 
     qDebug() << "interface consru";
     QImage slotIcon = QImage(":/interface/icon-slot");
-    for (int row = 0; row < 3; ++row) {
-        for (int column = 0; column < 5; ++column) {
+    for (int row = 0;
+         row < 3;
+         ++row) {
+        for (int column = 0;
+             column < 5;
+             ++column) {
             buildSlots.push_back(new BuildSlot(QPoint(2784 + column * 168, row * 156),
-                    114, 114));
+                                               114, 114));
             buildSlots.back()->setImage(slotIcon);
             addChild(buildSlots.back());
         }
@@ -205,7 +212,9 @@ void client::GameInterface::paint(QPainter& painter) {
     auto builder = std::dynamic_pointer_cast<core::Builder>(
             object->getAttribute(core::Builder::attributeName));
     if (builder) {
-        for (int idx = 0; idx < buildSlots.size(); ++idx) {
+        for (int idx = 0;
+             idx < buildSlots.size();
+             ++idx) {
             if (idx < builder->getBuildList().size()) {
                 QString slot = builder->getBuildList().value(idx);
                 buildSlots[idx]->setObjectType(slot);
@@ -220,5 +229,24 @@ void client::GameInterface::paint(QPainter& painter) {
         speedView->setText(QString::number(static_cast<int>(moving->getMaxSpeed())));
     } else {
         speedView->setText(QString::number(0));
+    }
+}
+
+void client::GameInterface::init() {
+    GameScreen* gameScreen = dynamic_cast<GameScreen*>(getParent());
+    GameMap* gameMap = gameScreen->getGameMap();
+    core::GameWorld* world = gameMap->getGameWorld().get();
+    setSelectedUnitId(-1);
+    for (auto& object : gameWorld->getObjects()) {
+        if (object->hasAttribute("moving") && object->getTeam() == gameScreen->getTeam()) {
+            setSelectedUnitId(object->getId());
+            gameMap->centerWindow(QPoint(object->getPosition().x(), object->getPosition().y()));
+        }
+    }
+    if (getSelectedUnitId() == -1) {
+        for (auto& object : gameWorld->getObjects()) {
+            setSelectedUnitId(object->getId());
+            gameMap->centerWindow(QPoint(object->getPosition().x(), object->getPosition().y()));
+        }
     }
 }

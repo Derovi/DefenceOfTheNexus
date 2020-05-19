@@ -74,6 +74,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& mult
     gameMap->setGameWorld(multiplayerInterface->getGameWorld());
     interface = new GameInterface(QPoint(152, 1710), 450, 3536, gameMap->getGameWorld());
     addChild(interface);
+    interface->init();
     qDebug() << "game screen started";
 }
 

@@ -24,6 +24,8 @@ class GameInterface : public Widget {
 
     void setSelectedUnitId(int selectedUnitId);
 
+    void init();
+
   private:
     QImage stoneIcon;
     QImage woodIcon;
