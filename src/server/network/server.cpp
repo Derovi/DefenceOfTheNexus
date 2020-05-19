@@ -40,7 +40,7 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
             socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
                                   connectedPlayer.getPort());
             qDebug() << "send!" << offset / offsetConst;
-            QThread::msleep(50);
+            QThread::msleep(100);
         }
         ++currentDatagramId;
     })->start();

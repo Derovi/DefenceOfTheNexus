@@ -78,7 +78,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
             x = 2254;
             y = 962;
         }
-        auto playerSlot = std::make_shared<PlayerSlot>(QPoint(x, y), 232, 921);
+        auto* playerSlot = new PlayerSlot(QPoint(x, y), 232, 921);
         playerSlot->setImage(QImage(":/interface/free-slot"));
         playerSlot->setHoverImage(QImage(":/interface/busy-slot"));
         playerSlot->setTextChildren(
@@ -90,7 +90,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
             requestSlot(i + 1);
         });
 
-        addChild(playerSlot.get());
+        addChild(playerSlot);
         playersSlots.push_back(playerSlot);
     }
 
@@ -124,7 +124,7 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     backButton->setOnClick([](QPoint point, bool leftButton) {
         qDebug() << "closing!";
         QThread::create([&] {
-            QThread::msleep(3000);
+            QThread::msleep(1);
             App::runOnUiThread([&] {
                 App::getInstance()->closeScreen();
             });

@@ -9,6 +9,10 @@
         "maxSpeed": 200,
         "speed": 200
       },
+      "damageable": {
+        "health": 900,
+        "maxHealth": 1000
+      },
       "mining": {
         "miningSpeed": 4,
         "miningDelay": 1000,

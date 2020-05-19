@@ -425,14 +425,14 @@ utils::SmartSerializer::partGameWorldDeserializer(const std::shared_ptr<core::Ga
         QJsonObject objects = changes["objects"].toObject();
         auto iter = objects.begin();
         while (iter != objects.end()) {
-            if (gameWorld->getObjects().find(iter.key().toLongLong()) !=
-                gameWorld->getObjects().end()) {
+            qDebug() << iter.key() << iter.value();
+            if (gameWorld->getObjects().contains(iter.key().toLongLong())) {
                 partObjectDeserializer(gameWorld->getObjects()[iter.key().toLongLong()],
                                        iter->toObject(), keyManager);
             } else {
-                auto result = Serializer::objectDeserializer(iter.value().toObject());
+                /*auto result = Serializer::objectDeserializer(iter.value().toObject());
                 gameWorld->getObjects()[iter.key().toLongLong()] = std::make_shared<core::Object>(
-                    result.value());
+                    result.value());*/
             }
             ++iter;
         }
