@@ -174,6 +174,7 @@ void client::SelectionScreen::onInited() {
 void client::SelectionScreen::updatePlayerName(QString text) {
     int playerId = text.left(text.indexOf("#") + 1).toInt();
     QString playerName = text.mid(text.indexOf("#") + 1);
+    qDebug() << "update" << playerId << playerName;
     for (auto playerSlot : playersSlots) {
         if (playerSlot->getPlayerId() == playerId) {
             playerSlot->getTextChildren()->setText(playerName);

@@ -130,6 +130,7 @@ void client::NetworkScreen::connectClicked() {
     QString port = portInput->getTextChildren()->getText();
     multiplayerInterface = std::make_shared<MultiplayerInterface>(ip, port.toInt(),
                                                                   MultiplayerInterface::State::CONNECTING_SERVER);
+    multiplayerInterface->sendConnectRequest();
     connect(multiplayerInterface.get(), &MultiplayerInterface::connected, this, [&](int teamCount) {
         App::getInstance()->openScreen(std::make_shared<SelectionScreen>(multiplayerInterface, teamCount));
     });
