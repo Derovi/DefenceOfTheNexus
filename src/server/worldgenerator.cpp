@@ -89,7 +89,7 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         }
     }
 
-    int resourcesAmount = 50;//1ll * config.getWidth() * config.getHeight()
+    int resourcesAmount = 30;//1ll * config.getWidth() * config.getHeight()
 //        * config.getResourceDensity() * config.getResourceDensity();
 
     float woodProb = 0.5;
