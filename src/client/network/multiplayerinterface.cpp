@@ -97,10 +97,12 @@ void client::MultiplayerInterface::worldUpdate(const QString& message) {
     if (state != IN_GAME) {
         return;
     }
+    qDebug() << "start update - client";
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
     utils::SmartSerializer serializer(false);
     serializer.applyChanges(gameWorld, worldJson);
+    qDebug() << "stop update - client";
 //    qDebug() << "changed applied!";
     //std::cout << worldJson.toStdString();
 }

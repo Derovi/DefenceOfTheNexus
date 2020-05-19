@@ -19,12 +19,12 @@ void client::GameCreationScreen::onPaused() {
 }
 
 void client::GameCreationScreen::onResumed() {
+    qDebug() << "resumed!";
     server->finish();
     engine->finish();
     server = nullptr;
     engine = nullptr;
 }
-
 
 client::GameCreationScreen::GameCreationScreen() {
     setBackground(Sprite(QPixmap(":/backgrounds/menu"), 1, 1));

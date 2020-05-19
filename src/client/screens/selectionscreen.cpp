@@ -22,6 +22,7 @@ void client::SelectionScreen::onResumed() {
 
 }
 
+
 client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> multiplayerInterface,
                                          int playersCount):
         multiplayerInterface(multiplayerInterface), playersCount(playersCount) {
@@ -121,13 +122,13 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
                                                            App::getInstance()->getFont()));
     backButton->getTextChildren()->setColor(QColor(249, 192, 6));
     backButton->setOnClick([](QPoint point, bool leftButton) {
-        QThread* thread = QThread::create([&] {
+        qDebug() << "closing!";
+        QThread::create([&] {
             QThread::msleep(1);
             App::runOnUiThread([&] {
                 App::getInstance()->closeScreen();
             });
-        });
-        thread->start();
+        })->start();
     });
     addChild(backButton);
 }

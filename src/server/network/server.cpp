@@ -40,7 +40,7 @@ void server::Server::sendMessage(const ConnectedPlayer& connectedPlayer, const Q
             socket->writeDatagram(datagram, QHostAddress(connectedPlayer.getAddress()),
                                   connectedPlayer.getPort());
             qDebug() << "send!" << offset / offsetConst;
-            QThread::msleep(1);
+            QThread::msleep(100);
         }
         ++currentDatagramId;
     })->start();
@@ -96,6 +96,7 @@ int server::Server::getPort() const {
 }
 
 void server::Server::updateGameWorld(QVector<core::Event> events) {
+    qDebug() << "start update - server";
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::Serializer serializer;
         for (const core::Event& event : events) {
@@ -109,6 +110,7 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
                                      smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
                                                                 engine->getGameWorld()));
     }
+    qDebug() << "finish update - server";
 }
 
 server::Engine* server::Server::getEngine() const {
