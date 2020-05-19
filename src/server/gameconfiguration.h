@@ -34,13 +34,13 @@ class GameConfiguration {
     void setExplorerType(QString explorer);
 
   private:
-    int width = 50000;
-    int height = 50000;
+    int width = 20000;
+    int height = 20000;
     int tickPerSec = 60;
-    int playerCount = 2;
+    int playerCount = 1;
     double resourceDensity = 0.0007;
     uint64_t seed = 1337;
-    QString explorerType = "test1";
+    QString explorerType = "player";
 };
 
 #endif  // GAMECONFIGURATION_H
