@@ -15,14 +15,22 @@ namespace server::damaging_performer {
 
 bool isDamageable(std::shared_ptr<core::Object> object, std::shared_ptr<core::Damaging> damaging,
                   std::shared_ptr<core::Object> target) {
-//    float angle = object->getSightAngle();
-//    double length = damaging->getAttackRadius();
-//    QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
-//    QPolygonF attackLine;
-//    attackLine.append(object->getPosition());
-//    attackLine.append(object->getPosition() + attackDirection);
-//    return attackLine.intersects(target->getHitboxOnMap());
-    return QLineF(target->getPosition(), object->getPosition()).length() < damaging->getAttackRadius();
+
+    float angle = object->getSightAngle();
+    for (int i = 0; i < 8; ++i) {
+        double length = damaging->getAttackRadius();
+        QPointF attackDirection(length * std::cos(angle), length * std::sin(angle));
+        QPolygonF attackLine;
+        attackLine.append(object->getPosition());
+        attackLine.append(object->getPosition() + attackDirection);
+        if (attackLine.intersects(target->getHitboxOnMap())) {
+            return true;
+        }
+        angle += M_PI_4;
+        if (angle > 2 * M_PI) {}
+        angle -= 2 * M_PI;
+    }
+    return false;
 }
 
 void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object> object,

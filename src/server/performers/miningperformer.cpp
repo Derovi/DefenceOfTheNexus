@@ -8,14 +8,21 @@
 bool server::mining_performer::isMineable(std::shared_ptr<core::Object> object,
                                           std::shared_ptr<core::Mining> mining,
                                           std::shared_ptr<core::Object> target) {
-//    float angle = object->getSightAngle();
-//    double length = mining->getMiningRadius();
-//    QPointF miningDirection(length * std::cos(angle), length * std::sin(angle));
-//    QPolygonF miningLine;
-//    miningLine.append(object->getPosition() - target->getPosition());
-//    miningLine.append(object->getPosition() + miningDirection - target->getPosition());
-//    return miningLine.intersects(target->getHitbox());
-    return QLineF(target->getPosition(), object->getPosition()).length() < mining->getMiningRadius();
+    float angle = object->getSightAngle();
+    for (int i = 0; i < 8; ++i) {
+        double length = mining->getMiningRadius();
+        QPointF miningDirection(length * std::cos(angle), length * std::sin(angle));
+        QPolygonF miningLine;
+        miningLine.append(object->getPosition() - target->getPosition());
+        miningLine.append(object->getPosition() + miningDirection - target->getPosition());
+        if (miningLine.intersects(target->getHitboxOnMap())) {
+            return true;
+        }
+        angle += M_PI_4;
+        if (angle > 2 * M_PI) {}
+        angle -= 2 * M_PI;
+    }
+    return false;
 }
 
 void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
