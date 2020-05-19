@@ -288,6 +288,8 @@ void client::GameMap::buildCommand(const QString& objectType) {
 
 void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
+    //for(int j=0;j<1000;j++)
+      //  qDebug()<<"kek";
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
         int id = event.getArguments()[0].toLongLong();
