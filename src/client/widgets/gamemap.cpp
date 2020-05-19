@@ -153,6 +153,7 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         return;
     }
     auto target = gameWorld->objectAt(point);
+    qDebug() << "check perm" << gameWorld->getObjects()[objectId]->getTeam() << gameScreen->getTeam();
     if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
         qDebug() << "No permission!";
         return;

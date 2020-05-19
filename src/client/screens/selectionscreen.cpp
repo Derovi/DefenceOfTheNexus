@@ -168,7 +168,6 @@ void client::SelectionScreen::requestNicknameChange(const QString& nickname) {
 
 void client::SelectionScreen::onInited() {
     //TODO FIX
-    multiplayerInterface->setTeam(1);
     App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
 }
 
