@@ -124,9 +124,8 @@ client::SelectionScreen::SelectionScreen(std::shared_ptr<MultiplayerInterface> m
     backButton->setOnClick([](QPoint point, bool leftButton) {
         qDebug() << "closing!";
         QThread::create([&] {
-            QThread::msleep(1);
+            QThread::msleep(3000);
             App::runOnUiThread([&] {
-                qDebug() << "CLOS!";
                 App::getInstance()->closeScreen();
             });
         })->start();

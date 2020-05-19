@@ -1,6 +1,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include <QDebug>
+
 #include "widget.h"
 #include "sprite.h"
 
@@ -29,6 +31,10 @@ class Screen : public client::Widget {
     void setBackground(const Sprite& background);
 
     void draw() override;
+
+    virtual ~Screen() {
+        qDebug() << "destroy screen";
+    }
 
   private:
     ScreenState state = CURRENT;

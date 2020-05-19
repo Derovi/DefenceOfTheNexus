@@ -13,6 +13,11 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->setWidth(config.getWidth());
     gameWorld->setTeamCount(config.getPlayerCount() + 1);
 
+    gameWorld->summonObject(utils::Factory::getObjectSignature("special-tower").value(),
+                            QPoint(0, 0), 0);
+    gameWorld->summonObject(utils::Factory::getObjectSignature("test1").value(),
+                            QPoint(100, 0), 1);
+
     // Enemy nexus
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));
 

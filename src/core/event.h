@@ -4,6 +4,7 @@
 #include <QtCore/QString>
 #include <QtCore/QPoint>
 #include <QtCore/QStringList>
+#include <QDebug>
 
 namespace core {
 
@@ -25,6 +26,10 @@ class Event {
     const QStringList& getArguments() const;
 
     void setArguments(const QStringList& arguments);
+
+    ~Event() {
+        qDebug() << "event destroy";
+    }
 
   private:
     Type type;

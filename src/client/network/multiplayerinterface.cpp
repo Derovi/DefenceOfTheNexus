@@ -223,5 +223,3 @@ void client::MultiplayerInterface::teamUpdate(const QString& message) {
     }
     emit slotsUpdated(result);
 }
-
-client::MultiplayerInterface::~MultiplayerInterface() = default;
