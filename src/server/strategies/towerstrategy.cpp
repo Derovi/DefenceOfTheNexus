@@ -9,7 +9,7 @@
 namespace server {
 
 TowerStrategy::TowerStrategy(std::shared_ptr<core::Object> object):
-    Strategy(object), target(nullptr), damaging(nullptr), targetId(-1) {qDebug() << "Created tower strategy!" << endl;}
+    Strategy(object), target(nullptr), damaging(nullptr), targetId(-1) {}
 
 QString TowerStrategy::getName() {
     return name;

@@ -82,6 +82,8 @@ class Factory {
                     const QJsonObject& changes,
                     const utils::KeyManager& keyManager)> partDeserializer);
 
+    static QHash<QString, server::ObjectSignature> getObjectSignatures();
+
   private:
     static QHash<QString, std::function<std::shared_ptr<server::Strategy>(
             std::shared_ptr<core::Object>)>> strategyCreators;

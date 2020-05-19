@@ -42,6 +42,12 @@ void utils::KeyManager::registerKeys() {
     addKey("damaging");
     addKey("wall");
     addKey("building");
+    addKey("range");
+    addKey("ownerId");
+    addKey("shooterPosX");
+    addKey("shooterPosY");
+    addKey("bullet");
+
 }
 
 utils::KeyManager::KeyManager(bool hash) {

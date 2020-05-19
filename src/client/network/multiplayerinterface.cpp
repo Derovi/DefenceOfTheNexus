@@ -44,10 +44,10 @@ void client::MultiplayerInterface::readMessage() {
         int dataGramCount = message.mid(datagramCountStart,
                                         datagramIdStart - datagramCountStart - 1).toInt();
         int dataGramId = message.mid(datagramIdStart, messageStart - datagramIdStart - 1).toInt();
-        qDebug() << "index:" << dataGramIndex << dataGramCount << dataGramId << message.size();
+//        qDebug() << "index:" << dataGramIndex << dataGramCount << dataGramId << message.size();
         message = message.right(message.size() - messageStart);
-        qDebug() << "client read message, length: " << message.length();
-        std::cout << message.toStdString() << std::endl;
+//        qDebug() << "client read message, length: " << message.length();
+//        std::cout << message.toStdString() << std::endl;
 
         if (!datagrams.contains(dataGramId)) {
             datagrams[dataGramId] = std::make_pair(QVector<QString>(dataGramCount),
@@ -79,31 +79,31 @@ void client::MultiplayerInterface::sendInitRequest() {
 }
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
-    qDebug() << "init response!";
+//    qDebug() << "init response!";
     int teamEntryStart =
             utils::network::prefixInitResponse.size() + utils::network::separator.size();
     QString team = message.mid(teamEntryStart,
                                message.indexOf(utils::network::separator, teamEntryStart) -
                                teamEntryStart);
-    qDebug() << "init response team: " << team;
+//    qDebug() << "init response team: " << team;
     int worldJsonEntryStart = teamEntryStart + team.length() + utils::network::separator.size();
     QString worldJson = message.right(message.size() - worldJsonEntryStart);
 
     this->team = team.toUInt();
 
-    utils::SmartSerializer serializer(false);
-    qDebug() << "applying changes!!";
+    utils::SmartSerializer serializer(true);
+//    qDebug() << "applying changes!!";
     serializer.applyChanges(gameWorld, worldJson);
-    qDebug() << "emit inited!";
+//    qDebug() << "emit inited!";
     emit inited();
 }
 
 void client::MultiplayerInterface::worldUpdate(const QString& message) {
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
-    utils::SmartSerializer serializer(false);
+    utils::SmartSerializer serializer(true);
     serializer.applyChanges(gameWorld, worldJson);
-    qDebug() << "changed applied!";
+//    qDebug() << "changed applied!";
     //std::cout << worldJson.toStdString();
 }
 

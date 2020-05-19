@@ -180,7 +180,7 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 break;
             }
             summonObject(columnSignature,
-                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), ang);
+                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), team, ang);
         } else {
             QPolygonF hitbox = wall.getHitbox();
             QMatrix matrix;
@@ -196,7 +196,10 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 !((dynamic_cast<Cost*>(wall.getAttribute("cost").get()))->pay(resources[team]))) {
                 break;
             }
-            summonObject(wall, QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), ang);
+            summonObject(wall,
+                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100),
+                         team,
+                         ang);
         }
         kol++;
     }

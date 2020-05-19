@@ -25,10 +25,10 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(),
                                 QPoint(x, y),
                                 i + 1);
-//        gameWorld->summonObject(
-//            utils::Factory::getObjectSignature(config.getExplorerType()).value(),
-//            QPoint(3000 + 200, 0),
-//            i + 1);
+        gameWorld->summonObject(
+            utils::Factory::getObjectSignature(config.getExplorerType()).value(),
+            QPoint(3000 + 200, 0),
+            i + 1);
     }
 
     for (int y = -475; y <= 475; y += 200) {

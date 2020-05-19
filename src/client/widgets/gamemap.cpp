@@ -8,7 +8,7 @@
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position),  cameraSpeed(60),
-        showHitBoxes(false), showSprites(true), fixed(false) {
+        showHitBoxes(true), showSprites(true), fixed(false) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
@@ -153,10 +153,10 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         return;
     }
     auto target = gameWorld->objectAt(point);
-    if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
-        qDebug() << "No permission!";
-        return;
-    }
+//    if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
+//        qDebug() << "No permission!";
+//        return;
+//    }
     if (target != nullptr && target->hasAttribute("resource")) {
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("mine_resource", {
                 QString::number(objectId), QString::number(target->getId())}));
@@ -277,6 +277,7 @@ void client::GameMap::buildCommand(const QString& objectType) {
 
 void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
+    qDebug() << "I'm handling event!" << endl;
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
     }
