@@ -100,7 +100,7 @@ void client::MultiplayerInterface::worldUpdate(const QString& message) {
     qDebug() << "start update - client";
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
-    utils::SmartSerializer serializer(false);
+    utils::SmartSerializer serializer(true);
     serializer.applyChanges(gameWorld, worldJson);
     qDebug() << "stop update - client";
 //    qDebug() << "changed applied!";

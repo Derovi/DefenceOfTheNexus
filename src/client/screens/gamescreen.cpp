@@ -23,6 +23,17 @@ void client::GameScreen::onResumed() {
 
 void client::GameScreen::draw() {
     Screen::draw();
+    int teamNumber = getTeam();
+    int unitId = getInterface()->getSelectedUnitId();
+    if (gameMap->getGameWorld()->getObjects().contains(unitId)) {
+        teamNumber = gameMap->getGameWorld()->getObjects()[unitId]->getTeam();
+    }
+    teamButton->getTextChildren()->setText(QString::number(teamNumber));
+    if (teamNumber == getTeam()) {
+        teamButton->getTextChildren()->setColor(Qt::green);
+    } else {
+        teamButton->getTextChildren()->setColor(Qt::red);
+    }
 }
 
 client::GameMap* client::GameScreen::getGameMap() const {
@@ -50,6 +61,15 @@ client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& mult
     });
 
     addChild(pauseButton);
+
+    teamButton = new ImageButton(QPoint(3734, 24), 72, 72);
+    teamButton->setImage(QImage(":/interface/icon-slot"));
+    teamButton->setTextChildren(
+            std::make_shared<TextView>(QPoint(0, 0), QString::number(multiplayerInterface->getTeam()),
+                                                            App::getInstance()->getFont()));
+    teamButton->getTextChildren()->setTextSize(50);
+    teamButton->getTextChildren()->setColor(QColor(255, 255, 255));
+    addChild(teamButton);
 
     gameMap->setGameWorld(multiplayerInterface->getGameWorld());
     interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());

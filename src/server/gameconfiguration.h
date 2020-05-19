@@ -34,8 +34,8 @@ class GameConfiguration {
     void setExplorerType(QString explorer);
 
   private:
-    int width = 5000;
-    int height = 5000;
+    int width = 7000;
+    int height = 7000;
     int tickPerSec = 60;
     int playerCount = 1;
     double resourceDensity = 0.0007;

@@ -103,6 +103,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
         object->getAttributes().push_back(attribute->clone());
     }
     objects.insert(lastSummonedId, object);
+    qDebug() << "summoned!";
     return object;
 }
 
@@ -198,7 +199,10 @@ core::GameWorld::buildWall(QPoint start, QPoint finish,
                 !((dynamic_cast<Cost*>(wall.getAttribute("cost").get()))->pay(resources[team]))) {
                 break;
             }
-            summonObject(wall, QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100), team, ang);
+            summonObject(wall,
+                         QPoint(start.x() + dx * j * 100, start.y() + dy * j * 100),
+                         team,
+                         ang);
         }
         kol++;
     }

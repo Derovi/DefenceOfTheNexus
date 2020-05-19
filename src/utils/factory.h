@@ -84,6 +84,8 @@ class Factory {
 
     static QHash<QString, server::ObjectSignature> getObjectSignatures();
 
+    static QHash<QString, server::ObjectSignature> getObjectSignatures();
+
   private:
     static QHash<QString, std::function<std::shared_ptr<server::Strategy>(
         std::shared_ptr<core::Object>)>> strategyCreators;
