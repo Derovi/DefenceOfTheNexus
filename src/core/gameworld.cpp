@@ -234,7 +234,7 @@ core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& p
         return nullptr;
     }
     qDebug() << "building at" << position << signature.getTypeName();
-    return summonObject(signature, position, rotationAngle);
+    return summonObject(signature, position, team, rotationAngle);
 }
 
 std::pair<core::Object, bool>

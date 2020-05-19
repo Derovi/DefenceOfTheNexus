@@ -89,7 +89,7 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         }
     }
 
-    int resourcesAmount = 30;//1ll * config.getWidth() * config.getHeight()
+    int resourcesAmount = 50;//1ll * config.getWidth() * config.getHeight()
 //        * config.getResourceDensity() * config.getResourceDensity();
 
     float woodProb = 0.5;
@@ -97,8 +97,8 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     // ironProb = 0.2;
 
     std::mt19937 rnd(config.getSeed());
-    std::uniform_int_distribution<> ux(-config.getWidth() / 2, config.getWidth() / 2);
-    std::uniform_int_distribution<> uy(-config.getHeight() / 2, config.getHeight() / 2);
+    std::uniform_int_distribution<> ux(-config.getWidth(), config.getWidth());
+    std::uniform_int_distribution<> uy(-config.getHeight(), config.getHeight() / 2);
     std::uniform_real_distribution<> ur;
 
     const auto any = [&](const QVector<ObjectSignature>& signatures) {

@@ -23,7 +23,7 @@ bool server::mining_performer::isMineable(std::shared_ptr<core::Object> object,
         if (angle > 2 * M_PI) {}
         angle -= 2 * M_PI;
     }
-    return QLineF(object->getPosition(), target->getPosition()).length() < 2 * mining->getMiningRadius();
+    return QLineF(object->getPosition(), target->getPosition()).length() < mining->getMiningRadius();
 }
 
 void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
