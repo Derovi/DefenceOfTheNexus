@@ -40,6 +40,8 @@ class GameScreen : public Screen {
 
     GameInterface* interface;
 
+    ImageButton* teamButton;
+
     GameMap* gameMap;
 
     bool paused;
