@@ -307,7 +307,7 @@ utils::Serializer::resourceDeserializer(const QJsonObject& serialized) {
     }
     int amount = serialized["amount"].toDouble();
     int maxAmount = serialized["maxAmount"].toDouble();
-    int type = serialized["resourceType"].toDouble();
+    int type = serialized["resourceType"].toInt();
     core::ResourceType resType = static_cast<core::ResourceType>(type);
     double modifier = serialized["miningSpeedModifier"].toDouble();
     return std::make_shared<core::Resource>(resType, amount, maxAmount, modifier);
@@ -740,10 +740,7 @@ utils::Serializer::costSerializer(const std::shared_ptr<core::Attribute>& attrib
         if (result == std::nullopt) {
             return result;
         }
-        QJsonObject thisObj;
-        thisObj.insert("object", result.value());
-        ++iter;
-        ans.push_back(thisObj);
+        ans.push_back(result.value());
     }
     json.insert("all", ans);
     return json;
@@ -771,20 +768,15 @@ utils::Serializer::wallDeserializer(const QJsonObject& serialized) {
 
 std::optional<std::shared_ptr<core::Attribute>>
 utils::Serializer::costDeserializer(const QJsonObject& serialized) {
+    qDebug()<<serialized;
     if (!serialized["all"].isArray()) {
         return std::nullopt;
     }
     QJsonArray array = serialized["all"].toArray();
     QVector<core::Resource> cost;
     for (const auto obj : array) {
-        if (!obj.isObject()) {
-            return std::nullopt;
-        }
         QJsonObject myObj = obj.toObject();
-        if (!myObj["object"].isObject()) {
-            return std::nullopt;
-        }
-        QJsonObject jsonOfObject = myObj["object"].toObject();
+        QJsonObject jsonOfObject = myObj;
         auto res = resourceDeserializer(jsonOfObject);
         if (res == std::nullopt) {
             return std::nullopt;
@@ -792,6 +784,8 @@ utils::Serializer::costDeserializer(const QJsonObject& serialized) {
         cost.push_back(*dynamic_cast<core::Resource*>(res.value().get()));
     }
     auto object = new core::Cost(cost);
+    for(int j=0;j<100;j++)
+        qDebug()<<42;
     return std::make_shared<core::Cost>(*object);
 }
 

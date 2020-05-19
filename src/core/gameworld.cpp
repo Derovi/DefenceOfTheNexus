@@ -91,7 +91,7 @@ core::GameWorld::summonObject(const server::ObjectSignature& signature, const QP
                               int team,
                               float rotationAngle) {
     ++lastSummonedId;
-    //qDebug() << "id:" << lastSummonedId << rotationAngle << team << signature.getTypeName();
+    qDebug() << "id:" << lastSummonedId << rotationAngle << team << signature.getTypeName();
     std::shared_ptr<Object> object = std::make_shared<Object>(lastSummonedId,
                                                               signature.getTypeName(),
                                                               position,
@@ -230,7 +230,7 @@ core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& p
         return nullptr;
     }
     if (team > 0 && team < 255 && (signature.getAttribute("cost") != nullptr) &&
-        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources[team]))) {
+        !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources[team-1]))) {
         return nullptr;
     }
     qDebug() << "building at" << position << signature.getTypeName();
