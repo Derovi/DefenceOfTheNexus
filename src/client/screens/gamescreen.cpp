@@ -46,6 +46,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& mult
     pauseButton->setImage(QImage(":/images/cancel"));
     pauseButton->setOnClick([=](QPoint point, bool leftButton) {
         App::getInstance()->openScreen(std::make_shared<PauseScreen>());
+        qDebug() << "Сервер запущен на порту: " << QString::number(multiplayerInterface->getPort());
     });
 
     addChild(pauseButton);
