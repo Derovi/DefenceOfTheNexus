@@ -8,7 +8,7 @@
 bool server::mining_performer::isMineable(std::shared_ptr<core::Object> object,
                                           std::shared_ptr<core::Mining> mining,
                                           std::shared_ptr<core::Object> target) {
-//    qDebug() << object->getPosition() << "wanna mine" << target->getPosition() << endl;
+//    //qDebug() << object->getPosition() << "wanna mine" << target->getPosition() << endl;
     float angle = object->getSightAngle();
     for (int i = 0; i < 8; ++i) {
         double length = mining->getMiningRadius();
@@ -46,7 +46,7 @@ void server::mining_performer::mine(std::shared_ptr<core::GameWorld> world,
         int mined = resource->mine(mining->getMiningSpeed());
         mining->setMining(true);
         world->addTeamResources(resource->getType(), mined, object->getTeam());
-        qDebug() << "Mined " << mined << " of " << (int) resource->getType() << endl;
+        //qDebug() << "Mined " << mined << " of " << (int) resource->getType() << endl;
         world->generateEvent(
                 core::Event(core::Event::MINE_EVENT,
                             QStringList(QString::number(object->getId()))));

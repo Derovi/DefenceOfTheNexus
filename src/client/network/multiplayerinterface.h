@@ -59,7 +59,7 @@ class MultiplayerInterface : public QObject {
     int getPlayerId() const;
 
     ~MultiplayerInterface() override {
-        qDebug() << "delete mult";
+        //qDebug() << "delete mult";
     };
 
   private:

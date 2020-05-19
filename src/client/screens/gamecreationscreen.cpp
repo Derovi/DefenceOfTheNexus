@@ -19,7 +19,7 @@ void client::GameCreationScreen::onPaused() {
 }
 
 void client::GameCreationScreen::onResumed() {
-    qDebug() << "resumed!";
+    //qDebug() << "resumed!";
     server->finish();
     engine->finish();
     server = nullptr;

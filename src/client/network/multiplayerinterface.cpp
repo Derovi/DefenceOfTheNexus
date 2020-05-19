@@ -31,7 +31,7 @@ void client::MultiplayerInterface::setTeam(uint8_t team) {
 }
 
 void client::MultiplayerInterface::readMessage() {
-    qDebug() << "pend" << socket->pendingDatagramSize();
+    //qDebug() << "pend" << socket->pendingDatagramSize();
     do {
         QByteArray Datagram;
         Datagram.resize(socket->pendingDatagramSize());
@@ -44,14 +44,14 @@ void client::MultiplayerInterface::readMessage() {
         int datagramIdStart = message.indexOf('*') + 1;
         int messageStart = message.indexOf('>') + 1;
 
-        //qDebug() << "mes st" << messageStart << message.length();
+        ////qDebug() << "mes st" << messageStart << message.length();
         int dataGramIndex = message.mid(1, datagramCountStart - 2).toInt();
         int dataGramCount = message.mid(datagramCountStart,
                                         datagramIdStart - datagramCountStart - 1).toInt();
         int dataGramId = message.mid(datagramIdStart, messageStart - datagramIdStart - 1).toInt();
-        qDebug() << "index:" << dataGramIndex << ' ' <<  dataGramCount <<  ' ' << dataGramId << ' ' << message.size() << endl;
+        //qDebug() << "index:" << dataGramIndex << ' ' <<  dataGramCount <<  ' ' << dataGramId << ' ' << message.size() << endl;
         message = message.right(message.size() - messageStart);
-        qDebug() << "client read message, length: " << message.length();
+        //qDebug() << "client read message, length: " << message.length();
         //std::cout << message.toStdString() << std::endl;
 
         if (!datagrams.contains(dataGramId)) {
@@ -79,12 +79,12 @@ const std::shared_ptr<QUdpSocket>& client::MultiplayerInterface::getSocket() con
 }
 
 void client::MultiplayerInterface::sendInitRequest() {
-    qDebug() << "init request!";
+    //qDebug() << "init request!";
     sendMessage(utils::network::prefixInitRequest);
 }
 
 void client::MultiplayerInterface::initResponse(const QString& message) {
-    qDebug() << "init response!";
+    //qDebug() << "init response!";
     auto arguments = message.split(utils::network::separator);  // {prefix, worldJson}
 
     utils::SmartSerializer serializer(false);
@@ -97,13 +97,13 @@ void client::MultiplayerInterface::worldUpdate(const QString& message) {
     if (state != IN_GAME) {
         return;
     }
-    qDebug() << "start update - client";
+    //qDebug() << "start update - client";
     QString worldJson = message.right(message.size() - utils::network::prefixWorldUpdate.size() -
                                       utils::network::separator.size());
     utils::SmartSerializer serializer(true);
     serializer.applyChanges(gameWorld, worldJson);
-    qDebug() << "stop update - client";
-//    qDebug() << "changed applied!";
+    //qDebug() << "stop update - client";
+//    //qDebug() << "changed applied!";
     //std::cout << worldJson.toStdString();
 }
 
@@ -147,7 +147,7 @@ void client::MultiplayerInterface::buildDatagrams() {
         }
         if (!completed) {
             if (datagrams.first().second.msecsTo(QDateTime::currentDateTime()) > timeout) {
-                qDebug() << "timeout, datagram parts lost!";
+                //qDebug() << "timeout, datagram parts lost!";
                 datagrams.clear();
                 if (state == State::IN_GAME) {
                     sendInitRequest();
@@ -156,7 +156,7 @@ void client::MultiplayerInterface::buildDatagrams() {
             return;
         }
         datagrams.remove(datagrams.firstKey());
-        qDebug() << "completed!" << message.size();
+        //qDebug() << "completed!" << message.size();
         if (message.startsWith(utils::network::prefixInitResponse)) {
             initResponse(message);
         } else if (message.startsWith(utils::network::prefixWorldUpdate)) {
@@ -207,7 +207,7 @@ void client::MultiplayerInterface::nickNameResponse(const QString& message) {
 
 void client::MultiplayerInterface::teamUpdate(const QString& message) {
     auto arguments = message.split(utils::network::separator);  // {prefix, array json}
-    qDebug() << "team update!! ";
+    //qDebug() << "team update!! ";
     QJsonArray jsonArray = utils::Serializer().stringToJsonObject(arguments[1]).value()["slots"].toArray();
     QVector<QString> result;
     uint8_t textIndex = 0;

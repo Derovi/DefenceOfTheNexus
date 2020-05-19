@@ -33,7 +33,7 @@ class Screen : public client::Widget {
     void draw() override;
 
     virtual ~Screen() {
-        qDebug() << "destroy screen";
+        //qDebug() << "destroy screen";
     }
 
   private:

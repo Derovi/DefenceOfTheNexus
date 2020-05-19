@@ -12,7 +12,7 @@ void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     clearSprites();
     if (getObject()->hasAttribute("damaging")) {
         auto damaging = std::dynamic_pointer_cast<core::Damaging>(getObject()->getAttribute("damaging"));
-        qDebug() << getObject()->getId() << "has damaging" << damaging->isAttacking() << "and he is attacking!" << endl;
+        //qDebug() << getObject()->getId() << "has damaging" << damaging->isAttacking() << "and he is attacking!" << endl;
         if (damaging->isAttacking()) {
 //            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getAttackDelay();
 //            progress += 0.5;
@@ -26,7 +26,7 @@ void client::UnitSpriteController::onUpdate(uint64_t timeDeltaMSec) {
     }
     if (getObject()->hasAttribute("mining")) {
         auto damaging = std::dynamic_pointer_cast<core::Mining>(getObject()->getAttribute("mining"));
-        qDebug() << getObject()->getId() << "has damaging" << damaging->isMining() << "and he is attacking!" << endl;
+        //qDebug() << getObject()->getId() << "has damaging" << damaging->isMining() << "and he is attacking!" << endl;
         if (damaging->isMining()) {
 //            double progress = 1 - static_cast<double>(damaging->getCurrentDelay()) / damaging->getMiningDelay();
 //            progress += 0.5;

@@ -33,7 +33,7 @@ void client::GameMap::setDisplayBounds(const QRect& displayBounds) {
 }
 
 void client::GameMap::paint(QPainter& painter) {
-    qDebug() << "client" << gameWorld->getObjects()[0]->getPosition();
+    //qDebug() << "client" << gameWorld->getObjects()[0]->getPosition();
     auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (fixed) {
         if (gameWorld->getObjects().contains(0)) {
@@ -159,13 +159,13 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
     }
     int objectId = gameScreen->getInterface()->getSelectedUnitId();
     if (!gameWorld->getObjects().contains(objectId)) {
-        qDebug() << "No such object!";
+        //qDebug() << "No such object!";
         return;
     }
     auto target = gameWorld->objectAt(point);
-    qDebug() << "check perm" << gameWorld->getObjects()[objectId]->getTeam() << gameScreen->getTeam();
+    //qDebug() << "check perm" << gameWorld->getObjects()[objectId]->getTeam() << gameScreen->getTeam();
     if (gameWorld->getObjects()[objectId]->getTeam() != gameScreen->getTeam()) {
-        qDebug() << "No permission!";
+        //qDebug() << "No permission!";
         return;
     }
     if (target != nullptr && target->hasAttribute("resource")) {
@@ -288,9 +288,9 @@ void client::GameMap::buildCommand(const QString& objectType) {
 
 void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
-    qDebug() << "I'm handling event!" << endl;
+    //qDebug() << "I'm handling event!" << endl;
     if (event.getType() == core::Event::Type::HIT_EVENT) {
-        qDebug() << "handled hit event! Damager id: " << event.getArguments();
+        //qDebug() << "handled hit event! Damager id: " << event.getArguments();
         int id = event.getArguments()[0].toLongLong();
         playSound(QStringList({QString("sounds/sword_attack.wav"),
                                QString::number(gameWorld->getObjects()[id]->getPosition().x()),

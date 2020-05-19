@@ -273,7 +273,7 @@ void client::ConnectionScreen::connectServer() {
 }
 
 void client::ConnectionScreen::joinGame() {
-    qDebug() << "join game!";
+    //qDebug() << "join game!";
     App::getInstance()->openScreen(std::make_shared<GameScreen>(multiplayerInterface));
 }
 

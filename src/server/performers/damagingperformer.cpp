@@ -72,7 +72,7 @@ void damage(std::shared_ptr<core::GameWorld> world, std::shared_ptr<core::Object
                 bulletAttr->setDamage(damaging->getDamage());
                 bulletAttr->setRange(damaging->getAttackRadius());
 
-                qDebug() << "Created bullet successfully" << endl;
+//                //qDebug() << "Created bullet successfully" << endl;
             }
         } else {
             damaging->setAttacking(false);
