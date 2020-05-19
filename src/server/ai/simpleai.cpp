@@ -147,7 +147,7 @@ void server::SimpleAI::spawnBot(const server::SimpleAI::BotSpawner& spawner) {
 void server::SimpleAI::spawnBots(std::shared_ptr<core::GameWorld> world) {
     static auto startTime = std::chrono::steady_clock::now();
     int64_t availableBots = std::chrono::duration_cast<std::chrono::minutes>(
-        std::chrono::steady_clock::now() - startTime).count() + 1;
+        std::chrono::steady_clock::now() - startTime).count();
     if (bots.size() < availableBots && !spawners.empty()) {
        QVector<uint64_t> spawnerIds = spawners.keys().toVector();
        while (bots.size() < availableBots) {
