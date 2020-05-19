@@ -24,13 +24,13 @@ void client::MiniMap::paint(QPainter& painter) {
     for (const auto& object: gameWorld->getObjects()) {
         double dx = object->getPosition().x() - cord.x();
         double dy = object->getPosition().y() - cord.y();
-        if (abs(dx) > 750 || abs(dy) > 750) {
+        if (abs(dx) > 1500 || abs(dy) > 1500) {
             continue;
         }
         QPolygonF drawPolygon = object->getRotatedHitbox();
         drawPolygon.translate(dx,dy);
         QTransform trans;
-        trans=trans.scale(0.2,0.2);
+        trans=trans.scale(0.1,0.1);
         drawPolygon=trans.map(drawPolygon);
         drawPolygon.translate(position.x()+height/2,position.y()+width/2);
         painter.setBrush(brushes[object->getTeam()]);

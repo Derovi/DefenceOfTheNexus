@@ -28,7 +28,7 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     healthBar->setHealthLine(QImage(":/interface/health-bar-line"));
     addChild(healthBar);
 
-    miniMap = new MiniMap(QPoint(800,50),350,350);
+    miniMap = new MiniMap(QPoint(700,50),350,350);
     miniMap->setGameWorld(gameWorld);
     addChild(miniMap);
 
