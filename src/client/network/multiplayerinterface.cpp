@@ -217,6 +217,7 @@ void client::MultiplayerInterface::teamUpdate(const QString& message) {
         result.push_back(line);
         if (!line.isEmpty()) {
             int id = line.right(line.size() - line.indexOf('#' - 1)).toInt();
+            qDebug() << id;
             if (id == getPlayerId()) {
                 setTeam(textIndex);
             }
