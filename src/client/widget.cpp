@@ -7,7 +7,8 @@
 
 client::Widget::Widget(const QPoint& position):
         position(position), windowManager(nullptr), width(0), height(0),
-        lastPaintTime(std::chrono::steady_clock::now()) {}
+        lastPaintTime(std::chrono::steady_clock::now()) {
+}
 
 client::Widget* client::Widget::getParent() {
     return parent;
@@ -18,7 +19,6 @@ int client::Widget::getHeght() {
 }
 
 client::Widget::~Widget() {
-    qDebug() << "delete";
     for (Widget* child : children) {
         delete child;
     }
