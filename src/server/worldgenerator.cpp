@@ -13,22 +13,65 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     gameWorld->setWidth(config.getWidth());
     gameWorld->setTeamCount(config.getPlayerCount() + 1);
 
-    // Enemy nexus
+    auto signatures = utils::Factory::getObjectSignatures();
+//     Enemy nexus
     gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(), QPoint(0, 0));
 
     for (int i = 0; i < config.getPlayerCount(); ++i) {
-        int x = static_cast<int>(config.getWidth() / 2
+        int x = static_cast<int>(config.getWidth() / 3
             * std::cos(i * 2 * M_PI / config.getPlayerCount()));
-        int y = static_cast<int>(config.getHeight() / 2
+        int y = static_cast<int>(config.getHeight() / 3
             * std::sin(i * 2 * M_PI / config.getPlayerCount()));
         gameWorld->summonObject(utils::Factory::getObjectSignature("nexus").value(),
                                 QPoint(x, y),
                                 i + 1);
-        gameWorld->summonObject(
-            utils::Factory::getObjectSignature(config.getExplorerType()).value(),
-            QPoint(x + 200, y),
-            i + 1);
+//        gameWorld->summonObject(
+//            utils::Factory::getObjectSignature(config.getExplorerType()).value(),
+//            QPoint(3000 + 200, 0),
+//            i + 1);
+    }
 
+    for (int y = -475; y <= 475; y += 200) {
+        gameWorld->buildWall(QPoint(-500, y), QPoint(-500, y + 200),
+                             utils::Factory::getObjectSignature("wall1").value(),
+                             utils::Factory::getObjectSignature("column1").value());
+        gameWorld->buildWall(QPoint(500, y), QPoint(500, y + 200),
+                             utils::Factory::getObjectSignature("wall1").value(),
+                             utils::Factory::getObjectSignature("column1").value());
+    }
+    for (int x = -475; x <= 475; x += 200) {
+        if (x == -75) {
+            continue;
+        }
+        gameWorld->buildWall(QPoint(x, -500), QPoint(x + 200, -500),
+                             utils::Factory::getObjectSignature("wall1").value(),
+                             utils::Factory::getObjectSignature("column1").value());
+        gameWorld->buildWall(QPoint(x, 500), QPoint(x + 200, 500),
+                             utils::Factory::getObjectSignature("wall1").value(),
+                             utils::Factory::getObjectSignature("column1").value());
+    }
+
+    int d = 500;
+    const int dx[] = {1, 1, -1, -1};
+    const int dy[] = {1, -1, 1, -1};
+
+    for (int i = 0; i < 4; ++i) {
+        gameWorld->summonObject(utils::Factory::getObjectSignature("big-tower").value(),
+                                QPoint(d * dx[i], d * dy[i]), 0);
+    }
+
+    d = 1200;
+    for (int i = 0; i < 4; ++i) {
+        gameWorld->summonObject(utils::Factory::getObjectSignature("medium-tower").value(),
+                                QPoint(d * dx[i], d * dy[i]), 0);
+    }
+
+    d = 1000;
+    for (int sign = -1; sign <= 1; sign += 2) {
+        gameWorld->summonObject(utils::Factory::getObjectSignature("medium-barrack").value(),
+                                QPoint(sign * d, 0), 0);
+        gameWorld->summonObject(utils::Factory::getObjectSignature("medium-barrack").value(),
+                                QPoint(0, sign * d), 0);
     }
 
     QHash<int, QVector<ObjectSignature>> resources;
@@ -37,20 +80,13 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
     resources[static_cast<int>(core::ResourceType::kStone)] = {};
     resources[static_cast<int>(core::ResourceType::kIron)] = {};
 
-    for (const auto& type : {"conifer", "oak", "fir", "wite"}) {
-        resources[static_cast<int>(core::ResourceType::kWood)].push_back(
-            utils::Factory::getObjectSignature(type).value());
-    }
-
-    for (const auto& type : {"rock", "stone", "cobblestone", "small-stone", "medium-stone",
-                             "big-stone"}) {
-        resources[static_cast<int>(core::ResourceType::kStone)].push_back(
-            utils::Factory::getObjectSignature(type).value());
-    }
-
-    for (const auto& type : {"iron", "ore"}) {
-        resources[static_cast<int>(core::ResourceType::kIron)].push_back(
-            utils::Factory::getObjectSignature(type).value());
+    for (auto& signature : signatures) {
+        auto resourceAttribute = std::dynamic_pointer_cast<core::Resource>(
+            signature.getAttribute("resource"));
+        if (resourceAttribute != nullptr) {
+            core::ResourceType resourceType = resourceAttribute->getType();
+            resources[static_cast<int>(resourceType)].push_back(signature);
+        }
     }
 
     int resourcesAmount = 1ll * config.getWidth() * config.getHeight()
@@ -88,6 +124,7 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
             }
         }
     }
+    qDebug() << "World generated" << endl;
 
     return gameWorld;
 }
