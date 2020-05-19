@@ -4,9 +4,9 @@
 #include <QtCore/QString>
 #include <QtCore/QPoint>
 
-#include "widgets/gamemap.h"
-
 namespace client {
+
+class GameMap;
 
 class MapInput {
   public:

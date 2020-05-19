@@ -12,6 +12,7 @@
 #include "../screen.h"
 #include "../graphicsobject.h"
 #include "../widget.h"
+#include "../mapinput.h"
 
 namespace client {
 
@@ -69,6 +70,8 @@ class GameMap : public Widget {
 
     const QHash<int64_t, std::shared_ptr<GraphicsObject>>& getGraphicsObjects() const;
 
+    const std::shared_ptr<MapInput>& getMapInput() const;
+
   protected:
     void wheelEvent(QWheelEvent* event) override;
 
@@ -104,6 +107,8 @@ class GameMap : public Widget {
     QMediaPlayer mainPlayer;
 
     QVector<QMediaPlayer*> musicPlayers;
+
+    std::shared_ptr<MapInput> mapInput;
 
     void drawBackground(QPainter& painter);
 

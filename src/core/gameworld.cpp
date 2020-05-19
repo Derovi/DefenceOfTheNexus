@@ -229,10 +229,11 @@ core::GameWorld::build(const server::ObjectSignature& signature, const QPoint& p
     if (isIntersectsWithObjects(hitbox)) {
         return nullptr;
     }
-    if ((signature.getAttribute("cost") != nullptr) &&
+    if (team > 0 && team < 255 && (signature.getAttribute("cost") != nullptr) &&
         !((dynamic_cast<Cost*>(signature.getAttribute("cost").get()))->pay(resources[team]))) {
         return nullptr;
     }
+    qDebug() << "building at" << position << signature.getTypeName();
     return summonObject(signature, position, rotationAngle);
 }
 

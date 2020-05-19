@@ -72,7 +72,7 @@ client::GameScreen::GameScreen(const std::shared_ptr<MultiplayerInterface>& mult
     addChild(teamButton);
 
     gameMap->setGameWorld(multiplayerInterface->getGameWorld());
-    interface = new GameInterface(QPoint(152, 1710), 3536, 450, gameMap->getGameWorld());
+    interface = new GameInterface(QPoint(152, 1710), 450, 3536, gameMap->getGameWorld());
     addChild(interface);
     qDebug() << "game screen started";
 }

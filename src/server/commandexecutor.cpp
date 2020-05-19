@@ -39,6 +39,8 @@ void server::CommandExecutor::registerCommands() {
     registerCommand("change_move_target", &CommandExecutor::changeMoveTargetCommand);
     registerCommand("mine_resource", &CommandExecutor::mineResource);
     registerCommand("attack", &CommandExecutor::attackCommand);
+    registerCommand("build", &CommandExecutor::buildCommand);
+    registerCommand("buildWall", &CommandExecutor::buildWallCommand);
 }
 
 // change_speed_command <object_id> <new_speed>
@@ -181,7 +183,7 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
     gameWorldController->getControllers()[minerId]->cancelTargets();
     qDebug() << minerId << " wanna mine " << resourceId << endl;
 
-    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+    auto destPoint = std::make_shared<QPointF>(target.value()->getPosition());
 
     DataBundle bundle;
     bundle.registerVariable("miningTarget", target.value());
@@ -192,23 +194,23 @@ bool server::CommandExecutor::mineResource(const QStringList& arguments) {
 
 // mine_resource <miner id> <target id>
 bool server::CommandExecutor::buildCommand(const QStringList& arguments) {
-    if (arguments.size() != 3) {
-        return false;
-    }
-    QString objectType = arguments[0];
+    qDebug() << "build command h";
+    int team = arguments[0].toInt();
+    QString type = arguments[1];
+    QPoint position = QPoint(arguments[2].toInt(), arguments[3].toInt());
+    getGameWorld()->build(utils::Factory::getObjectSignature(type).value(), position, team);
+    return true;
+}
 
-    bool isOk = true;
-    int x = arguments[1].toInt(&isOk);
-    if (!isOk) {
-        return false;
-    }
-
-    int y = arguments[2].toInt(&isOk);
-    if (!isOk) {
-        return false;
-    }
-
-    //getGameWorld()->build();
+// mine_resource <miner id> <target id>
+bool server::CommandExecutor::buildWallCommand(const QStringList& arguments) {
+    qDebug() << "build wall command h";
+    int team = arguments[0].toInt();
+    QString type = arguments[1];
+    QPoint pos1 = QPoint(arguments[2].toInt(), arguments[3].toInt());
+    QPoint pos2 = QPoint(arguments[4].toInt(), arguments[5].toInt());
+    getGameWorld()->buildWall(pos1, pos2, utils::Factory::getObjectSignature(type).value(),
+                              utils::Factory::getObjectSignature("column1").value(), team);
     return true;
 }
 
@@ -247,7 +249,7 @@ bool server::CommandExecutor::attackCommand(const QStringList& arguments) {
     gameWorldController->getControllers()[attackerId]->cancelTargets();
     qDebug() << attackerId << " wanna attack " << targetId << endl;
 
-    auto destPoint =  std::make_shared<QPointF>(target.value()->getPosition());
+    auto destPoint = std::make_shared<QPointF>(target.value()->getPosition());
 
     DataBundle bundle;
     bundle.registerVariable("attackTarget", target.value());

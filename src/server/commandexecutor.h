@@ -42,7 +42,7 @@ class CommandExecutor {
 
     bool buildCommand(const QStringList& arguments);
 
-    bool buildWallCommand(const QStringList& arguments) {};
+    bool buildWallCommand(const QStringList& arguments);
 
     // key - command name, value - function
     // (takes command arguments, returns status: true - success, false - invalid syntax/ denied)

@@ -9,7 +9,7 @@
 
 client::GameMap::GameMap(QPoint position, int height, int width):
         Widget(position),  cameraSpeed(60),
-        showHitBoxes(true), showSprites(true), fixed(false) {
+        showHitBoxes(true), showSprites(true), fixed(false), mapInput(std::make_shared<MapInput>(this)) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
@@ -149,6 +149,12 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point, bool leftButton) {
     point = getTransformToMap().map(point);
+    //qDebug() << "click" << mapInput->isWaiting();
+    /*if (mapInput->isWaiting()) {
+        qDebug() << "true waiting!";
+        mapInput->append(point);
+        return;
+    } else qDebug() << "bot waiting!";*/
     auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (leftButton) {
         auto object = gameWorld->objectAt(point);
@@ -331,3 +337,6 @@ void client::GameMap::playSound(QStringList arguments) {
     }
 }
 
+const std::shared_ptr<client::MapInput>& client::GameMap::getMapInput() const {
+    return mapInput;
+}

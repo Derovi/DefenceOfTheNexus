@@ -4,11 +4,12 @@
 #include "../core/attributes/wall.h"
 #include "screens/gamescreen.h"
 
-client::MapInput::MapInput(client::GameMap* gameMap): gameMap(gameMap) {}
+client::MapInput::MapInput(client::GameMap* gameMap): gameMap(gameMap), objectType("") {}
 
 void client::MapInput::abort() {
     points.clear();
     objectType.clear();
+    qDebug() << "map input abort!";
 }
 
 bool client::MapInput::isWaiting() {
@@ -28,10 +29,12 @@ client::GameMap* client::MapInput::getGameMap() const {
 }
 
 void client::MapInput::setObjectType(const QString& objectType) {
+    qDebug() << "map input objectType" << objectType;
     MapInput::objectType = objectType;
 }
 
 void client::MapInput::append(const QPoint& point) {
+    qDebug() << "map input append!";
     points.push_back(point);
     auto objectSignature = utils::Factory::getObjectSignature(objectType);
     if (!objectSignature) {
@@ -43,8 +46,10 @@ void client::MapInput::append(const QPoint& point) {
         if (points.size() == 0) {
             return;
         }
+        qDebug() << "map input build wall!";
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("build_wall",
                                                        {
+                                                               QString::number(gameScreen->getTeam()),
                                                                objectType,
                                                                QString::number(points.first().x()),
                                                                QString::number(points.first().y()),
@@ -52,12 +57,13 @@ void client::MapInput::append(const QPoint& point) {
                                                                QString::number(points[1].y())}));
         abort();
     } else {
+        qDebug() << "game map build!";
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("build",
                                                        {
+                                                               QString::number(gameScreen->getTeam()),
                                                                objectType,
                                                                QString::number(points.first().x()),
-                                                               QString::number(
-                                                                       points.first().y())}));
+                                                               QString::number(points.first().y())}));
         abort();
     }
 }

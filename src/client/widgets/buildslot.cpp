@@ -83,8 +83,9 @@ void client::BuildSlot::setObjectType(const QString& objectType) {
 }
 
 void client::BuildSlot::clicked(QPoint point, bool leftButton) {
+    qDebug() << "clicked input!";
     if (objectType.length() == 0) {
         return;
     }
-    dynamic_cast<GameScreen*>(getParent())->getGameMap()->buildCommand(objectType);
+    dynamic_cast<GameScreen*>(getParent()->getParent())->getGameMap()->getMapInput()->setObjectType(getObjectType());
 }

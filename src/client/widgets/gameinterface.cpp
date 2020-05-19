@@ -16,7 +16,7 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
         Widget(position), gameWorld(std::move(gameWorld)), selectedUnitId(selectedUnitId) {
     setHeight(height);
     setWidth(width);
-
+    qDebug() << "interface constru";
     auto gameScreen = dynamic_cast<GameScreen*>(getParent());
 
     unitIcon = new UnitIcon(QPoint(642, 0), 342, 450);
@@ -90,6 +90,7 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     addChild(stopButton);
     addChild(killButton);
 
+    qDebug() << "interface consru";
     QImage slotIcon = QImage(":/interface/icon-slot");
     for (int row = 0; row < 3; ++row) {
         for (int column = 0; column < 5; ++column) {
@@ -205,7 +206,7 @@ void client::GameInterface::paint(QPainter& painter) {
             object->getAttribute(core::Builder::attributeName));
     if (builder) {
         for (int idx = 0; idx < buildSlots.size(); ++idx) {
-            if (idx < idx < builder->getBuildList().size()) {
+            if (idx < builder->getBuildList().size()) {
                 QString slot = builder->getBuildList().value(idx);
                 buildSlots[idx]->setObjectType(slot);
             } else {
