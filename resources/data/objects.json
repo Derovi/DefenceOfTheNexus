@@ -25,7 +25,7 @@
         "maxHealth": 500
       },
       "builder": {
-        "list": ["test2", "column1",  "special-tower", "medium-tower", "scorpion", "scout", "mage", "player"]
+        "list": ["test2", "column1",  "special-tower", "medium-tower", "scorpion", "mage", "player"]
       }
     },
     "hitbox": {
