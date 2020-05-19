@@ -149,6 +149,11 @@ QTransform client::GameMap::getTransformToMap() const {
 
 void client::GameMap::clicked(QPoint point, bool leftButton) {
     point = getTransformToMap().map(point);
+    if (mapInput->isWaiting()) {
+        qDebug() << "true waiting!";
+        mapInput->append(point);
+        return;
+    } else qDebug() << "bot waiting!";
     auto gameScreen = dynamic_cast<GameScreen*>(getParent());
     if (leftButton) {
         auto object = gameWorld->objectAt(point);
@@ -169,11 +174,6 @@ void client::GameMap::clicked(QPoint point, bool leftButton) {
         return;
     }
     qDebug() << "click" << mapInput->isWaiting();
-    if (mapInput->isWaiting()) {
-        qDebug() << "true waiting!";
-        mapInput->append(point);
-        return;
-    } else qDebug() << "bot waiting!";
     if (target != nullptr && target->hasAttribute("resource")) {
         gameScreen->getMultiplayerInterface()->sendCommand(core::Command("mine_resource", {
                 QString::number(objectId), QString::number(target->getId())}));
