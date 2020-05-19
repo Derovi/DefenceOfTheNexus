@@ -2,6 +2,7 @@
 #define SERVER_H
 
 #include <QQueue>
+#include <QMediaPlayer>
 #include <QtNetwork/QUdpSocket>
 
 #include "../../utils/queue.h"
@@ -65,7 +66,14 @@ class Server : public QObject {
 
     int currentDatagramId;
 
+    QVector<std::shared_ptr<QMediaPlayer> > musicPlayers;
+
+    void playSound(QStringList arguments);
+
+    void handleEvent(core::Event event);
+
   private slots:
+
     void readMessage();
 };
 

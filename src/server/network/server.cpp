@@ -100,8 +100,11 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
     for (const ConnectedPlayer& connectedPlayer : connectedPlayers) {
         utils::Serializer serializer;
         for (const core::Event& event : events) {
-            sendMessage(connectedPlayer, utils::network::prefixEvent + utils::network::separator +
-                                         serializer.serializeEvent(event).value());
+          //  for(int j=0;j<1000;j++)
+        //        qDebug()<<42;
+        //    sendMessage(connectedPlayer, utils::network::prefixEvent + utils::network::separator +
+          //                               serializer.serializeEvent(event).value());
+          handleEvent(event);
         }
         utils::SmartSerializer smartSerializer(false);
         qDebug() << "world" << engine->getWorldBeforeUpdate()->getObjects().size()
@@ -109,6 +112,7 @@ void server::Server::updateGameWorld(QVector<core::Event> events) {
         sendMessage(connectedPlayer, utils::network::prefixWorldUpdate + utils::network::separator +
                                      smartSerializer.getChanges(engine->getWorldBeforeUpdate(),
                                                                 engine->getGameWorld()));
+
     }
     qDebug() << "finish update - server";
 }
@@ -260,5 +264,41 @@ void server::Server::slotRequest(uint8_t playerId, const QString& message) {
     for (const auto& player : connectedPlayers) {
         sendMessage(player,
                     utils::network::prefixTeamUpdate + utils::network::separator + response);
+    }
+}
+
+void server::Server::playSound(QStringList arguments) {
+    int volume = 30;
+    volume = std::max(volume, 0);
+    bool ok = false;
+    for (auto& player: musicPlayers) {
+        if (player->isAvailable()) {
+            ok = true;
+            player->setMedia(QUrl::fromLocalFile(arguments[0]));
+            player->setVolume(volume);
+            player->play();
+            break;
+        }
+    }
+    if (!ok) {
+        auto* player = new QMediaPlayer;
+        musicPlayers.push_back(std::make_shared<QMediaPlayer>(player));
+        musicPlayers.back()->setMedia(QUrl::fromLocalFile(arguments[0]));
+        musicPlayers.back()->setVolume(volume);
+        musicPlayers.back()->play();
+    }
+}
+
+void server::Server::handleEvent(core::Event event) {
+    if (event.getType() == core::Event::Type::HIT_EVENT) {
+        qDebug() << "handled hit event! Damager id: " << event.getArguments();
+        int id = event.getArguments()[0].toLongLong();
+        playSound(QStringList({QString("sounds/sword_attack.wav"),
+                               0,0}));
+    }
+    if (event.getType() == core::Event::Type::MINE_EVENT) {
+        int id = event.getArguments()[0].toLongLong();
+        playSound(QStringList({QString("sounds/mine.wav"),
+                               0,0}));
     }
 }
