@@ -13,6 +13,10 @@ class SelectionScreen : public Screen {
   public:
     explicit SelectionScreen(std::shared_ptr<MultiplayerInterface> multiplayerInterface, int playersCount);
 
+    ~SelectionScreen() {
+        qDebug() << "destroy selection!";
+    };
+
   private:
     void onPaused() override;
 

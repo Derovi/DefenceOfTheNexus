@@ -127,10 +127,13 @@ void client::App::closeScreen() {
     if (screens.empty()) {
         return;
     }
+    qDebug() << "popping!";
     screens.pop();
+    qDebug() << "destroyed!";
     if (screens.empty()) {
         return;
     }
+    qDebug() << "calling resume!";
     screens.top()->resume();
 }
 

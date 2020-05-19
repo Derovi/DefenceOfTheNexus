@@ -58,6 +58,8 @@ class MultiplayerInterface : public QObject {
 
     int getPlayerId() const;
 
+    ~MultiplayerInterface() override;
+
   private:
     QString address;
     int port;
