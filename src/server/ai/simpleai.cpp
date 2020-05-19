@@ -99,7 +99,7 @@ void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
     for (const auto& object : engine->getGameWorld()->getObjects()) {
         if (object->getTeam() != team) {
             if (object->hasAttribute("damageable")) {
-                possibleTargets.push_back({object->getId(), 1 + 3 * (object->getTypeName() == "nexus")});
+                possibleTargets.push_back({object->getId(), 1 + (object->getTypeName() == "nexus")});
                 probSum += possibleTargets.back().second;
             }
             continue;
@@ -147,7 +147,7 @@ void server::SimpleAI::spawnBot(const server::SimpleAI::BotSpawner& spawner) {
 void server::SimpleAI::spawnBots(std::shared_ptr<core::GameWorld> world) {
     static auto startTime = std::chrono::steady_clock::now();
     int64_t availableBots = std::chrono::duration_cast<std::chrono::seconds>(
-        std::chrono::steady_clock::now() - startTime).count() / 45;
+        std::chrono::steady_clock::now() - startTime).count() / 30;
     if (bots.size() < availableBots && !spawners.empty()) {
        QVector<uint64_t> spawnerIds = spawners.keys().toVector();
        while (bots.size() < availableBots) {
