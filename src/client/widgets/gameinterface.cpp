@@ -28,6 +28,11 @@ client::GameInterface::GameInterface(QPoint position, int height, int width,
     healthBar->setHealthLine(QImage(":/interface/health-bar-line"));
     addChild(healthBar);
 
+    miniMap = new MiniMap(QPoint(800,50),350,350);
+    miniMap->setGameWorld(gameWorld);
+    addChild(miniMap);
+
+
     stoneIcon = QImage(":/interface/icon-stone");
     woodIcon = QImage(":/interface/icon-wood");
     ironIcon = QImage(":/interface/icon-iron");
@@ -139,6 +144,7 @@ void client::GameInterface::paint(QPainter& painter) {
             graphicsObject = object;
         }
     }
+
 
     //Attributes icons
     painter.drawImage(QRect(1058, 100, 60, 60), damageIcon);
