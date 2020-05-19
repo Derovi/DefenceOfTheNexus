@@ -106,24 +106,24 @@ std::shared_ptr<core::GameWorld> server::world_generator::generate(
         return signatures[rnd() % signatures.size()];
     };
 
-    for (int i = 0; i < resourcesAmount; ++i) {
-        forever {
-            int x = ux(rnd);
-            int y = uy(rnd);
-            float r = ur(rnd);
-            ObjectSignature signature;
-            if (r < woodProb) {
-                signature = any(resources[static_cast<int>(core::ResourceType::kWood)]);
-            } else if (r < woodProb + stoneProb) {
-                signature = any(resources[static_cast<int>(core::ResourceType::kStone)]);
-            } else {
-                signature = any(resources[static_cast<int>(core::ResourceType::kIron)]);
-            }
-            if (gameWorld->summonObjectIfNoObstacles(signature, QPoint(x, y)) != nullptr) {
-                break;
-            }
-        }
-    }
+//    for (int i = 0; i < resourcesAmount; ++i) {
+//        forever {
+//            int x = ux(rnd);
+//            int y = uy(rnd);
+//            float r = ur(rnd);
+//            ObjectSignature signature;
+//            if (r < woodProb) {
+//                signature = any(resources[static_cast<int>(core::ResourceType::kWood)]);
+//            } else if (r < woodProb + stoneProb) {
+//                signature = any(resources[static_cast<int>(core::ResourceType::kStone)]);
+//            } else {
+//                signature = any(resources[static_cast<int>(core::ResourceType::kIron)]);
+//            }
+//            if (gameWorld->summonObjectIfNoObstacles(signature, QPoint(x, y)) != nullptr) {
+//                break;
+//            }
+//        }
+//    }
     qDebug() << "World generated" << endl;
 
     return gameWorld;
