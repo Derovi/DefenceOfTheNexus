@@ -99,7 +99,7 @@ void server::SimpleAI::loadBots(std::shared_ptr<core::GameWorld> world) {
     for (const auto& object : engine->getGameWorld()->getObjects()) {
         if (object->getTeam() != team) {
             if (object->hasAttribute("damageable")) {
-                possibleTargets.push_back({object->getId(), 1 + 3 * (object->getTypeName() == "nexus")});
+                possibleTargets.push_back({object->getId(), 1 + (object->getTypeName() == "nexus")});
                 probSum += possibleTargets.back().second;
             }
             continue;
