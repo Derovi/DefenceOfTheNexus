@@ -1,5 +1,5 @@
 {
-  "test1": {
+  "player": {
     "attributes": {
       "moving": {
         "direction": {
@@ -15,32 +15,26 @@
       },
       "mining": {
         "miningSpeed": 4,
-        "miningDelay": 1000,
-        "miningRadius": 500
+        "miningDelay": 700,
+        "miningRadius": 150
       },
       "damaging": {
         "damage": 10,
         "radius": 150,
-        "delay": 1000,
+        "delay": 700,
         "bulletType": ""
+      },
+      "damageable": {
+        "health": 500,
+        "maxHealth": 500
       },
       "builder": {
         "list": ["test2", "column1"]
       }
     },
     "hitbox": {
-      "x": [
-        -50,
-        0,
-        50,
-        0
-      ],
-      "y": [
-        0,
-        50,
-        0,
-        -50
-      ]
+      "x": [-50, 0, 50, 0],
+      "y": [0, 50, 0, -50]
     },
     "strategies": [
       "mineStrategy",
@@ -59,18 +53,8 @@
       }
     },
     "hitbox": {
-      "x": [
-        50,
-        -50,
-        -50,
-        50
-      ],
-      "y": [
-        50,
-        50,
-        -50,
-        -50
-      ]
+      "x": [50, -50, -50, 50],
+      "y": [50, 50, -50, -50]
     },
     "strategies": []
   },
@@ -100,6 +84,10 @@
   },
   "wall1": {
     "attributes": {
+      "damageable": {
+        "health": 50,
+        "maxHealth": 50
+      }
     },
     "hitbox": {
       "x": [
@@ -120,6 +108,10 @@
   },
   "column1": {
     "attributes": {
+      "damageable": {
+        "health": 75,
+        "maxHealth": 75
+      }
     },
     "hitbox": {
       "x": [
@@ -146,17 +138,17 @@
           "y": 0.7071067690849304
         },
         "maxSpeed": 35,
-        "speed": 350
+        "speed": 35
       },
       "damaging": {
         "damage": 20,
         "radius": 150,
-        "delay": 400,
+        "delay": 700,
         "bulletType": ""
       },
       "damageable": {
-        "health": 200,
-        "maxHealth": 200
+        "health": 100,
+        "maxHealth": 100
       }
     },
     "cost": {
@@ -180,16 +172,16 @@
     },
     "hitbox": {
       "x": [
-        -120,
-        -120,
-        120,
+        -100,
+        -100,
+        100,
         0
       ],
       "y": [
-        -100,
-        100,
-        100,
-        -100
+        -80,
+        80,
+        80,
+        -80
       ]
     },
     "strategies": [
@@ -211,7 +203,7 @@
       "damaging": {
         "damage": 7,
         "radius": 150,
-        "delay": 1000,
+        "delay": 400,
         "bulletType": ""
       },
       "damageable": {
@@ -239,18 +231,8 @@
       }
     },
     "hitbox": {
-      "x": [
-        -50,
-        -50,
-        50,
-        50
-      ],
-      "y": [
-        -50,
-        50,
-        50,
-        -50
-      ]
+      "x": [-30, -30, 30, 30],
+      "y": [-40, 40, 40, -40]
     },
     "strategies": [
       "pathStrategy",
@@ -265,18 +247,18 @@
           "x": 0.7071067690849304,
           "y": 0.7071067690849304
         },
-        "maxSpeed": 400,
-        "speed": 400
+        "maxSpeed": 300,
+        "speed": 300
       },
       "damaging": {
-        "damage": 10,
-        "radius": 150,
+        "damage": 25,
+        "radius": 200,
         "delay": 1500,
         "bulletType": ""
       },
       "damageable": {
-        "health": 100,
-        "maxHealth": 100
+        "health": 125,
+        "maxHealth": 125
       }
     },
     "cost": {
@@ -300,16 +282,16 @@
     },
     "hitbox": {
       "x": [
-        -75,
-        -75,
-        75,
-        75
+        -40,
+        -40,
+        40,
+        40
       ],
       "y": [
-        -75,
-        75,
-        75,
-        -75
+        -50,
+        50,
+        50,
+        -50
       ]
     },
     "strategies": [
@@ -359,18 +341,8 @@
       }
     },
     "hitbox": {
-      "x": [
-        -75,
-        -75,
-        75,
-        75
-      ],
-      "y": [
-        -75,
-        75,
-        75,
-        -75
-      ]
+      "x": [-50, -50, 50, 50],
+      "y": [-50, 50, 50, -50]
     },
     "strategies": [
       "pathStrategy",
@@ -508,8 +480,8 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [40, 0, -40],
+      "y": [75, -75, 75]
     },
     "strategies": []
   },
@@ -539,7 +511,7 @@
     },
     "hitbox": {
       "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "y": [75, 75, -75, -75]
     },
     "strategies": []
   },
@@ -598,8 +570,8 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [40, -40, -40, 40],
+      "y": [40, 40, -40, -40]
     },
     "strategies": []
   },
@@ -614,7 +586,7 @@
     },
     "hitbox": {
       "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "y": [40, 40, -40, -40]
     },
     "strategies": []
   },
@@ -674,15 +646,15 @@
     },
     "hitbox": {
       "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "y": [30, 50, -30, -50]
     },
     "strategies": []
   },
   "gover": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [100, -100, -100, 100],
+      "y": [100, 100, -100, -100]
     },
     "strategies": []
   },
@@ -694,8 +666,8 @@
       }
     },
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [100, -100, -100, 100],
+      "y": [100, 100, -100, -100]
     },
     "strategies": []
   },
@@ -710,50 +682,72 @@
   "big-barrack": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [75, -75, -75, 75],
+      "y": [75, 75, -75, -75]
     },
     "strategies": []
   },
   "medium-barrack": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [100, -100, -100, 100],
+      "y": [75, 75, -75, -75]
     },
     "strategies": []
   },
   "grass": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [10, -10, -10, 10],
+      "y": [10, 10, -10, -10]
     },
     "strategies": []
   },
   "dirt-rock": {
     "attributes": {},
     "hitbox": {
-      "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "x": [40, -40, -40, 40],
+      "y": [40, 40, -40, -40]
     },
     "strategies": []
   },
   "big-tower": {
-    "attributes": {},
+    "attributes": {
+      "damaging": {
+        "damage": 200,
+        "radius": 1000,
+        "delay": 1500,
+        "bulletType": "big-rocket"
+      },
+      "damageable": {
+        "health": 500,
+        "maxHealth": 500
+      }
+    },
     "hitbox": {
       "x": [50, -50, -50, 50],
       "y": [50, 50, -50, -50]
     },
-    "strategies": []
+    "strategies": ["towerStrategy"]
   },
   "medium-tower": {
-    "attributes": {},
+    "attributes": {
+      "damaging": {
+        "damage": 100,
+        "radius": 1300,
+        "delay": 700,
+        "bulletType": "rocket"
+      },
+      "damageable": {
+        "health": 400,
+        "maxHealth": 400
+      }
+    },
     "hitbox": {
       "x": [50, -50, -50, 50],
       "y": [50, 50, -50, -50]
     },
-    "strategies": []
+    "strategies": ["towerStrategy"]
   },
   "small-tower": {
     "attributes": {},
@@ -767,7 +761,7 @@
     "attributes": {},
     "hitbox": {
       "x": [50, -50, -50, 50],
-      "y": [50, 50, -50, -50]
+      "y": [75, 75, -75, -75]
     },
     "strategies": []
   },
@@ -793,18 +787,8 @@
   "high-tower": {
     "attributes": {},
     "hitbox": {
-      "x": [
-        50,
-        -50,
-        -50,
-        50
-      ],
-      "y": [
-        50,
-        50,
-        -50,
-        -50
-      ]
+      "x": [50, -50, -50, 50],
+      "y": [75, 75, -75, -75]
     },
     "strategies": []
   },
@@ -829,6 +813,54 @@
     "hitbox": {
       "x": [-5, 0, 5, 0],
       "y": [0, -5, 0, 5]
+    },
+    "strategies": ["bulletStrategy"]
+  },
+  "big-rocket": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 1,
+          "y": 1
+        },
+        "maxSpeed": 500,
+        "speed": 500
+      },
+      "bullet": {
+        "ownerId": 0,
+        "range": 0,
+        "damage": 0,
+        "shooterPosX": 0,
+        "shooterPosY": 0
+      }
+    },
+    "hitbox": {
+      "x": [-5, 0, 5, 0],
+      "y": [0, -10, 0, 10]
+    },
+    "strategies": ["bulletStrategy"]
+  },
+  "rocket": {
+    "attributes": {
+      "moving": {
+        "direction": {
+          "x": 1,
+          "y": 1
+        },
+        "maxSpeed": 550,
+        "speed": 550
+      },
+      "bullet": {
+        "ownerId": 0,
+        "range": 0,
+        "damage": 0,
+        "shooterPosX": 0,
+        "shooterPosY": 0
+      }
+    },
+    "hitbox": {
+      "x": [-5, 0, 5, 0],
+      "y": [0, -10, 0, 10]
     },
     "strategies": ["bulletStrategy"]
   }

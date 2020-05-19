@@ -1,5 +1,5 @@
 {
-  "test1": {
+  "player": {
     "width": 100,
     "height": 100,
     "spriteControllers": ["unit"],
@@ -159,6 +159,8 @@
   },
   "scorpion": {
     "spriteControllers": ["unit"],
+    "height": 300,
+    "width": 200,
     "spriteDescriptions": {
       "idle": {
         "resource": ":/units/unit1_idle",
@@ -596,6 +598,34 @@
     "spriteDescriptions": {
       "default": {
         "resource": ":/sprites/bullet",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "big-rocket": {
+    "width": 30,
+    "height": 70,
+    "spriteControllers": [
+      "default"
+    ],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/rocket2",
+        "rows": 1,
+        "columns": 1
+      }
+    }
+  },
+  "rocket": {
+    "width": 30,
+    "height": 70,
+    "spriteControllers": [
+      "default"
+    ],
+    "spriteDescriptions": {
+      "default": {
+        "resource": ":/sprites/rocket1",
         "rows": 1,
         "columns": 1
       }

@@ -124,6 +124,10 @@ void utils::Factory::registerObjectSignature(const QString& objectName,
     objectSignatures.insert(objectName, signature);
 }
 
+QHash<QString, server::ObjectSignature> utils::Factory::getObjectSignatures() {
+    return objectSignatures;
+}
+
 QHash<QString, std::function<std::shared_ptr<server::Strategy>(
         std::shared_ptr<core::Object>)>> utils::Factory::strategyCreators;
 

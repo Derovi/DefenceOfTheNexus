@@ -8,8 +8,8 @@
 #include "gamemap.h"
 
 client::GameMap::GameMap(QPoint position, int height, int width):
-        Widget(position), cameraSpeed(60),
-        showHitBoxes(false), showSprites(true), fixed(false) {
+        Widget(position),  cameraSpeed(60),
+        showHitBoxes(true), showSprites(true), fixed(false) {
     setHeight(height);
     setWidth(width);
     setBoundsWidth(30);
@@ -288,6 +288,7 @@ void client::GameMap::buildCommand(const QString& objectType) {
 
 void client::GameMap::handleEvent(const core::Event& event) {
     //!TODO handle event
+    qDebug() << "I'm handling event!" << endl;
     if (event.getType() == core::Event::Type::HIT_EVENT) {
         qDebug() << "handled hit event! Damager id: " << event.getArguments();
         int id = event.getArguments()[0].toLongLong();
